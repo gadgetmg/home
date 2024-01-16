@@ -22,6 +22,14 @@ secretGenerator:
 patches:
 - patch: |-
     - op: add
+      path: /metadata/labels
+      value:
+        pod-security.kubernetes.io/enforce: privileged
+  target:
+    kind: Namespace
+    name: argocd
+- patch: |-
+    - op: add
       path: /spec/template/spec/volumes/-
       value:
         name: local-repo
