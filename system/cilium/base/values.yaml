@@ -1,0 +1,7 @@
+ipam:
+  mode: kubernetes
+kubeProxyReplacement: true
+externalIPs:
+  enabled: true
+gatewayAPI:
+  enabled: true

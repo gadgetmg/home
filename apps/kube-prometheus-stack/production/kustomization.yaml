@@ -1,0 +1,13 @@
+resources:
+- ../base
+
+helmCharts:
+- name: kube-prometheus-stack
+  repo: https://prometheus-community.github.io/helm-charts
+  releaseName: prometheus
+  namespace: monitoring
+  version: 55.5.0
+  includeCRDs: true
+  additionalValuesFiles:
+  - ../base/values.yaml
+  - values.yaml

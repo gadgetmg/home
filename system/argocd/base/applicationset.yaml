@@ -1,0 +1,79 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: system
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: git@github.com:gadgetmg/home.git
+      revision: HEAD
+      directories:
+      - path: system/*/production
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  template:
+    metadata:
+      name: '{{index .path.segments 1}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:gadgetmg/home.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        name: in-cluster
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      revisionHistoryLimit: 10
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: git@github.com:gadgetmg/home.git
+      revision: HEAD
+      directories:
+      - path: apps/*/production
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  template:
+    metadata:
+      name: '{{index .path.segments 1}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:gadgetmg/home.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        name: in-cluster
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+        retry:
+          limit: 5
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      revisionHistoryLimit: 10

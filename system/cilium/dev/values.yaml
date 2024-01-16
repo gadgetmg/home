@@ -1,0 +1,4 @@
+operator:
+  replicas: 1
+l2announcements:
+  enabled: true

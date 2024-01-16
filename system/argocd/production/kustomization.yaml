@@ -1,0 +1,15 @@
+resources:
+- ../base
+
+helmCharts:
+- name: argo-cd
+  repo: https://argoproj.github.io/argo-helm
+  releaseName: argocd
+  namespace: argocd
+  version: 5.52.2
+  additionalValuesFiles:
+  - ../base/values.yaml
+  - values.yaml
+
+generators:
+- secrets-generator.yaml

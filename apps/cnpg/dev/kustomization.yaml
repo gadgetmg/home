@@ -1,0 +1,13 @@
+namespace: cnpg-system
+resources:
+- ../base
+
+helmCharts:
+- name: cloudnative-pg
+  repo: https://cloudnative-pg.io/charts
+  releaseName: cnpg
+  namespace: cnpg-system
+  version: 0.19.1
+  additionalValuesFiles:
+  - ../base/values.yaml
+  - values.yaml

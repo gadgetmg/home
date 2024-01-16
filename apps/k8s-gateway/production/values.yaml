@@ -1,0 +1,3 @@
+domain: seigra.net
+service:
+  loadBalancerIP: 10.1.3.1

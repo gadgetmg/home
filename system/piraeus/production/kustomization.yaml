@@ -1,0 +1,8 @@
+resources:
+- ../base
+- talos-loader-overrides.yaml
+- storagepools.yaml
+- storageclasses.yaml
+
+generators:
+- secrets-generator.yaml

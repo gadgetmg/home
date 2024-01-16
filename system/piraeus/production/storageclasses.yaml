@@ -1,0 +1,29 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: linstor-csi-ssd-luks-local
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/placementCount: "1"
+  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/layerList: luks
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: linstor-csi-ssd-luks-r3
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/placementCount: "3"
+  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/layerList: drbd luks
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
