@@ -52,6 +52,7 @@
           ssh-to-age
           talhelper
           talosctl
+          vcluster
           yq-go
         ];
         shellHook = '' 
