@@ -75,3 +75,20 @@ controlPlane:
     cluster:
       proxy:
         disabled: true
+  - |- # Enforce restricted pod security profile (https://www.talos.dev/latest/kubernetes-guides/configuration/pod-security)
+    - op: replace
+      path: /cluster/apiServer/admissionControl/0/configuration
+      value:
+        apiVersion: pod-security.admission.config.k8s.io/v1
+        kind: PodSecurityConfiguration
+        defaults:
+          enforce: restricted
+          enforce-version: latest
+          audit: restricted
+          audit-version: latest
+          warn: restricted
+          warn-version: latest
+        exemptions:
+          usernames: []
+          runtimeClasses: []
+          namespaces: [kube-system]
