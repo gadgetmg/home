@@ -1,13 +1,9 @@
-namespace: cnpg-system
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
 - ../base
 
-helmCharts:
-- name: cloudnative-pg
-  repo: https://cloudnative-pg.io/charts
-  releaseName: cnpg
-  namespace: cnpg-system
-  version: 0.19.1
-  additionalValuesFiles:
-  - ../base/values.yaml
-  - values.yaml
+replicas:
+- name: cnpg-cloudnative-pg
+  count: 1
