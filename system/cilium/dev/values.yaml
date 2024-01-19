@@ -1,3 +1,10 @@
+ipam:
+  mode: kubernetes
+kubeProxyReplacement: true
+externalIPs:
+  enabled: true
+gatewayAPI:
+  enabled: true
 operator:
   replicas: 1
 l2announcements:
