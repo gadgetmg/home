@@ -1,15 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
 - ../base
-
-helmCharts:
-- name: argo-cd
-  repo: https://argoproj.github.io/argo-helm
-  releaseName: argocd
-  namespace: argocd
-  version: 5.52.2
-  additionalValuesFiles:
-  - ../base/values.yaml
-  - values.yaml
 
 secretGenerator:
 - name: argocd-sops-age
@@ -19,7 +12,21 @@ secretGenerator:
   options:
     disableNameSuffixHash: true
 
+replicas:
+- name: argocd-redis-ha-haproxy
+  count: 1
+- name: argocd-repo-server
+  count: 1
+- name: argocd-server
+  count: 1
+
 patches:
+- patch: |-
+    - op: remove
+      path: /spec/template/spec/affinity
+  target:
+    kind: StatefulSet
+    name: argocd-redis-ha-server
 - patch: |-
     - op: add
       path: /metadata/labels

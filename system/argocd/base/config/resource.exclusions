@@ -1,0 +1,6 @@
+- apiGroups:
+  - cilium.io
+  kinds:
+  - CiliumIdentity
+  clusters:
+  - "*"
