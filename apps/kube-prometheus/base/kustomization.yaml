@@ -6,3 +6,17 @@ resources:
 
 patches:
 - path: namespace.patch.yaml
+- patch: |- # Adds permission for prometheus-k8s to access resources in other namespaces
+    - op: add
+      path: /rules/-
+      value:
+        apiGroups:
+        - ""
+        resources:
+        - services
+        - endpoints
+        - pods
+        verbs: ["get", "list", "watch"]
+  target:
+    kind: ClusterRole
+    name: prometheus-k8s
