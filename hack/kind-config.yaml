@@ -22,5 +22,8 @@ nodes:
   - hostPath: ../
     containerPath: /tmp/local-repo
     readOnly: true
+  - hostPath: containerd.service
+    containerPath: /etc/systemd/system/containerd.service
+    readOnly: true
 networking:
   disableDefaultCNI: true
