@@ -16,7 +16,7 @@ configMapGenerator:
   files:
   - config/resource.exclusions
   literals:
-  - kustomize.buildOptions=--enable-alpha-plugins --enable-exec --enable-helm --load-restrictor LoadRestrictionsNone
+  - kustomize.buildOptions=--enable-alpha-plugins --enable-exec --enable-helm
 - name: argocd-cmd-params-cm
   behavior: merge
   literals:
