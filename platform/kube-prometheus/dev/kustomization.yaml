@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+
+patches:
+- patch: |- # Use self-signed cert / override hostname in dev
+    - op: replace
+      path: /metadata/annotations/cert-manager.io~1cluster-issuer
+      value: selfsigned
+    - op: replace
+      path: /spec/listeners/0/hostname
+      value: grafana.dev.local
+  target:
+    kind: Gateway
+    name: monitoring
+- patch: |- # Override hostname in dev
+    - op: replace
+      path: /spec/hostnames/0
+      value: grafana.dev.local
+  target:
+    kind: HTTPRoute
+    name: grafana

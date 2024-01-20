@@ -1,15 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
 - ../base
-
-helmCharts:
-- name: argo-cd
-  repo: https://argoproj.github.io/argo-helm
-  releaseName: argocd
-  namespace: argocd
-  version: 5.52.2
-  additionalValuesFiles:
-  - ../base/values.yaml
-  - values.yaml
 
 secretGenerator:
 - name: argocd-sops-age
@@ -19,8 +12,39 @@ secretGenerator:
   options:
     disableNameSuffixHash: true
 
+replicas:
+- name: argocd-redis-ha-haproxy
+  count: 1
+- name: argocd-repo-server
+  count: 1
+- name: argocd-server
+  count: 1
+
 patches:
-- patch: |-
+- patch: |- # Use self-signed cert for argocd.dev.local in dev
+    - op: replace
+      path: /metadata/annotations/cert-manager.io~1cluster-issuer
+      value: selfsigned
+    - op: replace
+      path: /spec/listeners/0/hostname
+      value: argocd.dev.local
+  target:
+    kind: Gateway
+    name: argocd
+- patch: |- # Use self-signed cert for argocd.dev.local in dev
+    - op: replace
+      path: /spec/hostnames/0
+      value: argocd.dev.local
+  target:
+    kind: HTTPRoute
+    name: argocd-server
+- patch: |- # Remove anti-affinity rules for redis-ha in dev
+    - op: remove
+      path: /spec/template/spec/affinity
+  target:
+    kind: StatefulSet
+    name: argocd-redis-ha-server
+- patch: |- # Privilege argocd namespace in dev to allow injecting hostPath mount
     - op: add
       path: /metadata/labels
       value:
@@ -28,7 +52,7 @@ patches:
   target:
     kind: Namespace
     name: argocd
-- patch: |-
+- patch: |- # Inject hostPath mount for local copy of git repository
     - op: add
       path: /spec/template/spec/volumes/-
       value:
@@ -45,7 +69,7 @@ patches:
   target:
     kind: Deployment
     name: argocd-repo-server
-- patch: |-
+- patch: |- # Replace path to git repository in ApplicationSets
     - op: replace
       path: /spec/generators/0/git/repoURL
       value: file:///tmp/local-repo
@@ -54,17 +78,13 @@ patches:
       value: file:///tmp/local-repo
   target:
     kind: ApplicationSet
-- patch: |-
+- patch: |- # Target dev environment in apps ApplicationSet
     - op: replace
-      path: /spec/generators/0/git/directories/0/path
-      value: system/*/dev
-  target:
-    kind: ApplicationSet
-    name: system
-- patch: |-
-    - op: replace
-      path: /spec/generators/0/git/directories/0/path
-      value: apps/*/dev
+      path: /spec/generators/0/git/directories
+      value:
+      - path: apps/*/dev
+      - path: platform/*/dev
+      - path: system/*/dev
   target:
     kind: ApplicationSet
     name: apps

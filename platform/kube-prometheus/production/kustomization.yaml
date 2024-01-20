@@ -3,6 +3,3 @@ kind: Kustomization
 
 resources:
 - ../base
-
-generators:
-- secrets-generator.yaml
