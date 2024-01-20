@@ -16,8 +16,28 @@ helmCharts:
   repo: https://helm.cilium.io
   releaseName: cilium
   namespace: kube-system
-  version: 1.14.5
+  version: 1.15.0-rc.1
+  apiVersions:
+  - gateway.networking.k8s.io/v1/GatewayClass
   valuesFile: values.yaml
 
 generators:
 - secrets-generator.yaml
+
+patches:
+- patch: |-
+    kind: DaemonSet
+    metadata:
+      name: cilium
+      namespace: kube-system
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cilium-agent
+            env:
+            - name: GOMEMLIMIT
+              valueFrom:
+                resourceFieldRef:
+                  divisor: 0
+                  resource: limits.memory
