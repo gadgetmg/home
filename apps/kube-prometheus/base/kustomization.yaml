@@ -3,9 +3,12 @@ kind: Kustomization
 
 resources:
 - https://github.com/prometheus-operator/kube-prometheus?ref=release-0.13
+- gateway.yaml
+- grafana-httproute.yaml
 
 patches:
 - path: namespace.patch.yaml
+- path: grafana-networkpolicy.patch.yaml # Permits all ingress traffic into Grafana pods
 - patch: |- # Adds permission for prometheus-k8s to access resources in other namespaces
     - op: add
       path: /rules/-
