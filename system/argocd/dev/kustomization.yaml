@@ -78,17 +78,13 @@ patches:
       value: file:///tmp/local-repo
   target:
     kind: ApplicationSet
-- patch: |- # Target dev environment in system ApplicationSet
-    - op: replace
-      path: /spec/generators/0/git/directories/0/path
-      value: system/*/dev
-  target:
-    kind: ApplicationSet
-    name: system
 - patch: |- # Target dev environment in apps ApplicationSet
     - op: replace
-      path: /spec/generators/0/git/directories/0/path
-      value: apps/*/dev
+      path: /spec/generators/0/git/directories
+      value:
+      - path: apps/*/dev
+      - path: platform/*/dev
+      - path: system/*/dev
   target:
     kind: ApplicationSet
     name: apps
