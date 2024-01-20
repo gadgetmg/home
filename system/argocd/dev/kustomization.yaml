@@ -21,6 +21,23 @@ replicas:
   count: 1
 
 patches:
+- patch: |- # Use self-signed cert for argocd.dev.local in dev
+    - op: replace
+      path: /metadata/annotations/cert-manager.io~1cluster-issuer
+      value: selfsigned
+    - op: replace
+      path: /spec/listeners/0/hostname
+      value: argocd.dev.local
+  target:
+    kind: Gateway
+    name: argocd
+- patch: |- # Use self-signed cert for argocd.dev.local in dev
+    - op: replace
+      path: /spec/hostnames/0
+      value: argocd.dev.local
+  target:
+    kind: HTTPRoute
+    name: argocd-server
 - patch: |- # Remove anti-affinity rules for redis-ha in dev
     - op: remove
       path: /spec/template/spec/affinity
