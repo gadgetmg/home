@@ -1,0 +1,9 @@
+---
+base: docker.io/gadgetmg
+components:
+  linstor-controller:
+    tag: v1.25.1
+    image: piraeus-server
+  linstor-satellite:
+    tag: v1.25.1
+    image: piraeus-server
