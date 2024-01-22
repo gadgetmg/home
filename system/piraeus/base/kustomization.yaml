@@ -4,10 +4,3 @@ kind: Kustomization
 resources:
 - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.3.0
 - cluster.yaml
-
-configMapGenerator:
-- name: piraeus-operator-image-config
-  namespace: piraeus-datastore
-  behavior: merge
-  files:
-  - config/2_gadgetmg_overrides.yaml
