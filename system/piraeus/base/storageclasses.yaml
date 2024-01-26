@@ -1,0 +1,48 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd-r1
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/autoPlace: "1"
+  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/layerList: drbd luks storage
+  # https://linbit.com/blog/best-practices-for-kubernetes-storage-performance-with-linstor/
+  DrbdOptions/Disk/disk-flushes: "no" 
+  DrbdOptions/Disk/md-flushes: "no"
+  DrbdOptions/Net/max-buffers: "10000"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd-r2
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/autoPlace: "2"
+  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/layerList: drbd luks storage
+  DrbdOptions/Disk/disk-flushes: "no"
+  DrbdOptions/Disk/md-flushes: "no"
+  DrbdOptions/Net/max-buffers: "10000"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ssd-r3
+provisioner: linstor.csi.linbit.com
+parameters:
+  linstor.csi.linbit.com/autoPlace: "3"
+  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/layerList: drbd luks storage
+  DrbdOptions/Disk/disk-flushes: "no"
+  DrbdOptions/Disk/md-flushes: "no"
+  DrbdOptions/Net/max-buffers: "10000"
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer

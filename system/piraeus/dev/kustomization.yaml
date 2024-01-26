@@ -12,3 +12,6 @@ secretGenerator:
   - MASTER_PASSPHRASE=password
   options:
     disableNameSuffixHash: true
+
+patches:
+- path: dev-pools.patch.yaml
