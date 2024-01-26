@@ -7,3 +7,6 @@ resources:
 
 generators:
 - secrets-generator.yaml
+
+patches:
+- path: production-pools.patch.yaml

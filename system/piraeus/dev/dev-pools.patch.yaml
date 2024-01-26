@@ -1,11 +1,8 @@
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
-  name: ssd-storage-pool
+  name: pools
 spec:
   storagePools:
   - name: ssd
-    lvmPool: {}
-    source:
-      hostDevices:
-      - /dev/sda
+    fileThinPool: {}

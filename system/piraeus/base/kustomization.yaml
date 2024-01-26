@@ -1,6 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: piraeus-datastore
+
 resources:
+- ca-bootstrapper.yaml
+- internal-ca.yaml
+- api-ca.yaml
 - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.3.0
 - cluster.yaml
+- satellite-internal-tls.yaml
+- satellite-pools.yaml
+- storageclasses.yaml

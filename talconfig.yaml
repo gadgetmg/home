@@ -21,6 +21,7 @@ nodes:
     parameters:
     - usermode_helper=disabled
   - name: drbd_transport_tcp
+  - name: dm-thin-pool
   networkInterfaces:
   - interface: eno1
     dhcp: true
@@ -36,6 +37,7 @@ nodes:
     parameters:
     - usermode_helper=disabled
   - name: drbd_transport_tcp
+  - name: dm-thin-pool
   networkInterfaces:
   - interface: eno1
     dhcp: true
@@ -51,6 +53,7 @@ nodes:
     parameters:
     - usermode_helper=disabled
   - name: drbd_transport_tcp
+  - name: dm-thin-pool
   networkInterfaces:
   - interface: eno1
     dhcp: true
