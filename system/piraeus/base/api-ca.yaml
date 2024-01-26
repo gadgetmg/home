@@ -1,0 +1,24 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: linstor-api-ca
+spec:
+  commonName: linstor-api-ca
+  secretName: linstor-api-ca
+  duration: 87600h # 10 years
+  isCA: true
+  usages:
+  - signing
+  - key encipherment
+  - cert sign
+  issuerRef:
+    name: ca-bootstrapper
+    kind: Issuer
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: linstor-api-ca
+spec:
+  ca:
+    secretName: linstor-api-ca
