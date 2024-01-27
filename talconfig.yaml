@@ -1,7 +1,7 @@
 ---
 clusterName: talos
 talosVersion: v1.6.1
-kubernetesVersion: v1.29.0
+kubernetesVersion: v1.29.1
 endpoint: https://10.1.2.10:6443
 allowSchedulingOnControlPlanes: true
 clusterPodNets:
