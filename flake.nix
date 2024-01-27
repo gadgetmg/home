@@ -1,15 +1,17 @@
 {
-  description = "Talos";
+  description = "Home";
 
   inputs = {
-    nixpkgs = { url = github:NixOS/nixpkgs/nixos-unstable; };  # NixOS 23.11
-    krewfile = { url = github:brumhard/krewfile/v0.2.0; };
+    nixpkgs = { url = github:NixOS/nixpkgs/nixos-unstable; };
     talhelper = { url = "github:budimanjojo/talhelper"; };
+    krewfile = { url = github:brumhard/krewfile; };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: let
     system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; config.allowUnfree = true; config.allowBroken = true; };
+    pkgs = import nixpkgs { inherit system; };
+    krewfile = inputs.krewfile.packages.${system}.default;
+    talhelper = inputs.talhelper.packages.${system}.default;
     kubernetes-helm = pkgs.kubernetes-helm.overrideAttrs (prev: {
       ldflags = prev.ldflags ++ [
         "-X helm.sh/helm/v3/pkg/chartutil.k8sVersionMajor=1"
@@ -30,25 +32,22 @@
       default = pkgs.mkShell {
         NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
         nativeBuildInputs = with pkgs; [
-          talosctl
-          kubectl
-          clusterctl
-          terraform
-          kubernetes-helm
+          age
           argocd
           cilium-cli
-          kubeseal
-          krew
-          yq-go
-          sops
-          age
-          ssh-to-age
-          kind
           kfilt
+          kind
+          krew
+          krewfile
+          kubectl
+          kubernetes-helm
           kustomize
           kustomize-sops
-          inputs.krewfile.packages.${system}.default
-          inputs.talhelper.packages.${system}.default
+          sops
+          ssh-to-age
+          talhelper
+          talosctl
+          yq-go
         ];
         shellHook = '' 
           export PATH="$HOME/.krew/bin:$PATH"
