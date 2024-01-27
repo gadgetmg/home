@@ -6,7 +6,7 @@ helmCharts:
   repo: https://ori-edge.github.io/k8s_gateway
   releaseName: k8s-gateway
   namespace: kube-system
-  version: 2.1.0
+  version: 2.3.0
   valuesInline:
     domain: placeholder.name
 
