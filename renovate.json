@@ -2,5 +2,27 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "nix": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["^talconfig.yaml$"],
+      "matchStrings": ["talosVersion: [\"']?(?<currentValue>.+?)[\"']?\\s+"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "siderolabs/talos",
+      "extractVersionTemplate": "^(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^talconfig.yaml$"],
+      "matchStrings": ["kubernetesVersion: [\"']?(?<currentValue>.+?)[\"']?\\s+"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "kubernetes/kubernetes",
+      "extractVersionTemplate": "^(?<version>.*)$"
+    }
   ]
 }
