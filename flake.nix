@@ -41,6 +41,7 @@
           krewfile
           kubectl
           kubernetes-helm
+          kubevirt
           kustomize
           kustomize-sops
           sops
