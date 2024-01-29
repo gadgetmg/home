@@ -20,6 +20,7 @@ Platform stack components provide common services to the cluster and abstract aw
 
 - [`platform/cnpg`](platform/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`platform/kube-prometheus`](platform/kube-prometheus) - Kubernetes monitoring platform with the [Prometheus operator](https://prometheus-operator.dev/)
+- [`platform/kubevirt`](platform/kubevirt) - Virtualization platform with [KubeVirt](https://kubevirt.io/)
 
 ### Application stack
 
