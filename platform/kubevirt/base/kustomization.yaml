@@ -6,3 +6,14 @@ resources:
 - https://github.com/kubevirt/kubevirt/releases/download/v1.1.1/kubevirt-cr.yaml
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.58.0/cdi-operator.yaml
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.58.0/cdi-cr.yaml
+
+patches:
+# Premptively removes the v1alpha1 version of cdis.cdi.kubevirt.io as cdi-operator will remove it
+# post-install and Argo CD will see it as out of sync.
+# https://github.com/kubevirt/containerized-data-importer/pull/2527
+- patch: |-
+    - op: remove
+      path: /spec/versions/0
+  target:
+    kind: CustomResourceDefinition
+    name: cdis.cdi.kubevirt.io
