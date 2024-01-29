@@ -15,4 +15,4 @@ plugins:
     exemptions:
       usernames: []
       runtimeClasses: []
-      namespaces: [kube-system]
+      namespaces: [kube-system, local-path-storage]
