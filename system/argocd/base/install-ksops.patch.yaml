@@ -13,6 +13,7 @@ spec:
           secretName: argocd-sops-age
       initContainers:
       - name: install-ksops
+        # renovate: datasource=docker depName=viaductoss/ksops
         image: viaductoss/ksops:v4.3.1
         securityContext:
           allowPrivilegeEscalation: false
