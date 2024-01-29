@@ -9,20 +9,13 @@
   "lockFileMaintenance": {
     "enabled": true
   },
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^talconfig.yaml$"],
-      "matchStrings": ["talosVersion: [\"']?(?<currentValue>.+?)[\"']?\\s+"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "siderolabs/talos",
-      "extractVersionTemplate": "^(?<version>.*)$"
-    },
-    {
-      "fileMatch": ["^talconfig.yaml$"],
-      "matchStrings": ["kubernetesVersion: [\"']?(?<currentValue>.+?)[\"']?\\s+"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "kubernetes/kubernetes",
-      "extractVersionTemplate": "^(?<version>.*)$"
+      "customType": "regex",
+      "fileMatch": ["\\.yaml$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+.+(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ]
     }
   ]
 }
