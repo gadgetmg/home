@@ -1,0 +1,25 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestSuite
+startControlPlane: true
+testDirs:
+- ../base/tests/unit
+- tests/unit
+timeout: 1
+commands:
+  # renovate: datasource=github-releases depName=cilium/cilium
+- command: kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0-rc.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumbgppeeringpolicies.yaml
+  timeout: 30
+  # renovate: datasource=github-releases depName=cilium/cilium
+- command: kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0-rc.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
+  timeout: 30
+  # renovate: datasource=github-releases depName=cilium/cilium
+- command: kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0-rc.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumloadbalancerippools.yaml
+  timeout: 30
+  # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+- command: kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
+  timeout: 30
+- script: kustomize build --enable-alpha-plugins --enable-exec --enable-helm | kubectl apply -f -
+  timeout: 30
+suppress:
+- events
+namespace: default
