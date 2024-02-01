@@ -1,0 +1,21 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestSuite
+startControlPlane: true
+testDirs:
+- ../base/tests/unit
+- tests/unit
+timeout: 1
+commands:
+  # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+- command: kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
+  timeout: 30
+  # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+- command: kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
+  timeout: 30
+- script: kustomize build | kfilt -i kind=CustomResourceDefinition | kubectl apply -f -
+  timeout: 30
+- script: kustomize build | kfilt -x kind=CustomResourceDefinition | kubectl apply -f -
+  timeout: 30
+suppress:
+- events
+namespace: default
