@@ -1,0 +1,13 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestSuite
+startControlPlane: true
+testDirs:
+- ../base/tests/unit
+- tests/unit
+timeout: 1
+commands:
+- script: kustomize build --enable-helm | kubectl apply -f -
+  timeout: 30
+suppress:
+- events
+namespace: default
