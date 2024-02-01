@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubevirt.io: ""
+    pod-security.kubernetes.io/enforce: privileged
+  name: kubevirt
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    operator.kubevirt.io: ""
+  name: kubevirts.kubevirt.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: kubevirt-operator
+  namespace: kubevirt
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: kubevirt-operator
+  namespace: kubevirt
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: kubevirt-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    operator.kubevirt.io: ""
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+  name: kubevirt.io:operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: kubevirt-operator-rolebinding
+  namespace: kubevirt
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    kubevirt.io: ""
+  name: kubevirt-operator
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: kubevirt-cluster-critical
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    kubevirt.io: virt-operator
+  name: virt-operator
+  namespace: kubevirt
+---
+apiVersion: kubevirt.io/v1
+kind: KubeVirt
+metadata:
+  name: kubevirt
+  namespace: kubevirt

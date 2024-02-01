@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/managed-by: cdi-operator
+    cdi.kubevirt.io: ""
+  name: cdi-operator
+  namespace: cdi
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: storage
+    app.kubernetes.io/managed-by: cdi-operator
+    cdi.kubevirt.io: ""
+  name: cdi-operator
+  namespace: cdi
