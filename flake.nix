@@ -30,6 +30,8 @@
     # Accessible via 'nix develop'
     devShells.${system} = {
       default = pkgs.mkShell {
+        TEST_ASSET_ETCD = "${pkgs.etcd}/bin/etcd";
+        TEST_ASSET_KUBE_APISERVER = "${pkgs.kubernetes}/bin/kube-apiserver";
         NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
         nativeBuildInputs = with pkgs; [
           age
@@ -44,6 +46,7 @@
           kubevirt
           kustomize
           kustomize-sops
+          kuttl
           sops
           ssh-to-age
           talhelper
