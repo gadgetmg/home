@@ -7,8 +7,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager
   namespace: cert-manager
 ---
@@ -21,8 +19,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager:leaderelection
   namespace: kube-system
 ---
@@ -35,8 +31,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
     rbac.authorization.k8s.io/aggregate-to-cluster-reader: "true"
   name: cert-manager-cluster-view
 ---
@@ -49,8 +43,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-certificates
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -62,8 +54,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-challenges
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -75,8 +65,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-clusterissuers
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -88,8 +76,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-ingress-shim
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -101,8 +87,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-issuers
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -114,8 +98,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-orders
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -127,8 +109,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: cert-manager-edit
@@ -142,8 +122,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
     rbac.authorization.k8s.io/aggregate-to-admin: "true"
     rbac.authorization.k8s.io/aggregate-to-cluster-reader: "true"
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
@@ -159,8 +137,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager:leaderelection
   namespace: kube-system
 ---
@@ -173,8 +149,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-certificates
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -186,8 +160,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-challenges
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -199,8 +171,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-clusterissuers
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -212,8 +182,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-ingress-shim
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -225,8 +193,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-issuers
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -238,8 +204,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-controller-orders
 ---
 apiVersion: v1
@@ -251,8 +215,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager
   namespace: cert-manager
 ---
@@ -265,8 +227,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager
   namespace: cert-manager
 ---
@@ -279,8 +239,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager
   namespace: cert-manager
 ---
@@ -293,8 +251,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager
   namespace: cert-manager
 ---
@@ -307,8 +263,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
     prometheus: default
   name: cert-manager
   namespace: cert-manager

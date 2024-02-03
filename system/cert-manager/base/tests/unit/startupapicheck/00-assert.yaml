@@ -11,8 +11,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: startupapicheck
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-startupapicheck
   namespace: cert-manager
 ---
@@ -29,8 +27,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: startupapicheck
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-startupapicheck:create-cert
   namespace: cert-manager
 ---
@@ -47,8 +43,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: startupapicheck
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-startupapicheck:create-cert
   namespace: cert-manager
 ---
@@ -65,7 +59,5 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: startupapicheck
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-startupapicheck
   namespace: cert-manager
