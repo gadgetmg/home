@@ -7,8 +7,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
   namespace: cert-manager
 ---
@@ -21,8 +19,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook:dynamic-serving
   namespace: cert-manager
 ---
@@ -35,8 +31,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook:subjectaccessreviews
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -48,8 +42,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook:dynamic-serving
   namespace: cert-manager
 ---
@@ -62,23 +54,7 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook:subjectaccessreviews
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    app: webhook
-    app.kubernetes.io/component: webhook
-    app.kubernetes.io/instance: cert-manager
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
-  name: cert-manager-webhook
-  namespace: cert-manager
 ---
 apiVersion: v1
 kind: Service
@@ -89,8 +65,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
   namespace: cert-manager
 ---
@@ -103,8 +77,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
   namespace: cert-manager
 ---
@@ -117,8 +89,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
   namespace: cert-manager
 ---
@@ -133,8 +103,6 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
 ---
 apiVersion: admissionregistration.k8s.io/v1
@@ -148,6 +116,4 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: webhook
-    app.kubernetes.io/version: v1.13.3
-    helm.sh/chart: cert-manager-v1.13.3
   name: cert-manager-webhook
