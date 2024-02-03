@@ -5,6 +5,7 @@
     nixpkgs = { url = github:NixOS/nixpkgs/nixos-unstable; };
     talhelper = { url = "github:budimanjojo/talhelper"; };
     krewfile = { url = github:brumhard/krewfile; };
+    dagger = { url = github:dagger/nix; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs = { self, nixpkgs, ... }@inputs: let
@@ -12,6 +13,7 @@
     pkgs = import nixpkgs { inherit system; };
     krewfile = inputs.krewfile.packages.${system}.default;
     talhelper = inputs.talhelper.packages.${system}.default;
+    dagger = inputs.dagger.packages.${system}.dagger;
     kubernetes-helm = pkgs.kubernetes-helm.overrideAttrs (prev: {
       ldflags = prev.ldflags ++ [
         "-X helm.sh/helm/v3/pkg/chartutil.k8sVersionMajor=1"
@@ -30,11 +32,15 @@
     # Accessible via 'nix develop'
     devShells.${system} = {
       default = pkgs.mkShell {
+        TEST_ASSET_ETCD = "${pkgs.etcd}/bin/etcd";
+        TEST_ASSET_KUBE_APISERVER = "${pkgs.kubernetes}/bin/kube-apiserver";
         NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
         nativeBuildInputs = with pkgs; [
           age
           argocd
           cilium-cli
+          dagger
+          go
           kfilt
           kind
           krew
@@ -44,6 +50,7 @@
           kubevirt
           kustomize
           kustomize-sops
+          kuttl
           sops
           ssh-to-age
           talhelper

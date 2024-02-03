@@ -1,0 +1,18 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestSuite
+startControlPlane: true
+testDirs:
+- ../base/tests/unit
+- tests/unit
+timeout: 1
+commands:
+  # renovate: datasource=github-releases depName=cert-manager/cert-manager
+- command: kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
+  timeout: 30
+- script: kustomize build --enable-alpha-plugins --enable-exec | kfilt -i kind=CustomResourceDefinition | kubectl apply -f -
+  timeout: 30
+- script: kustomize build --enable-alpha-plugins --enable-exec | kfilt -x kind=CustomResourceDefinition | kubectl apply -f -
+  timeout: 30
+suppress:
+- events
+namespace: default

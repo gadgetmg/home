@@ -1,0 +1,150 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: resource-metrics-server-resources
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+    rbac.authorization.k8s.io/aggregate-to-admin: "true"
+    rbac.authorization.k8s.io/aggregate-to-edit: "true"
+    rbac.authorization.k8s.io/aggregate-to-view: "true"
+  name: system:aggregated-metrics-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: resource-metrics-auth-reader
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: resource-metrics:system:auth-delegator
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: adapter-config
+  namespace: monitoring
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring
+---
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: v1beta1.metrics.k8s.io
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: kube-prometheus
+    app.kubernetes.io/version: 0.11.1
+  name: prometheus-adapter
+  namespace: monitoring

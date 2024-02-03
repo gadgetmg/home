@@ -1,0 +1,32 @@
+name: test
+run-name: Test
+
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Install Dagger CLI
+      run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
+    - name: argocd
+      run: dagger call -m ci unit-test --app system/argocd --env dev
+    - name: cert-manager
+      run: dagger call -m ci unit-test --app system/cert-manager --env dev
+    - name: cilium
+      run: dagger call -m ci unit-test --app system/cilium --env dev
+    - name: k8s-gateway
+      run: dagger call -m ci unit-test --app system/k8s-gateway --env dev
+    - name: piraeus
+      run: dagger call -m ci unit-test --app system/piraeus --env dev
+    - name: cnpg
+      run: dagger call -m ci unit-test --app platform/cnpg --env dev
+    - name: kube-prometheus
+      run: dagger call -m ci unit-test --app platform/kube-prometheus --env dev
+    - name: kubevirt
+      run: dagger call -m ci unit-test --app platform/kubevirt --env dev

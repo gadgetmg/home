@@ -1,0 +1,167 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha
+  namespace: argocd
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha-haproxy
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-configmap
+  namespace: argocd
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-health-configmap
+  namespace: argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha
+  namespace: argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-announce-0
+  namespace: argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-announce-1
+  namespace: argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-announce-2
+  namespace: argocd
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha-haproxy
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha-haproxy
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-haproxy
+  namespace: argocd
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/name: argocd-redis-ha
+    app.kubernetes.io/part-of: argocd
+  name: argocd-redis-ha-server
+  namespace: argocd
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: argocd-redis-ha-proxy-network-policy
+  namespace: argocd
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: argocd-redis-ha-server-network-policy
+  namespace: argocd
