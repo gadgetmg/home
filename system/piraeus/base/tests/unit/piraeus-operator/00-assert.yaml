@@ -1,8 +1,0 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kubernetes.io/component: piraeus-operator
-    app.kubernetes.io/name: piraeus-datastore
-  name: piraeus-operator-controller-manager
-  namespace: piraeus-datastore

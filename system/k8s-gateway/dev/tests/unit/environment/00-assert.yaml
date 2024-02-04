@@ -1,5 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: k8s-gateway-bdm58tm547 # hash of known-good dev ConfigMap
-  namespace: kube-system
