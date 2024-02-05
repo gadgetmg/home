@@ -8,7 +8,7 @@ parameters:
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/layerList: drbd luks storage
   # https://linbit.com/blog/best-practices-for-kubernetes-storage-performance-with-linstor/
-  DrbdOptions/Disk/disk-flushes: "no" 
+  DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
 reclaimPolicy: Delete

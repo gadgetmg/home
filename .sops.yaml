@@ -7,3 +7,6 @@ creation_rules:
   - age:
     - age14j53rr640k25j2z5q3y2dl3um0kkp2tlh4ptm8espz8ws907z9eqzlpevn # gadgetmg@pm.me
     - age1lzq4n9az8872zn99787s8dg8zleg26nhq79luf5hgs40ry057cyqkhu55m # argocd (production)
+stores:
+  yaml:
+    indent: 2
