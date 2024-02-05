@@ -14,7 +14,7 @@
       "customType": "regex",
       "fileMatch": ["\\.yaml$"],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+.+(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+.+(?<currentValue>v?\\d+\\.\\d+\\.\\d+)"
       ]
     }
   ]
