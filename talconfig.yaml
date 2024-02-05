@@ -1,4 +1,3 @@
----
 clusterName: talos
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.6.3
