@@ -4,6 +4,8 @@ metadata:
   name: apps
   namespace: argocd
 spec:
+  syncPolicy:
+    preserveResourcesOnDeletion: true
   generators:
   - git:
       repoURL: git@github.com:gadgetmg/home.git
