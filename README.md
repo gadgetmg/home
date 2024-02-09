@@ -26,6 +26,10 @@ Platform stack components provide common services to the cluster and abstract aw
 
 TBD
 
+### Root app
+
+Following Argo CD's [app of apps pattern](https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/#app-of-apps-pattern), apps for which Argo CD should sync are managed by an app themselves. This is controlled by the [`root`](root) app which generates the desired manifests with [Jsonnet](https://jsonnet.org/) to avoid duplication.
+
 ## Secrets management
 
 Secrets in this repository are encrypted with [SOPS](https://getsops.io/) and applied via Kustomize with the [KSOPS](https://github.com/viaduct-ai/kustomize-sops) plugin. Secrets are readable with my personal AGE private key as well as a private key created for the production Argo CD deployment.
