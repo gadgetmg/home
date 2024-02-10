@@ -38,6 +38,8 @@
             argocd
             cilium-cli
             go
+            go-jsonnet
+            jsonnet-bundler
             kfilt
             kind
             krew
