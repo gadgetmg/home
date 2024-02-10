@@ -1,14 +1,29 @@
-#!/bin/sh
+#!/usr/bin/env sh
 cd "$(dirname "$0")"
 
 # create kind cluster
 kind create cluster --config=kind-config.yaml
 
-# install cilium CNI less custom resources (cilium-operator is responsible for installing CRDs)
-kustomize build --enable-alpha-plugins --enable-exec --enable-helm ../system/cilium/dev | kfilt -x kind=CiliumLoadBalancerIPPool -x kind=CiliumL2AnnouncementPolicy -x kind=GatewayClass | kubectl apply -f -
+# pre-install CRDs
+kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumloadbalancerippools.yaml
+kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
+kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.71.2/stripped-down-crds.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
 
-# bootstrap Argo CD CRDs
-kustomize build --enable-alpha-plugins --enable-exec --enable-helm ../system/argocd/dev | kfilt -i kind=CustomResourceDefinition | kubectl apply -f -
+# install cilium CNI
+kustomize build --enable-helm ../system/cilium/dev | kubectl apply -f -
 
-# bootstrap Argo CD
-kustomize build --enable-alpha-plugins --enable-exec --enable-helm ../system/argocd/dev | kfilt -x kind=CustomResourceDefinition | kubectl apply -f -
+# install cert-manager
+kustomize build --enable-helm ../system/cert-manager/dev | kubectl apply -f -
+
+# install Argo CD
+kustomize build ../system/argocd/dev | kubectl apply -f -
+
+# Install root app
+jsonnet -J ../vendor ../root/dev/main.jsonnet -y | kubectl apply -f -
+
+# Wait for Argo CD initial password
+kubectl config set-context --namespace='argocd' --current
+kubectl wait --for=condition=Available deployment.apps/argocd-server --timeout=10m
+argocd --core admin initial-password

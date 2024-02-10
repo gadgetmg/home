@@ -6,7 +6,6 @@ namespace: argocd
 resources:
 - namespace.yaml
 - https://github.com/argoproj/argo-cd/manifests/ha/cluster-install?ref=v2.9.6
-- applicationset.yaml
 - gateway.yaml
 - server-httproute.yaml
 
