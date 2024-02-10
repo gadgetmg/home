@@ -48,7 +48,7 @@ local app = argo_cd.argoproj.v1alpha1.application;
     app.new('cnpg') + self.defaults +
     app.spec.source.withPath('platform/cnpg/' + $.config.environment),
   'kube-prometheus':
-    app.new('kube-prometheus') + self.defaults +
+    app.new('kube-prometheus') + self.defaults + self.jsonnet +
     app.spec.source.withPath('platform/kube-prometheus/' + $.config.environment),
   kubevirt:
     app.new('kubevirt') + self.defaults +
