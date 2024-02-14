@@ -47,6 +47,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   cnpg:
     app.new('cnpg') + self.defaults +
     app.spec.source.withPath('platform/cnpg/' + $.config.environment),
+  crossplane:
+    app.new('crossplane') + self.defaults +
+    app.spec.source.withPath('platform/crossplane/' + $.config.environment),
   'kube-prometheus':
     app.new('kube-prometheus') + self.defaults + self.jsonnet +
     app.spec.source.withPath('platform/kube-prometheus/' + $.config.environment),

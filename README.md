@@ -19,6 +19,7 @@ System stack components are fundamental to the cluster delivering core functiona
 Platform stack components provide common services to the cluster and abstract away complicated tasks like database management and monitoring.
 
 - [`platform/cnpg`](platform/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
+- [`platform/crossplane`](platform/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
 - [`platform/kube-prometheus`](platform/kube-prometheus) - Kubernetes monitoring platform with the [Prometheus operator](https://prometheus-operator.dev/)
 - [`platform/kubevirt`](platform/kubevirt) - Virtualization platform with [KubeVirt](https://kubevirt.io/)
 

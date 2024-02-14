@@ -37,6 +37,7 @@
             age
             argocd
             cilium-cli
+            crossplane-cli
             go
             go-jsonnet
             jsonnet-bundler
