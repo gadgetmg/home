@@ -1,0 +1,3 @@
+jqPathExpressions: 
+- .spec.template.spec.containers[].env[].valueFrom.resourceFieldRef | select(.divisor == "0").divisor
+- .spec.template.spec.initContainers[].env[].valueFrom.resourceFieldRef | select(.divisor == "0").divisor

@@ -23,22 +23,3 @@ helmCharts:
 
 generators:
 - secrets-generator.yaml
-
-patches:
-- patch: |-
-    apiVersion: apps/v1
-    kind: DaemonSet
-    metadata:
-      name: cilium
-      namespace: kube-system
-    spec:
-      template:
-        spec:
-          containers:
-          - name: cilium-agent
-            env:
-            - name: GOMEMLIMIT
-              valueFrom:
-                resourceFieldRef:
-                  divisor: 0
-                  resource: limits.memory
