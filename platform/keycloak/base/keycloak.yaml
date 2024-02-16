@@ -32,6 +32,8 @@ metadata:
 spec:
   secretName: keycloak-tls
   commonName: auth.seigra.net
+  dnsNames:
+  - auth.seigra.net
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

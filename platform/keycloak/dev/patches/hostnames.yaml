@@ -12,6 +12,8 @@ metadata:
   name: keycloak
 spec:
   commonName: auth.dev.local
+  dnsNames:
+  - auth.dev.local
   issuerRef:
     name: selfsigned
 ---
