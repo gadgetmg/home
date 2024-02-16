@@ -7,6 +7,18 @@ local kp =
       },
       grafana+: {
         hostname: 'grafana.seigra.net',
+        config+: {
+          sections+: {
+            'auth.generic_oauth'+: {
+              auth_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/auth',
+              token_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/token',
+              api_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/userinfo',
+            },
+            server: {
+              root_url: 'https://grafana.seigra.net',
+            },
+          },
+        },
       },
     },
   };
