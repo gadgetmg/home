@@ -26,13 +26,23 @@ local cilium = mixin({
   mixin: (import 'github.com/grafana/jsonnet-libs/cilium-enterprise-mixin/mixin.libsonnet'),
 });
 
+local externalsecrets = mixin({
+  name: 'external-secrets',
+  mixin: {
+    grafanaDashboards: {
+      'external-secrets.json': (import 'github.com/external-secrets/external-secrets/docs/snippets/dashboard.json'),
+    },
+  },
+});
+
 {
   values+:: {
     grafana+: {
       dashboards+: etcd.grafanaDashboards +
                    coredns.grafanaDashboards +
                    certmanager.grafanaDashboards +
-                   argocd.grafanaDashboards,
+                   argocd.grafanaDashboards +
+                   externalsecrets.grafanaDashboards,
     },
   },
   // Creates new top-level keys for mixins to fit structure used by kube-prometheus

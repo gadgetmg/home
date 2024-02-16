@@ -24,6 +24,16 @@
     {
       "source": {
         "git": {
+          "remote": "https://github.com/external-secrets/external-secrets.git",
+          "subdir": "docs/snippets"
+        }
+      },
+      "version": "33a0fa2af0acd97cc604658ae57634045a70d0e7",
+      "sum": "ay8J5/JNA3UEo0GtYGjoXBhcHF69ffLDzQ0r+CVakzA="
+    },
+    {
+      "source": {
+        "git": {
           "remote": "https://github.com/grafana/grafana.git",
           "subdir": "grafana-mixin"
         }

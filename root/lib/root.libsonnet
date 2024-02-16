@@ -50,6 +50,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   crossplane:
     app.new('crossplane') + self.defaults +
     app.spec.source.withPath('platform/crossplane/' + $.config.environment),
+  'external-secrets':
+    app.new('external-secrets') + self.defaults +
+    app.spec.source.withPath('platform/external-secrets/' + $.config.environment),
   'kube-prometheus':
     app.new('kube-prometheus') + self.defaults + self.jsonnet +
     app.spec.source.withPath('platform/kube-prometheus/' + $.config.environment),
