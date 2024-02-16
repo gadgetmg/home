@@ -6,9 +6,9 @@ kind create cluster --config=kind-config.yaml
 
 # pre-install CRDs
 # renovate: datasource=helm depName=cilium registryUrl=https://helm.cilium.io
-kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumloadbalancerippools.yaml
+kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumloadbalancerippools.yaml
 # renovate: datasource=helm depName=cilium registryUrl=https://helm.cilium.io
-kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
+kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
 # renovate: datasource=helm depName=cert-manager registryUrl=https://charts.jetstack.io
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
 # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
