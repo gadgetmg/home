@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-db
+spec:
+  instances: 2
+  affinity:
+    podAntiAffinityType: required
+  storage:
+    size: 10Gi
+    storageClass: ssd-r1
+  bootstrap:
+    initdb:
+      database: keycloak

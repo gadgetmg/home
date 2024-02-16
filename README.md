@@ -21,6 +21,7 @@ Platform stack components provide common services to the cluster and abstract aw
 - [`platform/cnpg`](platform/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`platform/crossplane`](platform/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
 - [`platform/external-secrets`](platform/external-secrets) - [External Secrets Operator](https://external-secrets.io/) for secrets management
+- [`platform/keycloak`](platform/keycloak) - [Keycloak](https://www.keycloak.org/) for identity and access management (IAM)
 - [`platform/kube-prometheus`](platform/kube-prometheus) - Kubernetes monitoring platform with the [Prometheus operator](https://prometheus-operator.dev/)
 - [`platform/kubevirt`](platform/kubevirt) - Virtualization platform with [KubeVirt](https://kubevirt.io/)
 

@@ -53,6 +53,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   'external-secrets':
     app.new('external-secrets') + self.defaults +
     app.spec.source.withPath('platform/external-secrets/' + $.config.environment),
+  keycloak:
+    app.new('keycloak') + self.defaults +
+    app.spec.source.withPath('platform/keycloak/' + $.config.environment),
   'kube-prometheus':
     app.new('kube-prometheus') + self.defaults + self.jsonnet +
     app.spec.source.withPath('platform/kube-prometheus/' + $.config.environment),

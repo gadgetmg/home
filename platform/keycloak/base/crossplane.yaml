@@ -1,0 +1,56 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-keycloak
+spec:
+  # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
+  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v0.10.0
+  runtimeConfigRef:
+    name: enable-ess
+---
+apiVersion: keycloak.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    secretRef:
+      key: credentials
+      name: keycloak-crossplane-credentials
+      namespace: keycloak
+    source: Secret
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: keycloak-crossplane-credentials
+spec:
+  secretStoreRef:
+    name: keycloak
+    kind: SecretStore
+  target:
+    template:
+      data:
+        credentials: |
+          {
+            "url": "https://auth.seigra.net",
+            "tls_insecure_skip_verify": "true",
+            "client_id": "admin-cli",
+            "username": "{{ .username }}",
+            "password": "{{ .password }}"
+          }
+  data:
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: keycloak-initial-admin
+      metadataPolicy: None
+      property: username
+    secretKey: username
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: keycloak-initial-admin
+      metadataPolicy: None
+      property: password
+    secretKey: password

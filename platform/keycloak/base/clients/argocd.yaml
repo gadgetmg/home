@@ -1,0 +1,91 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: StoreConfig
+metadata:
+  name: argocd
+spec:
+  defaultScope: argocd
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: argocd
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: argocd
+    realmIdRef:
+      name: home
+    standardFlowEnabled: true
+    rootUrl: https://argocd.seigra.net
+    validRedirectUris:
+    - https://argocd.seigra.net/auth/callback
+    - https://argocd.seigra.net/api/dex/callback
+  publishConnectionDetailsTo:
+    name: argocd-oidc-secret
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: argocd
+    configRef:
+      name: argocd
+---
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: argocd-groups
+spec:
+  forProvider:
+    config:
+      usermodel.clientRoleMapping.clientId: argocd
+      multivalued: "true"
+      claim.name: groups
+      id.token.claim: "true"
+      access.token.claim: "false"
+      userinfo.token.claim: "false"
+      introspection.token.claim: "false"
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: argocd-admin
+spec:
+  forProvider:
+    description: unrestricted access to all resources
+    name: admin
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: argocd-readonly
+spec:
+  forProvider:
+    description: read-only access to all resources
+    name: readonly
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd
+---
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: argocd-admin-group-roles
+spec:
+  forProvider:
+    groupIdRef:
+      name: home-admins
+    realmIdRef:
+      name: home
+    roleIdsRefs:
+    - name: argocd-admin

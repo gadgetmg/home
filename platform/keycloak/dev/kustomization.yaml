@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+- dev-user.yaml
+
+secretGenerator:
+- name: keycloak-home-dev-user
+  namespace: keycloak
+  type: kubernetes.io/basic-auth
+  literals:
+  - username=dev
+  - password=dev
+  options:
+    disableNameSuffixHash: true
+
+patches:
+- path: patches/hostnames.yaml
+- path: patches/resources.yaml
+- path: patches/storage.yaml
