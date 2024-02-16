@@ -16,7 +16,7 @@
         "\\.(yaml|sh)$"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?) ?(?:registryUrl=(?<registryUrl>.*?))?\\s+.+(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: registryUrl=(?<registryUrl>.*?))?\\s+.+(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
       ]
     }
   ]
