@@ -76,16 +76,3 @@ spec:
       name: home
     clientIdRef:
       name: argocd
----
-apiVersion: group.keycloak.crossplane.io/v1alpha1
-kind: Roles
-metadata:
-  name: argocd-admin-group-roles
-spec:
-  forProvider:
-    groupIdRef:
-      name: home-admins
-    realmIdRef:
-      name: home
-    roleIdsRefs:
-    - name: argocd-admin
