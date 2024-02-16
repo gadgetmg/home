@@ -5,6 +5,8 @@ metadata:
 spec:
   forProvider:
     username: dev
+    email: dev@dev.local
+    emailVerified: true
     initialPassword:
     - valueSecretRef:
         name: keycloak-home-dev-user
