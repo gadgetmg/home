@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
 - namespace.yaml
+# CRD for DeploymentRuntimeConfig
+- https://github.com/crossplane/crossplane/raw/v1.14.5/cluster/crds/pkg.crossplane.io_deploymentruntimeconfigs.yaml
 - runtime-config.yaml
 
 helmCharts:
