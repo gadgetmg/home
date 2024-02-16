@@ -10,7 +10,7 @@ kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.1/pkg/k8s/apis/ciliu
 # renovate: datasource=helm depName=cilium registryUrl=https://helm.cilium.io
 kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.1/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
 # renovate: datasource=helm depName=cert-manager registryUrl=https://charts.jetstack.io
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml
 # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
 kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.71.2/stripped-down-crds.yaml
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
