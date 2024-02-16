@@ -49,6 +49,16 @@ spec:
     - https://argocd.dev.local/auth/callback
     - https://argocd.dev.local/api/dex/callback
 ---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: grafana
+spec:
+  forProvider:
+    rootUrl: https://grafana.dev.local
+    validRedirectUris:
+    - https://grafana.dev.local/login/generic_oauth
+---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:

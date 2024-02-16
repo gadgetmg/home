@@ -1,44 +1,43 @@
 apiVersion: keycloak.crossplane.io/v1alpha1
 kind: StoreConfig
 metadata:
-  name: argocd
+  name: grafana
 spec:
-  defaultScope: argocd
+  defaultScope: monitoring
 ---
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
-  name: argocd
+  name: grafana
 spec:
   deletionPolicy: Delete
   forProvider:
     accessType: CONFIDENTIAL
-    clientId: argocd
+    clientId: grafana
     realmIdRef:
       name: home
     standardFlowEnabled: true
-    rootUrl: https://argocd.seigra.net
+    rootUrl: https://grafana.seigra.net
     validRedirectUris:
-    - https://argocd.seigra.net/auth/callback
-    - https://argocd.seigra.net/api/dex/callback
+    - https://grafana.seigra.net/login/generic_oauth
   publishConnectionDetailsTo:
-    name: argocd-oidc-secret
+    name: grafana-oidc-secret
     metadata:
       labels:
-        app.kubernetes.io/part-of: argocd
+        app.kubernetes.io/part-of: grafana
     configRef:
-      name: argocd
+      name: grafana
 ---
 apiVersion: client.keycloak.crossplane.io/v1alpha1
 kind: ProtocolMapper
 metadata:
-  name: argocd-groups
+  name: grafana-roles
 spec:
   forProvider:
     config:
-      usermodel.clientRoleMapping.clientId: argocd
+      usermodel.clientRoleMapping.clientId: grafana
       multivalued: "true"
-      claim.name: groups
+      claim.name: roles
       id.token.claim: "true"
       access.token.claim: "false"
       userinfo.token.claim: "false"
@@ -46,7 +45,7 @@ spec:
     realmIdRef:
       name: home
     clientIdRef:
-      name: argocd
+      name: grafana
     name: client roles
     protocol: openid-connect
     protocolMapper: oidc-usermodel-client-role-mapper
@@ -54,25 +53,38 @@ spec:
 apiVersion: role.keycloak.crossplane.io/v1alpha1
 kind: Role
 metadata:
-  name: argocd-admin
+  name: grafana-admin
 spec:
   forProvider:
-    description: unrestricted access to all resources
+    description: Has access to all organization resources, including dashboards, users, and teams.
     name: admin
     realmIdRef:
       name: home
     clientIdRef:
-      name: argocd
+      name: grafana
 ---
 apiVersion: role.keycloak.crossplane.io/v1alpha1
 kind: Role
 metadata:
-  name: argocd-readonly
+  name: grafana-editor
 spec:
   forProvider:
-    description: read-only access to all resources
-    name: readonly
+    description: Can view and edit dashboards, folders, and playlists.
+    name: editor
     realmIdRef:
       name: home
     clientIdRef:
-      name: argocd
+      name: grafana
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-viewer
+spec:
+  forProvider:
+    description: Can view dashboards, playlists, and query data sources.
+    name: viewer
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana
