@@ -12,6 +12,15 @@ secretGenerator:
   options:
     disableNameSuffixHash: true
 
+configMapGenerator:
+- name: argocd-cm
+  behavior: merge
+  files:
+  - config/oidc.config
+  literals:
+  - oidc.tls.insecure.skip.verify="true"
+  - url=https://argocd.dev.local
+
 replicas:
 - name: argocd-redis-ha-haproxy
   count: 1

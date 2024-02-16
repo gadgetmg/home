@@ -13,10 +13,12 @@ configMapGenerator:
 - name: argocd-cm
   behavior: merge
   files:
+  - config/oidc.config
   - config/resource.exclusions
   - config/resource.customizations.ignoreDifferences.all
   literals:
   - kustomize.buildOptions=--enable-alpha-plugins --enable-exec --enable-helm
+  - url=https://argocd.seigra.net
 - name: argocd-cmd-params-cm
   behavior: merge
   literals:
