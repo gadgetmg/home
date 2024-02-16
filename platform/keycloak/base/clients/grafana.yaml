@@ -1,0 +1,90 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: StoreConfig
+metadata:
+  name: grafana
+spec:
+  defaultScope: monitoring
+---
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: grafana
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: grafana
+    realmIdRef:
+      name: home
+    standardFlowEnabled: true
+    rootUrl: https://grafana.seigra.net
+    validRedirectUris:
+    - https://grafana.seigra.net/login/generic_oauth
+  publishConnectionDetailsTo:
+    name: grafana-oidc-secret
+    metadata:
+      labels:
+        app.kubernetes.io/part-of: grafana
+    configRef:
+      name: grafana
+---
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: grafana-roles
+spec:
+  forProvider:
+    config:
+      usermodel.clientRoleMapping.clientId: grafana
+      multivalued: "true"
+      claim.name: roles
+      id.token.claim: "true"
+      access.token.claim: "false"
+      userinfo.token.claim: "false"
+      introspection.token.claim: "false"
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-admin
+spec:
+  forProvider:
+    description: Has access to all organization resources, including dashboards, users, and teams.
+    name: admin
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-editor
+spec:
+  forProvider:
+    description: Can view and edit dashboards, folders, and playlists.
+    name: editor
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: grafana-viewer
+spec:
+  forProvider:
+    description: Can view dashboards, playlists, and query data sources.
+    name: viewer
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana

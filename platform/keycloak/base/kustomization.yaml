@@ -36,3 +36,4 @@ resources:
 - crossplane.yaml
 - realms/home.yaml
 - clients/argocd.yaml
+- clients/grafana.yaml
