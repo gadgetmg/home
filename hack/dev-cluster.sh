@@ -5,10 +5,15 @@ cd "$(dirname "$0")"
 kind create cluster --config=kind-config.yaml
 
 # pre-install CRDs
+# renovate: datasource=github-releases depName=cilium/cilium
 kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliumloadbalancerippools.yaml
+# renovate: datasource=github-releases depName=cilium/cilium
 kubectl apply -f https://github.com/cilium/cilium/raw/v1.15.0/pkg/k8s/apis/cilium.io/client/crds/v2alpha1/ciliuml2announcementpolicies.yaml
+# renovate: datasource=github-releases depName=cert-manager/cert-manager
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.1/cert-manager.crds.yaml
+# renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
 kubectl apply -f https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.71.2/stripped-down-crds.yaml
+# renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
 
 # install cilium CNI
