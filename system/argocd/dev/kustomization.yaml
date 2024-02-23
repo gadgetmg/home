@@ -67,7 +67,7 @@ patches:
       value:
         name: local-repo
         hostPath:
-          path: /tmp/local-repo
+          path: /var/mnt/local-repo
           type: Directory
     - op: add
       path: /spec/template/spec/containers/0/volumeMounts/-
@@ -78,22 +78,3 @@ patches:
   target:
     kind: Deployment
     name: argocd-repo-server
-- patch: |- # Replace path to git repository in ApplicationSets
-    - op: replace
-      path: /spec/generators/0/git/repoURL
-      value: file:///tmp/local-repo
-    - op: replace
-      path: /spec/template/spec/source/repoURL
-      value: file:///tmp/local-repo
-  target:
-    kind: ApplicationSet
-- patch: |- # Target dev environment in apps ApplicationSet
-    - op: replace
-      path: /spec/generators/0/git/directories
-      value:
-      - path: apps/*/dev
-      - path: platform/*/dev
-      - path: system/*/dev
-  target:
-    kind: ApplicationSet
-    name: apps

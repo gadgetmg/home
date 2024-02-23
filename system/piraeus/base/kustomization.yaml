@@ -12,3 +12,4 @@ resources:
 - satellite-internal-tls.yaml
 - satellite-pools.yaml
 - storageclasses.yaml
+- talos-loader-overrides.yaml

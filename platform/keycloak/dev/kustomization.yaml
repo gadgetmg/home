@@ -18,4 +18,3 @@ secretGenerator:
 patches:
 - path: patches/hostnames.yaml
 - path: patches/resources.yaml
-- path: patches/storage.yaml

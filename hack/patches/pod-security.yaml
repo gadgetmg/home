@@ -1,8 +1,6 @@
-apiVersion: apiserver.config.k8s.io/v1
-kind: AdmissionConfiguration
-plugins:
-- name: PodSecurity
-  configuration:
+- op: replace
+  path: /cluster/apiServer/admissionControl/0/configuration
+  value:
     apiVersion: pod-security.admission.config.k8s.io/v1
     kind: PodSecurityConfiguration
     defaults:
@@ -15,4 +13,4 @@ plugins:
     exemptions:
       usernames: []
       runtimeClasses: []
-      namespaces: [kube-system, local-path-storage]
+      namespaces: [kube-system]
