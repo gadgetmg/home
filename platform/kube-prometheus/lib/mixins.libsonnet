@@ -23,7 +23,13 @@ local argocd = mixin({
 
 local cilium = mixin({
   name: 'cilium',
-  mixin: (import 'github.com/grafana/jsonnet-libs/cilium-enterprise-mixin/mixin.libsonnet'),
+  mixin: (import 'github.com/grafana/jsonnet-libs/cilium-enterprise-mixin/mixin.libsonnet') {
+    local grafanaDashboards = super.grafanaDashboards,
+    grafanaDashboards: {
+      [std.asciiLower(filename)]: grafanaDashboards[filename]
+      for filename in std.objectFields(grafanaDashboards)
+    },
+  },
 });
 
 local externalsecrets = mixin({
@@ -42,6 +48,7 @@ local externalsecrets = mixin({
                    coredns.grafanaDashboards +
                    certmanager.grafanaDashboards +
                    argocd.grafanaDashboards +
+                   cilium.grafanaDashboards +
                    externalsecrets.grafanaDashboards,
     },
   },
