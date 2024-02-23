@@ -6,6 +6,7 @@ namespace: argocd
 images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
+  # renovate: datasource=github-releases depName=argoproj/argo-cd
   newTag: v2.10.1
 
 resources:
