@@ -1,7 +1,0 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: Cluster
-metadata:
-  name: keycloak-db
-spec:
-  storage:
-    storageClass: standard

@@ -1,0 +1,9 @@
+cluster:
+  extraManifests:
+  - https://github.com/cert-manager/cert-manager/releases/download/v1.14.2/cert-manager.crds.yaml
+  - https://github.com/cloudnative-pg/cloudnative-pg/raw/v1.22.1/config/crd/bases/postgresql.cnpg.io_clusters.yaml
+  - https://github.com/crossplane/crossplane/raw/v1.15.0/cluster/crds/pkg.crossplane.io_providers.yaml
+  - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_externalsecrets.yaml
+  - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_secretstores.yaml
+  - https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
+  - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.71.2/stripped-down-crds.yaml

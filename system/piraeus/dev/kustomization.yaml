@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
 - ../base
-- kind-loader-overrides.yaml
 
 secretGenerator:
 - name: linstorcluster-passphrase
@@ -15,3 +14,24 @@ secretGenerator:
 
 patches:
 - path: dev-pools.patch.yaml
+- patch: |
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: ssd-r1
+    provisioner: linstor.csi.linbit.com
+    parameters:
+      linstor.csi.linbit.com/autoPlace: "1"
+      linstor.csi.linbit.com/layerList: luks storage
+- patch: |
+    $patch: delete
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: ssd-r2
+- patch: |
+    $patch: delete
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: ssd-r3

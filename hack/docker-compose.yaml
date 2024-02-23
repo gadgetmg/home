@@ -1,0 +1,42 @@
+services:
+  controlplane-1: &talos
+    container_name: dev-controlplane-1
+    hostname: dev-controlplane-1
+    image: ghcr.io/siderolabs/talos:v1.6.4
+    environment:
+      PLATFORM: container
+    read_only: true
+    privileged: true
+    security_opt:
+    - seccomp=unconfined
+    networks:
+    - dev
+    volumes:
+    - type: tmpfs
+      target: /run
+    - type: tmpfs
+      target: /system
+    - type: tmpfs
+      target: /tmp
+    - type: volume
+      target: /system/state
+    - type: volume
+      target: /var
+    - type: volume
+      target: /etc/cni
+    - type: volume
+      target: /etc/kubernetes
+    - type: volume
+      target: /usr/libexec/kubernetes
+    - type: volume
+      target: /usr/etc/udev
+    - type: volume
+      target: /opt
+    - ..:/var/mnt/local-repo
+
+networks:
+  dev:
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.5.0.0/24

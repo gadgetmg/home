@@ -9,3 +9,13 @@ configMapGenerator:
   behavior: replace
   files:
   - Corefile
+
+patches:
+- patch: |- # Explicity set IP to use for the load balancer
+    - op: add
+      path: /metadata/annotations
+      value:
+        io.cilium/lb-ipam-ips: 10.5.0.11
+  target:
+    kind: Service
+    name: k8s-gateway
