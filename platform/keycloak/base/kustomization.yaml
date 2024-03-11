@@ -12,43 +12,43 @@ resources:
 - https://github.com/keycloak/keycloak-k8s-resources/raw/23.0.6/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
 # Crossplane provider-keycloak CRDs
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/client.keycloak.crossplane.io_protocolmappers.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/client.keycloak.crossplane.io_protocolmappers.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/client.keycloak.crossplane.io_rolemappers.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/client.keycloak.crossplane.io_rolemappers.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/group.keycloak.crossplane.io_groups.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/group.keycloak.crossplane.io_groups.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/group.keycloak.crossplane.io_memberships.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/group.keycloak.crossplane.io_memberships.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/group.keycloak.crossplane.io_roles.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/group.keycloak.crossplane.io_roles.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/keycloak.crossplane.io_providerconfigs.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/keycloak.crossplane.io_providerconfigs.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/keycloak.crossplane.io_providerconfigusages.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/keycloak.crossplane.io_providerconfigusages.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/keycloak.crossplane.io_storeconfigs.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/keycloak.crossplane.io_storeconfigs.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidclient.keycloak.crossplane.io_clientdefaultscopes.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidclient.keycloak.crossplane.io_clientdefaultscopes.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidclient.keycloak.crossplane.io_clients.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidclient.keycloak.crossplane.io_clients.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidclient.keycloak.crossplane.io_clientscopes.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidclient.keycloak.crossplane.io_clientscopes.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidclient.keycloak.crossplane.io_clientserviceaccountrealmroles.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidclient.keycloak.crossplane.io_clientserviceaccountrealmroles.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidclient.keycloak.crossplane.io_clientserviceaccountroles.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidclient.keycloak.crossplane.io_clientserviceaccountroles.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/openidgroup.keycloak.crossplane.io_groupmembershipprotocolmappers.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/openidgroup.keycloak.crossplane.io_groupmembershipprotocolmappers.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/realm.keycloak.crossplane.io_realms.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/realm.keycloak.crossplane.io_realms.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/realm.keycloak.crossplane.io_requiredactions.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/realm.keycloak.crossplane.io_requiredactions.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/role.keycloak.crossplane.io_roles.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/role.keycloak.crossplane.io_roles.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/user.keycloak.crossplane.io_groups.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/user.keycloak.crossplane.io_groups.yaml
 # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.11.0/package/crds/user.keycloak.crossplane.io_users.yaml
+- https://github.com/crossplane-contrib/provider-keycloak/raw/v0.12.0/package/crds/user.keycloak.crossplane.io_users.yaml
 # Keycloak Operator
 # renovate: datasource=github-tags depName=keycloak/keycloak-k8s-resources
 - https://github.com/keycloak/keycloak-k8s-resources/raw/23.0.6/kubernetes/kubernetes.yml
