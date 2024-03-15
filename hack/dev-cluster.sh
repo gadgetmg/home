@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 # renovate: datasource=github-releases depName=siderolabs/talos
 TALOS_VERSION=v1.6.5
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-KUBERNETES_VERSION=v1.29.2
+KUBERNETES_VERSION=v1.29.3
 # renovate: datasource=helm depName=cilium registryUrl=https://helm.cilium.io
 CILIUM_VERSION=v1.15.1
 
