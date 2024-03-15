@@ -5,17 +5,17 @@ namespace: argocd
 
 resources:
 - ../base
-- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.10.2
+- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.10.3
 
 patches:
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://github.com/argoproj/argo-cd/raw/v2.10.2/manifests/ha/base/overlays/argocd-repo-server-deployment.yaml
+- path: https://github.com/argoproj/argo-cd/raw/v2.10.3/manifests/ha/base/overlays/argocd-repo-server-deployment.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://github.com/argoproj/argo-cd/raw/v2.10.2/manifests/ha/base/overlays/argocd-server-deployment.yaml
+- path: https://github.com/argoproj/argo-cd/raw/v2.10.3/manifests/ha/base/overlays/argocd-server-deployment.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://github.com/argoproj/argo-cd/raw/v2.10.2/manifests/ha/base/overlays/argocd-application-controller-statefulset.yaml
+- path: https://github.com/argoproj/argo-cd/raw/v2.10.3/manifests/ha/base/overlays/argocd-application-controller-statefulset.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://github.com/argoproj/argo-cd/raw/v2.10.2/manifests/ha/base/overlays/argocd-cmd-params-cm.yaml
+- path: https://github.com/argoproj/argo-cd/raw/v2.10.3/manifests/ha/base/overlays/argocd-cmd-params-cm.yaml
 
 generators:
 - secrets-generator.yaml
