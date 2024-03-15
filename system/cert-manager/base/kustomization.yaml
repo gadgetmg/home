@@ -4,12 +4,12 @@ kind: Kustomization
 resources:
 - namespace.yaml
 # renovate: datasource=helm depName=cert-manager registryUrl=https://charts.jetstack.io
-- https://github.com/cert-manager/cert-manager/releases/download/v1.14.3/cert-manager.crds.yaml
+- https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.crds.yaml
 
 helmCharts:
 - name: cert-manager
   repo: https://charts.jetstack.io
   releaseName: cert-manager
   namespace: cert-manager
-  version: v1.14.3
+  version: v1.14.4
   valuesFile: values.yaml
