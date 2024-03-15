@@ -7,7 +7,7 @@ resources:
 - ca-bootstrapper.yaml
 - internal-ca.yaml
 - api-ca.yaml
-- https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.4.0
+- https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.4.1
 - cluster.yaml
 - satellite-internal-tls.yaml
 - satellite-pools.yaml
