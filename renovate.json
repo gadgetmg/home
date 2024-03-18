@@ -20,6 +20,7 @@
       "automerge": true
     }
   ],
+  "requiredStatusChecks": null,
   "customManagers": [
     {
       "customType": "regex",
