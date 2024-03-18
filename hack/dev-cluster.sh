@@ -5,8 +5,6 @@ cd "$(dirname "$0")"
 TALOS_VERSION=v1.6.6
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 KUBERNETES_VERSION=v1.29.3
-# renovate: datasource=helm depName=cilium registryUrl=https://helm.cilium.io
-CILIUM_VERSION=v1.15.1
 
 # Bring up Talos cluster
 docker compose up --detach
