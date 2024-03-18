@@ -1,14 +1,14 @@
 cluster:
   extraManifests:
-  # renovate: datasource=helm depName=cert-manager registryUrl=https://charts.jetstack.io
+  # renovate: datasource=github-releases depName=cert-manager/cert-manager
   - https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.crds.yaml
   # renovate: datasource=github-releases depName=cloudnative-pg/cloudnative-pg
   - https://github.com/cloudnative-pg/cloudnative-pg/raw/v1.22.2/config/crd/bases/postgresql.cnpg.io_clusters.yaml
-  # renovate: datasource=helm depName=crossplane registryUrl=https://charts.crossplane.io/stable
+  # renovate: datasource=github-releases depName=crossplane/crossplane
   - https://github.com/crossplane/crossplane/raw/v1.15.0/cluster/crds/pkg.crossplane.io_providers.yaml
-  # renovate: datasource=helm depName=external-secrets registryUrl=https://charts.external-secrets.io
+  # renovate: datasource=github-releases depName=external-secrets/external-secrets
   - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_externalsecrets.yaml
-  # renovate: datasource=helm depName=external-secrets registryUrl=https://charts.external-secrets.io
+  # renovate: datasource=github-releases depName=external-secrets/external-secrets
   - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_secretstores.yaml
   # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
   - https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
