@@ -5,7 +5,7 @@ resources:
 - namespace.yaml
 # CRD for DeploymentRuntimeConfig
 # renovate: datasource=github-releases depName=crossplane/crossplane
-- https://github.com/crossplane/crossplane/raw/v1.15.0/cluster/crds/pkg.crossplane.io_deploymentruntimeconfigs.yaml
+- https://github.com/crossplane/crossplane/raw/v1.15.1/cluster/crds/pkg.crossplane.io_deploymentruntimeconfigs.yaml
 - runtime-config.yaml
 
 helmCharts:
