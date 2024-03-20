@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 
 # renovate: datasource=github-releases depName=siderolabs/talos
-TALOS_VERSION=v1.6.6
+TALOS_VERSION=v1.6.7
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 KUBERNETES_VERSION=v1.29.3
 
