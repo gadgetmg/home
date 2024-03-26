@@ -22,7 +22,7 @@ helmCharts:
   repo: https://helm.cilium.io
   releaseName: cilium
   namespace: kube-system
-  version: 1.15.2
+  version: 1.15.3
   apiVersions:
   - gateway.networking.k8s.io/v1/GatewayClass
   - monitoring.coreos.com/v1
