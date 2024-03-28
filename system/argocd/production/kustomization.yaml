@@ -5,7 +5,7 @@ namespace: argocd
 
 resources:
 - ../base
-- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.10.4
+- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.10.5
 
 patches:
 # renovate: datasource=github-releases depName=argoproj/argo-cd
