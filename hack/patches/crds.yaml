@@ -7,9 +7,9 @@ cluster:
   # renovate: datasource=github-releases depName=crossplane/crossplane
   - https://github.com/crossplane/crossplane/raw/v1.15.1/cluster/crds/pkg.crossplane.io_providers.yaml
   # renovate: datasource=github-releases depName=external-secrets/external-secrets
-  - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_externalsecrets.yaml
+  - https://github.com/external-secrets/external-secrets/raw/v0.9.14/config/crds/bases/external-secrets.io_externalsecrets.yaml
   # renovate: datasource=github-releases depName=external-secrets/external-secrets
-  - https://github.com/external-secrets/external-secrets/raw/v0.9.13/config/crds/bases/external-secrets.io_secretstores.yaml
+  - https://github.com/external-secrets/external-secrets/raw/v0.9.14/config/crds/bases/external-secrets.io_secretstores.yaml
   # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
   - https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
   # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
