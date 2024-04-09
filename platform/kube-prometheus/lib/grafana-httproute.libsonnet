@@ -1,4 +1,4 @@
-local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/v0.7.1/main.libsonnet';
+local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/main.libsonnet';
 local k = import 'github.com/jsonnet-libs/k8s-libsonnet/1.28/main.libsonnet';
 
 {
