@@ -13,4 +13,4 @@ cluster:
   # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
   - https://github.com/kubernetes-sigs/gateway-api/raw/v1.0.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
   # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-  - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.73.0/stripped-down-crds.yaml
+  - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.73.1/stripped-down-crds.yaml
