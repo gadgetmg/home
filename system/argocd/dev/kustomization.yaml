@@ -5,7 +5,7 @@ namespace: argocd
 
 resources:
 - ../base
-- https://github.com/argoproj/argo-cd/manifests/base/redis?ref=v2.10.6
+- https://github.com/argoproj/argo-cd/manifests/base/redis?ref=v2.10.7
 
 secretGenerator:
 - name: argocd-sops-age

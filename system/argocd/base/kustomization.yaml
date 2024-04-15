@@ -11,14 +11,14 @@ images:
 
 resources:
 - namespace.yaml
-- https://github.com/argoproj/argo-cd/manifests/base/application-controller?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/base/repo-server?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/base/server?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/base/config?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/base/notification?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/base/applicationset-controller?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=v2.10.6
-- https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.10.6
+- https://github.com/argoproj/argo-cd/manifests/base/application-controller?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/base/repo-server?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/base/server?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/base/config?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/base/notification?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/base/applicationset-controller?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=v2.10.7
+- https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.10.7
 - gateway.yaml
 - server-httproute.yaml
 - servicemonitors.yaml
