@@ -1,0 +1,25 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: talos-docker-override
+spec:
+  patches:
+  - target:
+      kind: DaemonSet
+      name: linstor-satellite
+    patch: |
+      apiVersion: apps/v1
+      kind: DaemonSet
+      metadata:
+        name: linstor-satellite
+      spec:
+        template:
+          spec:
+            containers:
+            - name: linstor-satellite
+              volumeMounts:
+              - mountPath: /run/udev
+                $patch: delete
+            volumes:
+            - name: run-udev
+              $patch: delete
