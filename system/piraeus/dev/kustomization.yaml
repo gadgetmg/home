@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
 - ../base
+- talos-docker-overrides.yaml
 
 secretGenerator:
 - name: linstorcluster-passphrase
