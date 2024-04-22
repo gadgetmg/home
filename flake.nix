@@ -26,11 +26,26 @@
           mv $GOPATH/bin/kustomize-sops $out/bin/ksops
         '';
       });
+      talosctl =
+        let
+          version = "1.7.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "siderolabs";
+            repo = "talos";
+            rev = "v${version}";
+            hash = "sha256-E5pu37R2y0hQezM/p6LJXZv2L6QnV89Ir2HoKaqcOqI=";
+          };
+        in
+        (pkgs.talosctl.override {
+          buildGoModule = args: pkgs.buildGoModule.override { } (args // {
+            inherit src version;
+            vendorHash = "sha256-5vWAZsLQxPZGpTiT/OowCLNPdE5e+HrAGXpFRw6jgbU=";
+          });
+        });
     in
     rec {
-      # Devshell for bootstrapping
-      # Accessible via 'nix develop'
-      devShells.${system} = {
+      # Accessible via 'nix develop' or 'nix shell'
+      packages.${system} = {
         default = pkgs.mkShell {
           NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
           nativeBuildInputs = with pkgs; [
@@ -58,9 +73,9 @@
             yq-go
           ];
           shellHook = '' 
-          export PATH="$HOME/.krew/bin:$PATH"
-          krewfile
-        '';
+            export PATH="$HOME/.krew/bin:$PATH"
+            krewfile
+          '';
         };
       };
     };
