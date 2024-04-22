@@ -62,4 +62,7 @@ local app = argo_cd.argoproj.v1alpha1.application;
   kubevirt:
     app.new('kubevirt') + self.defaults +
     app.spec.source.withPath('platform/kubevirt/' + $.config.environment),
+  'mariadb-operator':
+    app.new('mariadb-operator') + self.defaults +
+    app.spec.source.withPath('platform/mariadb-operator/' + $.config.environment),
 }
