@@ -1,6 +1,6 @@
 clusterName: talos
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: v1.7.0
+talosVersion: v1.6.7
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 kubernetesVersion: v1.30.0
 endpoint: https://10.1.2.10:6443
