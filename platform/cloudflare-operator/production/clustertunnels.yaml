@@ -1,0 +1,27 @@
+apiVersion: networking.cfargotunnel.com/v1alpha1
+kind: ClusterTunnel
+metadata:
+  name: dm3-in
+spec:
+  image: cloudflare/cloudflared:2024.4.0
+  newTunnel:
+    name: dm3.in
+  size: 3
+  cloudflare:
+    accountId: 7f59a2864fba072065728215ded21ec0
+    domain: dm3.in
+    secret: cloudflare-secrets
+---
+apiVersion: networking.cfargotunnel.com/v1alpha1
+kind: ClusterTunnel
+metadata:
+  name: seigra-net
+spec:
+  image: cloudflare/cloudflared:2024.4.0
+  newTunnel:
+    name: seigra.net
+  size: 3
+  cloudflare:
+    accountId: 7f59a2864fba072065728215ded21ec0
+    domain: seigra.net
+    secret: cloudflare-secrets

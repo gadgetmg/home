@@ -44,6 +44,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   piraeus:
     app.new('piraeus') + self.defaults +
     app.spec.source.withPath('system/piraeus/' + $.config.environment),
+  'cloudflare-operator':
+    app.new('cloudflare-operator') + self.defaults +
+    app.spec.source.withPath('platform/cloudflare-operator/' + $.config.environment),
   cnpg:
     app.new('cnpg') + self.defaults +
     app.spec.source.withPath('platform/cnpg/' + $.config.environment),
