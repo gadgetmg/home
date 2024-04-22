@@ -5,6 +5,7 @@ services:
     image: ghcr.io/siderolabs/talos:v1.6.7
     environment:
       PLATFORM: container
+      TALOSSKU: 12CPU-16384RAM
     read_only: true
     privileged: true
     security_opt:

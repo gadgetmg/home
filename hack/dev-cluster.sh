@@ -20,9 +20,13 @@ talosctl gen config dev-talos https://10.5.0.2:6443 \
   --output-types controlplane,talosconfig \
   --output config --force
 # Apply and bootstrap the Talos cluster
-while ! talosctl apply-config --nodes 10.5.0.2 --file config/controlplane.yaml --insecure &> /dev/null; do sleep 1 && echo -n .; done;
-while ! talosctl bootstrap --nodes 10.5.0.2 --endpoints 10.5.0.2 --talosconfig config/talosconfig &> /dev/null; do sleep 1 && echo -n .; done;
-while ! talosctl kubeconfig --nodes 10.5.0.2 --endpoints 10.5.0.2 --talosconfig config/talosconfig &> /dev/null; do sleep 1 && echo -n .; done;
+echo -n "Applying control plane configuration..."
+while ! talosctl apply-config --nodes 10.5.0.2 --file config/controlplane.yaml --insecure &> /dev/null; do sleep 1 && echo -n .; done; echo
+echo -n "Bootstrapping cluster..."
+while ! talosctl bootstrap --nodes 10.5.0.2 --endpoints 10.5.0.2 --talosconfig config/talosconfig &> /dev/null; do sleep 1 && echo -n .; done; echo
+echo -n "Generating kubeconfig..."
+while ! talosctl kubeconfig --nodes 10.5.0.2 --endpoints 10.5.0.2 --talosconfig config/talosconfig &> /dev/null; do sleep 1 && echo -n .; done; echo
+echo -n "Waiting for control plane to be ready..."
 while ! kubectl wait --for=condition=Ready=false node/dev-controlplane-1 --timeout=600s &> /dev/null; do sleep 1 && echo -n .; done; echo
 # Patch CoreDNS configuration to resolve .dev.local domains with k8s_gateway
 kubectl apply -f local-dns.yaml
