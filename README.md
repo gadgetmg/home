@@ -18,12 +18,14 @@ System stack components are fundamental to the cluster delivering core functiona
 
 Platform stack components provide common services to the cluster and abstract away complicated tasks like database management and monitoring.
 
+- [`platform/cloudflare-operator`](platform/cloudflare-operator) - [Cloudflare Operator](https://github.com/adyanth/cloudflare-operator) for Cloudflare tunnels via [cloudflared](https://github.com/cloudflare/cloudflared).
 - [`platform/cnpg`](platform/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`platform/crossplane`](platform/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
 - [`platform/external-secrets`](platform/external-secrets) - [External Secrets Operator](https://external-secrets.io/) for secrets management
 - [`platform/keycloak`](platform/keycloak) - [Keycloak](https://www.keycloak.org/) for identity and access management (IAM)
 - [`platform/kube-prometheus`](platform/kube-prometheus) - Kubernetes monitoring platform with the [Prometheus operator](https://prometheus-operator.dev/)
 - [`platform/kubevirt`](platform/kubevirt) - Virtualization platform with [KubeVirt](https://kubevirt.io/)
+- [`platform/mariadb-operator`](platform/mariadb-operator) - [MariaDB Operator](https://github.com/mariadb-operator/mariadb-operator) for MariaDB databases.
 
 ### Application stack
 
