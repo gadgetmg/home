@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ezxss
+  labels:
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/component: ezxss
+    app.kubernetes.io/part-of: ezxss
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/component: ezxss
+    app.kubernetes.io/part-of: ezxss

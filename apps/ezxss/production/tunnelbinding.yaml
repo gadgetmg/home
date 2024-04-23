@@ -1,0 +1,16 @@
+apiVersion: networking.cfargotunnel.com/v1alpha1
+kind: TunnelBinding
+metadata:
+  name: ezxss
+  labels:
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/component: tunnel
+    app.kubernetes.io/part-of: ezxss
+subjects:
+- name: ezxss
+  spec:
+    fqdn: dm3.in
+tunnelRef:
+  kind: ClusterTunnel
+  name: dm3-in
