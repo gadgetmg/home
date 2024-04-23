@@ -29,7 +29,9 @@ Platform stack components provide common services to the cluster and abstract aw
 
 ### Application stack
 
-TBD
+Application stack components provide usable functionality to end users and rely on components in the platform and system stacks.
+
+- [`apps/ezxss`](apps/ezxss) - [ezXSS](https://github.com/ssl/ezXSS) platform for testing for XSS vulnerabilities, particularly useful for blind XSS injections.
 
 ### Root app
 

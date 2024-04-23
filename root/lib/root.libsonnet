@@ -68,4 +68,7 @@ local app = argo_cd.argoproj.v1alpha1.application;
   'mariadb-operator':
     app.new('mariadb-operator') + self.defaults +
     app.spec.source.withPath('platform/mariadb-operator/' + $.config.environment),
+  ezxss:
+    app.new('ezxss') + self.defaults +
+    app.spec.source.withPath('apps/ezxss/' + $.config.environment),
 }
