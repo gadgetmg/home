@@ -9,9 +9,14 @@ metadata:
     app.kubernetes.io/component: tunnel
     app.kubernetes.io/part-of: ezxss
 subjects:
-- name: ezxss
+- kind: Service
+  name: ezxss
   spec:
     fqdn: dm3.in
+    noTlsVerify: false
+    proxyAddress: 127.0.0.1
+    proxyPort: 0
+    proxyType: ''
 tunnelRef:
   kind: ClusterTunnel
   name: dm3-in
