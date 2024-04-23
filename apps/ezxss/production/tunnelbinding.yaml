@@ -2,6 +2,7 @@ apiVersion: networking.cfargotunnel.com/v1alpha1
 kind: TunnelBinding
 metadata:
   name: ezxss
+  namespace: ezxss
   labels:
     app.kubernetes.io/name: ezxss
     app.kubernetes.io/instance: ezxss
