@@ -12,6 +12,10 @@ local k = import 'github.com/jsonnet-libs/k8s-libsonnet/1.28/main.libsonnet';
       hr.new(self._metadata.name) +  // Name common to grafana resources
       hr.metadata.withNamespace($.values.common.namespace) +
       hr.metadata.withLabels(self._metadata.labels) +  // Labels common to grafana resources
+      hr.metadata.withAnnotations({  // Annotate for cert-manager
+        'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+        'argocd.argoproj.io/sync-wave': '1',
+      }) +
       hr.spec.withHostnames($.values.grafana.hostname) +
       hr.spec.withParentRefs(  // Connects to gateway resource
         pr.withGroup('gateway.networking.k8s.io') +

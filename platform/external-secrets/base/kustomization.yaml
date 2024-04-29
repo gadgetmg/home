@@ -13,3 +13,13 @@ helmCharts:
   apiVersions:
   - monitoring.coreos.com/v1
   valuesFile: values.yaml
+
+patches:
+- patch: |- # Sync resources dependent on other cluster components as late as possible
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    group: monitoring.coreos.com

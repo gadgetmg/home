@@ -3,9 +3,9 @@ local root =
   {
     config+:: {
       environment: 'dev',
-      repoURL: 'file:///tmp/local-repo',
+      repoURL: 'http://10.5.0.254/git/repo.git',
     },
   };
 
 // Outputs flat array of manifests
-std.objectValues(root)
+std.objectValues(std.prune(root))

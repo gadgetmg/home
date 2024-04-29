@@ -3,9 +3,6 @@ kind: Kustomization
 
 resources:
 - namespace.yaml
-# CRD for DeploymentRuntimeConfig
-# renovate: datasource=github-releases depName=crossplane/crossplane
-- https://github.com/crossplane/crossplane/raw/v1.15.2/cluster/crds/pkg.crossplane.io_deploymentruntimeconfigs.yaml
 - runtime-config.yaml
 
 helmCharts:
@@ -15,3 +12,13 @@ helmCharts:
   namespace: crossplane-system
   version: 1.15.2
   valuesFile: values.yaml
+
+patches:
+- patch: |- # Sync crossplane resources after CRDs created by crossplane
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    group: .*crossplane.io

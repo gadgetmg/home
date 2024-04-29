@@ -13,3 +13,20 @@ resources:
 - satellite-pools.yaml
 - storageclasses.yaml
 - talos-loader-overrides.yaml
+
+patches:
+- patch: |- # Sync cert-manager resources after initial operator
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    group: cert-manager.io
+- patch: |- # Sync piraeus resources after all prerequisite CRDs
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    group: piraeus.io

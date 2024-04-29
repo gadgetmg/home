@@ -1,0 +1,325 @@
+version: '3'
+
+env:
+  # renovate: datasource=github-releases depName=siderolabs/talos
+  TALOS_VERSION: v1.6.7
+  # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  KUBERNETES_VERSION: v1.29.4
+
+tasks:
+  test:
+    cmds:
+    - task: cluster:create
+    - defer: { task: cluster:destroy }
+    - task: root:apply
+    - chainsaw test
+
+  cluster:create:
+    deps: [generate-cilium-cni-patch]
+    cmds:
+    - hack/scripts/create-cluster.sh
+    status:
+    - docker ps | grep dev-controlplane-1
+
+  cluster:destroy:
+    deps: [git-mirror:stop]
+    cmds:
+    - defer: talosctl config context ""
+    - defer: talosctl config remove dev --noconfirm
+    - defer: kubectl config unset current-context
+    - defer: kubectl config delete-context admin@dev
+    - defer: kubectl config delete-user admin@dev
+    - defer: kubectl config delete-cluster dev
+    - talosctl cluster destroy --name dev
+    status:
+    - '! kubectl config get-clusters | grep ^dev$'
+
+  root:apply:
+    deps: [system:argocd:apply-minimal, git-mirror:start]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/root/dev > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    sources:
+    - '{{.ROOT_DIR}}/root/**/*sonnet'
+    status:
+    - kubectl get apps/root -n argocd
+
+  system:argocd:apply:
+    deps: [system:cilium:apply, platform:kube-prometheus:apply-crds]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/dev > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    - kubectl rollout status --watch deployment.apps,daemonset.apps,statefulset.apps -n argocd
+    sources:
+    - '{{.ROOT_DIR}}/system/argocd/**/*.yaml'
+    status:
+    - kubectl get gateway/argocd -n argocd
+
+  system:argocd:apply-minimal:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/dev > {{.MANIFESTS}}
+    - kfilt -x group=gateway.networking.k8s.io -x group=monitoring.coreos.com < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl rollout status --watch deployment.apps,daemonset.apps,statefulset.apps -n argocd
+    status:
+    - kubectl get crd/applications.argoproj.io
+
+  system:cert-manager:apply:
+    deps: [platform:kube-prometheus:apply-crds, system:cilium:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl rollout status --watch deployment.apps -n argocd
+    sources:
+    - '{{.ROOT_DIR}}/system/cert-manager/**/*.yaml'
+    status:
+    - kubectl get ns/cert-manager
+  
+  system:cert-manager:apply-crds:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    status:
+    - kubectl get crd/certificates.cert-manager.io
+
+  system:cilium:apply:
+    deps: [system:cert-manager:apply-crds, platform:kube-prometheus:apply-crds]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cilium/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition -x group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl rollout status --watch deployment.apps/cilium-operator daemonset.apps/cilium -n kube-system
+    - kfilt -i group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/system/cilium/**/*.yaml'
+    status:
+    - kubectl get gatewayclass/cilium
+  
+  system:k8s-gateway:apply:
+    deps: [system:cert-manager:apply, platform:kube-prometheus:apply-crds]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/k8s-gateway/dev > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    sources:
+    - '{{.ROOT_DIR}}/system/k8s-gateway/**/*.yaml'
+    status:
+    - kubectl get deploy/k8s-gateway -n kube-system
+  
+  system:piraeus:apply:
+    deps: [system:cert-manager:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/piraeus/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl wait --for=condition=Available linstorcluster --all -n piraeus-datastore --timeout=10m
+    sources:
+    - '{{.ROOT_DIR}}/system/piraeus/**/*.yaml'
+    status:
+    - kubectl get ns/piraeus-datastore
+
+  platform:cloudflare-operator:apply:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cloudflare-operator/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/cloudflare-operator/**/*.yaml'
+    status:
+    - kubectl get ns/cloudflare-operator-system
+
+  platform:cnpg:apply:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cnpg/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/cnpg/**/*.yaml'
+    status:
+    - kubectl get ns/cnpg-system
+
+  platform:crossplane:apply:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/crossplane/dev > {{.MANIFESTS}}
+    - kfilt -x group=pkg.crossplane.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl rollout status --watch deployment.apps -n crossplane-system
+    - kfilt -i group=pkg.crossplane.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/crossplane/**/*.yaml'
+    status:
+    - kubectl get ns/crossplane-system
+
+  platform:external-secrets:apply:
+    deps: [platform:kube-prometheus:apply-crds]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/external-secrets/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/external-secrets/**/*.yaml'
+    status:
+    - kubectl get ns/external-secrets
+
+  platform:keycloak:apply:
+    deps: [platform:cnpg:apply, platform:crossplane:apply, platform:external-secrets:apply, system:piraeus:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/keycloak/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition -k Provider < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl wait --for=condition=Installed --for=condition=Healthy provider.pkg.crossplane.io/provider-keycloak --timeout=10m
+    - kfilt -K CustomResourceDefinition -K Provider < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/keycloak/**/*.yaml'
+    status:
+    - kubectl get ns/keycloak
+
+  platform:kube-prometheus:apply:
+    deps: [system:cilium:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/kube-prometheus/**/*sonnet'
+    status:
+    - kubectl get deploy/prometheus-operator -n monitoring
+  
+  platform:kube-prometheus:apply-crds:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition -k Namespace < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    status:
+    - kubectl get crd/servicemonitors.monitoring.coreos.com
+
+  platform:kubevirt:apply:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kubevirt/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/kubevirt/**/*.yaml'
+    status:
+    - kubectl get ns/kubevirt
+
+  platform:mariadb-operator:apply:
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/mariadb-operator/dev > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl rollout status --watch deployment.app -n mariadb-system
+    sources:
+    - '{{.ROOT_DIR}}/platform/mariadb-operator/**/*.yaml'
+    status:
+    - kubectl get ns/mariadb-system
+
+  apps:ezxss:apply:
+    deps: [platform:mariadb-operator:apply, system:piraeus:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    vars:
+      MANIFESTS: {sh: mktemp}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/apps/ezxss/dev > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    sources:
+    - '{{.ROOT_DIR}}/apps/ezxss/**/*.yaml'
+    status:
+    - kubectl get ns/ezxss
+
+  git-mirror:start:
+    vars:
+      NAME: git-mirror
+      VOLUME: '{{.ROOT_DIR}}/.git:/git/repo.git:ro'
+      IP: 10.5.0.254
+      IMAGE:
+        sh: docker buildx build -q hack/git-mirror
+    cmds:
+    - docker run --name {{.NAME}} -v {{.VOLUME}} --net dev --ip {{.IP}} -d --rm {{.IMAGE}}
+    status:
+    - docker ps | grep git-mirror
+
+  git-mirror:stop:
+    vars:
+      NAME: git-mirror
+    cmds:
+    - docker stop {{.NAME}}
+    status:
+    - '! docker ps | grep git-mirror'
+
+  generate-cilium-cni-patch:
+    internal: true
+    env:
+      MANIFESTS:
+        sh: hack/scripts/cilium-cni-manifests.sh
+    cmds:
+    - hack/scripts/cilium-cni-patch.sh
+    sources:
+    - system/cilium/**/*.yaml
+    generates:
+    - hack/patches/cilium-cni.yaml

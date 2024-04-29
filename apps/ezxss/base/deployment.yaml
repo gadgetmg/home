@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ezxss
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     app.kubernetes.io/name: ezxss
     app.kubernetes.io/instance: ezxss
@@ -47,5 +49,6 @@ spec:
             drop: ["ALL"]
       securityContext:
         runAsNonRoot: true
+        fsGroup: 33
         seccompProfile:
           type: RuntimeDefault

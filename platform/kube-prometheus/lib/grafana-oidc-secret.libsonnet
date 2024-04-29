@@ -14,6 +14,7 @@
                       secretKeyRef: {
                         name: 'grafana-oidc-secret',
                         key: 'attribute.client_secret',
+                        optional: true,
                       },
                     },
                   },

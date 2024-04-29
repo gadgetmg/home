@@ -9,6 +9,8 @@ local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/ma
       gw.metadata.withNamespace($.values.common.namespace) +
       gw.metadata.withAnnotations({  // Annotate for cert-manager
         'cert-manager.io/cluster-issuer': $.values.common.clusterIssuer,
+        'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+        'argocd.argoproj.io/sync-wave': '1',
       }) +
       gw.spec.withGatewayClassName('cilium') +
       gw.spec.withListeners(

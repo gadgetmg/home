@@ -33,7 +33,7 @@ spec:
       data:
         credentials: |
           {
-            "url": "https://auth.seigra.net",
+            "url": "https://keycloak-service.keycloak:8443",
             "tls_insecure_skip_verify": "true",
             "client_id": "admin-cli",
             "username": "{{ .username }}",
