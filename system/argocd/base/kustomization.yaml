@@ -11,14 +11,8 @@ images:
 
 resources:
 - namespace.yaml
-- https://github.com/argoproj/argo-cd/manifests/base/application-controller?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/base/repo-server?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/base/server?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/base/config?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/base/notification?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/base/applicationset-controller?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/cluster-rbac?ref=v2.10.8
-- https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.10.8
+# renovate: datasource=github-releases depName=argoproj/argo-cd
+- https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.8/manifests/install.yaml
 - gateway.yaml
 - server-httproute.yaml
 - servicemonitors.yaml
@@ -29,6 +23,7 @@ configMapGenerator:
   files:
   - config/oidc.config
   - config/resource.exclusions
+  - config/resource.customizations
   - config/resource.customizations.ignoreDifferences.all
   literals:
   - kustomize.buildOptions=--enable-alpha-plugins --enable-exec --enable-helm
@@ -39,4 +34,20 @@ configMapGenerator:
   - server.insecure=true
 
 patches:
+- patch: |-
+    $patch: delete
+    apiVersion: kustomize.config.k8s.io/v1beta1
+    kind: Kustomization
+    metadata:
+      name: any
+  target:
+    name: argocd-(dex-server|redis)($|-network-policy)
 - path: install-ksops.patch.yaml
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    group: (monitoring.coreos.com|gateway.networking.k8s.io)

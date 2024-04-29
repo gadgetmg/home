@@ -58,20 +58,3 @@ spec:
     rootUrl: https://grafana.dev.local
     validRedirectUris:
     - https://grafana.dev.local/login/generic_oauth
----
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
-metadata:
-  name: keycloak-crossplane-credentials
-spec:
-  target:
-    template:
-      data:
-        credentials: |
-          {
-            "url": "https://auth.dev.local",
-            "tls_insecure_skip_verify": "true",
-            "client_id": "admin-cli",
-            "username": "{{ .username }}",
-            "password": "{{ .password }}"
-          }

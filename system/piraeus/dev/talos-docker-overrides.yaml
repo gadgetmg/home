@@ -2,6 +2,8 @@ apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
   name: talos-docker-override
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   patches:
   - target:

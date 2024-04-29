@@ -17,10 +17,7 @@ local app = argo_cd.argoproj.v1alpha1.application;
     app.spec.source.withTargetRevision('HEAD') +
     app.spec.syncPolicy.automated.withPrune(true) +
     app.spec.syncPolicy.automated.withSelfHeal(true) +
-    app.spec.syncPolicy.retry.backoff.withDuration('5s') +
-    app.spec.syncPolicy.retry.backoff.withFactor(2) +
-    app.spec.syncPolicy.retry.backoff.withMaxDuration('3m') +
-    app.spec.syncPolicy.retry.withLimit(5) +
+    app.spec.syncPolicy.retry.withLimit(-1) +
     app.spec.syncPolicy.withSyncOptions('ServerSideApply=true'),
 
   jsonnet::

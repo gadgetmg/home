@@ -48,28 +48,3 @@ patches:
   target:
     kind: StatefulSet
     name: argocd-redis-ha-server
-- patch: |- # Privilege argocd namespace in dev to allow injecting hostPath mount
-    - op: add
-      path: /metadata/labels
-      value:
-        pod-security.kubernetes.io/enforce: privileged
-  target:
-    kind: Namespace
-    name: argocd
-- patch: |- # Inject hostPath mount for local copy of git repository
-    - op: add
-      path: /spec/template/spec/volumes/-
-      value:
-        name: local-repo
-        hostPath:
-          path: /var/mnt/local-repo
-          type: Directory
-    - op: add
-      path: /spec/template/spec/containers/0/volumeMounts/-
-      value:
-        name: local-repo
-        mountPath: /tmp/local-repo
-        readOnly: true
-  target:
-    kind: Deployment
-    name: argocd-repo-server

@@ -10,51 +10,22 @@
   outputs = { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
       krewfile = inputs.krewfile.packages.${system}.default;
       talhelper = inputs.talhelper.packages.${system}.default;
-      kubernetes-helm = pkgs.kubernetes-helm.overrideAttrs (prev: {
-        ldflags = prev.ldflags ++ [
-          "-X helm.sh/helm/v3/pkg/chartutil.k8sVersionMajor=1"
-          "-X helm.sh/helm/v3/pkg/chartutil.k8sVersionMinor=29"
-        ];
-        doCheck = false;
-      });
-      kustomize-sops = pkgs.kustomize-sops.overrideAttrs ({
-        installPhase = ''
-          mkdir -p $out/bin
-          mv $GOPATH/bin/kustomize-sops $out/bin/ksops
-        '';
-      });
-      talosctl =
-        let
-          version = "1.7.0";
-          src = pkgs.fetchFromGitHub {
-            owner = "siderolabs";
-            repo = "talos";
-            rev = "v${version}";
-            hash = "sha256-E5pu37R2y0hQezM/p6LJXZv2L6QnV89Ir2HoKaqcOqI=";
-          };
-        in
-        (pkgs.talosctl.override {
-          buildGoModule = args: pkgs.buildGoModule.override { } (args // {
-            inherit src version;
-            vendorHash = "sha256-5vWAZsLQxPZGpTiT/OowCLNPdE5e+HrAGXpFRw6jgbU=";
-          });
-        });
     in
     rec {
       # Accessible via 'nix develop' or 'nix shell'
       packages.${system} = {
         default = pkgs.mkShell {
-          NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
-          nativeBuildInputs = with pkgs; [
+          buildInputs = with pkgs; [
             age
             argocd
             cilium-cli
             crossplane-cli
             go
             go-jsonnet
+            go-task
             jsonnet-bundler
             kfilt
             kind
@@ -65,9 +36,10 @@
             kubevirt
             kustomize
             kustomize-sops
+            kyverno-chainsaw
             sops
             ssh-to-age
-            talhelper
+            # talhelper
             talosctl
             yamlfmt
             yq-go
