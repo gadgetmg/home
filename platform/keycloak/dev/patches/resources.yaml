@@ -6,6 +6,8 @@ spec:
   instances: 1
   affinity:
     podAntiAffinityType: preferred
+  storage:
+    size: 1Gi
 ---
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: Keycloak
