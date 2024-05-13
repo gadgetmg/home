@@ -18,8 +18,8 @@
           "subdir": "contrib/mixin"
         }
       },
-      "version": "a8c6a9c6058d2012eea1d21a918f777d5a0b0295",
-      "sum": "xuUBd2vqF7asyVDe5CE08uPT/RxAdy8O75EjFJoMXXU="
+      "version": "333bd7bf7612a9f83cc94e8334565012e84f354f",
+      "sum": "IXI3LQIT9NmTPJAk8WLUJd5+qZfcGpeNCyWIK7oEpws="
     },
     {
       "source": {
@@ -28,8 +28,8 @@
           "subdir": "docs/snippets"
         }
       },
-      "version": "6d08e679be66bcec7d54e02abc0caf629f6b1d78",
-      "sum": "4hrA6z2KS5QFmq8bDUH+ocTflPdlY9loyRjLWFUMCpM="
+      "version": "4b8b8788bf9bd4883b5cd5e63b986d2fe1da46ee",
+      "sum": "+iHwetDmOtPEMP6vX5bJE1XTyeu57Kp1LW129fFWSjU="
     },
     {
       "source": {
@@ -98,7 +98,7 @@
           "subdir": "argocd-mixin"
         }
       },
-      "version": "c43257cbd1efa8fdc21dcd9f060b400fc355d314",
+      "version": "54f7f74fe61f3bd05a35f2616505305b2ae1e19a",
       "sum": "YM49GuOtOciXilvxykviiH3j6La/pEM1f3WnCUKlqvU="
     },
     {
@@ -108,8 +108,8 @@
           "subdir": "cilium-enterprise-mixin"
         }
       },
-      "version": "c43257cbd1efa8fdc21dcd9f060b400fc355d314",
-      "sum": "U3cFD6C7DwvhunsbpEo+T00WPj61J2uCqRjvpN52WCI="
+      "version": "54f7f74fe61f3bd05a35f2616505305b2ae1e19a",
+      "sum": "mWeavqBkiY054bflk+mGgPeKoo8gx0TPFxZGUjQzjvo="
     },
     {
       "source": {
@@ -188,8 +188,8 @@
           "subdir": ""
         }
       },
-      "version": "27c8a4885dfe6896dc5d886936687eb5e4f02c21",
-      "sum": "u1C0cy9ZawAJxsZsJUoEE4KbqhiH04XmAU1b5POYPS8="
+      "version": "033a6fb33be80d381045dc570fc53f0b7750e8b6",
+      "sum": "mrmfolXgp1MNMX5Svdbro8/L5v6VDh8UIpsQ9KwU39M="
     },
     {
       "source": {
@@ -238,7 +238,7 @@
           "subdir": "jsonnet/mixin"
         }
       },
-      "version": "caa561eae2117476f4d9be0479fbc106f8a497cb",
+      "version": "11f8eb1665b7228d5752685379f24f64e658a19f",
       "sum": "gi+knjdxs2T715iIQIntrimbHRgHnpM8IFBJDD1gYfs=",
       "name": "prometheus-operator-mixin"
     },
@@ -249,8 +249,8 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "caa561eae2117476f4d9be0479fbc106f8a497cb",
-      "sum": "FG4W+aAfUf1b3qZYefhLSwTK3c+VeT6OfBpWK4zwfIs="
+      "version": "11f8eb1665b7228d5752685379f24f64e658a19f",
+      "sum": "5Lu5550Raz3BpfO07ITkUMJAZ9wjKhjCOJ3GLstF5uw="
     },
     {
       "source": {
@@ -259,7 +259,7 @@
           "subdir": "doc/alertmanager-mixin"
         }
       },
-      "version": "d7ad5e12f8f823ec64e4e84e91d926b6a8e60f71",
+      "version": "c9f73e3ab7d90efa8e62733b3594bfff2a80f35e",
       "sum": "IpF46ZXsm+0wJJAPtAre8+yxTNZA57mBqGpBP/r7/kw=",
       "name": "alertmanager"
     },
@@ -280,7 +280,7 @@
           "subdir": "documentation/prometheus-mixin"
         }
       },
-      "version": "93be83069e3ec4b572b1db1d49e08b4ebb68e563",
+      "version": "3b8b57700c469c7cde84e1d8f9d383cb8fe11ab0",
       "sum": "u/Fpz2MPkezy71/q+c7mF0vc3hE9fWt2W/YbvF0LP/8=",
       "name": "prometheus"
     },
@@ -302,7 +302,7 @@
           "subdir": "mixin"
         }
       },
-      "version": "70e3bd9bf4222d837155ae321667950a3156576a",
+      "version": "2d738f0dedb99adf2c89854935138114ecc37896",
       "sum": "HhSSbGGCNHCMy1ee5jElYDm0yS9Vesa7QB2/SHKdjsY=",
       "name": "thanos-mixin"
     }
