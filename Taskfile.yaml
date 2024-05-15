@@ -124,7 +124,19 @@ tasks:
     - '{{.ROOT_DIR}}/system/k8s-gateway/**/*.yaml'
     status:
     - kubectl get deploy/k8s-gateway -n kube-system
-  
+
+  system:kyverno:apply:
+    deps: [platform:kube-prometheus:apply-crds]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/kyverno/dev > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    sources:
+    - '{{.ROOT_DIR}}/system/kyverno/**/*.yaml'
+    status:
+    - kubectl get ns/kyverno
+
   system:piraeus:apply:
     deps: [system:cert-manager:apply]
     preconditions:
