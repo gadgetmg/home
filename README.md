@@ -12,6 +12,7 @@ System stack components are fundamental to the cluster delivering core functiona
 - [`system/cert-manager`](system/cert-manager) - Manages PKI certificates in the cluster with the [cert-manager](https://cert-manager.io/) and [trust-manager](https://cert-manager.io/docs/trust/trust-manager/) projects
 - [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling all networking including access from outside the cluster using BGP and the [Gateway API](https://gateway-api.sigs.k8s.io/)
 - [`system/k8s-gateway`](system/k8s-gateway) - An outside-facing instance of [CoreDNS with the k8s_gateway plugin](https://ori-edge.github.io/k8s_gateway/) for resolving DNS names from the LAN
+- [`system/kyverno`](system/kyverno) - [Kyverno](https://kyverno.io) Kubernetes policy engine
 - [`system/piraeus`](system/piraeus) - Container Storage Interface (CSI) plugin for [LINSTOR](https://linbit.com/linstor/) managed with the [Piraeus](https://piraeus.io/) operator
 
 ### Platform stack
