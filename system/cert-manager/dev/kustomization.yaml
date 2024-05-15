@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
 - ../base
-- issuers.yaml
 
 replicas:
 - name: cert-manager
@@ -11,4 +10,6 @@ replicas:
 - name: cert-manager-webhook
   count: 1
 - name: cert-manager-cainjector
+  count: 1
+- name: trust-manager
   count: 1
