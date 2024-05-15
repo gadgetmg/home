@@ -10,7 +10,7 @@ spec:
     try:
     - description: Error if any application is not both synced and healthy
       error:
-        timeout: 20m
+        timeout: 30m
         resource:
           apiVersion: argoproj.io/v1alpha1
           kind: Application
