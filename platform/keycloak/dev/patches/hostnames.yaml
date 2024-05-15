@@ -15,7 +15,7 @@ spec:
   dnsNames:
   - auth.dev.local
   issuerRef:
-    name: selfsigned
+    name: cluster-ca
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
