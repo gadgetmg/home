@@ -8,3 +8,6 @@ resources:
 replicas:
 - name: cilium-operator
   count: 1
+
+patches:
+- path: operator-deployment.patch.yaml
