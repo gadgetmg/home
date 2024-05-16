@@ -10,7 +10,7 @@ helmCharts:
   repo: https://charts.crossplane.io/stable
   releaseName: crossplane
   namespace: crossplane-system
-  version: 1.15.2
+  version: 1.16.0
   valuesFile: values.yaml
 
 patches:
