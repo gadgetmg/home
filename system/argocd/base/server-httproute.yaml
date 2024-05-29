@@ -3,6 +3,9 @@ kind: HTTPRoute
 metadata:
   name: argocd-server
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   hostnames:
   - argocd.seigra.net
