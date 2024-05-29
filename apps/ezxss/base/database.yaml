@@ -3,8 +3,6 @@ kind: MariaDB
 metadata:
   name: ezxss-db
   labels:
-    app.kubernetes.io/name: ezxss-db
-    app.kubernetes.io/instance: ezxss
     app.kubernetes.io/component: database
     app.kubernetes.io/part-of: ezxss
 spec:
