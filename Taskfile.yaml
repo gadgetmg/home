@@ -6,7 +6,7 @@ env:
   # renovate: datasource=github-releases depName=siderolabs/talos
   TALOS_VERSION: v1.7.2
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  KUBERNETES_VERSION: v1.29.4
+  KUBERNETES_VERSION: v1.30.1
 
 vars:
   MANIFESTS: # temporary file to hold built manifests for a task
@@ -274,6 +274,16 @@ tasks:
     - '{{.ROOT_DIR}}/apps/ezxss/**/*.yaml'
     status:
     - kubectl get ns/ezxss
+
+  production:bootstrap:
+    cmds:
+    - talhelper gencommand apply --extra-flags --insecure | sh
+    - |
+      talhelper gencommand bootstrap | sh
+      while [ $? -ne 0 ]; do !!; done
+    - kustomize build --enable-helm system/cilium/production | kfilt -x namespace=monitoring -x group=cert-manager.io -x group=monitoring.coreos.com | kubectl apply --server-side -f -
+    - kustomize build --enable-helm --enable-alpha-plugins --enable-exec system/argocd/production | kfilt -x group=monitoring.coreos.com | kubectl apply --server-side -f -
+    - jsonnet -J vendor root/production/main.jsonnet -y | kubectl apply --server-side -f -
 
   git-mirror:start:
     vars:
