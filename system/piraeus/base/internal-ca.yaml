@@ -2,6 +2,9 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: linstor-internal-ca
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   commonName: linstor-internal-ca
   secretName: linstor-internal-ca
@@ -19,6 +22,9 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: linstor-internal-ca
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   ca:
     secretName: linstor-internal-ca

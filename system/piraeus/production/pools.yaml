@@ -2,7 +2,12 @@ apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
   name: pools
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   storagePools:
   - name: ssd
-    fileThinPool: {}
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/sda

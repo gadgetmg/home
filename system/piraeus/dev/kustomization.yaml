@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
 - ../base
 - talos-docker-overrides.yaml
+- pools.yaml
+- storageclasses.yaml
 
 secretGenerator:
 - name: linstorcluster-passphrase
@@ -12,27 +14,3 @@ secretGenerator:
   - MASTER_PASSPHRASE=password
   options:
     disableNameSuffixHash: true
-
-patches:
-- path: dev-pools.patch.yaml
-- patch: |
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    metadata:
-      name: ssd-r1
-    provisioner: linstor.csi.linbit.com
-    parameters:
-      linstor.csi.linbit.com/autoPlace: "1"
-      linstor.csi.linbit.com/layerList: storage
-- patch: |
-    $patch: delete
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    metadata:
-      name: ssd-r2
-- patch: |
-    $patch: delete
-    apiVersion: storage.k8s.io/v1
-    kind: StorageClass
-    metadata:
-      name: ssd-r3
