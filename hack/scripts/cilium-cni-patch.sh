@@ -1,6 +1,6 @@
 #!/bin/sh
 
-yq -PM '.cluster.inlineManifests[0].contents = strenv(MANIFESTS)' << 'EOF' > hack/patches/cilium-cni.yaml
+yq -PM '.cluster.inlineManifests[0].contents = strenv(MANIFESTS)' << 'EOF' > $1
 cluster:
   network:
     cni:

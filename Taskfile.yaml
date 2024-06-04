@@ -9,26 +9,32 @@ env:
   KUBERNETES_VERSION: v1.30.1
 
 vars:
+  ENVIRONMENT: dev
   MANIFESTS: # temporary file to hold built manifests for a task
     sh: mktemp /tmp/tmp.{{.TASK}}-XXX.yaml
 
 tasks:
   test:
     cmds:
-    - task: cluster:create
-    - defer: { task: cluster:destroy }
+    - task: devcluster:create
+    - defer: { task: devcluster:destroy }
+    - task: git-mirror:start
     - task: root:apply
     - chainsaw test
 
-  cluster:create:
-    deps: [generate-cilium-cni-patch]
+  devcluster:create:
+    deps:
+    - task: generate-cilium-cni-patch
+      vars:
+        CNI_PATCH: hack/patches/cilium-cni.yaml
     cmds:
     - hack/scripts/create-cluster.sh
+    - kubectl -n kube-system get configmap/coredns -o yaml | sed "/forward/i\        forward dev.local 10.5.0.11" | kubectl replace -f -
     - task: system:cilium:apply
     status:
     - docker ps | grep dev-controlplane-1
 
-  cluster:destroy:
+  devcluster:destroy:
     deps: [git-mirror:stop]
     cmds:
     - defer: talosctl config context "" && talosctl config remove dev --noconfirm
@@ -38,12 +44,40 @@ tasks:
     - defer: kubectl config delete-cluster dev
     - talosctl cluster destroy --name dev
 
-  root:apply:
-    deps: [system:argocd:apply-minimal, git-mirror:start]
-    preconditions:
-    - kubectl config current-context | grep admin@dev
+  production:genconfig:
+    deps:
+    - task: generate-cilium-cni-patch
+      vars:
+        ENVIRONMENT: production
+        CNI_PATCH: clusterconfig/patches/cilium-cni.yaml
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/root/dev > {{.MANIFESTS}}
+    - talhelper genconfig
+
+  production:apply-insecure:
+    deps: [production:genconfig]
+    cmds:
+    - talhelper gencommand apply --extra-flags "--insecure" | sh
+
+  production:bootstrap:
+    deps: [production:genconfig]
+    cmds:
+    - talhelper gencommand bootstrap | sh
+    - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
+    - talhelper gencommand kubeconfig | sh
+    - task: system:cilium:apply
+      vars:
+        ENVIRONMENT: production
+    - task: root:apply
+      vars: { ENVIRONMENT: production }
+
+  root:apply:
+    deps:
+    - task: system:argocd:apply-minimal
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    preconditions:
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/root/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kubectl apply --server-side -f {{.MANIFESTS}}
     sources:
     - '{{.ROOT_DIR}}/root/**/*sonnet'
@@ -51,11 +85,13 @@ tasks:
     - kubectl get apps/root -n argocd
 
   system:argocd:apply:
-    deps: [platform:kube-prometheus:apply-crds]
+    deps:
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kubectl apply --server-side -f {{.MANIFESTS}}
     - kubectl rollout status --watch deployment.apps,daemonset.apps,statefulset.apps -n argocd
     sources:
@@ -65,20 +101,22 @@ tasks:
 
   system:argocd:apply-minimal:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/argocd/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -x group=gateway.networking.k8s.io -x group=monitoring.coreos.com < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl rollout status --watch deployment.apps,daemonset.apps,statefulset.apps -n argocd
     status:
     - kubectl get crd/applications.argoproj.io
 
   system:cert-manager:apply:
-    deps: [platform:kube-prometheus:apply-crds]
+    deps:
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl rollout status --watch deployment.apps -n cert-manager
@@ -89,21 +127,25 @@ tasks:
   
   system:cert-manager:apply-crds:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cert-manager/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     status:
     - kubectl get crd/certificates.cert-manager.io
 
   system:cilium:apply:
-    deps: [system:cert-manager:apply-crds, platform:kube-prometheus:apply-crds]
+    deps:
+    - task: system:cert-manager:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cilium/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/cilium/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
-    - kfilt -K CustomResourceDefinition -x group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition -x group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side --force-conflicts -f -
     - kubectl rollout restart deployment.apps/cilium-operator daemonset.apps/cilium -n kube-system
     - kubectl rollout status --watch deployment.apps/cilium-operator daemonset.apps/cilium -n kube-system
     - kfilt -i group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
@@ -113,24 +155,29 @@ tasks:
     - kubectl get gatewayclass/cilium
   
   system:k8s-gateway:apply:
-    deps: [system:cert-manager:apply, platform:kube-prometheus:apply-crds]
+    deps:
+    - task: system:cert-manager:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/k8s-gateway/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/k8s-gateway/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kubectl apply --server-side -f {{.MANIFESTS}}
-    - kubectl -n kube-system get configmap/coredns -o yaml | sed "/forward/i\        forward dev.local 10.5.0.11" | kubectl replace -f -
     sources:
     - '{{.ROOT_DIR}}/system/k8s-gateway/**/*.yaml'
     status:
     - kubectl get deploy/k8s-gateway -n kube-system
 
   system:kyverno:apply:
-    deps: [platform:kube-prometheus:apply-crds]
+    deps:
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/kyverno/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/kyverno/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kubectl apply --server-side -f {{.MANIFESTS}}
     sources:
     - '{{.ROOT_DIR}}/system/kyverno/**/*.yaml'
@@ -138,11 +185,13 @@ tasks:
     - kubectl get ns/kyverno
 
   system:piraeus:apply:
-    deps: [system:cert-manager:apply]
+    deps:
+    - task: system:cert-manager:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/system/piraeus/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/piraeus/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl wait --for=condition=Available linstorcluster --all -n piraeus-datastore --timeout=10m
@@ -153,9 +202,9 @@ tasks:
 
   platform:cloudflare-operator:apply:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cloudflare-operator/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cloudflare-operator/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     sources:
@@ -164,11 +213,13 @@ tasks:
     - kubectl get ns/cloudflare-operator-system
 
   platform:cnpg:apply:
-    deps: [system:piraeus:apply]
+    deps:
+    - task: system:piraeus:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cnpg/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cnpg/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl rollout status --watch deployment.apps -n cnpg-system
@@ -179,9 +230,9 @@ tasks:
 
   platform:crossplane:apply:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/crossplane/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/crossplane/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -x group=pkg.crossplane.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl rollout status --watch deployment.apps -n crossplane-system
     - kfilt -i group=pkg.crossplane.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
@@ -191,11 +242,13 @@ tasks:
     - kubectl get ns/crossplane-system
 
   platform:external-secrets:apply:
-    deps: [platform:kube-prometheus:apply-crds]
+    deps:
+    - task: platform:kube-prometheus:apply-crds
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/external-secrets/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/external-secrets/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     sources:
@@ -204,11 +257,21 @@ tasks:
     - kubectl get ns/external-secrets
 
   platform:keycloak:apply:
-    deps: [platform:cnpg:apply, platform:crossplane:apply, platform:external-secrets:apply, system:piraeus:apply, system:k8s-gateway:apply]
+    deps:
+    - task: platform:cnpg:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: platform:crossplane:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: platform:external-secrets:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: system:piraeus:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: system:k8s-gateway:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/keycloak/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/keycloak/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition -k Provider < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl wait --for=condition=Installed --for=condition=Healthy provider.pkg.crossplane.io/provider-keycloak --timeout=10m
     - kfilt -K CustomResourceDefinition -K Provider < {{.MANIFESTS}} | kubectl apply --server-side -f -
@@ -219,9 +282,9 @@ tasks:
 
   platform:kube-prometheus:apply:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     sources:
@@ -231,18 +294,18 @@ tasks:
   
   platform:kube-prometheus:apply-crds:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/dev > {{.MANIFESTS}}
-    - kfilt -k CustomResourceDefinition -k Namespace < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kube-prometheus/{{.ENVIRONMENT}} > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     status:
     - kubectl get crd/servicemonitors.monitoring.coreos.com
 
   platform:kubevirt:apply:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kubevirt/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/kubevirt/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     sources:
@@ -252,9 +315,9 @@ tasks:
 
   platform:mariadb-operator:apply:
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/mariadb-operator/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/mariadb-operator/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
     - kubectl rollout status --watch deployment.app -n mariadb-system
@@ -264,26 +327,20 @@ tasks:
     - kubectl get ns/mariadb-system
 
   apps:ezxss:apply:
-    deps: [platform:mariadb-operator:apply, system:piraeus:apply]
+    deps:
+    - task: platform:mariadb-operator:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    - task: system:piraeus:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
     preconditions:
-    - kubectl config current-context | grep admin@dev
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/apps/ezxss/dev > {{.MANIFESTS}}
+    - hack/scripts/build.sh {{.ROOT_DIR}}/apps/ezxss/{{.ENVIRONMENT}} > {{.MANIFESTS}}
     - kubectl apply --server-side -f {{.MANIFESTS}}
     sources:
     - '{{.ROOT_DIR}}/apps/ezxss/**/*.yaml'
     status:
     - kubectl get ns/ezxss
-
-  production:bootstrap:
-    cmds:
-    - talhelper gencommand apply --extra-flags --insecure | sh
-    - |
-      talhelper gencommand bootstrap | sh
-      while [ $? -ne 0 ]; do !!; done
-    - kustomize build --enable-helm system/cilium/production | kfilt -x namespace=monitoring -x group=cert-manager.io -x group=monitoring.coreos.com | kubectl apply --server-side -f -
-    - kustomize build --enable-helm --enable-alpha-plugins --enable-exec system/argocd/production | kfilt -x group=monitoring.coreos.com | kubectl apply --server-side -f -
-    - jsonnet -J vendor root/production/main.jsonnet -y | kubectl apply --server-side -f -
 
   git-mirror:start:
     vars:
@@ -309,10 +366,6 @@ tasks:
     internal: true
     env:
       MANIFESTS:
-        sh: hack/scripts/cilium-cni-manifests.sh
+        sh: hack/scripts/cilium-cni-manifests.sh {{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/cilium-cni-patch.sh
-    sources:
-    - system/cilium/**/*.yaml
-    generates:
-    - hack/patches/cilium-cni.yaml
+    - hack/scripts/cilium-cni-patch.sh {{.CNI_PATCH}}

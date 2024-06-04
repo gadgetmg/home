@@ -1,4 +1,4 @@
-clusterName: talos
+clusterName: production
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.7.4
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
@@ -9,10 +9,8 @@ clusterPodNets:
 - 10.244.0.0/16
 clusterSvcNets:
 - 10.96.0.0/12
-cniConfig:
-  name: none
 nodes:
-- hostname: talos-controlplane-1
+- hostname: production-controlplane-1
   ipAddress: 10.1.2.11
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
@@ -28,7 +26,7 @@ nodes:
     dhcp: true
     vip:
       ip: 10.1.2.10
-- hostname: talos-controlplane-2
+- hostname: production-controlplane-2
   ipAddress: 10.1.2.12
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
@@ -44,7 +42,7 @@ nodes:
     dhcp: true
     vip:
       ip: 10.1.2.10
-- hostname: talos-controlplane-3
+- hostname: production-controlplane-3
   ipAddress: 10.1.2.13
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
@@ -62,37 +60,6 @@ nodes:
       ip: 10.1.2.10
 controlPlane:
   patches:
-  - |- # Enable system disk encryption
-    machine:
-      systemDiskEncryption:
-        state:
-          provider: luks2
-          keys:
-            - slot: 0
-              tpm: {}
-        ephemeral:
-          provider: luks2
-          keys:
-            - slot: 0
-              tpm: {}
-  - |- # Disable kube-proxy deployment
-    cluster:
-      proxy:
-        disabled: true
-  - |- # Enforce restricted pod security profile (https://www.talos.dev/latest/kubernetes-guides/configuration/pod-security)
-    - op: replace
-      path: /cluster/apiServer/admissionControl/0/configuration
-      value:
-        apiVersion: pod-security.admission.config.k8s.io/v1
-        kind: PodSecurityConfiguration
-        defaults:
-          enforce: restricted
-          enforce-version: latest
-          audit: restricted
-          audit-version: latest
-          warn: restricted
-          warn-version: latest
-        exemptions:
-          usernames: []
-          runtimeClasses: []
-          namespaces: [kube-system]
+  - '@clusterconfig/patches/cilium-cni.yaml'
+  - '@clusterconfig/patches/disk-encryption.yaml'
+  - '@clusterconfig/patches/pod-security.yaml'
