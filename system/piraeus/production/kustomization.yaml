@@ -3,9 +3,8 @@ kind: Kustomization
 
 resources:
 - ../base
+- pools.yaml
+- storageclasses.yaml
 
 generators:
 - secrets-generator.yaml
-
-patches:
-- path: production-pools.patch.yaml

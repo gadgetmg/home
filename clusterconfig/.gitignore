@@ -1,4 +1,4 @@
 talosconfig
-talos-talos-controlplane-1.yaml
-talos-talos-controlplane-2.yaml
-talos-talos-controlplane-3.yaml
+production-production-controlplane-1.yaml
+production-production-controlplane-2.yaml
+production-production-controlplane-3.yaml

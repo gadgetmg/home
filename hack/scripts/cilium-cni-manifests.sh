@@ -1,7 +1,7 @@
 #!/bin/sh
 
 kustomize build \
-    --enable-helm system/cilium/dev | \
+    --enable-helm system/cilium/$1 | \
 kfilt \
     -N \*gateway.networking.k8s.io \
     -N hubble\* \

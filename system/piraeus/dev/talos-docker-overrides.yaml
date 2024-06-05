@@ -17,11 +17,8 @@ spec:
       spec:
         template:
           spec:
-            containers:
-            - name: linstor-satellite
-              volumeMounts:
-              - mountPath: /run/udev
-                $patch: delete
             volumes:
             - name: run-udev
-              $patch: delete
+              hostPath:
+                path: /var/run/udev
+                type: DirectoryOrCreate
