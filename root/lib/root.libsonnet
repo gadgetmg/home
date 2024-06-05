@@ -35,6 +35,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   cilium:
     app.new('cilium') + self.defaults +
     app.spec.source.withPath('system/cilium/' + $.config.environment),
+  'gateway-api':
+    app.new('gateway-api') + self.defaults +
+    app.spec.source.withPath('system/gateway-api/' + $.config.environment),
   'k8s-gateway':
     app.new('k8s-gateway') + self.defaults +
     app.spec.source.withPath('system/k8s-gateway/' + $.config.environment),
@@ -53,6 +56,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   crossplane:
     app.new('crossplane') + self.defaults +
     app.spec.source.withPath('platform/crossplane/' + $.config.environment),
+  'envoy-gateway':
+    app.new('envoy-gateway') + self.defaults +
+    app.spec.source.withPath('platform/envoy-gateway/' + $.config.environment),
   'external-secrets':
     app.new('external-secrets') + self.defaults +
     app.spec.source.withPath('platform/external-secrets/' + $.config.environment),

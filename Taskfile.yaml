@@ -144,16 +144,26 @@ tasks:
     - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
     - hack/scripts/build.sh {{.ROOT_DIR}}/system/cilium/{{.ENVIRONMENT}} > {{.MANIFESTS}}
-    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
-    - kfilt -K CustomResourceDefinition -x group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side --force-conflicts -f -
+    - kfilt -x group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side --force-conflicts -f -
     - kubectl rollout restart deployment.apps/cilium-operator daemonset.apps/cilium -n kube-system
     - kubectl rollout status --watch deployment.apps/cilium-operator daemonset.apps/cilium -n kube-system
     - kfilt -i group=cilium.io < {{.MANIFESTS}} | kubectl apply --server-side -f -
     sources:
     - '{{.ROOT_DIR}}/system/cilium/**/*.yaml'
     status:
-    - kubectl get gatewayclass/cilium
-  
+    - kubectl get servicemonitor/cilium-agent -n kube-system
+
+  system:gateway-api:apply:
+    preconditions:
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/system/gateway-api/{{.ENVIRONMENT}} > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
+    sources:
+    - '{{.ROOT_DIR}}/system/gateway-api/**/*.yaml'
+    status:
+    - kubectl get crd/gatewayclasses.gateway.networking.k8s.io
+
   system:k8s-gateway:apply:
     deps:
     - task: system:cert-manager:apply
@@ -240,6 +250,21 @@ tasks:
     - '{{.ROOT_DIR}}/platform/crossplane/**/*.yaml'
     status:
     - kubectl get ns/crossplane-system
+
+  platform:envoy-gateway:apply:
+    deps:
+    - task: system:gateway-api:apply
+      vars: { ENVIRONMENT: '{{.ENVIRONMENT}}' }
+    preconditions:
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/envoy-gateway/{{.ENVIRONMENT}} > {{.MANIFESTS}}
+    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/platform/envoy-gateway/**/*.yaml'
+    status:
+    - kubectl get ns/envoy-gateway-system
 
   platform:external-secrets:apply:
     deps:
