@@ -10,7 +10,8 @@ System stack components are fundamental to the cluster delivering core functiona
 
 - [`system/argocd`](system/argocd) - Continuous delivery of this repository using [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 - [`system/cert-manager`](system/cert-manager) - Manages PKI certificates in the cluster with the [cert-manager](https://cert-manager.io/) and [trust-manager](https://cert-manager.io/docs/trust/trust-manager/) projects
-- [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling all networking including access from outside the cluster using BGP and the [Gateway API](https://gateway-api.sigs.k8s.io/)
+- [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling networking including advertising LoadBalancer routes via BGP
+- [`system/gateway-api`](system/gateway-api) - [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs used by Envoy Gateway
 - [`system/k8s-gateway`](system/k8s-gateway) - An outside-facing instance of [CoreDNS with the k8s_gateway plugin](https://ori-edge.github.io/k8s_gateway/) for resolving DNS names from the LAN
 - [`system/kyverno`](system/kyverno) - [Kyverno](https://kyverno.io) Kubernetes policy engine
 - [`system/piraeus`](system/piraeus) - Container Storage Interface (CSI) plugin for [LINSTOR](https://linbit.com/linstor/) managed with the [Piraeus](https://piraeus.io/) operator
@@ -23,6 +24,7 @@ Platform stack components provide common services to the cluster and abstract aw
 - [`platform/cnpg`](platform/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`platform/crossplane`](platform/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
 - [`platform/external-secrets`](platform/external-secrets) - [External Secrets Operator](https://external-secrets.io/) for secrets management
+- [`platform/envoy-gateway`](platform/envoy-gateway) - [Envoy Gateway](https://gateway.envoyproxy.io/) implementation of the Gateway API for accepting ingress traffic into cluster services
 - [`platform/keycloak`](platform/keycloak) - [Keycloak](https://www.keycloak.org/) for identity and access management (IAM)
 - [`platform/kube-prometheus`](platform/kube-prometheus) - Kubernetes monitoring platform with the [Prometheus operator](https://prometheus-operator.dev/)
 - [`platform/kubevirt`](platform/kubevirt) - Virtualization platform with [KubeVirt](https://kubevirt.io/)

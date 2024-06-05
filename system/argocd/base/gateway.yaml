@@ -8,7 +8,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "1"
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: envoy-gateway
   listeners:
   - allowedRoutes:
       namespaces:
