@@ -15,7 +15,6 @@ resources:
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0/config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
-- hubble-ca.yaml
 
 helmCharts:
 - name: cilium

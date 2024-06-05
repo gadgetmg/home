@@ -46,11 +46,7 @@ hubble:
       enabled: true
   tls:
     auto:
-      method: certmanager
-      certManagerIssuerRef:
-        group: cert-manager.io
-        kind: Issuer
-        name: hubble-ca
+      method: cronJob
   relay:
     enabled: true
     rollOutPods: true
