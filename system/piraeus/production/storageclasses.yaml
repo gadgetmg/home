@@ -2,6 +2,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: ssd-r1
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
@@ -19,6 +21,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: ssd-r3
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
