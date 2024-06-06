@@ -28,3 +28,4 @@ helmCharts:
 patches:
 - path: patches/deployment-podsecurity.yaml
 - path: patches/job-podsecurity.yaml
+- path: patches/job-ttl.yaml

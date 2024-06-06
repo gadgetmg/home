@@ -1,0 +1,7 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: envoy-gateway-gateway-helm-certgen
+  namespace: envoy-gateway-system
+spec:
+  ttlSecondsAfterFinished: 30
