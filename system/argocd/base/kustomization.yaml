@@ -7,7 +7,7 @@ images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
   # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.11.0
+  newTag: v2.11.3
 
 resources:
 - namespace.yaml
