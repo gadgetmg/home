@@ -47,9 +47,9 @@ local app = argo_cd.argoproj.v1alpha1.application;
   kyverno:
     app.new('kyverno') + self.defaults +
     app.spec.source.withPath('system/kyverno/' + $.config.environment),
-  'cloudflare-operator':
-    app.new('cloudflare-operator') + self.defaults +
-    app.spec.source.withPath('platform/cloudflare-operator/' + $.config.environment),
+  'cloudflare-gateway':
+    app.new('cloudflare-gateway') + self.defaults +
+    app.spec.source.withPath('platform/cloudflare-gateway/' + $.config.environment),
   cnpg:
     app.new('cnpg') + self.defaults +
     app.spec.source.withPath('platform/cnpg/' + $.config.environment),

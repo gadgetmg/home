@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
 - ../base
-- clustertunnels.yaml
+- gatewayclass.yaml
 
 generators:
 - secrets-generator.yaml

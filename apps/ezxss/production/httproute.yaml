@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: ezxss
+  namespace: ezxss
+spec:
+  parentRefs:
+  - name: cloudflare
+    namespace: cloudflare-gateway
+  hostnames:
+  - dm3.in
+  rules:
+  - backendRefs:
+    - name: ezxss
+      port: 8080

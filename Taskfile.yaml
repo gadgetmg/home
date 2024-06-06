@@ -210,17 +210,16 @@ tasks:
     status:
     - kubectl get ns/piraeus-datastore
 
-  platform:cloudflare-operator:apply:
+  platform:cloudflare-gateway:apply:
     preconditions:
     - kubectl config current-context | grep @{{.ENVIRONMENT}}
     cmds:
-    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cloudflare-operator/{{.ENVIRONMENT}} > {{.MANIFESTS}}
-    - kfilt -k CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
-    - kfilt -K CustomResourceDefinition < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - hack/scripts/build.sh {{.ROOT_DIR}}/platform/cloudflare-gateway/{{.ENVIRONMENT}} > {{.MANIFESTS}}
+    - kubectl apply --server-side -f {{.MANIFESTS}}
     sources:
-    - '{{.ROOT_DIR}}/platform/cloudflare-operator/**/*.yaml'
+    - '{{.ROOT_DIR}}/platform/cloudflare-gateway/**/*.yaml'
     status:
-    - kubectl get ns/cloudflare-operator-system
+    - kubectl get ns/cloudflare-gateway
 
   platform:cnpg:apply:
     deps:
