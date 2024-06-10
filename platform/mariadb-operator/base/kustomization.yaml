@@ -11,7 +11,7 @@ helmCharts:
   repo: https://mariadb-operator.github.io/mariadb-operator
   releaseName: mariadb-operator
   namespace: mariadb-system
-  version: 0.28.1
+  version: 0.29.0
   valuesFile: values.yaml
   includeCRDs: true
 
