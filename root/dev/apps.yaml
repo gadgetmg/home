@@ -1,0 +1,458 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: argocd
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/argocd/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: cert-manager
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/cert-manager/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: cilium
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/cilium/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: cloudflare-operator
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/cloudflare-operator/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: cnpg
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/cnpg/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: crossplane
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/crossplane/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: envoy-gateway
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/envoy-gateway/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: external-secrets
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/external-secrets/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: ezxss
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: apps/ezxss/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: gateway-api
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/gateway-api/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: k8s-gateway
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/k8s-gateway/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: keycloak
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/keycloak/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: kube-prometheus
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    directory:
+      jsonnet:
+        libs:
+          - vendor
+    path: platform/kube-prometheus/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: kubevirt
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/kubevirt/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: kyverno
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/kyverno/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: mariadb-operator
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: platform/mariadb-operator/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: piraeus
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    path: system/piraeus/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: root
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+  project: default
+  revisionHistoryLimit: 10
+  source:
+    directory:
+      jsonnet:
+        libs:
+          - vendor
+    path: root/dev
+    repoURL: http://10.5.0.254/git/repo.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: -1
+    syncOptions:
+      - ServerSideApply=true

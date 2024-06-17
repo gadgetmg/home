@@ -33,6 +33,7 @@
             go-jsonnet
             go-task
             jsonnet-bundler
+            k9s
             kfilt
             kind
             krew
@@ -47,6 +48,7 @@
             ssh-to-age
             talhelper
             talosctl
+            vcluster
             yamlfmt
             yq-go
           ];
