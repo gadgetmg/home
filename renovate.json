@@ -8,7 +8,7 @@
   },
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": false
   },
   "packageRules": [
     {
@@ -17,7 +17,7 @@
         "patch"
       ],
       "matchCurrentVersion": "!/^0/",
-      "automerge": true
+      "automerge": false
     }
   ],
   "customManagers": [
