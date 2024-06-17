@@ -7,8 +7,7 @@ local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/ma
     gateway:
       gw.new('kube-prometheus') +
       gw.metadata.withNamespace($.values.common.namespace) +
-      gw.metadata.withAnnotations({  // Annotate for cert-manager
-        'cert-manager.io/cluster-issuer': $.values.common.clusterIssuer,
+      gw.metadata.withAnnotations({
         'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
         'argocd.argoproj.io/sync-wave': '1',
       }) +
@@ -32,5 +31,24 @@ local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/ma
           l.tls.withMode('Terminate'),
         ]
       ),
+    certificate: {
+      apiVersion: 'cert-manager.io/v1',
+      kind: 'Certificate',
+      metadata: {
+        name: 'grafana',
+        namespace: 'monitoring',
+      },
+      spec: {
+        commonName: 'grafana.seigra.net',
+        dnsNames: [
+          'grafana.seigra.net',
+        ],
+        issuerRef: {
+          kind: 'ClusterIssuer',
+          name: 'letsencrypt',
+        },
+        secretName: 'grafana-gateway-tls',
+      },
+    },
   },
 }
