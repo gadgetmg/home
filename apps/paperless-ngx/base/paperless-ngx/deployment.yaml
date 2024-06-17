@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+spec:
+  template:
+    spec:
+      containers:
+      - name: paperless-ngx
+        image: ghcr.io/paperless-ngx/paperless-ngx
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: paperless-ngx-config
+        - secretRef:
+            name: paperless-ngx-secret-key
+        - secretRef:
+            name: paperless-ngx-admin-password
+        - secretRef:
+            name: paperless-ngx-socialaccount-providers
+        env:
+        - name: PAPERLESS_DBHOST
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-db-app
+              key: host
+        - name: PAPERLESS_DBPORT
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-db-app
+              key: port
+        - name: PAPERLESS_DBNAME
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-db-app
+              key: dbname
+        - name: PAPERLESS_DBUSER
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-db-app
+              key: username
+        - name: PAPERLESS_DBPASS
+          valueFrom:
+            secretKeyRef:
+              name: paperless-ngx-db-app
+              key: password
+        volumeMounts:
+        - name: data
+          mountPath: /usr/src/paperless/data
+        - name: media
+          mountPath: /usr/src/paperless/media
+        - name: ca-bundle
+          mountPath: /bundle.pem
+          subPath: bundle.pem
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          runAsUser: 1000
+          runAsGroup: 1000
+        readinessProbe:
+          httpGet:
+            port: 8000
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: paperless-ngx-data
+      - name: media
+        persistentVolumeClaim:
+          claimName: paperless-ngx-media
+      - name: ca-bundle
+        configMap:
+          name: paperless-ngx-cluster-ca
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault

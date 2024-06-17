@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- database.yaml
+- redis
+- tika
+- gotenberg
+- paperless-ngx
+
+images:
+- name: valkey/valkey
+  newTag: 7.2.5-alpine3.19
+- name: ghcr.io/paperless-ngx/tika
+  newTag: 2.9.1-minimal
+- name: gotenberg/gotenberg
+  newTag: 8.5.0
+- name: ghcr.io/paperless-ngx/paperless-ngx
+  newTag: 2.8.3
+
+labels:
+- pairs:
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  includeSelectors: true
+  includeTemplates: true

@@ -367,6 +367,21 @@ tasks:
     status:
     - kubectl get ns/ezxss
 
+  apps:paperless-ngx:apply:
+    deps: [platform:cnpg:apply, platform:external-secrets:apply, platform:keycloak:apply, system:kyverno:apply, system:piraeus:apply]
+    preconditions:
+    - kubectl config current-context | grep admin@dev
+    cmds:
+    - hack/scripts/build.sh {{.ROOT_DIR}}/apps/paperless-ngx/dev > {{.MANIFESTS}}
+    # Delete and recreate ClusterPolicy to workaround https://github.com/kyverno/kyverno/issues/7718
+    - kfilt -K ClusterPolicy < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -k ClusterPolicy < {{.MANIFESTS}} | kubectl delete --ignore-not-found -f -
+    - kfilt -k ClusterPolicy < {{.MANIFESTS}} | kubectl apply --server-side -f -
+    sources:
+    - '{{.ROOT_DIR}}/apps/paperless-ngx/**/*.yaml'
+    status:
+    - kubectl get ns/paperless-ngx
+
   git-mirror:start:
     vars:
       NAME: git-mirror
