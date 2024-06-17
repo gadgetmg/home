@@ -440,10 +440,6 @@ spec:
   project: default
   revisionHistoryLimit: 10
   source:
-    directory:
-      jsonnet:
-        libs:
-        - vendor
     path: root/production
     repoURL: git@github.com:gadgetmg/home.git
     targetRevision: HEAD
