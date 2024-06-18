@@ -54,8 +54,6 @@ spec:
                     runAsUser: 1000
                     runAsGroup: 1000
               statefulSet:
-                highAvailability:
-                  replicas: 3
                 security:
                   podSecurityContext:
                     runAsNonRoot: true
