@@ -69,8 +69,6 @@ spec:
                 persistence:
                   volumeClaim:
                     storageClass: ssd-r1
-            policies:
-              podSecurityStandard: restricted
       destination:
         name: in-cluster
         namespace: preview-pr{{.number}}
@@ -85,6 +83,7 @@ spec:
         managedNamespaceMetadata:
           labels:
             app.kubernetes.io/instance: preview-pr{{.number}}
+            pod-security.kubernetes.io/enforce: privileged
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
