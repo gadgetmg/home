@@ -54,11 +54,9 @@
       },
     },
     alertmanager+: {
-      name: 'main',
       replicas: 1,
     },
     prometheus+: {
-      name: 'main',
       replicas: 1,
       retention: '30d',
       storage: {
