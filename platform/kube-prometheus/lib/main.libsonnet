@@ -20,7 +20,7 @@
   values+:: {
     common+: {
       namespace: 'monitoring',
-      platform: 'kops_coredns',
+      platform: 'kops',
       clusterIssuer: 'letsencrypt',
     },
     grafana+: {
