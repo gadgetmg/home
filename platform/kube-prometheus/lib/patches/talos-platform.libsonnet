@@ -1,0 +1,5 @@
+{
+  kubernetesControlPlane+: {
+    kubeDnsPrometheusDiscoveryService: null,
+  },
+}
