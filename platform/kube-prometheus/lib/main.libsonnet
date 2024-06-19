@@ -16,6 +16,8 @@
 (import 'patches/grafana-oidc-secret.libsonnet') +
 // Persists Prometheus metrics
 (import 'patches/prometheus-pvc.libsonnet') +
+// Patch 'kops' platform to not discover kube-dns
+(import 'patches/talos-platform.libsonnet') +
 {
   values+:: {
     common+: {
