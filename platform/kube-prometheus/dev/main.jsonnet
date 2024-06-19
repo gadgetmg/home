@@ -1,9 +1,9 @@
 local kp =
-  (import '../lib/kube-prometheus.libsonnet') +
+  (import '../lib/main.libsonnet') +
   {
     values+:: {
       common+: {
-        clusterIssuer: 'selfsigned',
+        clusterIssuer: 'cluster-ca',
       },
       grafana+: {
         hostname: 'grafana.dev.local',
@@ -22,13 +22,11 @@ local kp =
         },
       },
       prometheus+: {
-        replicas: 1,
-      },
-      alertmanager+: {
-        replicas: 1,
-      },
-      prometheusAdapter+: {
-        replicas: 1,
+        retention: '1h',
+        storage: {
+          size: '1Gi',
+          storageClassName: 'ssd-r1',
+        },
       },
     },
   };

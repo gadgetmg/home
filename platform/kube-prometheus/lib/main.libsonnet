@@ -4,20 +4,27 @@
 (import 'github.com/prometheus-operator/kube-prometheus/jsonnet/kube-prometheus/addons/all-namespaces.libsonnet') +
 // Add-on for anti-affinity rules
 (import 'github.com/prometheus-operator/kube-prometheus/jsonnet/kube-prometheus/addons/anti-affinity.libsonnet') +
-(import 'mixins.libsonnet') +  // Additional monitoring mixins (Prometheus alerts + Grafana dashboards)
-(import 'namespace.libsonnet') +  // Patch namespace labels
-(import 'gateway.libsonnet') +  // Gateway resource
-(import 'grafana-httproute.libsonnet') +  // HTTPRoute resource for Grafana
-(import 'grafana-oidc-secret.libsonnet') +  // Configures OIDC client secret for Grafana
+// Additional monitoring mixins (Prometheus alerts + Grafana dashboards)
+(import 'patches/mixins.libsonnet') +
+// Patch namespace labels
+(import 'patches/namespace.libsonnet') +
+// Gateway resource
+(import 'patches/gateway.libsonnet') +
+// HTTPRoute resource for Grafana
+(import 'patches/grafana-httproute.libsonnet') +
+// Configures OIDC client secret for Grafana
+(import 'patches/grafana-oidc-secret.libsonnet') +
+// Persists Prometheus metrics
+(import 'patches/prometheus-pvc.libsonnet') +
 {
   values+:: {
     common+: {
       namespace: 'monitoring',
       platform: 'kubeadm',  // Determines how core k8s resources are scraped
-      clusterIssuer: error 'must provide cluster issuer in overlay',
+      clusterIssuer: 'letsencrypt',
     },
     grafana+: {
-      hostname: error 'must provide hostname for grafana in overlay',
+      hostname: 'grafana.seigra.net',
       config+: {
         sections+: {
           auth: {
@@ -33,31 +40,31 @@
             email_attribute_path: 'email',
             login_attribute_path: 'username',
             name_attribute_path: 'full_name',
-            auth_url: error 'must provide generic OAuth auth_url for grafana in overlay',
-            token_url: error 'must provide generic OAuth token_url for grafana in overlay',
-            api_url: error 'must provide generic OAuth api_url for grafana in overlay',
+            auth_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/auth',
+            token_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/token',
+            api_url: 'https://auth.seigra.net/realms/home/protocol/openid-connect/userinfo',
             role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'",
             role_attribute_strict: true,
             tls_skip_verify_insecure: true,
           },
           server: {
-            root_url: error 'must provide server root URL for grafana in overlay',
+            root_url: 'https://grafana.seigra.net',
           },
         },
       },
     },
-    // Requires pod anti-affinity by node
     alertmanager+: {
-      podAntiAffinity: 'hard',
+      name: 'main',
+      replicas: 1,
     },
     prometheus+: {
-      podAntiAffinity: 'hard',
-    },
-    blackboxExporter+: {
-      podAntiAffinity: 'hard',
-    },
-    prometheusAdapter+: {
-      podAntiAffinity: 'hard',
+      name: 'main',
+      replicas: 1,
+      retention: '30d',
+      storage: {
+        size: '100Gi',
+        storageClassName: 'ssd-r3',
+      },
     },
   },
 }

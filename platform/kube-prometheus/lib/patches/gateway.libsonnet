@@ -36,18 +36,18 @@ local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/ma
       kind: 'Certificate',
       metadata: {
         name: 'grafana',
-        namespace: 'monitoring',
+        namespace: $.values.common.namespace,
       },
       spec: {
-        commonName: 'grafana.seigra.net',
+        commonName: $.values.grafana.hostname,
         dnsNames: [
-          'grafana.seigra.net',
+          $.kubePrometheus.gateway.spec.listeners[0].hostname,
         ],
         issuerRef: {
           kind: 'ClusterIssuer',
-          name: 'letsencrypt',
+          name: $.values.common.clusterIssuer,
         },
-        secretName: 'grafana-gateway-tls',
+        secretName: $.kubePrometheus.gateway.spec.listeners[0].tls.certificateRefs[0].name,
       },
     },
   },
