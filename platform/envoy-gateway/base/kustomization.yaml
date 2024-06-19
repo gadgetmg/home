@@ -23,7 +23,7 @@ helmCharts:
   repo: oci://docker.io/envoyproxy
   releaseName: envoy-gateway
   namespace: envoy-gateway-system
-  version: v1.0.1
+  version: v1.0.2
 
 patches:
 - path: patches/deployment-podsecurity.yaml
