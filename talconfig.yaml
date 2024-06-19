@@ -1,3 +1,5 @@
+# renovate: datasource=github-releases depName=budimanjojo/talhelper
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.0.0/pkg/config/schemas/talconfig.json
 clusterName: production
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.7.4
@@ -63,3 +65,4 @@ controlPlane:
   - '@clusterconfig/patches/cilium-cni.yaml'
   - '@clusterconfig/patches/disk-encryption.yaml'
   - '@clusterconfig/patches/pod-security.yaml'
+  - '@clusterconfig/patches/metrics-scraping.yaml'

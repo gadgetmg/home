@@ -20,7 +20,7 @@
   values+:: {
     common+: {
       namespace: 'monitoring',
-      platform: 'kubeadm',  // Determines how core k8s resources are scraped
+      platform: 'kops_coredns',
       clusterIssuer: 'letsencrypt',
     },
     grafana+: {

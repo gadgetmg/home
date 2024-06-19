@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://www.talos.dev/v1.7/schemas/config.schema.json
+machine:
+  systemDiskEncryption:
+    ephemeral:
+      provider: luks2
+      keys:
+      - nodeID: {}
+        slot: 0
+    state:
+      provider: luks2
+      keys:
+      - nodeID: {}
+        slot: 0
