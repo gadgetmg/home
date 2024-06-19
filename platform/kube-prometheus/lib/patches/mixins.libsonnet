@@ -1,11 +1,6 @@
 // Import mixin function
 local mixin = import 'github.com/prometheus-operator/kube-prometheus/jsonnet/kube-prometheus/lib/mixin.libsonnet';
 
-local etcd = mixin({
-  name: 'etcd',
-  mixin: (import 'github.com/etcd-io/etcd/contrib/mixin/mixin.libsonnet'),
-});
-
 local coredns = mixin({
   name: 'coredns',
   mixin: (import 'github.com/povilasv/coredns-mixin/mixin.libsonnet'),
@@ -44,8 +39,7 @@ local externalsecrets = mixin({
 {
   values+:: {
     grafana+: {
-      dashboards+: etcd.grafanaDashboards +
-                   coredns.grafanaDashboards +
+      dashboards+: coredns.grafanaDashboards +
                    certmanager.grafanaDashboards +
                    argocd.grafanaDashboards +
                    cilium.grafanaDashboards +
@@ -53,8 +47,6 @@ local externalsecrets = mixin({
     },
   },
   // Creates new top-level keys for mixins to fit structure used by kube-prometheus
-  etcd:
-    { prometehusRule: etcd.prometheusRules },
   coredns:
     { prometehusRule: coredns.prometheusRules },
   certmanager:
