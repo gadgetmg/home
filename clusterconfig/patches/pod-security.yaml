@@ -1,16 +1,10 @@
-- op: replace
-  path: /cluster/apiServer/admissionControl/0/configuration
-  value:
-    apiVersion: pod-security.admission.config.k8s.io/v1
-    kind: PodSecurityConfiguration
-    defaults:
-      enforce: restricted
-      enforce-version: latest
-      audit: restricted
-      audit-version: latest
-      warn: restricted
-      warn-version: latest
-    exemptions:
-      usernames: []
-      runtimeClasses: []
-      namespaces: [kube-system]
+# yaml-language-server: $schema=https://www.talos.dev/v1.7/schemas/config.schema.json
+cluster:
+  apiServer:
+    admissionControl:
+    - name: PodSecurity
+      configuration:
+        defaults:
+          enforce: restricted
+          audit: restricted
+          warn: restricted
