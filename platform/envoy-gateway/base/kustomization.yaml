@@ -5,15 +5,15 @@ namespace: envoy-gateway-system
 
 resources:
 # renovate: datasource=github-releases depName=envoyproxy/gateway
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
 # renovate: datasource=github-releases depName=envoyproxy/gateway
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
 # renovate: datasource=github-releases depName=envoyproxy/gateway
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoypatchpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoypatchpolicies.yaml
 # renovate: datasource=github-releases depName=envoyproxy/gateway
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
 # renovate: datasource=github-releases depName=envoyproxy/gateway
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.0.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
 - namespace.yaml
 - envoyproxy.yaml
 - gatewayclass.yaml
