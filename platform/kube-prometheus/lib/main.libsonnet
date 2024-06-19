@@ -66,5 +66,8 @@
         storageClassName: 'ssd-r3',
       },
     },
+    prometheusAdapter+: {
+      replicas: 1,
+    },
   },
 }
