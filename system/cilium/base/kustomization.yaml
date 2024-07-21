@@ -6,17 +6,16 @@ helmCharts:
   repo: https://helm.cilium.io
   releaseName: cilium
   namespace: kube-system
-  version: 1.15.6
+  version: 1.16.0-rc.0
   apiVersions:
   - monitoring.coreos.com/v1
+  - gateway.networking.k8s.io/v1/GatewayClass
   valuesFile: values.yaml
 
 patches:
-- patch: |- # Sync resources dependent on other cluster components as late as possible
+- patch: |
     - op: add
-      path: /metadata/annotations
-      value:
-        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "2"
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "1"
   target:
-    group: (monitoring.coreos.com|cert-manager.io)
+    group: (cert-manager.io|monitoring.coreos.com|gateway.networking.k8s.io|.*crossplane.io)

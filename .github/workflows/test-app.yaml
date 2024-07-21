@@ -1,0 +1,26 @@
+name: Test single app
+
+on:
+  workflow_call:
+    inputs:
+      dir:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      dir:
+        description: Path of app
+        required: true
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: DeterminateSystems/nix-installer-action@main
+    - uses: DeterminateSystems/magic-nix-cache-action@main
+    - uses: DeterminateSystems/flake-checker-action@main
+    - name: Test
+      working-directory: ${{ inputs.dir }}
+      run: nix develop --impure --command task test

@@ -1,0 +1,36 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: StoreConfig
+metadata:
+  name: argocd
+spec:
+  defaultScope: argocd
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: argocd-admin
+  labels:
+    seigra.net/roles: admin
+spec:
+  forProvider:
+    description: unrestricted access to all resources
+    name: admin
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: argocd-readonly
+  labels:
+    seigra.net/roles: readonly
+spec:
+  forProvider:
+    description: read-only access to all resources
+    name: readonly
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd

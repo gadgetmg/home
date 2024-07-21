@@ -19,12 +19,13 @@ spec:
           - path: root/dev
           values:
             name: '{{index .path.segments 1 }}'
+            stack: '{{index .path.segments 0 }}'
             type: default
       - git:
           repoURL: http://10.5.0.254/git/repo.git
           revision: HEAD
           directories:
-          - path: platform/kube-prometheus/dev
+          - path: system/kube-prometheus/dev
           values:
             type: jsonnet
       - git:
@@ -34,9 +35,27 @@ spec:
           - path: root/dev
           values:
             name: root
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+      - matchExpressions:
+        - key: seigra.net/stack
+          operator: In
+          values:
+          - system
+      - matchExpressions:
+        - key: seigra.net/stack
+          operator: In
+          values:
+          - apps
   template:
     metadata:
       name: '{{.values.name}}'
+      labels:
+        seigra.net/stack: '{{.values.stack}}'
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .
     spec:
       source:
         path: '{{.path.path}}'
@@ -53,6 +72,9 @@ spec:
           selfHeal: true
   templatePatch: |
     {{- if eq .values.type "jsonnet" }}
+    metadata:
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: .;/vendor
     spec:
       source:
         directory:

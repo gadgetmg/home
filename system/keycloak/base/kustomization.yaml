@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: keycloak
+
+resources:
+- namespace.yaml
+# Keycloak Operator CRDs
+# renovate: datasource=github-tags depName=keycloak/keycloak-k8s-resources
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.6/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+# renovate: datasource=github-tags depName=keycloak/keycloak-k8s-resources
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.6/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+# Keycloak Operator
+# renovate: datasource=github-tags depName=keycloak/keycloak-k8s-resources
+- https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.6/kubernetes/kubernetes.yml
+- database.yaml
+- certificate.yaml
+- keycloak.yaml
+- gateway.yaml
+- providerconfig.yaml
+- home/realm.yaml
+- home/groups.yaml
+- home/roles.yaml
+- clusterpolicy.yaml
+
+patches:
+- patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "1"
+  target:
+    group: (cert-manager.io|monitoring.coreos.com|gateway.networking.k8s.io|.*crossplane.io|postgresql.cnpg.io)
+- patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "2"
+  target:
+    group: k8s.keycloak.org
+    kind: Keycloak
+- patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "3"
+  target:
+    group: .*crossplane.io

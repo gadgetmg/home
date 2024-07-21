@@ -23,11 +23,15 @@ helmCharts:
   valuesFile: trust-manager.values.yaml
 
 patches:
-- patch: |-
+- patch: |
     - op: add
-      path: /metadata/annotations
-      value:
-        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "1"
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "1"
   target:
-    group: monitoring.coreos.com
+    group: (cert-manager.io|monitoring.coreos.com|gateway.networking.k8s.io|.*crossplane.io)
+- patch: |
+    - op: add
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "1"
+  target:
+    labelSelector: app.kubernetes.io/instance=trust-manager

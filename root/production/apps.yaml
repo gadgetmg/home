@@ -24,7 +24,7 @@ spec:
           repoURL: git@github.com:gadgetmg/home.git
           revision: HEAD
           directories:
-          - path: platform/kube-prometheus/production
+          - path: system/kube-prometheus/production
           values:
             type: jsonnet
       - git:

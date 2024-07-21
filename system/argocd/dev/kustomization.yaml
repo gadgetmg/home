@@ -5,7 +5,14 @@ namespace: argocd
 
 resources:
 - ../base
+- bundle.yaml
 - https://github.com/argoproj/argo-cd/manifests/base/redis?ref=v2.11.3
+
+images:
+- name: quay.io/argoproj/argocd
+  newName: quay.io/argoproj/argocd
+  # renovate: datasource=github-releases depName=argoproj/argo-cd
+  newTag: v2.11.3
 
 secretGenerator:
 - name: argocd-sops-age
@@ -19,13 +26,40 @@ configMapGenerator:
 - name: argocd-cm
   behavior: merge
   files:
-  - config/oidc.config
+  - config/dex.config
   literals:
   - oidc.tls.insecure.skip.verify="true"
   - url=https://argocd.dev.local
 
 patches:
-- patch: |- # Use self-signed cert for argocd.dev.local in dev
+- patch: |
+    apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+    kind: Client
+    metadata:
+      name: argocd
+    spec:
+      forProvider:
+        rootUrl: https://argocd.dev.local
+        validRedirectUris:
+        - https://argocd.dev.local/api/dex/callback
+- patch: | # Trust cluster-ca CA certificate
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: argocd-dex-server
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dex
+            volumeMounts:
+            - name: ca-certificates
+              mountPath: /etc/ssl/certs
+          volumes:
+          - name: ca-certificates
+            configMap:
+              name: argocd-dex-server-cluster-ca
+- patch: | # Use self-signed cert for argocd.dev.local in dev
     - op: replace
       path: /metadata/annotations/cert-manager.io~1cluster-issuer
       value: selfsigned
@@ -35,14 +69,14 @@ patches:
   target:
     kind: Gateway
     name: argocd
-- patch: |- # Use self-signed cert for argocd.dev.local in dev
+- patch: | # Use self-signed cert for argocd.dev.local in dev
     - op: replace
       path: /spec/hostnames/0
       value: argocd.dev.local
   target:
     kind: HTTPRoute
     name: argocd-server
-- patch: |- # Remove anti-affinity rules for redis-ha in dev
+- patch: | # Remove anti-affinity rules for redis-ha in dev
     - op: remove
       path: /spec/template/spec/affinity
   target:

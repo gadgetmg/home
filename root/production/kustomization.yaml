@@ -3,5 +3,4 @@ kind: Kustomization
 
 resources:
 - apps.yaml
-- vcluster-argocd-secret-sync-clusterpolicy.yaml
 - previews.yaml

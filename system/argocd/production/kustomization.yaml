@@ -7,6 +7,12 @@ resources:
 - ../base
 - https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.11.3
 
+images:
+- name: quay.io/argoproj/argocd
+  newName: quay.io/argoproj/argocd
+  # renovate: datasource=github-releases depName=argoproj/argo-cd
+  newTag: v2.11.3
+
 patches:
 # renovate: datasource=github-releases depName=argoproj/argo-cd
 - path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.11.3/manifests/ha/base/overlays/argocd-repo-server-deployment.yaml

@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:argocd:apply
+    cmds:
+    - task: default-apply

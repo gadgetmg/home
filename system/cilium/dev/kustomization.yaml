@@ -3,7 +3,8 @@ kind: Kustomization
 
 resources:
 - ../base
-- loadbalancer.yaml
+- ippool.yaml
+- l2announcement.yaml
 
 replicas:
 - name: cilium-operator
