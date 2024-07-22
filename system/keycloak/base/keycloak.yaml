@@ -1,0 +1,26 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+spec:
+  instances: 2
+  db:
+    vendor: postgres
+    host: keycloak-db-rw
+    usernameSecret:
+      name: keycloak-db-app
+      key: username
+    passwordSecret:
+      name: keycloak-db-app
+      key: password
+  http:
+    tlsSecret: keycloak-tls
+  ingress:
+    enabled: false
+  hostname:
+    hostname: auth.seigra.net
+  features:
+    enabled:
+    - account3
+    disabled:
+    - account2

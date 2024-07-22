@@ -11,13 +11,13 @@ helmCharts:
     domain: placeholder.name
 
 patches:
-- patch: |- # Remove ConfigMap templated by helm
+- patch: | # Remove ConfigMap templated by helm
     $patch: delete
     apiVersion: v1
     kind: ConfigMap
     metadata:
       name: k8s-gateway
-- patch: |- # Remove checksum of config templated by helm
+- patch: | # Remove checksum of config templated by helm
     - op: remove
       path: /spec/template/metadata/annotations/checksum~1config
   target:

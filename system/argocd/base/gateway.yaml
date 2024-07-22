@@ -4,35 +4,15 @@ metadata:
   name: argocd
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "1"
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
-  gatewayClassName: envoy-gateway
+  gatewayClassName: cilium
   listeners:
-  - allowedRoutes:
-      namespaces:
-        from: Same
+  - name: argocd
     hostname: argocd.seigra.net
-    name: argocd
     port: 443
     protocol: HTTPS
     tls:
       certificateRefs:
-      - group: ''
-        kind: Secret
-        name: argocd-gateway-tls
+      - name: argocd-gateway-tls
       mode: Terminate
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: argocd
-  namespace: argocd
-spec:
-  commonName: argocd.seigra.net
-  dnsNames:
-  - argocd.seigra.net
-  issuerRef:
-    kind: ClusterIssuer
-    name: letsencrypt
-  secretName: argocd-gateway-tls

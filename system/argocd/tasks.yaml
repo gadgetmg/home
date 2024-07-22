@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:gateway-api:apply-crds
+    - :system:k8s-gateway:apply
+    - :system:kube-prometheus:apply-crds
+    - :system:crossplane:apply
+    - :system:kyverno:apply
+    - :system:cert-manager:apply
+    cmds:
+    - task: default-apply

@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:cnpg:apply
+    - :system:crossplane:apply
+    - :system:k8s-gateway:apply
+    - :system:kyverno:apply
+    - :system:piraeus:apply
+    - :system:keycloak:apply-crds
+    cmds:
+    - task: default-apply
+    - kfilt -f {{.MANIFESTS}} -k Cluster | kubectl wait --for=condition=Ready --timeout=2m -f -
+    - kfilt -f {{.MANIFESTS}} -k Keycloak | kubectl wait --for=condition=Ready --timeout=2m -f -
+    # wait for crossplane credentials to be created by kyverno
+    - kfilt -f {{.MANIFESTS}} -k Realm | kubectl wait --for=condition=Ready --timeout=5m -f -
+    - kfilt -f {{.MANIFESTS}} -k Group | kubectl wait --for=condition=Ready --timeout=5m -f -
+    - kfilt -f {{.MANIFESTS}} -k Memberships | kubectl wait --for=condition=Ready --timeout=5m -f -
+    status:
+    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl diff --server-side -f -
+    - kfilt -f {{.MANIFESTS}} -k Cluster | kubectl wait --for=condition=Ready --timeout=0 -f -
+    - kfilt -f {{.MANIFESTS}} -k Keycloak | kubectl wait --for=condition=Ready --timeout=0 -f -
+    - kfilt -f {{.MANIFESTS}} -k Realm | kubectl wait --for=condition=Ready --timeout=0 -f -
+    - kfilt -f {{.MANIFESTS}} -k Group | kubectl wait --for=condition=Ready --timeout=0 -f -
+    - kfilt -f {{.MANIFESTS}} -k Memberships | kubectl wait --for=condition=Ready --timeout=0 -f -

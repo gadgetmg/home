@@ -3,9 +3,6 @@ kind: HTTPRoute
 metadata:
   name: argocd-server
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   hostnames:
   - argocd.seigra.net
@@ -16,12 +13,9 @@ spec:
     sectionName: argocd
   rules:
   - backendRefs:
-    - group: ''
-      kind: Service
+    - kind: Service
       name: argocd-server
-      namespace: argocd
       port: 80
-      weight: 1
     matches:
     - path:
         type: PathPrefix

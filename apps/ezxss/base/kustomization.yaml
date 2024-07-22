@@ -10,12 +10,3 @@ resources:
 - deployment.yaml
 - service.yaml
 
-patches:
-- patch: |-
-    - op: add
-      path: /metadata/annotations
-      value:
-        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "1"
-  target:
-    group: k8s.mariadb.com

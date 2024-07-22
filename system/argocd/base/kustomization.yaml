@@ -3,12 +3,6 @@ kind: Kustomization
 
 namespace: argocd
 
-images:
-- name: quay.io/argoproj/argocd
-  newName: quay.io/argoproj/argocd
-  # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.11.3
-
 resources:
 - namespace.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
@@ -16,39 +10,38 @@ resources:
 - gateway.yaml
 - server-httproute.yaml
 - servicemonitors.yaml
+- keycloak/client.yaml
+- keycloak/protocolmapper.yaml
+- keycloak/roles.yaml
+- clusterpolicies.yaml
 
 configMapGenerator:
 - name: argocd-cm
   behavior: merge
   files:
-  - config/oidc.config
+  - config/dex.config
   - config/resource.exclusions
   - config/resource.customizations
   - config/resource.customizations.ignoreDifferences.all
   literals:
   - kustomize.buildOptions=--enable-alpha-plugins --enable-exec --enable-helm
   - url=https://argocd.seigra.net
+  - timeout.reconciliation.jitter=1m
 - name: argocd-cmd-params-cm
   behavior: merge
   literals:
   - server.insecure=true
   - controller.diff.server.side=true
+  - applicationsetcontroller.enable.progressive.syncs=true
 
 patches:
-- patch: |-
-    $patch: delete
-    apiVersion: kustomize.config.k8s.io/v1beta1
-    kind: Kustomization
-    metadata:
-      name: any
+- path: patches/ksops.yaml
+- path: patches/delete.yaml
   target:
-    name: argocd-(dex-server|redis)($|-network-policy)
-- path: install-ksops.patch.yaml
-- patch: |-
+    name: argocd-redis.*
+- patch: |
     - op: add
-      path: /metadata/annotations
-      value:
-        argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-        argocd.argoproj.io/sync-wave: "1"
+      path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+      value: "1"
   target:
-    group: (monitoring.coreos.com)
+    group: (cert-manager.io|monitoring.coreos.com|gateway.networking.k8s.io|.*crossplane.io)

@@ -2,3 +2,4 @@ formatter:
   type: basic
   retain_line_breaks: true
   indentless_arrays: true
+  drop_merge_tag: true

@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
 - ../base
-- loadbalancer.yaml
+- ippool.yaml
+- bgp.yaml

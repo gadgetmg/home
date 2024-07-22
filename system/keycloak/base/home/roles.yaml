@@ -1,0 +1,13 @@
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Roles
+metadata:
+  name: admin-group-roles
+spec:
+  forProvider:
+    groupIdRef:
+      name: home-admins
+    realmIdRef:
+      name: home
+    roleIdsSelector:
+      matchLabels:
+        seigra.net/roles: admin

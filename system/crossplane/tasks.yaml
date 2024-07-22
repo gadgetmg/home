@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  apply:
+    deps: [build, apply-crds]
+    preconditions:
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
+    cmds:
+    - kfilt -K CustomResourceDefinition -x group=pkg.crossplane.io -f {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status -f -
+    - kfilt -i group=pkg.crossplane.io -f {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kubectl wait --for=condition=Installed Provider --all -n crossplane-system --timeout=1m
+    status:
+    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl diff --server-side -f -
+    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status --timeout=1s -f -

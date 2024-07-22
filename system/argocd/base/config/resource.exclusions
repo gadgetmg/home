@@ -4,3 +4,4 @@
   - CiliumIdentity
   clusters:
   - "*"
+# vim: set ft=yaml

@@ -5,7 +5,7 @@ resources:
 - ../base
 
 patches:
-- patch: |- # Explicity set IP to use for the load balancer
+- patch: | # Explicity set IP to use for the load balancer
     - op: add
       path: /metadata/annotations
       value:

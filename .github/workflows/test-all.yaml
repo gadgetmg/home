@@ -1,0 +1,27 @@
+name: Test all apps
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  get-all-apps:
+    name: Get all apps
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.dirs.outputs.dirs }}
+    steps:
+    - uses: actions/checkout@v4
+    - id: dirs
+      run: echo "matrix=$(ls -d apps/* system/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+  tests:
+    name: Run tests
+    needs: [get-all-apps]
+    strategy:
+      matrix:
+        dir: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+      fail-fast: false
+    uses: ./.github/workflows/test-app.yaml
+    with:
+      dir: ${{ matrix.dir }}

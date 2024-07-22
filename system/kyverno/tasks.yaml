@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:kube-prometheus:apply-crds
+    preconditions:
+    - kubectl config current-context | grep @{{.ENVIRONMENT}}
+    cmds:
+    - task: build
+    - task: apply-crds
+    - cmd: kubectl create namespace monitoring
+      ignore_error: true
+    # Kubectl has no understanding of Helm hooks, thus remove them
+    - kfilt -K CustomResourceDefinition -K Job -f {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status -f -
+    status:
+    - kubectl get namespace/monitoring
+    - kfilt -K CustomResourceDefinition -K Job -f {{.MANIFESTS}} | kubectl diff --server-side -f -
+    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status --timeout=1s -f -

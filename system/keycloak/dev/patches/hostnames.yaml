@@ -1,0 +1,39 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: keycloak
+spec:
+  hostname:
+    hostname: auth.dev.local
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: keycloak
+spec:
+  commonName: auth.dev.local
+  dnsNames:
+  - auth.dev.local
+  issuerRef:
+    name: cluster-ca
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: keycloak
+spec:
+  listeners:
+  - name: keycloak
+    hostname: auth.dev.local
+    port: 443
+    protocol: TLS
+    tls:
+      mode: Passthrough
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
+metadata:
+  name: keycloak
+spec:
+  hostnames:
+  - auth.dev.local
