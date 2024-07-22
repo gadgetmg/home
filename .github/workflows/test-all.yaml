@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - id: dirs
-      run: echo "matrix=$(ls -d apps/* system/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
+      run: echo "dirs=$(ls -d apps/* system/* | jq --raw-input --slurp --compact-output 'split("\n")[:-1]')" >> ${GITHUB_OUTPUT}
   tests:
     name: Run tests
     needs: [get-all-apps]
