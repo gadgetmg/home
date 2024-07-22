@@ -9,7 +9,7 @@ helmCharts:
   repo: https://charts.external-secrets.io
   releaseName: external-secrets
   namespace: external-secrets
-  version: 0.9.19
+  version: 0.9.20
   apiVersions:
   - monitoring.coreos.com/v1
   valuesFile: values.yaml
