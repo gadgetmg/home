@@ -20,7 +20,7 @@ jobs:
     needs: [get-all-apps]
     strategy:
       matrix:
-        dir: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+        dir: ${{ fromJSON(needs.get-all-apps.outputs.matrix) }}
       fail-fast: false
     uses: ./.github/workflows/test-app.yaml
     with:
