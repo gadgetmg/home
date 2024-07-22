@@ -5,5 +5,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  cidrs:
+  blocks:
   - cidr: 10.1.3.0/24
