@@ -40,6 +40,15 @@ patches:
         ports:
         - port: 9101
           protocol: TCP
+- target:
+    kind: Deployment
+    name: argocd-redis-ha-haproxy
+  patch: |
+    - op: replace
+      path: /spec/strategy/rollingUpdate
+      value:
+        maxSurge: 0
+        maxUnavailable: 1
 
 generators:
 - secrets-generator.yaml
