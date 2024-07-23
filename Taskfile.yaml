@@ -5,6 +5,7 @@ output: prefixed
 
 includes:
   apps:ezxss: apps/ezxss/tasks.yaml
+  apps:paperless-ngx: apps/paperless-ngx/tasks.yaml
   root: root/tasks.yaml
   system:argocd: system/argocd/tasks.yaml
   system:cert-manager: system/cert-manager/tasks.yaml

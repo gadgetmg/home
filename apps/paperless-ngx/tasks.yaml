@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:cnpg:apply
+    - :system:piraeus:apply-crds
+    - :system:kyverno:apply
+    - :system:gateway-api:apply
+    - :system:keycloak:apply
+    - :system:cert-manager:apply
+    - :system:external-secrets:apply
+    cmds:
+    - task: default-apply

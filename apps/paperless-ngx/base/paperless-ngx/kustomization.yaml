@@ -1,0 +1,44 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: paperless-ngx
+
+resources:
+- pvcs.yaml
+- secrets.yaml
+- bundle.yaml
+- deployment.yaml
+- service.yaml
+- gateway.yaml
+- httproute.yaml
+- keycloak.yaml
+- clusterpolicy.yaml
+
+configMapGenerator:
+- name: paperless-ngx-config
+  literals:
+  - PAPERLESS_ADMIN_USER=root
+  - PAPERLESS_APPS=allauth.socialaccount.providers.openid_connect
+  - PAPERLESS_DISABLE_REGULAR_LOGIN=True
+  - PAPERLESS_REDIS=redis://paperless-ngx-redis:6379
+  - PAPERLESS_SOCIAL_AUTO_SIGNUP=True
+  - PAPERLESS_TIKA_ENABLED=1
+  - PAPERLESS_TIKA_ENDPOINT=http://paperless-ngx-tika:9998
+  - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://paperless-ngx-gotenberg:3000
+  - PAPERLESS_URL=https://paperless.seigra.net
+  - REQUESTS_CA_BUNDLE=/bundle.pem
+- name: paperless-ngx-socialaccount-config
+  literals:
+  - name=seigra.net
+  - client_id=paperless-ngx
+  - provider_id=keycloak
+  - server_url=https://auth.seigra.net/realms/home/.well-known/openid-configuration
+  options:
+    disableNameSuffixHash: true
+
+labels:
+- pairs:
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/component: paperless-ngx
+  includeSelectors: true
+  includeTemplates: true
