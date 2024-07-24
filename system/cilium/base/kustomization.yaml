@@ -6,7 +6,7 @@ helmCharts:
   repo: https://helm.cilium.io
   releaseName: cilium
   namespace: kube-system
-  version: 1.16.0-rc.2
+  version: 1.16.0
   apiVersions:
   - monitoring.coreos.com/v1
   - gateway.networking.k8s.io/v1/GatewayClass
