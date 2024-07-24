@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx-redis
+spec:
+  template:
+    spec:
+      containers:
+      - name: redis
+        image: valkey/valkey
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+          runAsUser: 999
+          runAsGroup: 999
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault

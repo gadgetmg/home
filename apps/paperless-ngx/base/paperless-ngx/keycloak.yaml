@@ -1,0 +1,17 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: paperless-ngx
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: paperless-ngx
+    realmIdRef:
+      name: home
+    standardFlowEnabled: true
+    rootUrl: https://paperless.seigra.net
+    validRedirectUris:
+    - https://paperless.seigra.net/accounts/oidc/keycloak/login/callback/
+  publishConnectionDetailsTo:
+    name: keycloak-client-paperless-ngx

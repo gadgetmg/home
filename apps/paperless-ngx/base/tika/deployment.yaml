@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx-tika
+spec:
+  template:
+    spec:
+      containers:
+      - name: tika
+        image: ghcr.io/paperless-ngx/tika
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        readinessProbe:
+          httpGet:
+            port: 9998
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
