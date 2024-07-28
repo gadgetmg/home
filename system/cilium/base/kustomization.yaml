@@ -19,3 +19,12 @@ patches:
       value: "1"
   target:
     group: (cert-manager.io|monitoring.coreos.com|gateway.networking.k8s.io|.*crossplane.io)
+- patch: |
+    - op: replace
+      path: /spec/template/spec/securityContext
+      value:
+        seccompProfile:
+          type: RuntimeDefault
+  target:
+    name: hubble-generate-certs
+    kind: Job
