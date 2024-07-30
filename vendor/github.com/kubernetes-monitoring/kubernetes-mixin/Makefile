@@ -26,10 +26,7 @@ $(JSONNET_VENDOR): $(JB_BIN) jsonnetfile.json
 	$(JB_BIN) install
 
 .PHONY: fmt
-fmt: jsonnet-fmt markdownfmt
-
-.PHONY: jsonnet-fmt
-jsonnet-fmt: $(JSONNETFMT_BIN)
+fmt: $(JSONNETFMT_BIN) markdownfmt
 	@find . -name 'vendor' -prune -o -name '*.libsonnet' -print -o -name '*.jsonnet' -print | \
 		xargs -n 1 -- $(JSONNETFMT_BIN) $(JSONNETFMT_ARGS) -i
 
