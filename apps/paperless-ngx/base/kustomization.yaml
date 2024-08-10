@@ -17,7 +17,7 @@ images:
 - name: gotenberg/gotenberg
   newTag: 8.9.0
 - name: ghcr.io/paperless-ngx/paperless-ngx
-  newTag: 2.11.3
+  newTag: 2.11.4
 
 labels:
 - pairs:
