@@ -5,23 +5,23 @@ namespace: argocd
 
 resources:
 - ../base
-- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.12.1
+- https://github.com/argoproj/argo-cd/manifests/ha/base/redis-ha?ref=v2.12.2
 
 images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
   # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.12.1
+  newTag: v2.12.2
 
 patches:
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.1/manifests/ha/base/overlays/argocd-repo-server-deployment.yaml
+- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.2/manifests/ha/base/overlays/argocd-repo-server-deployment.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.1/manifests/ha/base/overlays/argocd-server-deployment.yaml
+- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.2/manifests/ha/base/overlays/argocd-server-deployment.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.1/manifests/ha/base/overlays/argocd-application-controller-statefulset.yaml
+- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.2/manifests/ha/base/overlays/argocd-application-controller-statefulset.yaml
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.1/manifests/ha/base/overlays/argocd-cmd-params-cm.yaml
+- path: https://raw.githubusercontent.com/argoproj/argo-cd/v2.12.2/manifests/ha/base/overlays/argocd-cmd-params-cm.yaml
 - target:
     kind: NetworkPolicy
     name: argocd-redis-ha-proxy-network-policy
