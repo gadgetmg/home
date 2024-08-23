@@ -7,9 +7,9 @@ resources:
 # renovate: datasource=github-releases depName=kubevirt/kubevirt
 - https://github.com/kubevirt/kubevirt/releases/download/v1.3.0/kubevirt-cr.yaml
 # renovate: datasource=github-releases depName=kubevirt/containerized-data-importer
-- https://github.com/kubevirt/containerized-data-importer/releases/download/v1.60.1/cdi-operator.yaml
+- https://github.com/kubevirt/containerized-data-importer/releases/download/v1.60.2/cdi-operator.yaml
 # renovate: datasource=github-releases depName=kubevirt/containerized-data-importer
-- https://github.com/kubevirt/containerized-data-importer/releases/download/v1.60.1/cdi-cr.yaml
+- https://github.com/kubevirt/containerized-data-importer/releases/download/v1.60.2/cdi-cr.yaml
 
 patches:
 # Premptively removes the v1alpha1 version of cdis.cdi.kubevirt.io as cdi-operator will remove it
