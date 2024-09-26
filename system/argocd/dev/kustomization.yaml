@@ -6,13 +6,13 @@ namespace: argocd
 resources:
 - ../base
 - bundle.yaml
-- https://github.com/argoproj/argo-cd/manifests/base/redis?ref=v2.12.3
+- https://github.com/argoproj/argo-cd/manifests/base/redis?ref=v2.12.4
 
 images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
   # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.12.3
+  newTag: v2.12.4
 
 secretGenerator:
 - name: argocd-sops-age
