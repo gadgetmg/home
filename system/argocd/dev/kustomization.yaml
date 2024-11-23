@@ -12,7 +12,7 @@ images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
   # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.12.4
+  newTag: v2.13.1
 
 secretGenerator:
 - name: argocd-sops-age
