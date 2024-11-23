@@ -10,8 +10,10 @@ resources:
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gatewayclasses.yaml
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_gateways.yaml
-# renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-- https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
+# Hold GRPCRoute on v1.1.0 as dropping v1alpha2 breaks k8s-gateway
+# https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.2.0
+# https://github.com/ori-edge/k8s_gateway/issues/279
+- https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.1.0/config/crd/experimental/gateway.networking.k8s.io_grpcroutes.yaml
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/standard/gateway.networking.k8s.io_httproutes.yaml
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
@@ -24,11 +26,10 @@ resources:
 - https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_udproutes.yaml
 
 patches:
-- patch: | # Force replace BackendTLSPolicy CRDs to downgrade from v1.1.0 to v1.0.0
+- patch: | # Force replace CRDs to allow downgrades
     - op: add
       path: /metadata/annotations/argocd.argoproj.io~1sync-options
       value:
         Replace=true
   target:
     kind: CustomResourceDefinition
-    name: backendtlspolicies.gateway.networking.k8s.io

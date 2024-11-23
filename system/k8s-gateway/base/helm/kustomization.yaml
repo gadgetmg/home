@@ -23,37 +23,3 @@ patches:
   target:
     kind: Deployment
     name: k8s-gateway
-- patch: |-
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRole
-    metadata:
-      name: k8s-gateway
-      labels:
-        app.kubernetes.io/name: k8s-gateway
-        app.kubernetes.io/instance: k8s-gateway
-    rules:
-    - apiGroups:
-      - ""
-      resources:
-      - services
-      - namespaces
-      verbs:
-      - list
-      - watch
-    - apiGroups:
-      - extensions
-      - networking.k8s.io
-      resources:
-      - ingresses
-      verbs:
-      - list
-      - watch
-    - apiGroups: 
-      - gateway.networking.k8s.io 
-      resources: 
-      - gateways
-      - httproutes
-      - tlsroutes
-      verbs: 
-      - watch 
-      - list
