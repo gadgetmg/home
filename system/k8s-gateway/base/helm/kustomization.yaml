@@ -51,6 +51,7 @@ patches:
     - apiGroups: 
       - gateway.networking.k8s.io 
       resources: 
+      - gateways
       - grpcroutes
       - httproutes
       - tlsroutes
