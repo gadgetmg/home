@@ -120,7 +120,7 @@ tasks:
     - cmd: kfilt -k Namespace -f {{.MANIFESTS}} | kubectl apply --server-side -f -
       ignore_error: true
     - kfilt -k ClusterPolicy -f {{.MANIFESTS}} | kubectl delete -f - --ignore-not-found
-    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl apply --server-side -f -
+    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl apply --server-side --force-conflicts -f -
     - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status --timeout=5m -f -
     status:
     - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl diff --server-side -f -
