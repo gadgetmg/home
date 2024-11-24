@@ -2,30 +2,32 @@ grafana:
   enabled: true
   namespace: monitoring
 admissionController:
-  clusterRole:
-    extraResources:
-    - apiGroups:
-      - '*'
-      resources:
-      - '*'
-      verbs:
-      - get
-      - list
-      - watch
+  rbac:
+    clusterRole:
+      extraResources:
+      - apiGroups:
+        - '*'
+        resources:
+        - '*'
+        verbs:
+        - get
+        - list
+        - watch
   replicas: 3
   serviceMonitor:
     enabled: true
 backgroundController:
-  clusterRole:
-    extraResources:
-    - apiGroups:
-      - '*'
-      resources:
-      - '*'
-      verbs:
-      - get
-      - list
-      - watch
+  rbac:
+    clusterRole:
+      extraResources:
+      - apiGroups:
+        - '*'
+        resources:
+        - '*'
+        verbs:
+        - get
+        - list
+        - watch
   replicas: 2
   serviceMonitor:
     enabled: true
@@ -34,16 +36,17 @@ cleanupController:
   serviceMonitor:
     enabled: true
 reportsController:
-  clusterRole:
-    extraResources:
-    - apiGroups:
-      - '*'
-      resources:
-      - '*'
-      verbs:
-      - get
-      - list
-      - watch
+  rbac:
+    clusterRole:
+      extraResources:
+      - apiGroups:
+        - '*'
+        resources:
+        - '*'
+        verbs:
+        - get
+        - list
+        - watch
   replicas: 2
   serviceMonitor:
     enabled: true
