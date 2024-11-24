@@ -3,7 +3,7 @@ grafana:
   namespace: monitoring
 admissionController:
   rbac:
-    clusterRole:
+    coreClusterRole:
       extraResources:
       - apiGroups:
         - '*'
@@ -18,7 +18,7 @@ admissionController:
     enabled: true
 backgroundController:
   rbac:
-    clusterRole:
+    coreClusterRole:
       extraResources:
       - apiGroups:
         - '*'
@@ -37,7 +37,7 @@ cleanupController:
     enabled: true
 reportsController:
   rbac:
-    clusterRole:
+    coreClusterRole:
       extraResources:
       - apiGroups:
         - '*'
