@@ -11,7 +11,7 @@ System stack components are fundamental to the cluster delivering core functiona
 - [`system/argocd`](system/argocd) - Continuous delivery of this repository using [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 - [`system/cert-manager`](system/cert-manager) - Manages PKI certificates in the cluster with the [cert-manager](https://cert-manager.io/) and [trust-manager](https://cert-manager.io/docs/trust/trust-manager/) projects
 - [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling all networking including access from outside the cluster using BGP and the [Gateway API](https://gateway-api.sigs.k8s.io/)
-- [`system/cloudflare-operator`](system/cloudflare-operator) - [Cloudflare Operator](https://github.com/adyanth/cloudflare-operator) for Cloudflare tunnels via [cloudflared](https://github.com/cloudflare/cloudflared).
+- [`system/cloudflare-gateway`](system/cloudflare-gateway) - [Cloudflare Gateway](https://github.com/pl4nty/cloudflare-kubernetes-gateway/tree/main) for Cloudflare tunnels via [cloudflared](https://github.com/cloudflare/cloudflared) and the Gateway API.
 - [`system/cnpg`](system/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`system/crossplane`](system/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
 - [`system/external-secrets`](system/external-secrets) - [External Secrets Operator](https://external-secrets.io/) for secrets management
