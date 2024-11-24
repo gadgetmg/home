@@ -5,6 +5,14 @@ metadata:
 spec:
   template:
     spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          # Keeps all pods on same node to allow for sharing RWO volume during RollingUpdate
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: paperless-ngx
+            topologyKey: kubernetes.io/hostname
       containers:
       - name: paperless-ngx
         image: ghcr.io/paperless-ngx/paperless-ngx
