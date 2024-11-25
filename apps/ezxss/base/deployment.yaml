@@ -27,7 +27,7 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-      - image: ghcr.io/gadgetmg/ezxss:4.2@sha256:219ffd36132b338668f18f142f2bc5b7d4aabaf3fd337a108fc37240da07dac5
+      - image: ghcr.io/gadgetmg/ezxss
         name: ezxss
         ports:
         - containerPort: 8080
