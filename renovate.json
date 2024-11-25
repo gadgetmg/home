@@ -14,9 +14,12 @@
       "fileMatch": [
         "\\.(yaml|sh)$"
       ],
+      "matchStringsStrategy": "recursive",
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: registryUrl=(?<registryUrl>.*?))?\\s+.+(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-      ]
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: registryUrl=(?<registryUrl>.*?))?\\n[^\\n]+",
+        "(?<currentValue>v\\d+\\.\\d+\\.\\d+[\\w\\-\\.]*)(@(?<currentDigest>(?:sha256:)?[a-f0-9]+))?"
+      ],
+      "autoReplaceStringTemplate": "{{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}"
     }
   ]
 }
