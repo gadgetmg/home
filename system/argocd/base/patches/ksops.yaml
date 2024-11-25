@@ -14,7 +14,7 @@ spec:
       initContainers:
       - name: install-ksops
         # renovate: datasource=docker depName=viaductoss/ksops
-        image: viaductoss/ksops:v4.3.2
+        image: viaductoss/ksops:v4.3.2@sha256:21cb93a5a8bc8f6a9e21991fde99653728585563a879fc2f7939d96de524747c
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
