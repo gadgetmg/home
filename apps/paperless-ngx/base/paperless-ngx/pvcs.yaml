@@ -3,21 +3,21 @@ kind: PersistentVolumeClaim
 metadata:
   name: paperless-ngx-data
 spec:
-  storageClassName: ssd-r3
+  storageClassName: hdd-r2
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 200Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: paperless-ngx-media
 spec:
-  storageClassName: ssd-r3
+  storageClassName: hdd-r2
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 200Gi

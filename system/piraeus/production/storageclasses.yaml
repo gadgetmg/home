@@ -64,7 +64,7 @@ metadata:
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
-  linstor.csi.linbit.com/autoPlace: "3"
+  linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/storagePool: hdd
   linstor.csi.linbit.com/layerList: drbd luks storage
   DrbdOptions/Disk/disk-flushes: "no"
