@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/snapshot.storage.k8s.io/volumesnapshotclass_v1.json
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: linstor-csi-velero
+  labels:
+    velero.io/csi-volumesnapshot-class: "true"
+driver: linstor.csi.linbit.com
+deletionPolicy: Retain
+parameters:
+  snap.linstor.csi.linbit.com/type: S3
+  snap.linstor.csi.linbit.com/remote-name: minio
+  snap.linstor.csi.linbit.com/allow-incremental: "true"
+  snap.linstor.csi.linbit.com/s3-bucket: velero
+  snap.linstor.csi.linbit.com/s3-endpoint: https://truenas.lan.seigra.net:9000
+  snap.linstor.csi.linbit.com/s3-use-path-style: "true"
+  snap.linstor.csi.linbit.com/s3-signing-region: minio
+  csi.storage.k8s.io/snapshotter-secret-name: linstor-csi-velero
+  csi.storage.k8s.io/snapshotter-secret-namespace: velero

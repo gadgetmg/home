@@ -19,6 +19,7 @@ includes:
   system:kyverno: system/kyverno/tasks.yaml
   system:mariadb-operator: system/mariadb-operator/tasks.yaml
   system:piraeus: system/piraeus/tasks.yaml
+  system:velero: system/velero/tasks.yaml
 
 run: when_changed
 

@@ -23,6 +23,7 @@ System stack components are fundamental to the cluster delivering core functiona
 - [`system/kyverno`](system/kyverno) - [Kyverno](https://kyverno.io) Kubernetes policy engine
 - [`system/mariadb-operator`](system/mariadb-operator) - [MariaDB Operator](https://github.com/mariadb-operator/mariadb-operator) for MariaDB databases.
 - [`system/piraeus`](system/piraeus) - Container Storage Interface (CSI) plugin for [LINSTOR](https://linbit.com/linstor/) managed with the [Piraeus](https://piraeus.io/) operator
+- [`system/velero`](system/velero) - [Velero](https://velero.io/) for Kubernetes resource and persistent volume backups
 
 ### Application stack
 
