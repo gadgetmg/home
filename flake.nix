@@ -49,6 +49,7 @@
             talhelper
             talosctl
             vcluster
+            velero
             yamlfmt
             yq-go
           ];

@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:piraeus:apply
+    cmds:
+    - task: default-apply
