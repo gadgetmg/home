@@ -37,6 +37,7 @@ configMapGenerator:
 patches:
 - path: patches/ksops.yaml
 - path: patches/delete.yaml
+- path: patches/dex-probe.yaml
   target:
     name: argocd-redis.*
 - patch: |

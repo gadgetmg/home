@@ -9,5 +9,6 @@ tasks:
     - :system:crossplane:apply
     - :system:kyverno:apply
     - :system:cert-manager:apply
+    - :system:keycloak:apply
     cmds:
     - task: default-apply
