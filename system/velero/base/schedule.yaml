@@ -15,4 +15,4 @@ spec:
     itemOperationTimeout: 0s
     metadata: {}
     ttl: 0s
-  useOwnerReferencesInBackup: false
+  useOwnerReferencesInBackup: true
