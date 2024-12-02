@@ -19,7 +19,7 @@ helmCharts:
   repo: https://charts.jetstack.io
   releaseName: trust-manager
   namespace: cert-manager
-  version: v0.13.0
+  version: v0.14.0
   valuesFile: trust-manager.values.yaml
 
 patches:
