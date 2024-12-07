@@ -3,8 +3,10 @@ version: '3'
 tasks:
   apply:
     deps:
+    - :system:cert-manager:apply
     - :system:cnpg:apply
     - :system:crossplane:apply
+    - :system:envoy-gateway:apply
     - :system:k8s-gateway:apply
     - :system:kyverno:apply
     - :system:keycloak:apply-crds
