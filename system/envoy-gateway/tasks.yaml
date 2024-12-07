@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:gateway-api:apply-crds
+    cmds:
+    - task: default-apply

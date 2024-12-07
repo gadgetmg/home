@@ -5,16 +5,6 @@ kind: Kustomization
 namespace: envoy-gateway-system
 
 resources:
-# # renovate: datasource=github-releases depName=envoyproxy/gateway
-# - https://raw.githubusercontent.com/envoyproxy/gateway/v1.2.3/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
-# # renovate: datasource=github-releases depName=envoyproxy/gateway
-# - https://raw.githubusercontent.com/envoyproxy/gateway/v1.2.3/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
-# # renovate: datasource=github-releases depName=envoyproxy/gateway
-# - https://raw.githubusercontent.com/envoyproxy/gateway/v1.2.3/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoypatchpolicies.yaml
-# # renovate: datasource=github-releases depName=envoyproxy/gateway
-# - https://raw.githubusercontent.com/envoyproxy/gateway/v1.2.3/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
-# # renovate: datasource=github-releases depName=envoyproxy/gateway
-# - https://raw.githubusercontent.com/envoyproxy/gateway/v1.2.3/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
 - namespace.yaml
 - envoyproxy.yaml
 - gatewayclass.yaml
@@ -30,3 +20,6 @@ helmCharts:
 patches:
 - path: patches/deployment-podsecurity.yaml
 - path: patches/job-podsecurity.yaml
+- path: patches/delete.yaml
+  target:
+    annotationSelector: "gateway.networking.k8s.io/channel"
