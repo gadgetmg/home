@@ -21,17 +21,23 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: keycloak
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-ca
 spec:
   listeners:
   - name: keycloak
     hostname: auth.dev.local
     port: 443
-    protocol: TLS
+    protocol: HTTPS
     tls:
-      mode: Passthrough
+      certificateRefs:
+      - group: ''
+        kind: Secret
+        name: keycloak-gateway-tls
+      mode: Terminate
 ---
-apiVersion: gateway.networking.k8s.io/v1alpha2
-kind: TLSRoute
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
   name: keycloak
 spec:

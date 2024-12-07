@@ -8,4 +8,4 @@ spec:
   affinity:
     podAntiAffinityType: preferred
   storage:
-    size: 1Gi
+    storageClass: local-path

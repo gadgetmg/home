@@ -25,7 +25,7 @@ local kp =
         retention: '1h',
         storage: {
           size: '1Gi',
-          storageClassName: 'ssd-r1',
+          storageClassName: 'local-path',
         },
       },
     },
