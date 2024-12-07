@@ -14,7 +14,8 @@ spec:
       name: keycloak-db-app
       key: password
   http:
-    tlsSecret: keycloak-tls
+    httpEnabled: true
+    httpPort: 80
   ingress:
     enabled: false
   hostname:

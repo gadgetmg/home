@@ -11,7 +11,7 @@ local gateway_api = import 'github.com/jsonnet-libs/gateway-api-libsonnet/1.0/ma
         'cert-manager.io/cluster-issuer': $.values.common.clusterIssuer,
         'argocd.argoproj.io/sync-wave': '1',
       }) +
-      gw.spec.withGatewayClassName('cilium') +
+      gw.spec.withGatewayClassName('envoy-gateway') +
       gw.spec.withListeners(
         [
           l.withName($.grafana._metadata.name) +

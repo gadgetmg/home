@@ -10,7 +10,6 @@ includes:
   system:argocd: system/argocd/tasks.yaml
   system:cert-manager: system/cert-manager/tasks.yaml
   system:cilium: system/cilium/tasks.yaml
-  system:cnpg: system/cnpg/tasks.yaml
   system:crossplane: system/crossplane/tasks.yaml
   system:external-secrets: system/external-secrets/tasks.yaml
   system:k8s-gateway: system/k8s-gateway/tasks.yaml
@@ -150,6 +149,8 @@ tasks:
     - hack/scripts/create-cluster.sh
     - kubectl -n kube-system get configmap/coredns -o yaml | sed "/forward/i\        forward dev.local 10.5.0.11" | kubectl replace -f -
     - task: system:cilium:apply
+    - kubectl apply --server-side -k https://github.com/rancher/local-path-provisioner/deploy?ref=v0.0.30
+    - kubectl label namespace/local-path-storage pod-security.kubernetes.io/enforce=privileged
     status:
     - docker ps | grep dev-controlplane-1
 

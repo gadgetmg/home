@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: envoy-gateway
   listeners:
   - name: argocd
     hostname: argocd.seigra.net

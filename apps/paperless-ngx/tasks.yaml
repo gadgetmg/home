@@ -4,7 +4,6 @@ tasks:
   apply:
     deps:
     - :system:cnpg:apply
-    - :system:piraeus:apply-crds
     - :system:kyverno:apply
     - :system:gateway-api:apply
     - :system:keycloak:apply

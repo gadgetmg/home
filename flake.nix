@@ -32,6 +32,7 @@
             go
             go-jsonnet
             go-task
+            hubble
             jsonnet-bundler
             k9s
             kfilt

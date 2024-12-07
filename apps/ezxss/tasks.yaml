@@ -4,6 +4,5 @@ tasks:
   apply:
     deps:
     - :system:mariadb-operator:apply
-    - :system:piraeus:apply-crds
     cmds:
     - task: default-apply

@@ -7,7 +7,6 @@ tasks:
     - :system:crossplane:apply
     - :system:k8s-gateway:apply
     - :system:kyverno:apply
-    - :system:piraeus:apply
     - :system:keycloak:apply-crds
     cmds:
     - task: default-apply

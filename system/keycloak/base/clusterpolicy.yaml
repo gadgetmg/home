@@ -26,8 +26,7 @@ spec:
       variable:
         value: |
           {
-            "url": "https://{{request.object.metadata.labels."app.kubernetes.io/instance"}}-service.{{request.object.metadata.namespace}}:8443",
-            "tls_insecure_skip_verify": "true",
+            "url": "http://{{request.object.metadata.labels."app.kubernetes.io/instance"}}-service.{{request.object.metadata.namespace}}",
             "client_id": "admin-cli",
             "username": "{{username}}",
             "password": "{{password}}"

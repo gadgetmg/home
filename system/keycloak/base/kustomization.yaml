@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -17,6 +18,7 @@ resources:
 - certificate.yaml
 - keycloak.yaml
 - gateway.yaml
+- httproute.yaml
 - providerconfig.yaml
 - home/realm.yaml
 - home/groups.yaml

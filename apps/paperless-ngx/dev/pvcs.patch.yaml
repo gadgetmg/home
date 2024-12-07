@@ -3,7 +3,4 @@ kind: PersistentVolumeClaim
 metadata:
   name: name
 spec:
-  storageClassName: ssd-r1
-  resources:
-    requests:
-      storage: 1Gi
+  storageClassName: local-path
