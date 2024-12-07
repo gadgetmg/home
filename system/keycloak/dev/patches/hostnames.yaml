@@ -5,6 +5,7 @@ metadata:
 spec:
   hostname:
     hostname: auth.dev.local
+    adminUrl: https://auth.dev.local/
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
