@@ -11,6 +11,7 @@ includes:
   system:cert-manager: system/cert-manager/tasks.yaml
   system:cilium: system/cilium/tasks.yaml
   system:crossplane: system/crossplane/tasks.yaml
+  system:envoy-gateway: system/envoy-gateway/tasks.yaml
   system:external-secrets: system/external-secrets/tasks.yaml
   system:k8s-gateway: system/k8s-gateway/tasks.yaml
   system:keycloak: system/keycloak/tasks.yaml

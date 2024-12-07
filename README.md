@@ -10,10 +10,11 @@ System stack components are fundamental to the cluster delivering core functiona
 
 - [`system/argocd`](system/argocd) - Continuous delivery of this repository using [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 - [`system/cert-manager`](system/cert-manager) - Manages PKI certificates in the cluster with the [cert-manager](https://cert-manager.io/) and [trust-manager](https://cert-manager.io/docs/trust/trust-manager/) projects
-- [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling all networking including access from outside the cluster using BGP and the [Gateway API](https://gateway-api.sigs.k8s.io/)
+- [`system/cilium`](system/cilium) - [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling all networking including access from outside the cluster using BGP.
 - [`system/cloudflare-gateway`](system/cloudflare-gateway) - [Cloudflare Gateway](https://github.com/pl4nty/cloudflare-kubernetes-gateway/tree/main) for Cloudflare tunnels via [cloudflared](https://github.com/cloudflare/cloudflared) and the Gateway API.
 - [`system/cnpg`](system/cnpg) - [CloudNativePG](https://cloudnative-pg.io/) operator for PostgreSQL databases
 - [`system/crossplane`](system/crossplane) - [Crossplane](https://www.crossplane.io/) control plane for managing non-Kubernetes resources
+- [`system/envoy-gateway`](system/envoy-gateway) - [Envoy Gateway](https://gateway.envoyproxy.io/) for handling ingress connections into the cluster via the Gateway API.
 - [`system/external-secrets`](system/external-secrets) - [External Secrets Operator](https://external-secrets.io/) for secrets management
 - [`system/gateway-api`](system/gateway-api) - [Gateway API](https://gateway-api.sigs.k8s.io/) CRDs used by Envoy Gateway
 - [`system/k8s-gateway`](system/k8s-gateway) - An outside-facing instance of [CoreDNS with the k8s_gateway plugin](https://ori-edge.github.io/k8s_gateway/) for resolving DNS names from the LAN
