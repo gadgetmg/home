@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/applicationset_v1alpha1.json
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -85,6 +86,7 @@ spec:
             app.kubernetes.io/instance: preview-pr{{.number}}
             pod-security.kubernetes.io/enforce: privileged
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/applicationset_v1alpha1.json
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
