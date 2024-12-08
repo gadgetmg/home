@@ -7,6 +7,7 @@ spec:
     hostname: auth.dev.local
     adminUrl: https://auth.dev.local/
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -18,6 +19,7 @@ spec:
   issuerRef:
     name: cluster-ca
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/gateway_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
@@ -37,6 +39,7 @@ spec:
         name: keycloak-gateway-tls
       mode: Terminate
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

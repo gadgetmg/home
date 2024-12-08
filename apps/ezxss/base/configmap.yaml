@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.31.3/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:

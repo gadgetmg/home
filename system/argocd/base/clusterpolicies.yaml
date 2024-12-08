@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kyverno.io/clusterpolicy_v1.json
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -67,6 +68,7 @@ spec:
               }
             }
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kyverno.io/clusterpolicy_v1.json
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -103,4 +105,3 @@ spec:
         type: Opaque
         data:
           client_secret: '{{ client_secret | base64_encode(@) }}'
----
