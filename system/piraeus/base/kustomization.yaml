@@ -9,8 +9,8 @@ resources:
 - internal-ca.yaml
 - api-ca.yaml
 - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.7.1
-- https://github.com/kubernetes-csi/external-snapshotter/client/config/crd?ref=v8.1.0
-- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.1.0
+- https://github.com/kubernetes-csi/external-snapshotter/client/config/crd?ref=v8.2.0
+- https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.2.0
 - cluster.yaml
 - satellite-internal-tls.yaml
 - talos-loader-overrides.yaml
