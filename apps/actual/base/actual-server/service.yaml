@@ -9,5 +9,6 @@ spec:
   ports:
   - port: 80
     targetPort: 5006
+    protocol: TCP
   selector:
     app.kubernetes.io/name: actual-server
