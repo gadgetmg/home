@@ -13,7 +13,6 @@ resources:
 - gateway.yaml
 - httproute.yaml
 - pvc.yaml
-- securitypolicy.yaml
 - service.yaml
 
 images:
