@@ -17,4 +17,4 @@ resources:
 
 images:
 - name: ghcr.io/actualbudget/actual-server
-  newTag: 24.11.0-alpine@sha256:7386ea23f25eb35546e507df87870dc309cee896815bbbf079a9707c50c34e88
+  newTag: 24.12.0-alpine@sha256:2dcab0dda0a174a9336e34e75ac03707c684ebcdb331d40a1785c58ff166cd47
