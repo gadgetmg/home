@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+
+patches:
+- path: patches/pvcs.patch.yaml
+  target:
+    kind: PersistentVolumeClaim
+- path: patches/gateway.patch.yaml
+  target:
+    kind: Gateway
+    name: actual
+- path: patches/httproute.patch.yaml

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+tasks:
+  apply:
+    deps:
+    - :system:envoy-gateway:apply
+    - :system:cert-manager:apply
+    cmds:
+    - task: default-apply
