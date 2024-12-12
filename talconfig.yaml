@@ -4,7 +4,7 @@ clusterName: production
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.8.3
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-kubernetesVersion: v1.31.4
+kubernetesVersion: v1.32.0
 endpoint: https://10.1.2.10:6443
 allowSchedulingOnControlPlanes: true
 clusterPodNets:
