@@ -12,7 +12,7 @@ images:
 - name: quay.io/argoproj/argocd
   newName: quay.io/argoproj/argocd
   # renovate: datasource=github-releases depName=argoproj/argo-cd
-  newTag: v2.13.1@sha256:19608c266cc41e4986d9b1c2b79ea4c42bb9430269eefc5005e9d65be4d22868
+  newTag: v2.13.1@af54ef8db5adfa77a08d4d05b1318a2198084c22
 
 patches:
 # renovate: datasource=github-releases depName=argoproj/argo-cd
