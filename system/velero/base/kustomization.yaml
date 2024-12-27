@@ -13,7 +13,7 @@ images:
 - name: velero/velero
   newTag: v1.15.1@sha256:1b9d838c6e3a45b2ca96b85a55f4e8c57961750b4faee29fe3ea37cf5ba87d1d
 - name: velero/velero-plugin-for-aws
-  newTag: v1.11.0@sha256:80d5b5176d29d4f1294d7e561b3c13a3417d775f7479995171f5b147fc3c705e
+  newTag: v1.11.1@sha256:3b0c402e0d55eb797a7ebe1f2525f18bdcdca8ee826680cd2d7cf657071e9d58
 
 helmCharts:
 - name: velero
