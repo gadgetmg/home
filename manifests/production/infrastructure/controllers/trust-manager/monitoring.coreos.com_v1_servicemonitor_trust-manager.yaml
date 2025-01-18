@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: trust-manager
+    app.kubernetes.io/instance: trust-manager
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: trust-manager
+    app.kubernetes.io/version: v0.15.0
+    helm.sh/chart: trust-manager-v0.15.0
+    prometheus: default
+  name: trust-manager
+  namespace: cert-manager
+spec:
+  endpoints:
+  - interval: 10s
+    path: /metrics
+    scrapeTimeout: 5s
+    targetPort: 9402
+  jobLabel: trust-manager
+  namespaceSelector:
+    matchNames:
+    - cert-manager
+  selector:
+    matchLabels:
+      app: trust-manager

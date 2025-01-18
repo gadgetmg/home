@@ -1,0 +1,107 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  labels:
+    app.kubernetes.io/name: piraeus-datastore
+  name: piraeus-operator-validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: piraeus-operator-webhook-service
+      namespace: piraeus-datastore
+      path: /validate-piraeus-io-v1-linstorcluster
+  failurePolicy: Fail
+  name: vlinstorcluster.kb.io
+  rules:
+  - apiGroups:
+    - piraeus.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - linstorclusters
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: piraeus-operator-webhook-service
+      namespace: piraeus-datastore
+      path: /validate-piraeus-io-v1-linstornodeconnection
+  failurePolicy: Fail
+  name: vlinstornodeconnection.kb.io
+  rules:
+  - apiGroups:
+    - piraeus.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - linstornodeconnections
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: piraeus-operator-webhook-service
+      namespace: piraeus-datastore
+      path: /validate-piraeus-io-v1-linstorsatellite
+  failurePolicy: Fail
+  name: vlinstorsatellite.kb.io
+  rules:
+  - apiGroups:
+    - piraeus.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - linstorsatellites
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: piraeus-operator-webhook-service
+      namespace: piraeus-datastore
+      path: /validate-piraeus-io-v1-linstorsatelliteconfiguration
+  failurePolicy: Fail
+  name: vlinstorsatelliteconfiguration.kb.io
+  rules:
+  - apiGroups:
+    - piraeus.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - linstorsatelliteconfigurations
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: piraeus-operator-webhook-service
+      namespace: piraeus-datastore
+      path: /validate-storage-k8s-io-v1-storageclass
+  failurePolicy: Fail
+  name: vstorageclass.kb.io
+  rules:
+  - apiGroups:
+    - storage.k8s.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - storageclasses
+  sideEffects: None

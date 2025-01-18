@@ -1,0 +1,48 @@
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: admin
+  name: grafana-admin
+spec:
+  forProvider:
+    clientIdRef:
+      name: grafana
+    description: Has access to all organization resources, including dashboards, users,
+      and teams.
+    name: admin
+    realmIdRef:
+      name: home
+
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: editor
+  name: grafana-editor
+spec:
+  forProvider:
+    clientIdRef:
+      name: grafana
+    description: Can view and edit dashboards, folders, and playlists.
+    name: editor
+    realmIdRef:
+      name: home
+
+---
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: readonly
+  name: grafana-viewer
+spec:
+  forProvider:
+    clientIdRef:
+      name: grafana
+    description: Can view dashboards, playlists, and query data sources.
+    name: viewer
+    realmIdRef:
+      name: home

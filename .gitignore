@@ -1,6 +1,6 @@
 .direnv
 .decrypted~*
 .task
-build
 charts
 kubeconfig
+talosconfig

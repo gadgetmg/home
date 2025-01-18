@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=https://json.schemastore.org/json-patch
+- op: replace
+  path: /spec/listeners/0/hostname
+  value: argocd.10.5.0.12.nip.io
+- op: replace
+  path: /metadata/annotations/cert-manager.io~1cluster-issuer
+  value: cluster-ca

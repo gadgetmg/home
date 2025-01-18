@@ -3,24 +3,6 @@ version: '3'
 
 output: prefixed
 
-includes:
-  apps:ezxss: apps/ezxss/tasks.yaml
-  apps:paperless-ngx: apps/paperless-ngx/tasks.yaml
-  root: root/tasks.yaml
-  system:argocd: system/argocd/tasks.yaml
-  system:cert-manager: system/cert-manager/tasks.yaml
-  system:cilium: system/cilium/tasks.yaml
-  system:crossplane: system/crossplane/tasks.yaml
-  system:envoy-gateway: system/envoy-gateway/tasks.yaml
-  system:external-secrets: system/external-secrets/tasks.yaml
-  system:k8s-gateway: system/k8s-gateway/tasks.yaml
-  system:keycloak: system/keycloak/tasks.yaml
-  system:kube-prometheus: system/kube-prometheus/tasks.yaml
-  system:kyverno: system/kyverno/tasks.yaml
-  system:mariadb-operator: system/mariadb-operator/tasks.yaml
-  system:piraeus: system/piraeus/tasks.yaml
-  system:velero: system/velero/tasks.yaml
-
 run: when_changed
 
 env:
@@ -29,134 +11,16 @@ env:
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
   KUBERNETES_VERSION: v1.32.1
 
-vars:
-  ENVIRONMENT: '{{regexFind "(dev|preview|production)" (base .USER_WORKING_DIR) | default "dev" }}'
-  MANIFESTS: build/{{.ENVIRONMENT}}:{{regexReplaceAll ":[^:]*$" .TASK ""}}.yaml
-
 tasks:
-  build:
-    desc: Only build the manifests for the current app (current directory)
-    vars: &default-vars
-      APP: '{{regexReplaceAll "/(dev|preview|production)" (.USER_WORKING_DIR | replace .ROOT_DIR "" | trimPrefix "/") "" | replace "/" ":"}}'
+  clusters:dev:create:
     cmds:
-    - task: '{{.APP}}:build'
-
-  apply-crds:
-    desc: Apply CRDs only for the current app (current directory)
-    vars: *default-vars
-    cmds:
-    - task: '{{.APP}}:apply-crds'
-
-  apply:
-    desc: Apply all manifests for the current app (current directory)
-    vars: *default-vars
-    cmds:
-    - task: '{{.APP}}:apply'
-
-  test:
-    desc: Test the current app (current directory)
-    aliases: [default]
-    vars: *default-vars
-    cmds:
-    - task: '{{.APP}}:test'
-
-  clean:
-    desc: Delete all built manifests
-    cmds:
-    - rm -rf build
-    status:
-    - test ! -d build
-
-  .build-dir:
-    silent: true
-    internal: true
-    cmds:
-    - mkdir -p build
-    status:
-    - test -d build
-
-  '*:build':
-    desc: Build manifests for app specified in *
-    label: '{{.APP}}:build'
-    prefix: '{{.APP}}:build'
-    deps: [.build-dir]
-    vars: &build-vars
-      APP: '{{index .MATCH 0}}'
-      APP_DIR: '{{.APP | replace ":" "/"}}'
-      MANIFESTS: build/{{.ENVIRONMENT}}:{{.APP}}.yaml
-    cmds:
-    - hack/scripts/build.sh {{.APP_DIR}}/{{.ENVIRONMENT}} > {{.MANIFESTS}}
-    sources:
-    - '{{.APP_DIR}}/*'
-    - '{{.APP_DIR}}/**/*'
-    - hack/scripts/build.sh
-    generates:
-    - '{{.MANIFESTS}}'
-
-  '*:apply-crds':
-    desc: Apply CRDs only for app specified in *
-    label: '{{.APP}}:apply-crds'
-    prefix: '{{.APP}}:apply-crds'
-    deps: ['{{.APP}}:build']
-    preconditions:
-    - kubectl config current-context | grep @{{.ENVIRONMENT}}
-    vars: *build-vars
-    cmds:
-    - cmd: kfilt -k CustomResourceDefinition -f {{.MANIFESTS}} | kubectl apply --server-side -f -
-      ignore_error: true
-    - cmd: kfilt -k CustomResourceDefinition -f {{.MANIFESTS}} | kubectl wait --for condition=established --timeout=10s -f -
-      ignore_error: true
-    status:
-    - kfilt -k CustomResourceDefinition -f {{.MANIFESTS}} | kubectl diff --server-side -f -
-
-  '*:apply': &apply
-    desc: Apply all manifests for app specified in *
-    label: '{{.APP}}:apply'
-    prefix: '{{.APP}}:apply'
-    deps: ['{{.APP}}:build', '{{.APP}}:apply-crds']
-    preconditions:
-    - kubectl config current-context | grep @{{.ENVIRONMENT}}
-    vars: *build-vars
-    cmds:
-    - cmd: kfilt -k Namespace -f {{.MANIFESTS}} | kubectl apply --server-side -f -
-      ignore_error: true
-    - kfilt -k ClusterPolicy -f {{.MANIFESTS}} | kubectl delete -f - --ignore-not-found
-    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl apply --server-side --force-conflicts -f -
-    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status --timeout=5m -f -
-    status:
-    - kfilt -K CustomResourceDefinition -f {{.MANIFESTS}} | kubectl diff --server-side -f -
-    - kfilt -i group=apps -f {{.MANIFESTS}} | kubectl rollout status --timeout=1s -f -
-
-  '*:test':
-    desc: Test app specified in *
-    label: '{{.APP}}:test'
-    prefix: '{{.APP}}:test'
-    deps: ['envs:dev:create']
-    vars: *build-vars
-    cmds:
-    - task: '{{.APP}}:apply'
-    - chainsaw test --selector app={{regexFind "[^:]+$" .APP}}
-
-  '*:default-apply':
-    <<: *apply
-    internal: true
-
-  envs:dev:create:
-    deps:
-    - task: generate-cilium-cni-patch
-      vars:
-        CNI_PATCH: hack/patches/cilium-cni.yaml
-    cmds:
-    - hack/scripts/create-cluster.sh
-    - kubectl -n kube-system get configmap/coredns -o yaml | sed "/forward/i\        forward dev.local 10.5.0.11" | kubectl replace -f -
-    - task: system:cilium:apply
-    - kubectl apply --server-side -k https://github.com/rancher/local-path-provisioner/deploy?ref=v0.0.30
-    - kubectl label namespace/local-path-storage pod-security.kubernetes.io/enforce=privileged
+    - clusters/dev/scripts/create-cluster.sh
+    - kubectl create namespace argocd
+    - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
     status:
     - docker ps | grep dev-controlplane-1
 
-  envs:dev:destroy:
-    deps: ['envs:dev:git-mirror-stop']
+  clusters:dev:destroy:
     cmds:
     - defer: talosctl config context "" && talosctl config remove dev --noconfirm
     - defer: kubectl config unset current-context
@@ -165,62 +29,20 @@ tasks:
     - defer: kubectl config delete-cluster dev
     - talosctl cluster destroy --name dev
 
-  envs:production:genconfig:
-    deps:
-    - task: generate-cilium-cni-patch
-      vars:
-        CNI_PATCH: clusterconfig/patches/cilium-cni.yaml
+  clusters:production:genconfig:
     cmds:
     - talhelper genconfig
 
-  envs:production:apply-insecure:
-    deps: ['envs:production:genconfig']
+  clusters:production:apply-insecure:
+    deps: ['clusters:production:genconfig']
     cmds:
     - talhelper gencommand apply --extra-flags "--insecure" | sh
 
-  envs:production:bootstrap:
-    deps: ['envs:production:genconfig']
+  clusters:production:bootstrap:
+    deps: ['clusters:production:genconfig']
     cmds:
     - talhelper gencommand bootstrap | sh
     - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
     - talhelper gencommand kubeconfig | sh
-    - task: system:cilium:apply
-      vars:
-        ENVIRONMENT: production
-    - task: root:apply
-      vars: {ENVIRONMENT: production}
-
-  envs:dev:git-mirror-start:
-    vars:
-      NAME: git-mirror
-      VOLUME: '{{.ROOT_DIR}}/.git:/git/repo.git:ro'
-      IP: 10.5.0.254
-      IMAGE:
-        sh: docker buildx build -q hack/git-mirror
-    cmds:
-    - docker run --name {{.NAME}} -v {{.VOLUME}} --net dev --ip {{.IP}} -d --rm {{.IMAGE}}
-    status:
-    - docker ps | grep {{.NAME}}
-
-  envs:dev:git-mirror-stop:
-    vars:
-      NAME: git-mirror
-    cmds:
-    - docker stop {{.NAME}}
-    status:
-    - '! docker ps | grep {{.NAME}}'
-
-  generate-cilium-cni-patch:
-    internal: true
-    env:
-      MANIFESTS:
-        sh: hack/scripts/cilium-cni-manifests.sh {{.ENVIRONMENT}}
-    cmds:
-    - hack/scripts/cilium-cni-patch.sh {{.CNI_PATCH}}
-    sources:
-    - system/cilium/*
-    - system/cilium/**/*
-    - hack/scripts/cilium-cni-manifests.sh
-    - hack/scripts/cilium-cni-patch.sh
-    generates:
-    - '{{.CNI_PATCH}}'
+    - kubectl create namespace argocd
+    - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -

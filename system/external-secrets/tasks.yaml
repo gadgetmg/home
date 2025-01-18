@@ -1,8 +1,0 @@
-version: '3'
-
-tasks:
-  apply:
-    deps:
-    - :system:cert-manager:apply
-    - :system:kube-prometheus:apply-crds
-    - default-apply

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: keycloak
+
+resources:
+- database.yaml
+- keycloak.yaml
+- gateway.yaml
+- httproute.yaml
+- crossplane/providerconfig.yaml
+- crossplane/secretsync.yaml
+- home/realm.yaml
+- home/groups.yaml
+- home/roles.yaml

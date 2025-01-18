@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: tika
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx-tika
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx-tika
+  namespace: paperless-ngx
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: tika
+      app.kubernetes.io/instance: paperless-ngx
+      app.kubernetes.io/name: paperless-ngx-tika
+      app.kubernetes.io/part-of: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: tika
+        app.kubernetes.io/instance: paperless-ngx
+        app.kubernetes.io/name: paperless-ngx-tika
+        app.kubernetes.io/part-of: paperless-ngx
+    spec:
+      containers:
+      - image: ghcr.io/paperless-ngx/tika:2.9.1-minimal@sha256:20db3df89eaeb1b271dd840888fe909b88b12f4b86ef641ec07a1d45d4c5168f
+        name: tika
+        readinessProbe:
+          httpGet:
+            port: 9998
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault

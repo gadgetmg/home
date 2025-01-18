@@ -1,7 +1,0 @@
-- apiGroups:
-  - cilium.io
-  kinds:
-  - CiliumIdentity
-  clusters:
-  - "*"
-# vim: set ft=yaml

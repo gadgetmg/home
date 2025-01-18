@@ -1,8 +1,0 @@
-version: '3'
-
-tasks:
-  apply:
-    deps:
-    - :system:kube-prometheus:apply-crds
-    cmds:
-    - task: default-apply

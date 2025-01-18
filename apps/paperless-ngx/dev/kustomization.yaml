@@ -5,24 +5,45 @@ kind: Kustomization
 resources:
 - ../base
 
-configMapGenerator:
-- name: paperless-ngx-config
-  behavior: merge
-  literals:
-  - PAPERLESS_URL=https://paperless.dev.local
-- name: paperless-ngx-socialaccount-config
-  behavior: merge
-  literals:
-  - server_url=https://auth.dev.local/realms/home/.well-known/openid-configuration
-
 patches:
-- path: database.patch.yaml
-- path: keycloak.patch.yaml
-- path: pvcs.patch.yaml
+- path: patches/database.yaml
+- path: patches/pvcs.yaml
   target:
     kind: PersistentVolumeClaim
-- path: gateway.patch.yaml
+- path: patches/gateway.yaml
   target:
     kind: Gateway
-    name: paperless-ngx
-- path: httproute.patch.yaml
+
+replacements:
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: ConfigMap
+      name: paperless-ngx-config
+    fieldPaths:
+    - data.PAPERLESS_URL
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: ConfigMap
+      name: paperless-ngx-socialaccount-config
+    fieldPaths:
+    - data.server_url
+    options:
+      delimiter: '/'
+      index: 2

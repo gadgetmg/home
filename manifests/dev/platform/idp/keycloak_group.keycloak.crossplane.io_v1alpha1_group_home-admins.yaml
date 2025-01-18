@@ -1,0 +1,11 @@
+apiVersion: group.keycloak.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: home-admins
+  namespace: keycloak
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    name: Admins
+    realmIdRef:
+      name: home

@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+
+patches:
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+- path: patches/application.yaml
+  target:
+    kind: Application
+    name: kube-prometheus-stack
+
+replacements:
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: Client
+    fieldPaths:
+      - spec.forProvider.rootUrl
+      - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: Application
+      name: kube-prometheus-stack
+    fieldPaths:
+    - spec.source.helm.valuesObject.grafana.grafana\.ini.server.domain
+  - select:
+      kind: Application
+      name: kube-prometheus-stack
+    fieldPaths:
+    - spec.source.helm.valuesObject.grafana.grafana\.ini.server.root_url
+    options:
+      delimiter: '/'
+      index: 2

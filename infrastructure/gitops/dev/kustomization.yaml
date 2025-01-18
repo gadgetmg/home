@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+- dex-bundle.yaml
+
+patches:
+- target:
+    kind: Application
+    name: argocd
+  path: patches/values-argocd.yaml
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+    name: argocd
+
+replacements:
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2

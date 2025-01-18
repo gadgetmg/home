@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/application_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: v67.10.0
+    helm:
+      valuesObject:
+        fullnameOverride: k8s
+        grafana:
+          fullnameOverride: grafana
+          grafana.ini:
+            auth.generic_oauth:
+              enabled: true
+              auto_login: true
+              name: seigra.net
+              allow_sign_up: true
+              client_id: grafana
+              scopes: openid email profile offline_access roles
+              email_attribute_path: email
+              login_attribute_path: username
+              name_attribute_path: full_name
+              auth_url: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
+              token_url: https://auth.seigra.net/realms/home/protocol/openid-connect/token
+              api_url: https://auth.seigra.net/realms/home/protocol/openid-connect/userinfo
+              role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+              role_attribute_strict: true
+              tls_skip_verify_insecure: true
+            server:
+              domain: grafana.seigra.net
+              root_url: https://grafana.seigra.net
+          envFromSecret: grafana-oidc-secret
+        prometheusOperator:
+          fullnameOverride: prometheus-operator
+        cleanPrometheusOperatorObjectNames: true
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
+          prometheus:
+            monitor:
+              attachMetadata:
+                node: true
+              relabelings:
+              - sourceLabels:
+                - __meta_kubernetes_endpoint_node_name
+                targetLabel: node
+                action: replace
+                regex: (.+)
+                replacement: ${1}
+        kube-state-metrics:
+          fullnameOverride: kube-state-metrics
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=true
+    - CreateNamespace=true
+    - ApplyOutOfSyncOnly=true
+    - FailOnSharedResource=true
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+    automated:
+      prune: true
+      selfHeal: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
