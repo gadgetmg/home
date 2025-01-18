@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://www.talos.dev/v1.7/schemas/config.schema.json
+machine:
+  kubelet:
+    extraConfig:
+      evictionHard:
+        nodefs.available: 0%
+        nodefs.inodesFree: 0%
+        imagefs.available: 0%

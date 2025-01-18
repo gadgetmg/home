@@ -1,6 +1,0 @@
-- op: replace
-  path: /metadata/annotations/cert-manager.io~1cluster-issuer
-  value: selfsigned
-- op: replace
-  path: /spec/listeners/0/hostname
-  value: paperless.dev.local

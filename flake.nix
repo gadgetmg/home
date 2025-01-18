@@ -2,12 +2,21 @@
   description = "Home";
 
   inputs = {
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
-    talhelper = { url = "github:budimanjojo/talhelper"; inputs.nixpkgs.follows = "nixpkgs"; };
-    krewfile = { url = "github:brumhard/krewfile"; inputs.nixpkgs.follows = "nixpkgs"; };
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
+    talhelper = {
+      url = "github:budimanjojo/talhelper";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    krewfile = {
+      url = "github:brumhard/krewfile";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -39,12 +48,15 @@
             kind
             krew
             krewfile
+            kubeconform
             kubectl
             kubernetes-helm
+            kubeseal
             kubevirt
             kustomize
             kustomize-sops
             kyverno-chainsaw
+            pre-commit
             sops
             ssh-to-age
             talhelper
@@ -53,8 +65,11 @@
             velero
             yamlfmt
             yq-go
+            (python3.withPackages (python-pkgs: [
+              python-pkgs.pyaml
+            ]))
           ];
-          shellHook = '' 
+          shellHook = ''
             export PATH="$HOME/.krew/bin:$PATH"
             krewfile
           '';

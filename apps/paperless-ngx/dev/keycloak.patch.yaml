@@ -1,9 +1,0 @@
-apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
-kind: Client
-metadata:
-  name: paperless-ngx
-spec:
-  forProvider:
-    rootUrl: https://paperless.dev.local
-    validRedirectUris:
-    - https://paperless.dev.local/accounts/oidc/keycloak/login/callback/

@@ -1,0 +1,17 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: grafana
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: grafana
+    realmIdRef:
+      name: home
+    rootUrl: https://grafana.seigra.net
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://grafana.seigra.net/login/generic_oauth
+  publishConnectionDetailsTo:
+    name: grafana-oidc-secret

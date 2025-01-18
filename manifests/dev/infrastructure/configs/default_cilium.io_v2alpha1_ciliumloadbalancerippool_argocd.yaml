@@ -1,0 +1,10 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: argocd
+spec:
+  blocks:
+  - cidr: 10.5.0.12/32
+  serviceSelector:
+    matchLabels:
+      gateway.envoyproxy.io/owning-gateway-name: argocd

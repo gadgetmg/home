@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kyverno
+    app.kubernetes.io/version: 3.2.7
+    helm.sh/chart: kyverno-3.2.7
+  name: kyverno:cleanup-jobs
+rules:
+- apiGroups:
+  - kyverno.io
+  resources:
+  - admissionreports
+  - clusteradmissionreports
+  - updaterequests
+  verbs:
+  - list
+  - deletecollection
+  - delete
+- apiGroups:
+  - reports.kyverno.io
+  resources:
+  - ephemeralreports
+  - clusterephemeralreports
+  verbs:
+  - list
+  - deletecollection
+  - delete

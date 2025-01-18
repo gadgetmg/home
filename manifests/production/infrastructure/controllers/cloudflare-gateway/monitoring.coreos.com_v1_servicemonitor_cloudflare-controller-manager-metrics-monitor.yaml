@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: cloudflare-kubernetes-gateway
+    control-plane: controller-manager
+  name: cloudflare-controller-manager-metrics-monitor
+  namespace: cloudflare-gateway
+spec:
+  endpoints:
+  - path: /metrics
+    port: http
+    scheme: http
+  selector:
+    matchLabels:
+      control-plane: controller-manager

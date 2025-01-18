@@ -1,0 +1,6 @@
+apiVersion: keycloak.crossplane.io/v1alpha1
+kind: StoreConfig
+metadata:
+  name: argocd
+spec:
+  defaultScope: argocd

@@ -1,0 +1,18 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: production-controlplane-1-pools
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: production-controlplane-1
+  storagePools:
+  - lvmThinPool: {}
+    name: ssd
+    source:
+      hostDevices:
+      - /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HMJP-00005_S3F6NX0KA09034
+  - lvmThinPool: {}
+    name: hdd
+    source:
+      hostDevices:
+      - /dev/disk/by-id/usb-WD_easystore_264D_3654475432533746-0:0

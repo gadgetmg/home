@@ -6,11 +6,19 @@ resources:
 - ../base
 
 patches:
-- path: patches/pvcs.patch.yaml
+- path: patches/pvcs.yaml
   target:
     kind: PersistentVolumeClaim
-- path: patches/gateway.patch.yaml
+- path: patches/gateway.yaml
   target:
     kind: Gateway
-    name: actual
-- path: patches/httproute.patch.yaml
+
+replacements:
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+    fieldPaths:
+    - spec.hostnames.0

@@ -1,0 +1,21 @@
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: grafana-roles
+spec:
+  forProvider:
+    config:
+      usermodel.clientRoleMapping.clientId: grafana
+      multivalued: 'true'
+      claim.name: roles
+      id.token.claim: 'true'
+      access.token.claim: 'false'
+      userinfo.token.claim: 'false'
+      introspection.token.claim: 'false'
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: grafana
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper

@@ -1,0 +1,41 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: ezxss
+  name: ezxss-db
+  namespace: ezxss
+spec:
+  database: ezxss
+  image: mariadb:11.3.2
+  metrics:
+    enabled: true
+    exporter:
+      podSecurityContext:
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile:
+          type: RuntimeDefault
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+  podSecurityContext:
+    fsGroup: 999
+    runAsGroup: 999
+    runAsNonRoot: true
+    runAsUser: 999
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+  storage:
+    size: 1Gi
+    storageClassName: local-path
+  username: ezxss

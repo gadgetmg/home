@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+
+helmCharts:
+- name: crossplane
+  repo: https://charts.crossplane.io/stable
+  releaseName: crossplane
+  namespace: crossplane-system
+  version: 1.18.2
+  valuesInline:
+    metrics:
+      enabled: true

@@ -1,8 +1,0 @@
-replicaCount: 2
-app:
-  metrics:
-    service:
-      servicemonitor:
-        enabled: true
-podDisruptionBudget:
-  enabled: true

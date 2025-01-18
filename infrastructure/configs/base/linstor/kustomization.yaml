@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: piraeus-datastore
+
+resources:
+- ca-bootstrapper.yaml
+- internal-ca.yaml
+- api-ca.yaml
+- cluster.yaml
+- satellite-internal-tls.yaml
+- talos-loader-overrides.yaml

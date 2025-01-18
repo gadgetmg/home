@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+
+images:
+- name: velero/velero
+  newTag: v1.15.2@sha256:668467fdf39f3a610ed6f27431f38a6fbb6143a2ab302ad3e839b0074aaeba39
+- name: velero/velero-plugin-for-aws
+  newTag: v1.11.1@sha256:3b0c402e0d55eb797a7ebe1f2525f18bdcdca8ee826680cd2d7cf657071e9d58
+
+helmCharts:
+- name: velero
+  repo: https://vmware-tanzu.github.io/helm-charts
+  releaseName: velero
+  namespace: velero
+  version: 8.3.0
+  includeCRDs: true
+  valuesInline:
+    initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:v1.11.1@sha256:3b0c402e0d55eb797a7ebe1f2525f18bdcdca8ee826680cd2d7cf657071e9d58
+      volumeMounts:
+      - mountPath: /target
+        name: plugins
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+          - ALL
+        readOnlyRootFilesystem: true
+    containerSecurityContext:
+      runAsUser: 1002
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+        add: []
+      readOnlyRootFilesystem: true
+    upgradeCRDs: false
+    configuration:
+      backupStorageLocation: []
+      volumeSnapshotLocation: []
+      features: EnableCSI
+    credentials:
+      existingSecret: velero
+    snapshotsEnabled: true
