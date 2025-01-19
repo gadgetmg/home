@@ -19,3 +19,7 @@ helmCharts:
     webhook:
       certManager:
         enabled: true
+        cert:
+          issuerRef:
+            kind: ClusterIssuer
+            name: cluster-ca

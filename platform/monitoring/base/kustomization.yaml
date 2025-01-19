@@ -3,7 +3,106 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- kube-prometheus-stack.yaml
-- prometheus-adapter.yaml
+- namespace.yaml
 - keycloak
 - gateway
+
+helmCharts:
+- name: kube-prometheus-stack
+  repo: https://prometheus-community.github.io/helm-charts
+  releaseName: kube-prometheus-stack
+  namespace: monitoring
+  version: 67.10.0
+  valuesInline:
+    fullnameOverride: k8s
+    grafana:
+      fullnameOverride: grafana
+      grafana.ini:
+        auth.generic_oauth:
+          enabled: true
+          auto_login: true
+          name: seigra.net
+          allow_sign_up: true
+          client_id: grafana
+          scopes: openid email profile offline_access roles
+          email_attribute_path: email
+          login_attribute_path: username
+          name_attribute_path: full_name
+          auth_url: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
+          token_url: https://auth.seigra.net/realms/home/protocol/openid-connect/token
+          api_url: https://auth.seigra.net/realms/home/protocol/openid-connect/userinfo
+          role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+          role_attribute_strict: true
+          tls_skip_verify_insecure: true
+        server:
+          domain: grafana.seigra.net
+          root_url: https://grafana.seigra.net
+      envFromSecret: grafana-oidc-secret
+    prometheusOperator:
+      fullnameOverride: prometheus-operator
+    cleanPrometheusOperatorObjectNames: true
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          attachMetadata:
+            node: true
+          relabelings:
+          - sourceLabels:
+            - __meta_kubernetes_endpoint_node_name
+            targetLabel: node
+            action: replace
+            regex: (.+)
+            replacement: ${1}
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+- name: prometheus-adapter
+  repo: https://prometheus-community.github.io/helm-charts
+  releaseName: prometheus-adapter
+  namespace: monitoring
+  version: 4.11.0
+  valuesInline:
+    prometheus:
+      url: http://k8s-prometheus.monitoring.svc
+    rules:
+      default: false
+      resource:
+        cpu:
+          containerQuery: |
+            sum by (<<.GroupBy>>) (
+              rate(container_cpu_usage_seconds_total{container!="",<<.LabelMatchers>>}[3m])
+            )
+          nodeQuery: |
+            sum  by (<<.GroupBy>>) (
+              rate(node_cpu_seconds_total{mode!="idle",mode!="iowait",mode!="steal",<<.LabelMatchers>>}[3m])
+            )
+          resources:
+            overrides:
+              node:
+                resource: node
+              namespace:
+                resource: namespace
+              pod:
+                resource: pod
+          containerLabel: container
+        memory:
+          containerQuery: |
+            sum by (<<.GroupBy>>) (
+              avg_over_time(container_memory_working_set_bytes{container!="",<<.LabelMatchers>>}[3m])
+            )
+          nodeQuery: |
+            sum by (<<.GroupBy>>) (
+              avg_over_time(node_memory_MemTotal_bytes{<<.LabelMatchers>>}[3m])
+              -
+              avg_over_time(node_memory_MemAvailable_bytes{<<.LabelMatchers>>}[3m])
+            )
+          resources:
+            overrides:
+              node:
+                resource: node
+              namespace:
+                resource: namespace
+              pod:
+                resource: pod
+          containerLabel: container
+        window: 3m

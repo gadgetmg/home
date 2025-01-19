@@ -9,10 +9,6 @@ patches:
 - path: patches/gateway.yaml
   target:
     kind: Gateway
-- path: patches/application.yaml
-  target:
-    kind: Application
-    name: kube-prometheus-stack
 
 replacements:
 - source:
@@ -36,19 +32,6 @@ replacements:
     fieldPaths:
       - spec.forProvider.rootUrl
       - spec.forProvider.validRedirectUris.*
-    options:
-      delimiter: '/'
-      index: 2
-  - select:
-      kind: Application
-      name: kube-prometheus-stack
-    fieldPaths:
-    - spec.source.helm.valuesObject.grafana.grafana\.ini.server.domain
-  - select:
-      kind: Application
-      name: kube-prometheus-stack
-    fieldPaths:
-    - spec.source.helm.valuesObject.grafana.grafana\.ini.server.root_url
     options:
       delimiter: '/'
       index: 2

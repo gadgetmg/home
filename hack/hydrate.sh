@@ -15,7 +15,7 @@ for t in $targets; do
 
   echo "building $outdir"
   mkdir -p $outdir
-  kustomize build --enable-helm $t -o $outdir/
+  kustomize build --enable-helm --enable-alpha-plugins $t -o $outdir/
 done
 
 # replace any colons in file names
