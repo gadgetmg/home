@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: restricted-pod-security
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/kpt-fn/starlark:v0.5.0
+    config.kubernetes.io/local-config: "true"
+data:
+  source: |
+    def setSecurityContext(resources):
+      for r in resources:
+        if r["apiVersion"] == "apps/v1" and r["kind"] in ["Deployment", "StatefulSet"]:
+          p = r["spec"]["template"]["spec"]
+          p.setdefault("securityContext", {}).update({
+            "runAsNonRoot": True,
+            "seccompProfile": "RuntimeDefault"
+          })
+          for c in p.get("containers", []) + p.get("initContainers", []) + p.get("ephemeralContainers", []):
+            c.setdefault("securityContext", {}).update({
+              "allowPrivilegeEscalation": False,
+              "capabilities": {"drop": ["ALL"]}
+            })
+    setSecurityContext(ctx.resource_list["items"])

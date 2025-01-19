@@ -12,12 +12,12 @@ spec:
       repoURL: git@github.com:gadgetmg/home.git
       revision: HEAD
       directories:
-      - path: manifests/poduction/infrastructure/controllers/*
-      - path: manifests/poduction/infrastructure/controllers
+      - path: manifests/production/infrastructure/controllers/*
+      - path: manifests/production/infrastructure/controllers
         exclude: true
-      - path: manifests/poduction/infrastructure/*
-      - path: manifests/poduction/platform/*
-      - path: manifests/poduction/apps/*
+      - path: manifests/production/infrastructure/*
+      - path: manifests/production/platform/*
+      - path: manifests/production/apps/*
   template:
     metadata:
       name: '{{.path.basename}}'
