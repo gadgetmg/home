@@ -1,0 +1,39 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "create_timestamp": {
+          "type": "integer"
+        },
+        "node_name": {
+          "type": "string"
+        },
+        "resource_flags": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "resource_name": {
+          "type": "string"
+        },
+        "snapshot_name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "Resources"
+      ],
+      "version": "v1-18-2",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

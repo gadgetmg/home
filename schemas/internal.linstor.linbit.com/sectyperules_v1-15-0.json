@@ -1,0 +1,29 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "access_type": {
+          "type": "integer"
+        },
+        "domain_name": {
+          "type": "string"
+        },
+        "type_name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "SecTypeRules"
+      ],
+      "version": "v1-15-0",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

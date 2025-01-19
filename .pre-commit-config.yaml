@@ -3,10 +3,16 @@ repos:
   hooks:
   - id: hydrate
     name: hydrate
-    language: script
-    entry: hack/hydrate.sh
-    files: ^(infrastructure|platform|apps)
+    language: system
+    entry: task
+    args: ["hydrate"]
     pass_filenames: false
+# - id: kubeconform
+#   name: kubeconform
+#   language: system
+#   entry: task
+#   args: ["kubeconform", "--"]
+#   files: ^manifests/.*\.yaml
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:

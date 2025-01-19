@@ -1,0 +1,29 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "entry_dsp_key": {
+          "type": "string"
+        },
+        "entry_key": {
+          "type": "string"
+        },
+        "entry_value": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "SecConfiguration"
+      ],
+      "version": "v1-15-0",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

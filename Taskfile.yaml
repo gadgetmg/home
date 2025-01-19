@@ -46,3 +46,44 @@ tasks:
     - talhelper gencommand kubeconfig | sh
     - kubectl create namespace argocd
     - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
+
+  build:
+    label: build-{{ .KUSTOMIZATION }}
+    sources:
+    - '{{ .KUSTOMIZATION }}/**'
+    - '{{ .KUSTOMIZATION }}/../base/**'
+    vars:
+      APPLICATION: '{{ dir .KUSTOMIZATION | trimPrefix .ROOT_DIR | trimPrefix "/" }}'
+      ENVIRONMENT: '{{ base .KUSTOMIZATION }}'
+      OUTDIR: '{{ .ROOT_DIR }}/manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}/'
+    generates:
+    - '{{ .OUTDIR }}**'
+    cmds:
+    - mkdir -p {{ .OUTDIR }}
+    - rm -rf {{ .OUTDIR }}**
+    - kustomize build --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}
+    - find {{ .OUTDIR }} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
+    - git add --intent-to-add {{ .OUTDIR }}
+    internal: true
+
+  hydrate:
+    sources:
+    - infrastructure/controllers/*/*[^base]/kustomization.yaml
+    - infrastructure/*/*[^base]/kustomization.yaml
+    - platform/*/*[^base]/kustomization.yaml
+    - apps/*/*[^base]/kustomization.yaml
+    cmds:
+    - for: sources
+      task: build
+      vars:
+        KUSTOMIZATION: '{{ dir .ITEM }}'
+    method: none
+
+  kubeconform:
+    cmds:
+    - kubeconform -output pretty
+        -kubernetes-version 1.32.1
+        -schema-location default
+        -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json'
+        -skip CustomResourceDefinition
+        {{.CLI_ARGS | default "manifests/"}}

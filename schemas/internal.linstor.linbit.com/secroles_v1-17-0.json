@@ -1,0 +1,36 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "domain_name": {
+          "type": "string"
+        },
+        "role_dsp_name": {
+          "type": "string"
+        },
+        "role_enabled": {
+          "type": "boolean"
+        },
+        "role_name": {
+          "type": "string"
+        },
+        "role_privileges": {
+          "format": "int64",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "SecRoles"
+      ],
+      "version": "v1-17-0",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,103 +1,31 @@
 #!/usr/bin/env bash
 
-# Check if python3 is installed
-if ! command -v python3 &> /dev/null; then
-    printf "python3 is required for this utility, and is not installed on your machine"
-    printf "please visit https://www.python.org/downloads/ to install it"
-    exit 1
-fi
-# Check if kubectl is installed
-if ! command -v kubectl &> /dev/null; then
-    printf "kubectl is required for this utility, and is not installed on your machine"
-    printf "please visit https://kubernetes.io/docs/tasks/tools/#kubectl to install it"
-    exit 1
-fi
-# Check if yq is installed
-if ! command -v yq &> /dev/null; then
-    printf "yq is required for this utility, and is not installed on your machine"
-    printf "please visit https://github.com/mikefarah/yq#install to install it"
-    exit 1
-fi
+# Original author: https://github.com/datreeio/CRDs-catalog
 
-# Check if the pyyaml module is installed
-if ! echo 'import yaml' | python3 &> /dev/null; then
-    printf "the python3 module 'yaml' is required, and is not installed on your machine.\n"
-
-    while true; do
-        read -p "Do you wish to install this program? (y/n) " yn
-        case $yn in
-            [Yy] ) pip3 install pyyaml; break;;
-            "" ) pip3 install pyyaml; break;;
-            [Nn] ) echo "Exiting..."; exit;;
-            * ) echo "Please answer 'y' (yes) or 'n' (no).";;
-        esac
-    done
-fi
+cd "$(dirname "$0")/.."
 
 # Create temp folder for CRDs
-TMP_CRD_DIR=$HOME/.datree/crds
+TMP_CRD_DIR=$TEMP/crds
 mkdir -p $TMP_CRD_DIR
 
 # Create final schemas directory
-SCHEMAS_DIR=$HOME/.datree/crdSchemas
-mkdir -p $SCHEMAS_DIR
-cd $SCHEMAS_DIR
-
-# Create array to store CRD kinds and groups
-ORGANIZE_BY_GROUP=true
-declare -A CRD_GROUPS 2>/dev/null
-if [ $? -ne 0 ]; then
-    # Array creation failed, signal to skip organization by group
-    ORGANIZE_BY_GROUP=false
-fi
+SCHEMAS_DIR=schemas
 
 # Extract CRDs from cluster
-NUM_OF_CRDS=0
 while read -r crd
 do
-    filename=${crd%% *}
-    kubectl get crds "$filename" -o yaml > "$TMP_CRD_DIR/$filename.yaml" 2>&1
+    crdname=${crd%% *}
+    crdfile="$TMP_CRD_DIR/$crdname.yaml"
+    kubectl get crds "$crdname" -o yaml > $crdfile 2>&1
 
-    resourceKind=$(yq -r '.spec.names.singular' "$TMP_CRD_DIR/$filename.yaml")
-    resourceGroup=$(yq -r '.spec.group' "$TMP_CRD_DIR/$filename.yaml")
+    # Extract metadata from the CRD yaml
+    resourceKind=$(yq -r '.spec.names.singular' $crdfile)
+    resourceGroup=$(yq -r '.spec.group' $crdfile)
 
-    # Save name and group for later directory organization
-    CRD_GROUPS["$resourceKind"]="$resourceGroup"
-
-    let ++NUM_OF_CRDS
+    # Convert the CRD yaml to a JSON schema
+    outdir="$SCHEMAS_DIR/$resourceGroup"
+    mkdir -p $outdir
+    python3 hack/crd2jsonschema.py $crdfile --output-directory $outdir
 done < <(kubectl get crds 2>&1 | sed -n '/NAME/,$p' | tail -n +2)
 
-# If no CRDs exist in the cluster, exit
-if [ $NUM_OF_CRDS == 0 ]; then
-    printf "No CRDs found in the cluster, exiting...\n"
-    exit 0
-fi
-
-# Download converter script
-curl https://raw.githubusercontent.com/yannh/kubeconform/master/scripts/openapi2jsonschema.py --output $TMP_CRD_DIR/openapi2jsonschema.py 2>/dev/null
-
-# Copy and rename files to support kubeval
-rm -rf $SCHEMAS_DIR/master-standalone
-mkdir -p $SCHEMAS_DIR/master-standalone
-cp $SCHEMAS_DIR/*.json $SCHEMAS_DIR/master-standalone
-find $SCHEMAS_DIR/master-standalone -name '*json' -exec bash -c ' mv -f $0 ${0/\_/-stable-}' {} \;
-
-# Organize schemas by group
-for crd in $TMP_CRD_DIR/*.yaml
-do
-python3 $TMP_CRD_DIR/openapi2jsonschema.py $crd
-for schema in $SCHEMAS_DIR/*.json
-do
-crdFileName=$(basename $schema .json)
-crdKind=${crdFileName%%_*}
-crdGroup=${CRD_GROUPS[$crdKind]}
-mkdir -p $crdGroup
-mv $schema ./$crdGroup
-done
-done
-
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-
-# rm -rf $TMP_CRD_DIR
+rm -rf $TMP_CRD_DIR
