@@ -15,7 +15,7 @@ data:
           p = r["spec"]["template"]["spec"]
           p.setdefault("securityContext", {}).update({
             "runAsNonRoot": True,
-            "seccompProfile": "RuntimeDefault"
+            "seccompProfile": {"type": "RuntimeDefault"}
           })
           for c in p.get("containers", []) + p.get("initContainers", []) + p.get("ephemeralContainers", []):
             c.setdefault("securityContext", {}).update({

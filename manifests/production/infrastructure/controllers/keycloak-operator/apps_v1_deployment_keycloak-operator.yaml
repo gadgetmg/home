@@ -86,5 +86,6 @@ spec:
           timeoutSeconds: 10
       securityContext:
         runAsNonRoot: true
-        seccompProfile: RuntimeDefault
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: keycloak-operator
