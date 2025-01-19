@@ -19,6 +19,8 @@ helmCharts:
   releaseName: argocd
   namespace: argocd
   version: 7.7.15
+  apiVersions:
+  - monitoring.coreos.com/v1
   valuesInline:
     configs:
       params:

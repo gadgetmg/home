@@ -10,7 +10,6 @@ helmCharts:
   version: 1.16.5
   apiVersions:
   - monitoring.coreos.com/v1
-  - gateway.networking.k8s.io/v1/GatewayClass
   valuesInline:
     k8sServiceHost: localhost
     k8sServicePort: 7445

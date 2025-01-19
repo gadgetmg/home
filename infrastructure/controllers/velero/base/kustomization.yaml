@@ -18,6 +18,8 @@ helmCharts:
   namespace: velero
   version: 8.3.0
   includeCRDs: true
+  apiVersions:
+  - monitoring.coreos.com/v1
   valuesInline:
     initContainers:
     - name: velero-plugin-for-aws
