@@ -13,6 +13,8 @@ helmCharts:
   releaseName: kube-prometheus-stack
   namespace: monitoring
   version: 67.10.0
+  apiVersions:
+  - discovery.k8s.io/v1/EndpointSlice
   valuesInline:
     fullnameOverride: k8s
     grafana:
@@ -61,6 +63,8 @@ helmCharts:
   releaseName: prometheus-adapter
   namespace: monitoring
   version: 4.11.0
+  apiVersions:
+  - apiregistration.k8s.io/v1
   valuesInline:
     prometheus:
       url: http://k8s-prometheus.monitoring.svc
