@@ -1,0 +1,43 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "flags": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "node_name_dst": {
+          "type": "string"
+        },
+        "node_name_src": {
+          "type": "string"
+        },
+        "resource_name": {
+          "type": "string"
+        },
+        "snapshot_name": {
+          "type": "string"
+        },
+        "tcp_port": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "ResourceConnections"
+      ],
+      "version": "v1-27-1",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

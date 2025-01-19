@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "allocated": {
+          "format": "byte",
+          "type": "string"
+        },
+        "capacity": {
+          "format": "byte",
+          "type": "string"
+        },
+        "fail_flag": {
+          "type": "boolean"
+        },
+        "node_name": {
+          "type": "string"
+        },
+        "usable": {
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "SatellitesCapacity"
+      ],
+      "version": "v1-17-0",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

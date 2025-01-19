@@ -1,0 +1,40 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "delete_map": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": "object"
+        },
+        "rollback_map": {
+          "type": "object",
+          "x-kubernetes-preserve-unknown-fields": true
+        }
+      },
+      "required": [
+        "rollback_map",
+        "delete_map"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "spec"
+  ],
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "Rollback"
+      ],
+      "version": "v1",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

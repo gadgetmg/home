@@ -1,0 +1,46 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "layer_resource_id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "layer_resource_kind": {
+          "type": "string"
+        },
+        "layer_resource_parent_id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "layer_resource_suffix": {
+          "type": "string"
+        },
+        "layer_resource_suspended": {
+          "type": "boolean"
+        },
+        "node_name": {
+          "type": "string"
+        },
+        "resource_name": {
+          "type": "string"
+        },
+        "snapshot_name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "LayerResourceIds"
+      ],
+      "version": "v1-27-1",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

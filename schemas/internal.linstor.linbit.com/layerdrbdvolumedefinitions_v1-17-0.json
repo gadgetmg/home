@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "resource_name": {
+          "type": "string"
+        },
+        "resource_name_suffix": {
+          "type": "string"
+        },
+        "snapshot_name": {
+          "type": "string"
+        },
+        "vlm_minor_nr": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "vlm_nr": {
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "LayerDrbdVolumeDefinitions"
+      ],
+      "version": "v1-17-0",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

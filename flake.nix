@@ -65,8 +65,9 @@
             velero
             yamlfmt
             yq-go
-            (python3.withPackages (python-pkgs: [
-              python-pkgs.pyaml
+            (python3.withPackages (python-pkgs: with python-pkgs; [
+              pyaml
+              deepdiff
             ]))
           ];
           shellHook = ''

@@ -1,0 +1,38 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "id_enabled": {
+          "type": "boolean"
+        },
+        "id_locked": {
+          "type": "boolean"
+        },
+        "identity_dsp_name": {
+          "type": "string"
+        },
+        "identity_name": {
+          "type": "string"
+        },
+        "pass_hash": {
+          "type": "string"
+        },
+        "pass_salt": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "SecIdentities"
+      ],
+      "version": "v1-19-1",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}
