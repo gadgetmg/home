@@ -25,6 +25,6 @@ jobs:
         restore-keys: |
           .task-${{ github.ref_name }}-
           .task-
-    - run: pre-commit run --all-files
+    - run: SKIP=no-commit-to-branch pre-commit run --all-files
     - uses: pre-commit-ci/lite-action@v1.1.0
       if: always()
