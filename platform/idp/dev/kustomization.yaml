@@ -4,6 +4,8 @@ kind: Kustomization
 
 resources:
 - ../base
+- secrets/keycloak-admin.yaml
+- secrets/crossplane-credentials.yaml
 - dev-user.yaml
 
 secretGenerator:
@@ -31,14 +33,14 @@ replacements:
       kind: HTTPRoute
     fieldPaths:
     - spec.hostnames.0
-  - select:
-      kind: Keycloak
-    fieldPaths:
-      - spec.hostname.hostname
-  - select:
-      kind: Keycloak
-    fieldPaths:
-      - spec.hostname.adminUrl
-    options:
-      delimiter: '/'
-      index: 2
+  # - select:
+  #     kind: Keycloak
+  #   fieldPaths:
+  #     - spec.hostname.hostname
+  # - select:
+  #     kind: Keycloak
+  #   fieldPaths:
+  #     - spec.hostname.adminUrl
+  #   options:
+  #     delimiter: '/'
+  #     index: 2

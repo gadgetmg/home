@@ -6,11 +6,36 @@ namespace: keycloak
 
 resources:
 - database.yaml
-- keycloak.yaml
 - gateway.yaml
 - httproute.yaml
 - crossplane/providerconfig.yaml
-- crossplane/secretsync.yaml
 - home/realm.yaml
 - home/groups.yaml
 - home/roles.yaml
+
+helmCharts:
+- name: keycloak
+  repo: oci://registry-1.docker.io/bitnamicharts
+  version: 24.4.5
+  releaseName: keycloak
+  namespace: keycloak
+  valuesInline:
+    production: true
+    proxyHeaders: xforwarded
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+      prometheusRule:
+        enabled: true
+        namespace: monitoring
+    postgresql:
+      enabled: false
+    externalDatabase:
+      existingSecret: keycloak-db-app
+      existingSecretHostKey: host
+      existingSecretPortKey: port
+      existingSecretUserKey: user
+      existingSecretDatabaseKey: dbname
+      existingSecretPasswordKey: password

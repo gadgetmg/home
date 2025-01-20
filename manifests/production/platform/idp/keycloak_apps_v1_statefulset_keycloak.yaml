@@ -1,0 +1,221 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/version: 26.1.0
+    helm.sh/chart: keycloak-24.4.5
+  name: keycloak
+  namespace: keycloak
+spec:
+  podManagementPolicy: Parallel
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: keycloak
+      app.kubernetes.io/instance: keycloak
+      app.kubernetes.io/name: keycloak
+  serviceName: keycloak-headless
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-env-vars: 83d74ca0bd45cdb018d9bfe8037246dfcc6256fa7efcd9bd993f8c8381fbedf7
+        checksum/secrets: a4ed07eaf1bebe4f71e03f5719cdcfecfc3568b5ca2b1083c55ce8a8c639051b
+      labels:
+        app.kubernetes.io/app-version: 26.1.0
+        app.kubernetes.io/component: keycloak
+        app.kubernetes.io/instance: keycloak
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: keycloak
+        app.kubernetes.io/version: 26.1.0
+        helm.sh/chart: keycloak-24.4.5
+    spec:
+      affinity:
+        nodeAffinity: null
+        podAffinity: null
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/instance: keycloak
+                  app.kubernetes.io/name: keycloak
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      automountServiceAccountToken: true
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: BITNAMI_DEBUG
+          value: "false"
+        - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: admin-password
+              name: keycloak
+        - name: KEYCLOAK_DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: keycloak-db-app
+        - name: KEYCLOAK_DATABASE_HOST
+          valueFrom:
+            secretKeyRef:
+              key: host
+              name: keycloak-db-app
+        - name: KEYCLOAK_DATABASE_PORT
+          valueFrom:
+            secretKeyRef:
+              key: port
+              name: keycloak-db-app
+        - name: KEYCLOAK_DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: keycloak-db-app
+        - name: KEYCLOAK_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              key: dbname
+              name: keycloak-db-app
+        - name: KEYCLOAK_HTTP_RELATIVE_PATH
+          value: /
+        - name: KC_SPI_ADMIN_REALM
+          value: master
+        envFrom:
+        - configMapRef:
+            name: keycloak-env-vars
+        image: docker.io/bitnami/keycloak:26.1.0-debian-12-r0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 300
+          periodSeconds: 1
+          successThreshold: 1
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        name: keycloak
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 9000
+          name: metrics
+          protocol: TCP
+        - containerPort: 7800
+          name: discovery
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /realms/master
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 2Gi
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 50Mi
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /tmp
+          name: empty-dir
+          subPath: tmp-dir
+        - mountPath: /bitnami/keycloak
+          name: empty-dir
+          subPath: app-volume-dir
+        - mountPath: /opt/bitnami/keycloak/conf
+          name: empty-dir
+          subPath: app-conf-dir
+        - mountPath: /opt/bitnami/keycloak/lib/quarkus
+          name: empty-dir
+          subPath: app-quarkus-dir
+        - mountPath: /opt/bitnami/keycloak/data
+          name: empty-dir
+          subPath: app-data-dir
+        - mountPath: /opt/bitnami/keycloak/providers
+          name: empty-dir
+          subPath: app-providers-dir
+      enableServiceLinks: true
+      initContainers:
+      - args:
+        - -ec
+        - |
+          . /opt/bitnami/scripts/liblog.sh
+
+          info "Copying writable dirs to empty dir"
+          # In order to not break the application functionality we need to make some
+          # directories writable, so we need to copy it to an empty dir volume
+          cp -r --preserve=mode /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
+          cp -r --preserve=mode /opt/bitnami/keycloak/data /emptydir/app-data-dir
+          cp -r --preserve=mode /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
+          info "Copy operation completed"
+        command:
+        - /bin/bash
+        image: docker.io/bitnami/keycloak:26.1.0-debian-12-r0
+        imagePullPolicy: IfNotPresent
+        name: prepare-write-dirs
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 2Gi
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 50Mi
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /emptydir
+          name: empty-dir
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+        supplementalGroups: []
+        sysctls: []
+      serviceAccountName: keycloak
+      volumes:
+      - emptyDir: {}
+        name: empty-dir
+  updateStrategy:
+    rollingUpdate: {}
+    type: RollingUpdate
