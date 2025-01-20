@@ -48,10 +48,10 @@ tasks:
     - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
 
   build:
-    label: build-{{ .KUSTOMIZATION }}
+    label: build-{{ .KUSTOMIZATION | replace "/" "-" }}
     sources:
-    - '{{ .KUSTOMIZATION }}/**'
-    - '{{ .KUSTOMIZATION }}/../base/**'
+    - '{{ .KUSTOMIZATION }}/**/*'
+    - '{{ .KUSTOMIZATION }}/../base/**/*'
     vars:
       APPLICATION: '{{ dir .KUSTOMIZATION | trimPrefix .ROOT_DIR | trimPrefix "/" }}'
       ENVIRONMENT: '{{ base .KUSTOMIZATION }}'
@@ -80,10 +80,12 @@ tasks:
     method: none
 
   kubeconform:
+    sources:
+    - manifests/**/*
     cmds:
     - kubeconform -output pretty
-        -kubernetes-version 1.32.1
+        -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }}
         -schema-location default
         -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json'
-        -skip CustomResourceDefinition
-        {{.CLI_ARGS | default "manifests/"}}
+        -skip CustomResourceDefinition,EnvoyProxy
+        manifests/

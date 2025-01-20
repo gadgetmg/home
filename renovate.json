@@ -2,8 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
-    ":maintainLockFilesWeekly",
-    ":automergeAll"
+    ":maintainLockFilesWeekly"
+  ],
+  "ignorePaths": [
+    "manifests/**"
   ],
   "nix": {
     "enabled": true
