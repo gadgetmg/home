@@ -23,8 +23,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: 83d74ca0bd45cdb018d9bfe8037246dfcc6256fa7efcd9bd993f8c8381fbedf7
-        checksum/secrets: c66f15aa66ded739bacd1101f93aab6c9b455000ec5f4c82fa90926345de3585
+        checksum/configmap-env-vars: e96d1d97ded5a19962fd297a4ec82c8f738a837e31709dd71612cbd1f7299063
       labels:
         app.kubernetes.io/app-version: 26.1.0
         app.kubernetes.io/component: keycloak
@@ -60,7 +59,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: admin-password
-              name: keycloak
+              name: keycloak-admin
         - name: KEYCLOAK_DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
