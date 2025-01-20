@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: keycloak
 
 resources:
+- namespace.yaml
 - database.yaml
 - gateway.yaml
 - httproute.yaml
@@ -20,6 +21,10 @@ helmCharts:
   releaseName: keycloak
   namespace: keycloak
   valuesInline:
+    auth:
+      adminUser: admin
+      existingSecret: keycloak-admin
+      passwordSecretKey: admin-password
     production: true
     proxyHeaders: xforwarded
     metrics:
