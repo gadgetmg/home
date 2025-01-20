@@ -5,14 +5,14 @@ repos:
     name: hydrate
     language: system
     entry: task
-    args: ["hydrate"]
+    args: ["-s", "hydrate"]
     pass_filenames: false
-# - id: kubeconform
-#   name: kubeconform
-#   language: system
-#   entry: task
-#   args: ["kubeconform", "--"]
-#   files: ^manifests/.*\.yaml
+  - id: kubeconform
+    name: kubeconform
+    language: system
+    entry: task
+    args: ["-s", "kubeconform"]
+    pass_filenames: false
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
