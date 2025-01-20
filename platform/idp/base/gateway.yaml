@@ -14,7 +14,5 @@ spec:
     protocol: HTTPS
     tls:
       certificateRefs:
-      - group: ''
-        kind: Secret
-        name: keycloak-gateway-tls
+      - name: keycloak-gateway-tls
       mode: Terminate
