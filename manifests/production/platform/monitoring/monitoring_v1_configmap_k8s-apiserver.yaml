@@ -73,7 +73,6 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/part-of: kube-prometheus-stack
     grafana_dashboard: "1"
-    heritage: Helm
     release: kube-prometheus-stack
   name: k8s-apiserver
   namespace: monitoring

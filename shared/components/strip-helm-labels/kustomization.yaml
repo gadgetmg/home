@@ -29,5 +29,10 @@ patches:
     - op: remove
       path: /metadata/labels/app.kubernetes.io~1managed-by
 - target:
+    labelSelector: heritage=Helm
+  patch: |
+    - op: remove
+      path: /metadata/labels/heritage
+- target:
     kind: (Deployment|StatefulSet|DaemonSet)
   path: patch.yaml
