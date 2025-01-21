@@ -4,6 +4,8 @@ kind: Kustomization
 
 resources:
 - namespace.yaml
+- clusterroles.yaml
+- clusterrolebindings.yaml
 
 components:
 - ../../../../shared/components/strip-helm-labels
@@ -21,32 +23,10 @@ helmCharts:
       replicas: 1
       serviceMonitor:
         enabled: true
-      rbac:
-        clusterRole:
-          extraResources:
-          - apiGroups:
-            - '*'
-            resources:
-            - '*'
-            verbs:
-            - get
-            - list
-            - watch
     backgroundController:
       replicas: 1
       serviceMonitor:
         enabled: true
-      rbac:
-        clusterRole:
-          extraResources:
-          - apiGroups:
-            - '*'
-            resources:
-            - '*'
-            verbs:
-            - get
-            - list
-            - watch
     cleanupController:
       replicas: 1
       serviceMonitor:
@@ -55,14 +35,3 @@ helmCharts:
       replicas: 1
       serviceMonitor:
         enabled: true
-      rbac:
-        clusterRole:
-          extraResources:
-          - apiGroups:
-            - '*'
-            resources:
-            - '*'
-            verbs:
-            - get
-            - list
-            - watch
