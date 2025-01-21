@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 67.10.0
-    chart: kube-prometheus-stack-67.10.0
+    app.kubernetes.io/version: 68.2.2
+    chart: kube-prometheus-stack-68.2.2
     heritage: Helm
     release: kube-prometheus-stack
   name: k8s-kubelet
@@ -19,6 +19,12 @@ spec:
   - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
     honorLabels: true
     honorTimestamps: true
+    metricRelabelings:
+    - action: drop
+      regex: (csi_operations|storage_operation_duration)_seconds_bucket;(0.25|2.5|15|25|120|600)(\.0)?
+      sourceLabels:
+      - __name__
+      - le
     port: https-metrics
     relabelings:
     - action: replace
@@ -50,6 +56,16 @@ spec:
       regex: container_(file_descriptors|tasks_state|threads_max)
       sourceLabels:
       - __name__
+    - action: drop
+      regex: container_memory_failures_total;hierarchy
+      sourceLabels:
+      - __name__
+      - scope
+    - action: drop
+      regex: container_network_.*;(cali|cilium|cni|lxc|nodelocaldns|tunl).*
+      sourceLabels:
+      - __name__
+      - interface
     - action: drop
       regex: container_spec.*
       sourceLabels:
