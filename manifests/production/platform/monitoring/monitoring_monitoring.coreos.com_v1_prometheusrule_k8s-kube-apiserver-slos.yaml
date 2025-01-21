@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 68.2.2
-    chart: kube-prometheus-stack-68.2.2
+    app.kubernetes.io/version: 68.3.0
+    chart: kube-prometheus-stack-68.3.0
     heritage: Helm
     release: kube-prometheus-stack
   name: k8s-kube-apiserver-slos
@@ -18,7 +18,8 @@ spec:
     rules:
     - alert: KubeAPIErrorBudgetBurn
       annotations:
-        description: The API server is burning too much error budget.
+        description: The API server is burning too much error budget on cluster {{
+          $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeapierrorbudgetburn
         summary: The API server is burning too much error budget.
       expr: |-
@@ -32,7 +33,8 @@ spec:
         short: 5m
     - alert: KubeAPIErrorBudgetBurn
       annotations:
-        description: The API server is burning too much error budget.
+        description: The API server is burning too much error budget on cluster {{
+          $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeapierrorbudgetburn
         summary: The API server is burning too much error budget.
       expr: |-
@@ -46,7 +48,8 @@ spec:
         short: 30m
     - alert: KubeAPIErrorBudgetBurn
       annotations:
-        description: The API server is burning too much error budget.
+        description: The API server is burning too much error budget on cluster {{
+          $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeapierrorbudgetburn
         summary: The API server is burning too much error budget.
       expr: |-
@@ -60,7 +63,8 @@ spec:
         short: 2h
     - alert: KubeAPIErrorBudgetBurn
       annotations:
-        description: The API server is burning too much error budget.
+        description: The API server is burning too much error budget on cluster {{
+          $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeapierrorbudgetburn
         summary: The API server is burning too much error budget.
       expr: |-

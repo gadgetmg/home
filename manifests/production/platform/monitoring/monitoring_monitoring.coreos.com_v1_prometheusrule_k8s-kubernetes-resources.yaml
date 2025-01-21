@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 68.2.2
-    chart: kube-prometheus-stack-68.2.2
+    app.kubernetes.io/version: 68.3.0
+    chart: kube-prometheus-stack-68.3.0
     heritage: Helm
     release: kube-prometheus-stack
   name: k8s-kubernetes-resources
@@ -74,7 +74,7 @@ spec:
     - alert: KubeQuotaAlmostFull
       annotations:
         description: Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage
-          }} of its {{ $labels.resource }} quota.
+          }} of its {{ $labels.resource }} quota on cluster {{ $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubequotaalmostfull
         summary: Namespace quota is going to be full.
       expr: |-
@@ -88,7 +88,7 @@ spec:
     - alert: KubeQuotaFullyUsed
       annotations:
         description: Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage
-          }} of its {{ $labels.resource }} quota.
+          }} of its {{ $labels.resource }} quota on cluster {{ $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubequotafullyused
         summary: Namespace quota is fully used.
       expr: |-
@@ -102,7 +102,7 @@ spec:
     - alert: KubeQuotaExceeded
       annotations:
         description: Namespace {{ $labels.namespace }} is using {{ $value | humanizePercentage
-          }} of its {{ $labels.resource }} quota.
+          }} of its {{ $labels.resource }} quota on cluster {{ $labels.cluster }}.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubequotaexceeded
         summary: Namespace quota has exceeded the limits.
       expr: |-
@@ -117,7 +117,7 @@ spec:
       annotations:
         description: '{{ $value | humanizePercentage }} throttling of CPU in namespace
           {{ $labels.namespace }} for container {{ $labels.container }} in pod {{
-          $labels.pod }}.'
+          $labels.pod }} on cluster {{ $labels.cluster }}.'
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/cputhrottlinghigh
         summary: Processes experience elevated CPU throttling.
       expr: |-
