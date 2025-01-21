@@ -27,7 +27,6 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/part-of: kube-prometheus-stack
     grafana_datasource: "1"
-    heritage: Helm
     release: kube-prometheus-stack
   name: k8s-grafana-datasource
   namespace: monitoring

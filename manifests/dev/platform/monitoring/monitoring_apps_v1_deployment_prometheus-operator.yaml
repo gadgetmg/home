@@ -7,7 +7,6 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
     app.kubernetes.io/part-of: kube-prometheus-stack
-    heritage: Helm
     release: kube-prometheus-stack
   name: prometheus-operator
   namespace: monitoring
@@ -26,7 +25,6 @@ spec:
         app.kubernetes.io/instance: kube-prometheus-stack
         app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
         app.kubernetes.io/part-of: kube-prometheus-stack
-        heritage: Helm
         release: kube-prometheus-stack
     spec:
       automountServiceAccountToken: true

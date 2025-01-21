@@ -11,3 +11,4 @@ spec:
         app.kubernetes.io/version: null
         app.kubernetes.io/app-version: null
         app.kubernetes.io/managed-by: null
+        heritage: null
