@@ -48,10 +48,6 @@ rules:
   - updaterequests/status
   - globalcontextentries
   - globalcontextentries/status
-  - admissionreports
-  - clusteradmissionreports
-  - backgroundscanreports
-  - clusterbackgroundscanreports
   - policyexceptions
   verbs:
   - create
@@ -124,14 +120,6 @@ rules:
   - create
   - update
   - patch
-  - get
-  - list
-  - watch
-- apiGroups:
-  - '*'
-  resources:
-  - '*'
-  verbs:
   - get
   - list
   - watch

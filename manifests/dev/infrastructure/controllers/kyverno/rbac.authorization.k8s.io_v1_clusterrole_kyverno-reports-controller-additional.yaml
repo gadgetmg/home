@@ -2,17 +2,15 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/component: rbac
+    app.kubernetes.io/component: reports-controller
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
-    rbac.authorization.k8s.io/aggregate-to-view: "true"
-  name: kyverno:rbac:view:reports
+  name: kyverno:reports-controller:additional
 rules:
 - apiGroups:
-  - reports.kyverno.io
+  - '*'
   resources:
-  - ephemeralreports
-  - clusterephemeralreports
+  - '*'
   verbs:
   - get
   - list

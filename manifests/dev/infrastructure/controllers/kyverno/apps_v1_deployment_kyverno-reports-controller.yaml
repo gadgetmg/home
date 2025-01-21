@@ -44,6 +44,7 @@ spec:
         - --disableMetrics=false
         - --otelConfig=prometheus
         - --metricsPort=8000
+        - --resyncPeriod=15m
         - --admissionReports=true
         - --aggregateReports=true
         - --policyReports=true
@@ -58,10 +59,10 @@ spec:
         - --loggingFormat=text
         - --v=2
         - --omitEvents=PolicyApplied,PolicySkipped
-        - --enablePolicyException=true
-        - --reportsChunkSize=0
+        - --enablePolicyException=false
         - --allowInsecureRegistry=false
         - --registryCredentialHelpers=default,google,amazon,azure,github
+        - --enableReporting=validate,mutate,mutateExisting,imageVerify,generate
         env:
         - name: KYVERNO_SERVICEACCOUNT_NAME
           value: kyverno-reports-controller
@@ -81,7 +82,7 @@ spec:
               fieldPath: metadata.namespace
         - name: TUF_ROOT
           value: /.sigstore
-        image: ghcr.io/kyverno/reports-controller:v1.12.6
+        image: ghcr.io/kyverno/reports-controller:v1.13.2
         imagePullPolicy: IfNotPresent
         name: controller
         ports:

@@ -12,10 +12,12 @@ rules:
   - ""
   resources:
   - secrets
+  - serviceaccounts
   verbs:
   - get
   - list
   - watch
+  - patch
   - create
   - update
   - delete
