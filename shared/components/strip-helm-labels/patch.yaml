@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patch
+spec:
+  template:
+    metadata:
+      labels:
+        chart: null
+        helm.sh/chart: null
+        app.kubernetes.io/version: null
+        app.kubernetes.io/app-version: null
+        app.kubernetes.io/managed-by: null

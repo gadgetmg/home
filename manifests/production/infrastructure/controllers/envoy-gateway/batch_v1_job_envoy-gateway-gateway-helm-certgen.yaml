@@ -5,10 +5,7 @@ metadata:
     helm.sh/hook: pre-install, pre-upgrade
   labels:
     app.kubernetes.io/instance: envoy-gateway
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: gateway-helm
-    app.kubernetes.io/version: v1.2.5
-    helm.sh/chart: gateway-helm-1.2.5
   name: envoy-gateway-gateway-helm-certgen
   namespace: envoy-gateway-system
 spec:

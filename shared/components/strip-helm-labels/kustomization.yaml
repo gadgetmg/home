@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+- target:
+    labelSelector: helm.sh/chart
+  patch: |
+    - op: remove
+      path: /metadata/labels/helm.sh~1chart
+- target:
+    labelSelector: chart
+  patch: |
+    - op: remove
+      path: /metadata/labels/chart
+- target:
+    labelSelector: app.kubernetes.io/version
+  patch: |
+    - op: remove
+      path: /metadata/labels/app.kubernetes.io~1version
+- target:
+    labelSelector: app.kubernetes.io/app-version
+  patch: |
+    - op: remove
+      path: /metadata/labels/app.kubernetes.io~1app-version
+- target:
+    labelSelector: app.kubernetes.io/managed-by=Helm
+  patch: |
+    - op: remove
+      path: /metadata/labels/app.kubernetes.io~1managed-by
+- target:
+    kind: (Deployment|StatefulSet|DaemonSet)
+  path: patch.yaml

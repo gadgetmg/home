@@ -5,10 +5,7 @@ metadata:
     app: cert-manager
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: cert-manager
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: cert-manager
-    app.kubernetes.io/version: v1.16.3
-    helm.sh/chart: cert-manager-v1.16.3
   name: cert-manager-controller-certificates
 rules:
 - apiGroups:

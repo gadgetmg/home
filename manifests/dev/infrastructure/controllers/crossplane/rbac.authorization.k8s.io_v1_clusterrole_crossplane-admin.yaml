@@ -9,9 +9,6 @@ metadata:
     app: crossplane
     app.kubernetes.io/component: cloud-infrastructure-controller
     app.kubernetes.io/instance: crossplane
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: crossplane
     app.kubernetes.io/part-of: crossplane
-    app.kubernetes.io/version: 1.18.2
-    helm.sh/chart: crossplane-1.18.2
   name: crossplane-admin

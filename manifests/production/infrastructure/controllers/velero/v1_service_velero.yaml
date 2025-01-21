@@ -3,9 +3,7 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/instance: velero
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: velero
-    helm.sh/chart: velero-8.3.0
   name: velero
   namespace: velero
 spec:

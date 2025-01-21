@@ -14,6 +14,9 @@ resources:
 - https://raw.githubusercontent.com/envoyproxy/gateway/refs/tags/v1.2.5/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_httproutefilters.yaml
 - https://raw.githubusercontent.com/envoyproxy/gateway/refs/tags/v1.2.5/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
 
+components:
+- ../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: prometheus-operator-crds
   repo: https://prometheus-community.github.io/helm-charts

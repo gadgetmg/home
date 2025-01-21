@@ -4,10 +4,7 @@ metadata:
   labels:
     app: trust-manager
     app.kubernetes.io/instance: trust-manager
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: trust-manager
-    app.kubernetes.io/version: v0.15.0
-    helm.sh/chart: trust-manager-v0.15.0
     prometheus: default
   name: trust-manager
   namespace: cert-manager

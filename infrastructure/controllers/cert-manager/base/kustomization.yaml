@@ -5,6 +5,9 @@ kind: Kustomization
 resources:
 - namespace.yaml
 
+components:
+- ../../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: cert-manager
   repo: https://charts.jetstack.io

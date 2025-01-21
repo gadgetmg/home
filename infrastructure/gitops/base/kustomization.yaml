@@ -13,6 +13,9 @@ resources:
 - keycloak/storeconfig.yaml
 - vcluster-argocd-secret-sync.yaml
 
+components:
+- ../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: argo-cd
   repo: https://argoproj.github.io/argo-helm

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 output: prefixed
 
@@ -34,12 +34,12 @@ tasks:
     - talhelper genconfig
 
   clusters:production:apply-insecure:
-    deps: ['clusters:production:genconfig']
+    deps: ["clusters:production:genconfig"]
     cmds:
     - talhelper gencommand apply --extra-flags "--insecure" | sh
 
   clusters:production:bootstrap:
-    deps: ['clusters:production:genconfig']
+    deps: ["clusters:production:genconfig"]
     cmds:
     - talhelper gencommand bootstrap | sh
     - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
@@ -50,14 +50,15 @@ tasks:
   build:
     label: build-{{ .KUSTOMIZATION | replace "/" "-" }}
     sources:
-    - '{{ .KUSTOMIZATION }}/**/*'
-    - '{{ .KUSTOMIZATION }}/../base/**/*'
+    - "{{ .KUSTOMIZATION }}/**/*"
+    - "{{ .KUSTOMIZATION }}/../base/**/*"
+    - shared/**/*
     vars:
       APPLICATION: '{{ dir .KUSTOMIZATION | trimPrefix .ROOT_DIR | trimPrefix "/" }}'
-      ENVIRONMENT: '{{ base .KUSTOMIZATION }}'
-      OUTDIR: '{{ .ROOT_DIR }}/manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}/'
+      ENVIRONMENT: "{{ base .KUSTOMIZATION }}"
+      OUTDIR: "{{ .ROOT_DIR }}/manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}/"
     generates:
-    - '{{ .OUTDIR }}**'
+    - "{{ .OUTDIR }}**"
     cmds:
     - mkdir -p {{ .OUTDIR }}
     - rm -rf {{ .OUTDIR }}**
@@ -76,16 +77,11 @@ tasks:
     - for: sources
       task: build
       vars:
-        KUSTOMIZATION: '{{ dir .ITEM }}'
+        KUSTOMIZATION: "{{ dir .ITEM }}"
     method: none
 
   kubeconform:
     sources:
     - manifests/**/*
     cmds:
-    - kubeconform -output pretty
-        -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }}
-        -schema-location default
-        -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json'
-        -skip CustomResourceDefinition,EnvoyProxy
-        manifests/
+    - kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy manifests/

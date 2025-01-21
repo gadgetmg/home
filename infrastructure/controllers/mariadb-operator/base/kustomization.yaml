@@ -7,6 +7,9 @@ namespace: mariadb-system
 resources:
 - namespace.yaml
 
+components:
+- ../../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: mariadb-operator
   repo: https://mariadb-operator.github.io/mariadb-operator

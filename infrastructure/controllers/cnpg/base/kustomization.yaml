@@ -5,6 +5,9 @@ kind: Kustomization
 resources:
 - namespace.yaml
 
+components:
+- ../../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: cloudnative-pg
   repo: https://cloudnative-pg.io/charts
