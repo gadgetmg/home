@@ -5,6 +5,9 @@ kind: Kustomization
 resources:
 - namespace.yaml
 
+components:
+- ../../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: kyverno
   repo: https://kyverno.github.io/kyverno/

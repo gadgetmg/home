@@ -60,10 +60,8 @@ spec:
         - containerPort: 8090
           name: grpc
         terminationMessagePolicy: FallbackToLogsOnError
-        volumeMounts: null
       nodeSelector:
         kubernetes.io/os: linux
-      priorityClassName: null
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001

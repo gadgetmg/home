@@ -3,10 +3,7 @@ kind: ServiceMonitor
 metadata:
   labels:
     app.kubernetes.io/instance: mariadb-operator
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: mariadb-operator-cert-controller
-    app.kubernetes.io/version: 0.36.0
-    helm.sh/chart: mariadb-operator-0.36.0
   name: mariadb-operator-cert-controller
   namespace: mariadb-system
 spec:

@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/instance: envoy-gateway
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: gateway-helm
-    app.kubernetes.io/version: v1.2.5
     control-plane: envoy-gateway
-    helm.sh/chart: gateway-helm-1.2.5
   name: envoy-gateway
   namespace: envoy-gateway-system
 spec:

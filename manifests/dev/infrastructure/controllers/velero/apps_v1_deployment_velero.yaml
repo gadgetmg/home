@@ -3,11 +3,8 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/instance: velero
-    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: velero
-    app.kubernetes.io/version: 1.15.2
     component: velero
-    helm.sh/chart: velero-8.3.0
   name: velero
   namespace: velero
 spec:
@@ -26,10 +23,7 @@ spec:
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/instance: velero
-        app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: velero
-        app.kubernetes.io/version: 1.15.2
-        helm.sh/chart: velero-8.3.0
         name: velero
     spec:
       containers:

@@ -14,6 +14,9 @@ resources:
 - home/groups.yaml
 - home/roles.yaml
 
+components:
+- ../../../shared/components/strip-helm-labels
+
 helmCharts:
 - name: keycloak
   repo: oci://registry-1.docker.io/bitnamicharts
