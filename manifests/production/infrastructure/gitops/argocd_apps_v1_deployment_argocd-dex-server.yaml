@@ -64,6 +64,16 @@ spec:
               optional: true
         image: ghcr.io/dexidp/dex:v2.41.1
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/live
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         name: dex-server
         ports:
         - containerPort: 5556
@@ -75,6 +85,16 @@ spec:
         - containerPort: 5558
           name: metrics
           protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/ready
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
         resources: {}
         securityContext:
           allowPrivilegeEscalation: false
