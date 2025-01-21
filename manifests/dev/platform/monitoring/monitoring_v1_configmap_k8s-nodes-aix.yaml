@@ -57,8 +57,8 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 67.10.0
-    chart: kube-prometheus-stack-67.10.0
+    app.kubernetes.io/version: 68.2.2
+    chart: kube-prometheus-stack-68.2.2
     grafana_dashboard: "1"
     heritage: Helm
     release: kube-prometheus-stack

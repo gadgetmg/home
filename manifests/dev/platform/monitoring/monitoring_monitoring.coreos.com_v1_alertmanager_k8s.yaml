@@ -6,8 +6,8 @@ metadata:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/part-of: kube-prometheus-stack
-    app.kubernetes.io/version: 67.10.0
-    chart: kube-prometheus-stack-67.10.0
+    app.kubernetes.io/version: 68.2.2
+    chart: kube-prometheus-stack-68.2.2
     heritage: Helm
     release: kube-prometheus-stack
   name: k8s
@@ -33,7 +33,7 @@ spec:
   alertmanagerConfigSelector: {}
   automountServiceAccountToken: true
   externalUrl: http://k8s-alertmanager.monitoring:9093
-  image: quay.io/prometheus/alertmanager:v0.27.0
+  image: quay.io/prometheus/alertmanager:v0.28.0
   listenLocal: false
   logFormat: logfmt
   logLevel: info
@@ -50,4 +50,4 @@ spec:
     seccompProfile:
       type: RuntimeDefault
   serviceAccountName: k8s-alertmanager
-  version: v0.27.0
+  version: v0.28.0
