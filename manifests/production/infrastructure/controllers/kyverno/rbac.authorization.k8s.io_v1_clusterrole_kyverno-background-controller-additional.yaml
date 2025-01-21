@@ -8,10 +8,18 @@ metadata:
   name: kyverno:background-controller:additional
 rules:
 - apiGroups:
-  - '*'
+  - ""
   resources:
-  - '*'
+  - secrets
   verbs:
   - get
   - list
-  - watch
+  - create
+  - update
+  - delete
+- apiGroups:
+  - openidclient.keycloak.crossplane.io
+  resources:
+  - clients
+  verbs:
+  - list
