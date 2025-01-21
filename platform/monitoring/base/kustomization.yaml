@@ -47,6 +47,7 @@ helmCharts:
       fullnameOverride: prometheus-operator
     cleanPrometheusOperatorObjectNames: true
     prometheus-node-exporter:
+      namespaceOverride: kube-system
       fullnameOverride: node-exporter
       prometheus:
         monitor:

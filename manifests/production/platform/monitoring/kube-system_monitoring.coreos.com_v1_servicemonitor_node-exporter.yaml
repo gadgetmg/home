@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: prometheus-node-exporter
     release: kube-prometheus-stack
   name: node-exporter
-  namespace: monitoring
+  namespace: kube-system
 spec:
   attachMetadata:
     node: true
