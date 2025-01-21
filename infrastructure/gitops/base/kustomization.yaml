@@ -25,6 +25,11 @@ helmCharts:
   apiVersions:
   - monitoring.coreos.com/v1
   valuesInline:
+    dex:
+      readinessProbe:
+        enabled: true
+      livenessProbe:
+        enabled: true
     configs:
       params:
         server.insecure: true
