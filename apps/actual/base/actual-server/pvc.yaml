@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: actual-server-data
 spec:
-  storageClassName: ssd-r3
+  storageClassName: ssd-r2
   accessModes:
   - ReadWriteOnce
   resources:

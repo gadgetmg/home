@@ -4,13 +4,13 @@ kind: StorageClass
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
-  name: ssd-r3
+  name: ssd-r2
 parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
-  linstor.csi.linbit.com/autoPlace: "3"
+  linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/layerList: drbd luks storage
   linstor.csi.linbit.com/storagePool: ssd
 provisioner: linstor.csi.linbit.com

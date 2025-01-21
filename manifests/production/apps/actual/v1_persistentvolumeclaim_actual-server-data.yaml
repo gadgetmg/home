@@ -13,4 +13,4 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: ssd-r3
+  storageClassName: ssd-r2
