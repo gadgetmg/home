@@ -7,4 +7,4 @@ spec:
   # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
   package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v1.9.2
   runtimeConfigRef:
-    name: enable-ess
+    name: provider-keycloak

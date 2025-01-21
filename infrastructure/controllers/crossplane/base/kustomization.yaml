@@ -17,3 +17,17 @@ helmCharts:
   valuesInline:
     metrics:
       enabled: true
+    securityContextCrossplane:
+      capabilities:
+        drop: ["ALL"]
+    securityContextRBACManager:
+      capabilities:
+        drop: ["ALL"]
+    podSecurityContextCrossplane:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    podSecurityContextRBACManager:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault

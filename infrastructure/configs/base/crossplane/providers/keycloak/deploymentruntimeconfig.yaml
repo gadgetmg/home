@@ -2,7 +2,7 @@
 apiVersion: pkg.crossplane.io/v1beta1
 kind: DeploymentRuntimeConfig
 metadata:
-  name: enable-ess
+  name: provider-keycloak
 spec:
   deploymentTemplate:
     spec:
@@ -13,3 +13,14 @@ spec:
           - name: package-runtime
             args:
             - --enable-external-secret-stores
+            securityContext:
+              allowPrivilegeEscalation: false
+              privileged: false
+              runAsGroup: 2000
+              runAsUser: 2000
+              capabilities:
+                drop: ["ALL"]
+          securityContext:
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
