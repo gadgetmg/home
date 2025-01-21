@@ -26,5 +26,8 @@ jobs:
           .task-${{ github.ref_name }}-
           .task-
     - run: SKIP=no-commit-to-branch pre-commit run --all-files
-    - uses: pre-commit-ci/lite-action@v1.1.0
+    - uses: stefanzweifel/git-auto-commit-action@v5.1.0
       if: always()
+      with:
+        commit_message: '[pre-commit] automatic fixes'
+        token: ${{ secrets.PRECOMMIT_PAT }}
