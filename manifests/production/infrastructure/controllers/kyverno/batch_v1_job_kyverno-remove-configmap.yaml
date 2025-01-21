@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   annotations:
-    helm.sh/hook: pre-delete
+    helm.sh/hook: post-delete
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded,hook-failed
     helm.sh/hook-weight: "10"
   labels:
@@ -23,7 +23,7 @@ spec:
         - |-
           set -euo pipefail
           kubectl delete cm -n kyverno kyverno
-        image: bitnami/kubectl:1.28.5
+        image: bitnami/kubectl:1.30.2
         imagePullPolicy: null
         name: kubectl
         securityContext:

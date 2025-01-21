@@ -19,20 +19,31 @@ spec:
       - command:
         - /bin/bash
         - -c
-        - "set -euo pipefail\nNAMESPACES=$(kubectl get namespaces --no-headers=true
-          | awk '{print $1}')\n\nfor ns in ${NAMESPACES[@]};\ndo\n  COUNT=$(kubectl
-          get policyreports.wgpolicyk8s.io -n $ns --no-headers=true | awk '/pol/{print
-          $1}' | wc -l)\n\n  if [ $COUNT -gt 0 ]; then\n    echo \"deleting $COUNT
-          policyreports in namespace $ns\"\n    kubectl get policyreports.wgpolicyk8s.io
-          -n $ns --no-headers=true | awk '/pol/{print $1}' | xargs kubectl delete
-          -n $ns policyreports.wgpolicyk8s.io\n  else\n    echo \"no policyreports
-          in namespace $ns\"\n  fi\ndone\n\nCOUNT=$(kubectl get clusterpolicyreports.wgpolicyk8s.io
-          --no-headers=true | awk '/pol/{print $1}' | wc -l)\n  \nif [ $COUNT -gt
-          0 ]; then\n  echo \"deleting $COUNT clusterpolicyreports\"\n  kubectl get
-          clusterpolicyreports.wgpolicyk8s.io --no-headers=true | awk '/pol/{print
-          $1}' | xargs kubectl delete clusterpolicyreports.wgpolicyk8s.io\nelse\n
-          \ echo \"no clusterpolicyreports\"\nfi\n"
-        image: bitnami/kubectl:1.28.5
+        - |
+          set -euo pipefail
+          NAMESPACES=$(kubectl get namespaces --no-headers=true | awk '{print $1}')
+
+          for ns in ${NAMESPACES[@]};
+          do
+            COUNT=$(kubectl get policyreports.wgpolicyk8s.io -n $ns --no-headers=true | awk '/pol/{print $1}' | wc -l)
+
+            if [ $COUNT -gt 0 ]; then
+              echo "deleting $COUNT policyreports in namespace $ns"
+              kubectl get policyreports.wgpolicyk8s.io -n $ns --no-headers=true | awk '/pol/{print $1}' | xargs kubectl delete -n $ns policyreports.wgpolicyk8s.io
+            else
+              echo "no policyreports in namespace $ns"
+            fi
+          done
+
+          COUNT=$(kubectl get clusterpolicyreports.wgpolicyk8s.io --no-headers=true | awk '/pol/{print $1}' | wc -l)
+
+          if [ $COUNT -gt 0 ]; then
+            echo "deleting $COUNT clusterpolicyreports"
+            kubectl get clusterpolicyreports.wgpolicyk8s.io --no-headers=true | awk '/pol/{print $1}' | xargs kubectl delete clusterpolicyreports.wgpolicyk8s.io
+          else
+            echo "no clusterpolicyreports"
+          fi
+        image: bitnami/kubectl:1.30.2
         imagePullPolicy: null
         name: kubectl
         securityContext:

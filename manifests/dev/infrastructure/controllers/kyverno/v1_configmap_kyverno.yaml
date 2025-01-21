@@ -7,9 +7,7 @@ data:
   resourceFilters: '[*/*,kyverno,*] [Event,*,*] [*/*,kube-system,*] [*/*,kube-public,*]
     [*/*,kube-node-lease,*] [Node,*,*] [Node/*,*,*] [APIService,*,*] [APIService/*,*,*]
     [TokenReview,*,*] [SubjectAccessReview,*,*] [SelfSubjectAccessReview,*,*] [Binding,*,*]
-    [Pod/binding,*,*] [ReplicaSet,*,*] [ReplicaSet/*,*,*] [AdmissionReport,*,*] [AdmissionReport/*,*,*]
-    [ClusterAdmissionReport,*,*] [ClusterAdmissionReport/*,*,*] [BackgroundScanReport,*,*]
-    [BackgroundScanReport/*,*,*] [ClusterBackgroundScanReport,*,*] [ClusterBackgroundScanReport/*,*,*]
+    [Pod/binding,*,*] [ReplicaSet,*,*] [ReplicaSet/*,*,*] [EphemeralReport,*,*] [ClusterEphemeralReport,*,*]
     [ClusterRole,*,kyverno:admission-controller] [ClusterRole,*,kyverno:admission-controller:core]
     [ClusterRole,*,kyverno:admission-controller:additional] [ClusterRole,*,kyverno:background-controller]
     [ClusterRole,*,kyverno:background-controller:core] [ClusterRole,*,kyverno:background-controller:additional]
@@ -52,8 +50,11 @@ data:
     [ServiceMonitor,kyverno,kyverno-admission-controller] [ServiceMonitor,kyverno,kyverno-background-controller]
     [ServiceMonitor,kyverno,kyverno-cleanup-controller] [ServiceMonitor,kyverno,kyverno-reports-controller]
     [Secret,kyverno,kyverno-svc.kyverno.svc.*] [Secret,kyverno,kyverno-cleanup-controller.kyverno.svc.*]'
+  updateRequestThreshold: "1000"
   webhookAnnotations: '{"admissions.enforcer/disabled":"true"}'
-  webhooks: '[{"namespaceSelector":{"matchExpressions":[{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["kube-system"]},{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["kyverno"]}],"matchLabels":null}}]'
+  webhooks: |2-
+
+      {"namespaceSelector":{"matchExpressions":[{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["kube-system"]},{"key":"kubernetes.io/metadata.name","operator":"NotIn","values":["kyverno"]}],"matchLabels":null}}
 kind: ConfigMap
 metadata:
   annotations:

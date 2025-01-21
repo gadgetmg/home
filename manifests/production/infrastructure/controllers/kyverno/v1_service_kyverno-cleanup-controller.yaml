@@ -9,7 +9,8 @@ metadata:
   namespace: kyverno
 spec:
   ports:
-  - name: https
+  - appProtocol: https
+    name: https
     port: 443
     protocol: TCP
     targetPort: https

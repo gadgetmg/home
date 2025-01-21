@@ -20,15 +20,7 @@ spec:
       - args:
         - migrate
         - --resource
-        - admissionreports.kyverno.io
-        - --resource
-        - backgroundscanreports.kyverno.io
-        - --resource
         - cleanuppolicies.kyverno.io
-        - --resource
-        - clusteradmissionreports.kyverno.io
-        - --resource
-        - clusterbackgroundscanreports.kyverno.io
         - --resource
         - clustercleanuppolicies.kyverno.io
         - --resource
@@ -41,7 +33,7 @@ spec:
         - policyexceptions.kyverno.io
         - --resource
         - updaterequests.kyverno.io
-        image: ghcr.io/kyverno/kyverno-cli:v1.12.6
+        image: ghcr.io/kyverno/kyverno-cli:v1.13.2
         imagePullPolicy: IfNotPresent
         name: kubectl
         securityContext:

@@ -16,7 +16,6 @@ rules:
 - apiGroups:
   - ""
   resources:
-  - secrets
   - configmaps
   - namespaces
   verbs:
@@ -28,10 +27,6 @@ rules:
   resources:
   - globalcontextentries
   - globalcontextentries/status
-  - admissionreports
-  - clusteradmissionreports
-  - backgroundscanreports
-  - clusterbackgroundscanreports
   - policyexceptions
   - policies
   - clusterpolicies
@@ -82,11 +77,3 @@ rules:
   verbs:
   - create
   - patch
-- apiGroups:
-  - '*'
-  resources:
-  - '*'
-  verbs:
-  - get
-  - list
-  - watch
