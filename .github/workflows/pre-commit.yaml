@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4.2.2
+      with:
+        token: ${{ secrets.PRECOMMIT_PAT }}
     - uses: nixbuild/nix-quick-install-action@v29
     - uses: DeterminateSystems/magic-nix-cache-action@v8
       with:
@@ -30,4 +32,3 @@ jobs:
       if: always()
       with:
         commit_message: '[pre-commit] automatic fixes'
-        token: ${{ secrets.PRECOMMIT_PAT }}
