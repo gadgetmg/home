@@ -13,4 +13,4 @@ resources:
 
 images:
 - name: ghcr.io/gadgetmg/ezxss
-  newTag: master@sha256:ae12b7ec1ca47547c55b2d839b6dc6b5b06bcd47e5a651a9becef6a5fe08d5ea
+  newTag: master@sha256:403d7bd266634a1a7390ab627568a833e12c625ff370134c4bfbf69e93baea90
