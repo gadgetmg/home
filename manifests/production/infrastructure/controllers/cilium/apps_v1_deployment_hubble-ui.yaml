@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/hubble-ui-nginx-configmap-checksum: e8acee96ed990156efd0291c8c33709d2c7902d2ec993eefa16c7cd3d1a9d84b
+        cilium.io/hubble-ui-nginx-configmap-checksum: de069d2597e16e4de004ce684b15d74b2ab6051c717ae073d86199a76d91fcf1
       labels:
         app.kubernetes.io/name: hubble-ui
         app.kubernetes.io/part-of: cilium
