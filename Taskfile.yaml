@@ -58,7 +58,7 @@ tasks:
       ENVIRONMENT: "{{ base .KUSTOMIZATION }}"
       OUTDIR: "{{ .ROOT_DIR }}/manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}/"
     generates:
-    - "{{ .OUTDIR }}**"
+    - "{{ .OUTDIR }}**/*"
     cmds:
     - mkdir -p {{ .OUTDIR }}
     - rm -rf {{ .OUTDIR }}**
