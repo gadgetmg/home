@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/name: actual-server
+    app.kubernetes.io/part-of: actual
+  name: actual-server
+  namespace: actual
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: application
+      app.kubernetes.io/instance: actual
+      app.kubernetes.io/name: actual-server
+      app.kubernetes.io/part-of: actual
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: application
+        app.kubernetes.io/instance: actual
+        app.kubernetes.io/name: actual-server
+        app.kubernetes.io/part-of: actual
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: application
+                app.kubernetes.io/instance: actual
+                app.kubernetes.io/name: actual-server
+                app.kubernetes.io/part-of: actual
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: actual-server
+        image: ghcr.io/actualbudget/actual-server:25.1.0-alpine@sha256:763c07f19074477f58a8beca19c066a2d8ec7d944b997991a6958e06fd827cc8
+        name: actual-server
+        ports:
+        - containerPort: 5006
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: actual-server-data
