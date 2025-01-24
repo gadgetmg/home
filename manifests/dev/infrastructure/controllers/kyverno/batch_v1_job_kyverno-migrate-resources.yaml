@@ -14,7 +14,8 @@ metadata:
 spec:
   backoffLimit: 2
   template:
-    metadata: null
+    metadata:
+      labels: {}
     spec:
       containers:
       - args:
