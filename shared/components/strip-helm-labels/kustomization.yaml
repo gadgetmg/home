@@ -34,5 +34,5 @@ patches:
     - op: remove
       path: /metadata/labels/heritage
 - target:
-    kind: (Deployment|StatefulSet|DaemonSet)
+    kind: (Deployment|StatefulSet|DaemonSet|Job)
   path: patch.yaml
