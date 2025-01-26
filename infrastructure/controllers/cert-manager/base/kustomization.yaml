@@ -15,8 +15,6 @@ helmCharts:
   namespace: cert-manager
   version: v1.16.3
   valuesInline:
-    crds:
-      enabled: true
     replicaCount: 1
     podDisruptionBudget:
       enabled: true
