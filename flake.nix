@@ -69,6 +69,7 @@
                   kustomize
                   kyverno-chainsaw
                   pre-commit
+                  renovate
                   sops
                   ssh-to-age
                   talhelper
