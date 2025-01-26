@@ -1,12 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    ":maintainLockFilesWeekly"
-  ],
-  "ignorePaths": [
-    "manifests/**"
-  ],
+  "extends": ["config:best-practices", ":maintainLockFilesWeekly"],
+  "ignorePaths": ["manifests/**"],
   "nix": {
     "enabled": true
   },
@@ -22,9 +17,32 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.(yaml|sh)$"
+      "fileMatch": [".*"],
+      "matchStrings": [
+        "https:\/\/github\\.com\/(?<depName>.*\/.*?)\/releases\/download\/(?<currentValue>.*?)\/"
       ],
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".*"],
+      "matchStrings": [
+        "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
+      ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".*"],
+      "matchStrings": [
+        "https:\/\/raw\\.githubusercontent\\.com\/yannh\/kubernetes-json-schema\/master\/(?<currentValue>.*?)\/"
+      ],
+      "depNameTemplate": "kubernetes/kubernetes",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [".*"],
       "matchStringsStrategy": "recursive",
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: registryUrl=(?<registryUrl>.*?))?\\n[^\\n]+",

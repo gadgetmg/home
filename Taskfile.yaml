@@ -85,3 +85,11 @@ tasks:
     - manifests/**/*
     cmds:
     - kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy manifests/
+
+  renovate:
+    env:
+      LOG_LEVEL: DEBUG
+      GITHUB_COM_TOKEN:
+        sh: gh auth token
+    cmds:
+    - renovate --platform=local
