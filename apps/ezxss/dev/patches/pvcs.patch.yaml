@@ -1,7 +1,0 @@
-apiVersion: k8s.mariadb.com/v1alpha1
-kind: MariaDB
-metadata:
-  name: name
-spec:
-  storage:
-    storageClassName: local-path

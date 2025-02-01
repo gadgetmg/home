@@ -1,0 +1,16 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: test
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      name: cluster-ca
+      key: ca.crt
+  target:
+    configMap:
+      key: bundle.pem
+    namespaceSelector:
+      matchLabels:
+        tests/name: trust-manager
