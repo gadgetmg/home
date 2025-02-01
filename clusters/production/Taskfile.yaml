@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  TALOSCONFIG: ./clusterconfig/talosconfig
+
+tasks:
+  genconfig:
+  - talhelper genconfig
+
+  apply:
+    deps: [genconfig]
+    cmd: talhelper gencommand apply | sh
+
+  apply-insecure:
+    deps: [genconfig]
+    cmd: talhelper gencommand apply --extra-flags "--insecure" | sh
+
+  bootstrap:
+    deps: [genconfig]
+    cmds:
+    - talhelper gencommand bootstrap | sh
+    - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
+    - talhelper gencommand kubeconfig | sh

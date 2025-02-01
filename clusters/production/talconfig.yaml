@@ -61,7 +61,8 @@ nodes:
       ip: 10.1.2.10
 controlPlane:
   patches:
-  - '@clusterconfig/patches/cilium-cni.yaml'
   - '@clusterconfig/patches/disk-encryption.yaml'
-  - '@clusterconfig/patches/pod-security.yaml'
   - '@clusterconfig/patches/metrics-scraping.yaml'
+  - '@clusterconfig/patches/no-cni.yaml'
+  - '@clusterconfig/patches/oidc.yaml'
+  - '@clusterconfig/patches/pod-security.yaml'

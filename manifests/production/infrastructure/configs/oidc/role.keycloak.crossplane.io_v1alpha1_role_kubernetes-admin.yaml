@@ -1,0 +1,14 @@
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: admin
+  name: kubernetes-admin
+spec:
+  forProvider:
+    clientIdRef:
+      name: kubernetes
+    description: kubernetes admin
+    name: admin
+    realmIdRef:
+      name: home
