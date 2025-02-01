@@ -35,12 +35,19 @@
             ci =
               with pkgs;
               mkShell {
+                LC_ALL = "en_US.UTF-8";
                 packages = [
                   pre-commit
                   kustomize
                   kubernetes-helm
                   kubeconform
                   go-task
+                  kind
+                  kapp
+                  parallel
+                  (bats.withLibraries (p: [
+                    p.bats-detik
+                  ]))
                 ];
               };
             default =
@@ -49,6 +56,9 @@
                 packages = [
                   age
                   argocd
+                  (bats.withLibraries (p: [
+                    p.bats-detik
+                  ]))
                   cilium-cli
                   crossplane-cli
                   go
@@ -57,6 +67,7 @@
                   hubble
                   jsonnet-bundler
                   k9s
+                  kapp
                   kfilt
                   kind
                   krew
@@ -68,6 +79,7 @@
                   kubevirt
                   kustomize
                   kyverno-chainsaw
+                  parallel
                   pre-commit
                   renovate
                   sops

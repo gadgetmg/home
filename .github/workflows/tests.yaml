@@ -1,0 +1,32 @@
+name: tests
+run-name: tests
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Install Nix
+      uses: nixbuild/nix-quick-install-action@25aff27c252e0c8cdda3264805f7b6bcd92c8718 # v29
+    - name: Load Nix environment
+      uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1.2.1
+      with:
+        arguments: .#ci
+
+    - name: Cache Task checksums
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        path: ./.task/
+        key: .task-${{ github.ref_name }}-${{ hashFiles('**/*') }}
+        restore-keys: |
+          .task-${{ github.ref_name }}-
+          .task-
+
+    - name: Run tests
+      run: bats -j 4 tests

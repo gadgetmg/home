@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx-db
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx-db
+  namespace: paperless-ngx
+spec:
+  affinity:
+    podAntiAffinityType: preferred
+  bootstrap:
+    initdb:
+      database: paperless-ngx
+  instances: 1
+  storage:
+    size: 10Gi
+    storageClass: standard

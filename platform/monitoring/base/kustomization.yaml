@@ -9,6 +9,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/delete-helm-tests
 
 helmCharts:
 - name: kube-prometheus-stack

@@ -15,6 +15,9 @@ spec:
       - path: manifests/production/infrastructure/controllers/*
       - path: manifests/production/infrastructure/controllers
         exclude: true
+      - path: manifests/production/infrastructure/configs/*
+      - path: manifests/production/infrastructure/configs
+        exclude: true
       - path: manifests/production/infrastructure/*
       - path: manifests/production/platform/*
       - path: manifests/production/apps/*

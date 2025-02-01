@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-output: prefixed
-
 run: when_changed
+
+shopt: [globstar]
 
 env:
   # renovate: datasource=github-releases depName=siderolabs/talos
@@ -12,22 +12,19 @@ env:
   KUBERNETES_VERSION: v1.32.1
 
 tasks:
-  clusters:dev:create:
+  clusters:kind:create:
     cmds:
-    - clusters/dev/scripts/create-cluster.sh
-    - kubectl create namespace argocd
-    - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
+    - kind create cluster --config clusters/kind/kind-config.yaml
+    - docker run -d --name cloud-provider-kind --rm --network kind -v /var/run/docker.sock:/var/run/docker.sock registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.5.0
     status:
-    - docker ps | grep dev-controlplane-1
+    - kind get clusters | grep ^kind$
 
-  clusters:dev:destroy:
+  clusters:kind:delete:
     cmds:
-    - defer: talosctl config context "" && talosctl config remove dev --noconfirm
-    - defer: kubectl config unset current-context
-    - defer: kubectl config delete-context admin@dev
-    - defer: kubectl config delete-user admin@dev
-    - defer: kubectl config delete-cluster dev
-    - talosctl cluster destroy --name dev
+    - kind delete cluster
+    - docker stop cloud-provider-kind
+    status:
+    - '! kind get clusters | grep ^kind$'
 
   clusters:production:genconfig:
     cmds:
@@ -47,38 +44,36 @@ tasks:
     - kubectl create namespace argocd
     - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
 
-  build:
+  build *:
+    vars:
+      KUSTOMIZATION: '{{ index .MATCH 0 }}'
+      APPLICATION: '{{ dir .KUSTOMIZATION }}'
+      ENVIRONMENT: "{{ base .KUSTOMIZATION }}"
+      OUTDIR: "manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}"
     label: build-{{ .KUSTOMIZATION | replace "/" "-" }}
     sources:
-    - "{{ .KUSTOMIZATION }}/**/*"
     - "{{ .KUSTOMIZATION }}/../base/**/*"
+    - "{{ .KUSTOMIZATION }}/**/*"
     - shared/**/*
-    vars:
-      APPLICATION: '{{ dir .KUSTOMIZATION | trimPrefix .ROOT_DIR | trimPrefix "/" }}'
-      ENVIRONMENT: "{{ base .KUSTOMIZATION }}"
-      OUTDIR: "{{ .ROOT_DIR }}/manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}/"
     generates:
-    - "{{ .OUTDIR }}**/*"
+    - "{{ .OUTDIR }}/**/*"
     cmds:
+    - rm -rf {{ .OUTDIR }}/**
     - mkdir -p {{ .OUTDIR }}
-    - rm -rf {{ .OUTDIR }}**
-    - kustomize build --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}
+    - kustomize build --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}/
+    # Replace colons with dashes in filenames
     - find {{ .OUTDIR }} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
-    - git add --intent-to-add {{ .OUTDIR }}
-    internal: true
 
   hydrate:
-    sources:
-    - infrastructure/controllers/*/*[^base]/kustomization.yaml
-    - infrastructure/*/*[^base]/kustomization.yaml
-    - platform/*/*[^base]/kustomization.yaml
-    - apps/*/*[^base]/kustomization.yaml
+    vars:
+      DIRS:
+        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -not -path "*/base/*" -exec dirname {} \;
     cmds:
-    - for: sources
-      task: build
-      vars:
-        KUSTOMIZATION: "{{ dir .ITEM }}"
+    - for: {var: DIRS}
+      task: build {{ .ITEM }}
+    - git add --intent-to-add manifests/
     method: none
+    silent: true
 
   kubeconform:
     sources:
