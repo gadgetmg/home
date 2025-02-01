@@ -29,4 +29,4 @@ jobs:
           .task-
 
     - name: Run tests
-      run: bats -j 4 tests
+      run: task tests

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  default:
+    sources:
+    - '{{ .TASKFILE_DIR }}/**/*'
+    - manifests/kind/infrastructure/crds/*
+    - manifests/kind/infrastructure/controllers/mariadb-operator/*
+    cmd: bats {{ .TASKFILE_DIR }}

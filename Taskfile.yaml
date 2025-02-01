@@ -11,6 +11,9 @@ env:
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
   KUBERNETES_VERSION: v1.32.1
 
+includes:
+  tests: tests/tasks.yaml
+
 tasks:
   clusters:kind:create:
     cmds:
@@ -63,23 +66,32 @@ tasks:
     - kustomize build --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}/
     # Replace colons with dashes in filenames
     - find {{ .OUTDIR }} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
+    internal: true
+
+  hydrate-env *:
+    vars:
+      DIRS:
+        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -path "*/{{ index .MATCH 0 }}/*" -exec dirname {} \;
+    deps:
+    - for: {var: DIRS}
+      task: build {{ .ITEM }}
+    silent: true
+    internal: true
 
   hydrate:
     vars:
-      DIRS:
-        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -not -path "*/base/*" -exec dirname {} \;
+      ENVS:
+        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -not -path "*/base/*" -exec dirname {} \; | xargs -n 1 basename | sort -u
     cmds:
-    - for: {var: DIRS}
-      task: build {{ .ITEM }}
+    - for: {var: ENVS}
+      task: hydrate-env {{ .ITEM }}
     - git add --intent-to-add manifests/
-    method: none
     silent: true
 
   kubeconform:
     sources:
     - manifests/**/*
-    cmds:
-    - kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy manifests/
+    cmd: kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy manifests/
 
   renovate:
     env:

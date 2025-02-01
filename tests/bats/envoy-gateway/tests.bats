@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 bats_load_library bats-detik/detik.bash
-load helpers
+load ../helpers
 DETIK_CLIENT_NAME="kubectl"
 
 setup_file() {

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  default:
+    sources:
+    - '{{ .TASKFILE_DIR }}/**/*'
+    - manifests/kind/infrastructure/crds/*
+    - manifests/kind/infrastructure/controllers/cert-manager/*
+    - manifests/kind/infrastructure/controllers/external-secrets/*
+    - manifests/kind/infrastructure/configs/clusterissuers/*
+    cmd: bats {{ .TASKFILE_DIR }}
