@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://www.talos.dev/v1.7/schemas/config.schema.json
+cluster:
+  apiServer:
+    extraArgs:
+      oidc-issuer-url: https://auth.seigra.net/realms/home
+      oidc-client-id: kubernetes
+      oidc-username-claim: email
+      oidc-groups-claim: groups

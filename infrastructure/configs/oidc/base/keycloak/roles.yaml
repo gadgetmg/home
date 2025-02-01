@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
+apiVersion: role.keycloak.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: kubernetes-admin
+  labels:
+    seigra.net/roles: admin
+spec:
+  forProvider:
+    description: kubernetes admin
+    name: admin
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: kubernetes

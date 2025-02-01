@@ -55,7 +55,7 @@ schematic ID of
 `a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799` used in the
 cluster:
 
-```
+```lang=yaml
 customization:
   systemExtensions:
     officialExtensions:
@@ -93,3 +93,18 @@ The default
 [Pod Security Standards](https://www.talos.dev/latest/kubernetes-guides/configuration/pod-security)
 profile is hardened to the `restricted` profile with a configuration patch in
 `talconfig.yaml`. This is increased from the default `baseline` set by Talos.
+
+## Authentication with OpenID Connect (OIDC)
+
+The cluster is configured to be able to use the Keycloak IdP to authenticate
+when connecting to the cluster with `kubectl`.
+
+The `kubeconfig` can be bootstrapped with the following:
+
+```lang=bash
+kubectl oidc-login setup \
+  --oidc-issuer-url https://auth.seigra.net/realms/home \
+  --oidc-client-id kubernetes
+```
+
+This will output a command that will add the user to `kubeconfig`.

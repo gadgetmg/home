@@ -12,6 +12,9 @@ env:
   KUBERNETES_VERSION: v1.32.1
 
 includes:
+  clusters:production:
+    taskfile: clusters/production
+    dir: clusters/production
   tests: tests/tasks.yaml
 
 tasks:
@@ -28,24 +31,6 @@ tasks:
     - docker stop cloud-provider-kind
     status:
     - '! kind get clusters | grep ^kind$'
-
-  clusters:production:genconfig:
-    cmds:
-    - talhelper genconfig
-
-  clusters:production:apply-insecure:
-    deps: ["clusters:production:genconfig"]
-    cmds:
-    - talhelper gencommand apply --extra-flags "--insecure" | sh
-
-  clusters:production:bootstrap:
-    deps: ["clusters:production:genconfig"]
-    cmds:
-    - talhelper gencommand bootstrap | sh
-    - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
-    - talhelper gencommand kubeconfig | sh
-    - kubectl create namespace argocd
-    - helm template argocd argo-cd -n argocd --repo https://argoproj.github.io/argo-helm | kubectl create -f -
 
   build *:
     vars:
