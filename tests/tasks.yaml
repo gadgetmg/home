@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes:
+  bats:cert-manager: bats/cert-manager/tasks.yaml
+  bats:cnpg: bats/cnpg/tasks.yaml
+  bats:crossplane: bats/crossplane/tasks.yaml
+  bats:envoy-gateway: bats/envoy-gateway/tasks.yaml
+  bats:external-secrets: bats/external-secrets/tasks.yaml
+  bats:kubevirt: bats/kubevirt/tasks.yaml
+  bats:kyverno: bats/kyverno/tasks.yaml
+  bats:mariadb-operator: bats/mariadb-operator/tasks.yaml
+  bats:trust-manager: bats/trust-manager/tasks.yaml
+
+tasks:
+  default:
+    vars:
+      BATS:
+        sh: find {{ .TASKFILE_DIR }}/bats -mindepth 1 -maxdepth 1 -type d -exec basename {} \;
+    cmds:
+    - for: {var: BATS}
+      task: bats:{{ .ITEM }}
+    silent: true

@@ -35,7 +35,6 @@
             ci =
               with pkgs;
               mkShell {
-                LC_ALL = "en_US.UTF-8";
                 packages = [
                   pre-commit
                   kustomize
@@ -44,7 +43,6 @@
                   go-task
                   kind
                   kapp
-                  parallel
                   (bats.withLibraries (p: [
                     p.bats-detik
                   ]))
@@ -79,7 +77,6 @@
                   kubevirt
                   kustomize
                   kyverno-chainsaw
-                  parallel
                   pre-commit
                   renovate
                   sops
