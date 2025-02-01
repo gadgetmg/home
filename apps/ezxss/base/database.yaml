@@ -8,7 +8,7 @@ metadata:
 spec:
   username: ezxss
   database: ezxss
-  image: mariadb:11.3.2
+  image: ghcr.io/mariadb/mariadb
   storage:
     size: 1Gi
     storageClassName: ssd-r1
