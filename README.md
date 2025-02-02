@@ -18,10 +18,11 @@ function in the cluster.
 System stack components are fundamental to the cluster delivering core
 functionality including networking and persistent storage to applications.
 
-- [`infrastructure/gitops`](infrastructure/gitops) - Continuous delivery of this
-  repository using [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 - [`infrastructure/crds`](infrastructure/crds) - Various CRDs used by
   controllers in the cluster
+- [`infrastructure/controllers/argocd`](infrastructure/controllers/argocd) -
+  Continuous delivery of this repository using
+  [Argo CD](https://argo-cd.readthedocs.io/en/stable/)
 - [`infrastructure/controllers/cert-manager`](infrastructure/controllers/cert-manager) -
   Manages PKI certificate issuance in the cluster with the
   [cert-manager](https://cert-manager.io/) controller
@@ -46,7 +47,7 @@ functionality including networking and persistent storage to applications.
 - [`infrastructure/controllers/external-secrets`](infrastructure/controllers/external-secrets) -
   [External Secrets Operator](https://external-secrets.io/) for secrets
   management
-- [`infrastructure/controllers/kubevirt`](infrastructure/controllers/kubevirt) -
+- [`infrastructure/controllers/kubevirt-operator`](infrastructure/controllers/kubevirt-operator) -
   Virtualization platform with [KubeVirt](https://kubevirt.io/)
 - [`infrastructure/controllers/kyverno`](infrastructure/controllers/kyverno) -
   [Kyverno](https://kyverno.io) Kubernetes policy engine
