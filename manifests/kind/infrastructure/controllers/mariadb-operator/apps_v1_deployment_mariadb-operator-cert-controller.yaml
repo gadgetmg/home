@@ -23,11 +23,11 @@ spec:
         - cert-controller
         - --ca-secret-name=mariadb-operator-webhook-ca
         - --ca-secret-namespace=mariadb-system
-        - --ca-validity=35064h
+        - --ca-lifetime=26280h
         - --cert-secret-name=mariadb-operator-webhook-cert
         - --cert-secret-namespace=mariadb-system
-        - --cert-validity=8766h
-        - --lookahead-validity=2160h
+        - --cert-lifetime=2160h
+        - --renew-before-percentage=33
         - --service-name=mariadb-operator-webhook
         - --service-namespace=mariadb-system
         - --requeue-duration=5m
@@ -37,7 +37,7 @@ spec:
         env:
         - name: CLUSTER_NAME
           value: cluster.local
-        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:0.36.0
+        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:0.37.1
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
