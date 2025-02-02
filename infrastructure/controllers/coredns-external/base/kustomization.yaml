@@ -21,6 +21,7 @@ helmCharts:
         enabled: true
       monitor:
         enabled: true
+        namespace: coredns-external
     isClusterService: false
     podSecurityContext:
       runAsNonRoot: true
