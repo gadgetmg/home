@@ -36,6 +36,9 @@ helmCharts:
         controller.diff.server.side: true
         applicationsetcontroller.enable.progressive.syncs: true
       cm:
+        resource.customizations.ignoreResourceUpdates.all: |
+          jsonPointers:
+          - /status
         resource.customizations: |
           argoproj.io/Application:
             health.lua: |

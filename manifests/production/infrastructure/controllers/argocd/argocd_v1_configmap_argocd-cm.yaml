@@ -148,6 +148,9 @@ data:
         hs.status = "Progressing"
         hs.message = "Waiting for resource to be created"
         return hs
+  resource.customizations.ignoreResourceUpdates.all: |
+    jsonPointers:
+    - /status
   resource.exclusions: |
     - apiGroups:
         - cilium.io
