@@ -7,7 +7,6 @@ includes:
   bats:crossplane: bats/crossplane/tasks.yaml
   bats:envoy-gateway: bats/envoy-gateway/tasks.yaml
   bats:external-secrets: bats/external-secrets/tasks.yaml
-  bats:kubevirt: bats/kubevirt/tasks.yaml
   bats:kyverno: bats/kyverno/tasks.yaml
   bats:mariadb-operator: bats/mariadb-operator/tasks.yaml
   bats:trust-manager: bats/trust-manager/tasks.yaml
