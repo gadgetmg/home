@@ -21,6 +21,8 @@ data:
         insecureEnableGroups: true
   exec.enabled: "false"
   kustomize.buildOptions: --enable-helm
+  resource.compareoptions: |
+    ignoreResourceStatusField: all
   resource.customizations: |
     argoproj.io/Application:
       health.lua: |
@@ -151,6 +153,7 @@ data:
   resource.customizations.ignoreResourceUpdates.all: |
     jsonPointers:
     - /status
+    - /metadata/resourceVersion
   resource.exclusions: |
     - apiGroups:
         - cilium.io
@@ -158,6 +161,7 @@ data:
         - CiliumIdentity
       clusters:
         - "*"
+  resource.ignoreResourceUpdatesEnabled: "true"
   server.rbac.log.enforce.enable: "false"
   statusbadge.enabled: "false"
   timeout.hard.reconciliation: 0s
