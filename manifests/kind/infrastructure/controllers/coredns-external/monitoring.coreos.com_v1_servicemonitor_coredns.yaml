@@ -5,12 +5,10 @@ metadata:
     app.kubernetes.io/instance: coredns
     app.kubernetes.io/name: coredns
   name: coredns
+  namespace: coredns-external
 spec:
   endpoints:
   - port: metrics
-  namespaceSelector:
-    matchNames:
-    - coredns-external
   selector:
     matchLabels:
       app.kubernetes.io/component: metrics
