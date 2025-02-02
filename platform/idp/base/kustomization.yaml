@@ -19,7 +19,7 @@ components:
 
 helmCharts:
 - name: keycloak
-  repo: oci://registry-1.docker.io/bitnamicharts
+  repo: oci://docker.io/bitnamicharts
   version: 24.4.6
   releaseName: keycloak
   namespace: keycloak

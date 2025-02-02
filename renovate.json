@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", ":maintainLockFilesWeekly"],
+  "extends": ["config:best-practices", ":maintainLockFilesWeekly", ":automergeAll"],
   "ignorePaths": ["manifests/**"],
   "nix": {
     "enabled": true
@@ -9,7 +9,7 @@
     {
       "matchPackageNames": [
         "docker.io/envoyproxy/gateway-helm",
-        "registry-1.docker.io/bitnamicharts/keycloak"
+        "docker.io/bitnamicharts/keycloak"
       ],
       "pinDigests": false
     }
