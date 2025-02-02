@@ -47,8 +47,6 @@ functionality including networking and persistent storage to applications.
 - [`infrastructure/controllers/external-secrets`](infrastructure/controllers/external-secrets) -
   [External Secrets Operator](https://external-secrets.io/) for secrets
   management
-- [`infrastructure/controllers/kubevirt-operator`](infrastructure/controllers/kubevirt-operator) -
-  Virtualization platform with [KubeVirt](https://kubevirt.io/)
 - [`infrastructure/controllers/kyverno`](infrastructure/controllers/kyverno) -
   [Kyverno](https://kyverno.io) Kubernetes policy engine
 - [`infrastructure/controllers/local-path-provisioner`](infrastructure/controllers/local-path-provisioner) -
