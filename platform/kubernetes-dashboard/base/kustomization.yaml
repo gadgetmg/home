@@ -15,3 +15,15 @@ helmCharts:
   repo: https://kubernetes.github.io/dashboard
   releaseName: kubernetes-dashboard
   version: 7.10.3
+  valuesInline:
+    app:
+      security:
+        csrfKey: placeholder
+
+patches:
+- patch: |
+    $patch: delete
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: kubernetes-dashboard-csrf
