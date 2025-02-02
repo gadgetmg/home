@@ -14,7 +14,7 @@ resources:
 - vcluster-argocd-secret-sync.yaml
 
 components:
-- ../../../shared/components/strip-helm-labels
+- ../../../../shared/components/strip-helm-labels
 
 helmCharts:
 - name: argo-cd
