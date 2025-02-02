@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+
+components:
+- ../../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: coredns
+  repo: https://coredns.github.io/helm
+  releaseName: coredns
+  namespace: coredns-external
+  version: v1.39.0
+  valuesInline:
+    serviceType: LoadBalancer
+    prometheus:
+      service:
+        enabled: true
+      monitor:
+        enabled: true
+    isClusterService: false
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    servers:
+    - zones:
+      - zone: svc.seigra.net
+      port: 53
+      plugins:
+      - name: errors
+      - name: health
+        configBlock: |-
+          lameduck 5s
+      - name: ready
+      - name: k8s_external
+      - name: kubernetes
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - name: loop
+      - name: reload
+      - name: loadbalance
