@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kubernetes-dashboard
+
+resources:
+- namespace.yaml
+
+components:
+- ../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: kubernetes-dashboard
+  repo: https://kubernetes.github.io/dashboard
+  releaseName: kubernetes-dashboard
+  version: 7.10.3
+  valuesInline:
+    app:
+      security:
+        csrfKey: placeholder
+
+patches:
+- patch: |
+    $patch: delete
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: kubernetes-dashboard-csrf
