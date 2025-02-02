@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: virt-controller
+  namespace: virtink-system
+spec:
+  selector:
+    matchLabels:
+      name: virt-controller
+  template:
+    metadata:
+      labels:
+        name: virt-controller
+    spec:
+      containers:
+      - args:
+        - --zap-time-encoding=iso8601
+        - --leader-elect
+        image: smartxworks/virt-controller:v0.17.0@sha256:a44a40ee780895dff0748135360edbc3dccc50b82d2207e1374fb5ab6f41c57d
+        name: virt-controller
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+      serviceAccountName: virt-controller
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: virt-controller-cert
