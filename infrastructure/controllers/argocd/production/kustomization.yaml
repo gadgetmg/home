@@ -4,5 +4,6 @@ kind: Kustomization
 
 resources:
 - ../base
+- secrets/argocd-notifications-secret.yaml
 - secrets/github-token.yaml
 - secrets/home-ssh-creds.yaml
