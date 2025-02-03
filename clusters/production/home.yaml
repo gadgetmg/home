@@ -9,7 +9,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
-      repoURL: git@github.com:gadgetmg/home.git
+      repoURL: https://github.com/gadgetmg/home
       revision: HEAD
       directories:
       - path: manifests/production/infrastructure/controllers/*
@@ -24,10 +24,16 @@ spec:
   template:
     metadata:
       name: '{{.path.basename}}'
+      annotations:
+        notifications.argoproj.io/subscribe.on-deployed.github: ""
+        notifications.argoproj.io/subscribe.on-health-degraded.github: ""
+        notifications.argoproj.io/subscribe.on-sync-failed.github: ""
+        notifications.argoproj.io/subscribe.on-sync-running.github: ""
+        notifications.argoproj.io/subscribe.on-sync-status-unknown.github: ""
     spec:
       source:
         path: '{{.path.path}}'
-        repoURL: git@github.com:gadgetmg/home.git
+        repoURL: https://github.com/gadgetmg/home
         targetRevision: HEAD
       destination:
         name: in-cluster
