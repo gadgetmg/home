@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 38fc558343395d77117a2b72df132e8b1eb2403fc012e9547a360d48e97fed58
-        checksum/cmd-params: 57e0dfe6fe2eb65a582af4416ea7ecbc2e356b0fc963658e1b290549a3e23e73
+        checksum/cm: 1c84cc9f61b61c3996db23d544db2101510ff43eac36323160de40e645b0efe0
+        checksum/cmd-params: cdb9217ff04c765feecfb1e47944dc298017fccca60281a4af4388b4d72092eb
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
@@ -119,7 +119,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v2.13.4
+        image: quay.io/argoproj/argocd:v2.14.1
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
@@ -137,6 +137,8 @@ spec:
           name: static-files
         - mountPath: /tmp
           name: dexconfig
+      nodeSelector:
+        kubernetes.io/os: linux
       serviceAccountName: argocd-dex-server
       terminationGracePeriodSeconds: 30
       volumes:
