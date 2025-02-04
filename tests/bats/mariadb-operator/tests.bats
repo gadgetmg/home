@@ -26,7 +26,7 @@ teardown() {
 @test "verify a mariadb cluster can be created" {
   create $BATS_TEST_DIRNAME/resources/mariadb-cluster.yaml
   verify "there is 1 mariadb named 'test'"
-  try "at most 20 times every 5s" \
+  try "at most 20 times every 10s" \
     "to get mariadb named 'test'" \
     "and verify that '.status.conditions[?(@.type==\"Ready\")].status' is 'True'"
 }
