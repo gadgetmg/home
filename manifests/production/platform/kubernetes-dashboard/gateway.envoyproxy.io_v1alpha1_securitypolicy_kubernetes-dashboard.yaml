@@ -14,6 +14,10 @@ spec:
     forwardAccessToken: true
     provider:
       authorizationEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
+      backendRefs:
+      - group: gateway.envoyproxy.io
+        kind: Backend
+        name: keycloak
       issuer: https://auth.seigra.net/realms/home
       tokenEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/token
     refreshToken: true
