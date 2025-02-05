@@ -1,0 +1,13 @@
+apiVersion: client.keycloak.crossplane.io/v1alpha1
+kind: RoleMapper
+metadata:
+  name: kubernetes-dashboard-cluster-admin
+  namespace: kubernetes-dashboard
+spec:
+  forProvider:
+    clientIdRef:
+      name: kubernetes-dashboard
+    realmIdRef:
+      name: home
+    roleIdRef:
+      name: kubernetes-cluster-admin

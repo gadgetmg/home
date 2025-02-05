@@ -1,9 +1,17 @@
+# yaml-language-server: $schema=../../../../../schemas/client.keycloak.crossplane.io/protocolmapper_v1alpha1.json
 apiVersion: client.keycloak.crossplane.io/v1alpha1
 kind: ProtocolMapper
 metadata:
-  name: argocd-groups
+  name: argocd-client-roles
 spec:
   forProvider:
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: argocd
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
     config:
       usermodel.clientRoleMapping.clientId: argocd
       multivalued: "true"
@@ -12,10 +20,3 @@ spec:
       access.token.claim: "false"
       userinfo.token.claim: "true"
       introspection.token.claim: "false"
-    realmIdRef:
-      name: home
-    clientIdRef:
-      name: argocd
-    name: client roles
-    protocol: openid-connect
-    protocolMapper: oidc-usermodel-client-role-mapper

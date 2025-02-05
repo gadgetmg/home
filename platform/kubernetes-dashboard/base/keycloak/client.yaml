@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: kubernetes-dashboard
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: kubernetes-dashboard
+    realmIdRef:
+      name: home
+    standardFlowEnabled: true
+    fullScopeAllowed: false
+    rootUrl: https://k8s.seigra.net
+    validRedirectUris:
+    - https://k8s.seigra.net/oauth2/callback
+  publishConnectionDetailsTo:
+    name: kubernetes-dashboard-oidc-secret

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
@@ -11,6 +12,7 @@ spec:
       name: home
     rootUrl: https://grafana.seigra.net
     standardFlowEnabled: true
+    fullScopeAllowed: false
     validRedirectUris:
     - https://grafana.seigra.net/login/generic_oauth
   publishConnectionDetailsTo:

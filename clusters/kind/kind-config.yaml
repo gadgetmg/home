@@ -9,6 +9,11 @@ nodes:
     apiServer:
       extraArgs:
         admission-control-config-file: /etc/config/admission-control.yaml
+        oidc-issuer-url: https://auth.172.18.0.4.nip.io/realms/home
+        oidc-ca-file: /etc/config/ca.crt
+        oidc-client-id: kubernetes
+        oidc-username-claim: email
+        oidc-groups-claim: groups
       extraVolumes:
       - name: accf
         hostPath: /etc/config

@@ -2,9 +2,16 @@
 apiVersion: client.keycloak.crossplane.io/v1alpha1
 kind: ProtocolMapper
 metadata:
-  name: kubernetes-groups
+  name: kubernetes-client-roles
 spec:
   forProvider:
+    realmIdRef:
+      name: home
+    clientIdRef:
+      name: kubernetes
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
     config:
       usermodel.clientRoleMapping.clientId: kubernetes
       multivalued: "true"
@@ -13,10 +20,3 @@ spec:
       access.token.claim: "false"
       userinfo.token.claim: "false"
       introspection.token.claim: "false"
-    realmIdRef:
-      name: home
-    clientIdRef:
-      name: kubernetes
-    name: client roles
-    protocol: openid-connect
-    protocolMapper: oidc-usermodel-client-role-mapper

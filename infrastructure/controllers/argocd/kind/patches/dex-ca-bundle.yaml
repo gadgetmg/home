@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+  namespace: argocd
+spec:
+  template:
+    spec:
+      containers:
+      - name: dex-server
+        volumeMounts:
+        - name: ca-bundle
+          mountPath: /etc/ssl/certs/ca-certificates.crt
+          subPath: ca-certificates.crt
+      volumes:
+      - name: ca-bundle
+        configMap:
+          name: argocd-dex-server-cluster-ca

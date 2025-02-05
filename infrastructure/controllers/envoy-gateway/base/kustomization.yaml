@@ -14,3 +14,8 @@ helmCharts:
   releaseName: envoy-gateway
   namespace: envoy-gateway-system
   version: 1.3.0
+  valuesInline:
+    config:
+      envoyGateway:
+        extensionApis:
+          enableBackend: true

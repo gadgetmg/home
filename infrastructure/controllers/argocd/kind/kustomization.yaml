@@ -5,12 +5,11 @@ kind: Kustomization
 resources:
 - ../base
 - dex-bundle.yaml
+- kapp-config.yaml
 
 patches:
-- target:
-    kind: Application
-    name: argocd
-  path: patches/values-argocd.yaml
+- path: patches/dex-ca-bundle.yaml
+- path: patches/argocd-cm.yaml
 - path: patches/gateway.yaml
   target:
     kind: Gateway

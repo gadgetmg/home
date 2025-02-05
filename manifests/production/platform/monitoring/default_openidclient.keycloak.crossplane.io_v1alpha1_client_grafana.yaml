@@ -7,6 +7,7 @@ spec:
   forProvider:
     accessType: CONFIDENTIAL
     clientId: grafana
+    fullScopeAllowed: false
     realmIdRef:
       name: home
     rootUrl: https://grafana.seigra.net
