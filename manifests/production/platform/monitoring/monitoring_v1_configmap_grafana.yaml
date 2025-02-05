@@ -14,9 +14,9 @@ data:
     login_attribute_path = username
     name = seigra.net
     name_attribute_path = full_name
-    role_attribute_path = contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+    role_attribute_path = contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || contains(groups[*], 'viewer') && 'Viewer'
     role_attribute_strict = true
-    scopes = openid email profile offline_access roles
+    scopes = openid email profile offline_access
     tls_skip_verify_insecure = true
     token_url = https://auth.seigra.net/realms/home/protocol/openid-connect/token
     [grafana_net]

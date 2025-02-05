@@ -7,11 +7,12 @@ spec:
   forProvider:
     accessType: CONFIDENTIAL
     clientId: grafana
+    fullScopeAllowed: false
     realmIdRef:
       name: home
-    rootUrl: https://grafana.10.5.0.13.nip.io
+    rootUrl: https://grafana.172.18.0.7.nip.io
     standardFlowEnabled: true
     validRedirectUris:
-    - https://grafana.10.5.0.13.nip.io/login/generic_oauth
+    - https://grafana.172.18.0.7.nip.io/login/generic_oauth
   publishConnectionDetailsTo:
     name: grafana-oidc-secret

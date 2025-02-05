@@ -7,11 +7,12 @@ spec:
   forProvider:
     accessType: CONFIDENTIAL
     clientId: argocd
+    fullScopeAllowed: false
     realmIdRef:
       name: home
-    rootUrl: https://argocd.10.5.0.12.nip.io
+    rootUrl: https://argocd.172.18.0.6.nip.io
     standardFlowEnabled: true
     validRedirectUris:
-    - https://argocd.10.5.0.12.nip.io/api/dex/callback
+    - https://argocd.172.18.0.6.nip.io/api/dex/callback
   publishConnectionDetailsTo:
     name: argocd-oidc-secret

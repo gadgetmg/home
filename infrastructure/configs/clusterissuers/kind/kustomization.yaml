@@ -4,3 +4,13 @@ kind: Kustomization
 
 resources:
 - ../base
+- secrets/cluster-ca.yaml
+
+patches:
+- patch: |
+    $patch: delete
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: cluster-ca
+      namespace: cert-manager

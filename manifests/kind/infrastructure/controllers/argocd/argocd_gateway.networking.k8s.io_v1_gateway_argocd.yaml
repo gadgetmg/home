@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: envoy-gateway
   listeners:
-  - hostname: argocd.10.5.0.12.nip.io
+  - hostname: argocd.172.18.0.6.nip.io
     name: argocd
     port: 443
     protocol: HTTPS

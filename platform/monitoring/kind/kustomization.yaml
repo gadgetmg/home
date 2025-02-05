@@ -6,6 +6,7 @@ resources:
 - ../base
 
 patches:
+- path: patches/configmap.yaml
 - path: patches/gateway.yaml
   target:
     kind: Gateway

@@ -4,4 +4,33 @@ kind: Kustomization
 
 resources:
 - ../base
+- backend.yaml
+- backendtlspolicy.yaml
+- bundle.yaml
 - secrets/csrf.yaml
+
+patches:
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+- path: patches/securitypolicy.yaml
+  target:
+    kind: SecurityPolicy
+
+replacements:
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2

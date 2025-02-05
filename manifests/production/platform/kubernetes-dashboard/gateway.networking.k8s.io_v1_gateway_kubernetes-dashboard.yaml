@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  gatewayClassName: envoy-gateway
+  listeners:
+  - hostname: k8s.seigra.net
+    name: kubernetes-dashboard
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - name: kubernetes-dashboard-gateway-tls
+      mode: Terminate

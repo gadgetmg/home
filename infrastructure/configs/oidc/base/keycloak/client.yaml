@@ -11,5 +11,6 @@ spec:
     realmIdRef:
       name: home
     standardFlowEnabled: true
+    fullScopeAllowed: false
     validRedirectUris:
     - http://localhost:8000

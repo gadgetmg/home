@@ -30,14 +30,14 @@ helmCharts:
           name: seigra.net
           allow_sign_up: true
           client_id: grafana
-          scopes: openid email profile offline_access roles
+          scopes: openid email profile offline_access
           email_attribute_path: email
           login_attribute_path: username
           name_attribute_path: full_name
           auth_url: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
           token_url: https://auth.seigra.net/realms/home/protocol/openid-connect/token
           api_url: https://auth.seigra.net/realms/home/protocol/openid-connect/userinfo
-          role_attribute_path: contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || contains(roles[*], 'viewer') && 'Viewer'
+          role_attribute_path: contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || contains(groups[*], 'viewer') && 'Viewer'
           role_attribute_strict: true
           tls_skip_verify_insecure: true
         server:

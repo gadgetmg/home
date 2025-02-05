@@ -11,7 +11,7 @@ spec:
   - allowedRoutes:
       namespaces:
         from: Same
-    hostname: grafana.10.5.0.13.nip.io
+    hostname: grafana.172.18.0.7.nip.io
     name: grafana
     port: 443
     protocol: HTTPS

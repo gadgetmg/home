@@ -106,6 +106,9 @@ spec:
           seccompProfile:
             type: RuntimeDefault
         volumeMounts:
+        - mountPath: /etc/ssl/certs/ca-certificates.crt
+          name: ca-bundle
+          subPath: ca-certificates.crt
         - mountPath: /shared
           name: static-files
         - mountPath: /tmp
@@ -142,6 +145,9 @@ spec:
       serviceAccountName: argocd-dex-server
       terminationGracePeriodSeconds: 30
       volumes:
+      - configMap:
+          name: argocd-dex-server-cluster-ca
+        name: ca-bundle
       - emptyDir: {}
         name: static-files
       - emptyDir: {}

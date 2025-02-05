@@ -6,6 +6,13 @@ namespace: kubernetes-dashboard
 
 resources:
 - namespace.yaml
+- gateway.yaml
+- httproute.yaml
+- securitypolicy.yaml
+- keycloak/client.yaml
+- keycloak/protocolmapper.yaml
+- keycloak/rolemapper.yaml
+- keycloak/secret-sync.yaml
 
 components:
 - ../../../shared/components/strip-helm-labels
@@ -15,7 +22,10 @@ helmCharts:
   repo: https://kubernetes.github.io/dashboard
   releaseName: kubernetes-dashboard
   version: 7.10.3
+  namespace: kubernetes-dashboard
   valuesInline:
+    kong:
+      enabled: false
     app:
       security:
         csrfKey: placeholder

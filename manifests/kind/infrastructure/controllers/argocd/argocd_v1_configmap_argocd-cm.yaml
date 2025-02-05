@@ -9,7 +9,7 @@ data:
       id: keycloak
       name: seigra.net
       config:
-        issuer: https://auth.seigra.net/realms/home
+        issuer: https://auth.172.18.0.4.nip.io/realms/home
         clientID: argocd
         clientSecret: $argocd-oidc-secret:client_secret
         scopes:
@@ -167,7 +167,7 @@ data:
   timeout.hard.reconciliation: 0s
   timeout.reconciliation: 180s
   timeout.reconciliation.jitter: 1m
-  url: https://argocd.seigra.net
+  url: https://argocd.172.18.0.6.nip.io
 kind: ConfigMap
 metadata:
   labels:

@@ -76,7 +76,7 @@ tasks:
   kubeconform:
     sources:
     - manifests/**/*
-    cmd: kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy manifests/
+    cmd: kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy,Backend,SecurityPolicy manifests/
 
   renovate:
     env:
