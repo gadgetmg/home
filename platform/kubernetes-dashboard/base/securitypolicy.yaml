@@ -9,6 +9,10 @@ spec:
     name: kubernetes-dashboard
   oidc:
     provider:
+      backendRefs:
+      - group: gateway.envoyproxy.io
+        kind: Backend
+        name: keycloak
       authorizationEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
       tokenEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/token
       issuer: https://auth.seigra.net/realms/home
