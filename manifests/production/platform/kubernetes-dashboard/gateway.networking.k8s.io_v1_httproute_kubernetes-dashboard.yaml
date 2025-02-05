@@ -5,7 +5,7 @@ metadata:
   namespace: kubernetes-dashboard
 spec:
   hostnames:
-  - kubernetes-dashboard.seigra.net
+  - k8s.seigra.net
   parentRefs:
   - name: kubernetes-dashboard
   rules:
