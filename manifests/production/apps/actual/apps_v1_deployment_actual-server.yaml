@@ -37,7 +37,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: actual-server
-        image: ghcr.io/actualbudget/actual-server:25.1.0-alpine@sha256:763c07f19074477f58a8beca19c066a2d8ec7d944b997991a6958e06fd827cc8
+        image: ghcr.io/actualbudget/actual-server:25.2.0-alpine@sha256:a60c6e1129fac98efc009bc27408946c6f492ace8870f2d88ef9cd87cd448094
         name: actual-server
         ports:
         - containerPort: 5006
