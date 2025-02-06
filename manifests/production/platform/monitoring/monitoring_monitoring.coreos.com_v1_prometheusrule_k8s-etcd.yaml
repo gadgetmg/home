@@ -26,9 +26,9 @@ spec:
           )
         )
         > 0
-      for: 10m
+      for: 20m
       labels:
-        severity: critical
+        severity: warning
     - alert: etcdInsufficientMembers
       annotations:
         description: 'etcd cluster "{{ $labels.job }}": insufficient members ({{ $value
