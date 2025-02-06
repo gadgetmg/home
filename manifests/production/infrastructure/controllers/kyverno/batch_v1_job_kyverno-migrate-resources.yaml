@@ -34,7 +34,7 @@ spec:
         - policyexceptions.kyverno.io
         - --resource
         - updaterequests.kyverno.io
-        image: ghcr.io/kyverno/kyverno-cli:v1.13.2
+        image: reg.kyverno.io/kyverno/kyverno-cli:v1.13.3
         imagePullPolicy: IfNotPresent
         name: kubectl
         securityContext:
