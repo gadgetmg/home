@@ -12,6 +12,12 @@ spec:
       authorizationEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/auth
       tokenEndpoint: https://auth.seigra.net/realms/home/protocol/openid-connect/token
       issuer: https://auth.seigra.net/realms/home
+      backendSettings:
+        retry:
+          numRetries: 2
+          retryOn:
+            triggers:
+            - reset
     forwardAccessToken: true
     refreshToken: true
     cookieNames:
