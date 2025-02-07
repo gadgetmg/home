@@ -18,6 +18,12 @@ spec:
       - group: gateway.envoyproxy.io
         kind: Backend
         name: keycloak
+      backendSettings:
+        retry:
+          numRetries: 2
+          retryOn:
+            triggers:
+            - reset
       issuer: https://auth.172.18.0.4.nip.io/realms/home
       tokenEndpoint: https://auth.172.18.0.4.nip.io/realms/home/protocol/openid-connect/token
     refreshToken: true
