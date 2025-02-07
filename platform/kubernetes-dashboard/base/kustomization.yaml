@@ -9,7 +9,6 @@ resources:
 - gateway.yaml
 - httproute.yaml
 - securitypolicy.yaml
-- backend.yaml
 - keycloak/client.yaml
 - keycloak/protocolmapper.yaml
 - keycloak/rolemapper.yaml

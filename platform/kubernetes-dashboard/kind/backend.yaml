@@ -6,5 +6,5 @@ metadata:
 spec:
   endpoints:
   - fqdn:
-      hostname: auth.seigra.net
+      hostname: auth.172.18.0.4.nip.io
       port: 443

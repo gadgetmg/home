@@ -8,3 +8,9 @@
 - op: replace
   path: /spec/oidc/provider/issuer
   value: https://auth.172.18.0.4.nip.io/realms/home
+- op: add
+  path: /spec/oidc/provider/backendRefs
+  value:
+  - group: gateway.envoyproxy.io
+    kind: Backend
+    name: keycloak
