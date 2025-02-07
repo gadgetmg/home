@@ -22,7 +22,7 @@ helmCharts:
 - name: kubernetes-dashboard
   repo: https://kubernetes.github.io/dashboard
   releaseName: kubernetes-dashboard
-  version: 7.10.3
+  version: 7.10.4
   namespace: kubernetes-dashboard
   valuesInline:
     kong:
