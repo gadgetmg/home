@@ -7,6 +7,9 @@ metadata:
   namespace: kubernetes-dashboard
 spec:
   gatewayClassName: envoy-gateway
+  infrastructure:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 172.18.0.5
   listeners:
   - hostname: k8s.172.18.0.5.nip.io
     name: kubernetes-dashboard

@@ -10,7 +10,7 @@ metadata:
   namespace: paperless-ngx
 spec:
   hostnames:
-  - paperless.10.5.0.15.nip.io
+  - paperless.172.18.0.8.nip.io
   parentRefs:
   - group: gateway.networking.k8s.io
     kind: Gateway

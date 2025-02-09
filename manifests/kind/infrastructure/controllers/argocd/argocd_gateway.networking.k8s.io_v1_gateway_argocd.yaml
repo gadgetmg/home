@@ -7,6 +7,9 @@ metadata:
   namespace: argocd
 spec:
   gatewayClassName: envoy-gateway
+  infrastructure:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 172.18.0.6
   listeners:
   - hostname: argocd.172.18.0.6.nip.io
     name: argocd

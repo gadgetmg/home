@@ -4,4 +4,9 @@
   value: cluster-ca
 - op: replace
   path: /spec/listeners/0/hostname
-  value: paperless.10.5.0.15.nip.io
+  value: paperless.172.18.0.8.nip.io
+- op: add
+  path: /spec/infrastructure
+  value:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 172.18.0.8
