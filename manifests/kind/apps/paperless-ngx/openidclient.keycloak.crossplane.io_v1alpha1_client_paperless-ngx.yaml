@@ -15,9 +15,9 @@ spec:
     clientId: paperless-ngx
     realmIdRef:
       name: home
-    rootUrl: https://paperless.10.5.0.15.nip.io
+    rootUrl: https://paperless.172.18.0.8.nip.io
     standardFlowEnabled: true
     validRedirectUris:
-    - https://paperless.10.5.0.15.nip.io/accounts/oidc/keycloak/login/callback/
+    - https://paperless.172.18.0.8.nip.io/accounts/oidc/keycloak/login/callback/
   publishConnectionDetailsTo:
     name: keycloak-client-paperless-ngx

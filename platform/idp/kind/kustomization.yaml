@@ -25,11 +25,4 @@ patches:
     kind: Gateway
 
 replacements:
-- source:
-    kind: Gateway
-    fieldPath: spec.listeners.0.hostname
-  targets:
-  - select:
-      kind: HTTPRoute
-    fieldPaths:
-    - spec.hostnames.0
+- path: ../../../shared/replacements/gateway-hostnames.yaml

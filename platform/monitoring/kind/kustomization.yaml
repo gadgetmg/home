@@ -12,27 +12,4 @@ patches:
     kind: Gateway
 
 replacements:
-- source:
-    kind: Gateway
-    fieldPath: spec.listeners.0.hostname
-  targets:
-  - select:
-      kind: HTTPRoute
-    fieldPaths:
-    - spec.hostnames.0
-  - select:
-      kind: Client
-    fieldPaths:
-    - spec.forProvider.rootUrl
-    - spec.forProvider.validRedirectUris.*
-    options:
-      delimiter: '/'
-      index: 2
-  - select:
-      kind: Client
-    fieldPaths:
-      - spec.forProvider.rootUrl
-      - spec.forProvider.validRedirectUris.*
-    options:
-      delimiter: '/'
-      index: 2
+- path: ../../../shared/replacements/gateway-hostnames.yaml

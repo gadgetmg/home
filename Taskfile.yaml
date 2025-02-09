@@ -19,18 +19,31 @@ includes:
 
 tasks:
   clusters:kind:create:
-    cmds:
-    - kind create cluster --config clusters/kind/kind-config.yaml
-    - docker run -d --name cloud-provider-kind --rm --network kind -v /var/run/docker.sock:/var/run/docker.sock registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.5.0
+    aliases: [up]
     status:
     - kind get clusters | grep ^kind$
+    cmds:
+    - kind create cluster --config clusters/kind/kind-config.yaml
+    - task: deploy
+      vars:
+        MANIFESTS:
+        - manifests/kind/infrastructure/controllers/metallb
+        - manifests/kind/infrastructure/configs/ipam
 
   clusters:kind:delete:
-    cmds:
-    - kind delete cluster
-    - docker stop cloud-provider-kind
+    aliases: [down]
     status:
     - '! kind get clusters | grep ^kind$'
+    cmd: kind delete cluster
+
+  deploy:
+    vars:
+      MANIFESTS: '{{ join " " .MANIFESTS | default .CLI_ARGS }}'
+    status:
+    - kubectl diff -f {{ splitList " " .MANIFESTS | join " -f " }}
+    cmds:
+    - for: {var: MANIFESTS}
+      cmd: kapp deploy -y -a {{ base .ITEM }} -f {{ .ITEM }}
 
   build *:
     vars:
@@ -48,7 +61,7 @@ tasks:
     cmds:
     - rm -rf {{ .OUTDIR }}/**
     - mkdir -p {{ .OUTDIR }}
-    - kustomize build --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}/
+    - kustomize build --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}/
     # Replace colons with dashes in filenames
     - find {{ .OUTDIR }} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
     internal: true

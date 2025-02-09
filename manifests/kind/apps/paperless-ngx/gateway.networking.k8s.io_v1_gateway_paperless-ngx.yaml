@@ -12,11 +12,14 @@ metadata:
   namespace: paperless-ngx
 spec:
   gatewayClassName: envoy-gateway
+  infrastructure:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 172.18.0.8
   listeners:
   - allowedRoutes:
       namespaces:
         from: Same
-    hostname: paperless.10.5.0.15.nip.io
+    hostname: paperless.172.18.0.8.nip.io
     name: paperless-ngx
     port: 443
     protocol: HTTPS

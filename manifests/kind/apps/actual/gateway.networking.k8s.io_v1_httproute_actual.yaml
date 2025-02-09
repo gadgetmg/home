@@ -9,7 +9,7 @@ metadata:
   namespace: actual
 spec:
   hostnames:
-  - actual.10.5.0.16.nip.io
+  - actual.172.18.0.9.nip.io
   parentRefs:
   - kind: Gateway
     name: actual
