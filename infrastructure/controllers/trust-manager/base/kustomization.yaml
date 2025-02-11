@@ -10,7 +10,7 @@ helmCharts:
   repo: https://charts.jetstack.io
   releaseName: trust-manager
   namespace: cert-manager
-  version: v0.15.0
+  version: v0.16.0
   valuesInline:
     replicaCount: 1
     app:
