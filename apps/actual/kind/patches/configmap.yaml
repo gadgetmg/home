@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: actual-server-env
+  namespace: actual
+data:
+  NODE_EXTRA_CA_CERTS: /bundle.pem
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: actual-server-openid-config
+  namespace: actual
+data:
+  issuer: https://auth.172.18.0.4.nip.io/realms/home

@@ -29,10 +29,18 @@ spec:
           protocol: TCP
         envFrom:
         - configMapRef:
-            name: actual-server
+            name: actual-server-env
+        - secretRef:
+            name: actual-server-env
         volumeMounts:
         - name: data
           mountPath: /data
+        - name: config
+          mountPath: /data/config.json
+          subPath: config.json
+        - name: bootstrap
+          mountPath: /app/app.js
+          subPath: app.js
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -41,6 +49,12 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: actual-server-data
+      - name: config
+        secret:
+          secretName: actual-server-config
+      - name: bootstrap
+        configMap:
+          name: actual-server-bootstrap
       securityContext:
         runAsNonRoot: true
         runAsUser: 1001

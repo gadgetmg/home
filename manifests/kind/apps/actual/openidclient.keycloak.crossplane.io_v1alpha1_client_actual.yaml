@@ -1,0 +1,22 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  labels:
+    app.kubernetes.io/component: auth
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual
+  namespace: actual
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: actual
+    realmIdRef:
+      name: home
+    rootUrl: https://actual.172.18.0.9.nip.io
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://actual.172.18.0.9.nip.io/openid/callback
+  publishConnectionDetailsTo:
+    name: keycloak-client-actual

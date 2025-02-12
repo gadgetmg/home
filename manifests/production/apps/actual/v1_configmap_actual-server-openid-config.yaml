@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  authMethod: oauth2
+  client_id: actual
+  issuer: https://auth.seigra.net/realms/home
+  server_hostname: https://actual.seigra.net
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual-server-openid-config
+  namespace: actual

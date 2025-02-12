@@ -1,0 +1,17 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: actual
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: actual
+    realmIdRef:
+      name: home
+    standardFlowEnabled: true
+    rootUrl: https://actual.seigra.net
+    validRedirectUris:
+    - https://actual.seigra.net/openid/callback
+  publishConnectionDetailsTo:
+    name: keycloak-client-actual
