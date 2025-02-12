@@ -1,0 +1,22 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  labels:
+    app.kubernetes.io/component: auth
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual
+  namespace: actual
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: actual
+    realmIdRef:
+      name: home
+    rootUrl: https://actual.seigra.net
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://actual.seigra.net/openid/callback
+  publishConnectionDetailsTo:
+    name: keycloak-client-actual

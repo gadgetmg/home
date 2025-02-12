@@ -1,0 +1,57 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  labels:
+    app.kubernetes.io/component: auth
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: keycloak-actual
+  namespace: actual
+spec:
+  generateExisting: true
+  rules:
+  - context:
+    - name: secret_name
+      variable:
+        jmesPath: request.object.spec.publishConnectionDetailsTo.name
+    - apiCall:
+        jmesPath: data."attribute.client_secret" | base64_decode(@)
+        method: GET
+        urlPath: /api/v1/namespaces/crossplane-system/secrets/{{ secret_name }}
+      name: client_secret
+    - configMap:
+        name: actual-server-openid-config
+        namespace: actual
+      name: client
+    - name: config
+      variable:
+        value: |
+          {
+            "openId": {
+              "issuer": "{{ client.data.issuer }}",
+              "client_id": "{{ client.data.client_id }}",
+              "client_secret": "{{ client_secret }}",
+              "server_hostname": "{{ client.data.server_hostname }}",
+              "authMethod": "{{ client.data.authMethod }}"
+            }
+          }
+    generate:
+      apiVersion: v1
+      data:
+        data:
+          config.json: '{{ config | base64_encode(@) }}'
+        type: Opaque
+      kind: Secret
+      name: actual-server-config
+      namespace: actual
+      synchronize: true
+    match:
+      resources:
+        kinds:
+        - Client
+        names:
+        - actual
+    name: keycloak-client-actual
+    skipBackgroundRequests: true

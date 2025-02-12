@@ -8,7 +8,6 @@ labels:
     app.kubernetes.io/component: application
 
 resources:
-- configmap.yaml
 - deployment.yaml
 - gateway.yaml
 - httproute.yaml
@@ -17,4 +16,22 @@ resources:
 
 images:
 - name: ghcr.io/actualbudget/actual-server
-  newTag: 25.2.1-alpine@sha256:0c637c4e302b672b7a4b6158472b6056e0d5231d7f75778963a4ee9d6d17b2a4
+  newTag: 25.2.1@sha256:3abc61d5f674a1043a93e448930142ce955b5e3938ee93e01f013c7d7d6f27d7
+
+configMapGenerator:
+- name: actual-server-env
+  literals:
+  - ACTUAL_LOGIN_METHOD=openid
+  - ACTUAL_ALLOWED_LOGIN_METHODS=openid
+  - DEBUG=actual:config
+- name: actual-server-openid-config
+  options:
+    disableNameSuffixHash: true
+  literals:
+  - issuer=https://auth.seigra.net/realms/home
+  - client_id=actual
+  - server_hostname=https://actual.seigra.net
+  - authMethod=oauth2
+- name: actual-server-bootstrap
+  files:
+  - bootstrap/app.js

@@ -36,8 +36,10 @@ spec:
       containers:
       - envFrom:
         - configMapRef:
-            name: actual-server
-        image: ghcr.io/actualbudget/actual-server:25.2.1-alpine@sha256:0c637c4e302b672b7a4b6158472b6056e0d5231d7f75778963a4ee9d6d17b2a4
+            name: actual-server-env-9h4m7b42th
+        - secretRef:
+            name: actual-server-env
+        image: ghcr.io/actualbudget/actual-server:25.2.1@sha256:3abc61d5f674a1043a93e448930142ce955b5e3938ee93e01f013c7d7d6f27d7
         name: actual-server
         ports:
         - containerPort: 5006
@@ -48,8 +50,17 @@ spec:
             drop:
             - ALL
         volumeMounts:
+        - mountPath: /bundle.pem
+          name: ca-bundle
+          subPath: bundle.pem
         - mountPath: /data
           name: data
+        - mountPath: /data/config.json
+          name: config
+          subPath: config.json
+        - mountPath: /app/app.js
+          name: bootstrap
+          subPath: app.js
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
@@ -58,6 +69,15 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
+      - configMap:
+          name: actual-server-cluster-ca
+        name: ca-bundle
       - name: data
         persistentVolumeClaim:
           claimName: actual-server-data
+      - name: config
+        secret:
+          secretName: actual-server-config
+      - configMap:
+          name: actual-server-bootstrap-576fghcft5
+        name: bootstrap

@@ -1,8 +1,0 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1/configmap.json
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: actual-server
-  labels:
-    app.kubernetes.io/name: actual-server
-data:
