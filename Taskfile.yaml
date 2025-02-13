@@ -9,7 +9,7 @@ env:
   # renovate: datasource=github-releases depName=siderolabs/talos
   TALOS_VERSION: v1.9.3
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  KUBERNETES_VERSION: v1.32.1
+  KUBERNETES_VERSION: v1.32.2
 
 includes:
   clusters:production:
