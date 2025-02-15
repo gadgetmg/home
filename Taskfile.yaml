@@ -11,6 +11,10 @@ env:
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
   KUBERNETES_VERSION: v1.32.2
 
+vars:
+  RELATIVE_DIR: '{{relPath .TASKFILE_DIR .USER_WORKING_DIR}}'
+  ENV: kind
+
 includes:
   clusters:production:
     taskfile: clusters/production
@@ -18,6 +22,9 @@ includes:
   tests: tests/tasks.yaml
 
 tasks:
+  echo:
+  - echo {{.ENV}}
+
   clusters:kind:create:
     aliases: [up]
     status:
@@ -98,3 +105,22 @@ tasks:
         sh: gh auth token
     cmds:
     - renovate --platform=local
+
+  build:*:
+    vars:
+      APP: '{{index .MATCH 0 | replace ":" "/"}}'
+      ENVS:
+        sh: find {{.APP}} -maxdepth 1 -type d ! -name "base"
+    cmds:
+    - rm -rf {{.OUTDIR}}/**
+    - mkdir -p {{.OUTDIR}}
+    - for: {var: ENVS}
+      cmd: kustomize build --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins {{.APP}}/{{.ITEM}} -o manifests/{{.ITEM}}/{{.APP}}
+    - find manifests/*/{{.APP}} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
+    sources:
+    - '{{.APP}}/**/*'
+    - shared/**/*
+
+  apps:actual:setup:
+    deps:
+    - apps:actual
