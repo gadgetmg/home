@@ -15,8 +15,8 @@ tasks:
   default:
     vars:
       BATS:
-        sh: find {{ .TASKFILE_DIR }}/bats -mindepth 1 -maxdepth 1 -type d -exec basename {} \;
+        sh: find {{.TASKFILE_DIR}}/bats -mindepth 1 -maxdepth 1 -type d -exec basename {} \;
     cmds:
     - for: {var: BATS}
-      task: bats:{{ .ITEM }}
+      task: bats:{{.ITEM}}
     silent: true

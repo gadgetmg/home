@@ -4,8 +4,8 @@ version: "3"
 tasks:
   default:
     sources:
-    - '{{ .TASKFILE_DIR }}/**/*'
+    - '{{.TASKFILE_DIR}}/**/*'
     - manifests/kind/infrastructure/crds/*
     - manifests/kind/infrastructure/controllers/envoy-gateway/*
     - manifests/kind/infrastructure/configs/gatewayclasses/*
-    cmd: bats {{ .TASKFILE_DIR }}
+    cmd: bats {{.TASKFILE_DIR}}

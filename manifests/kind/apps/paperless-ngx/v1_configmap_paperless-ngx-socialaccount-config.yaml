@@ -3,7 +3,7 @@ data:
   client_id: paperless-ngx
   name: seigra.net
   provider_id: keycloak
-  server_url: https://paperless.172.18.0.8.nip.io/realms/home/.well-known/openid-configuration
+  server_url: https://auth.172.18.0.4.nip.io/realms/home/.well-known/openid-configuration
 kind: ConfigMap
 metadata:
   labels:

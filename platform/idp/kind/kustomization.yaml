@@ -7,6 +7,7 @@ resources:
 - secrets/keycloak-admin.yaml
 - secrets/crossplane-credentials.yaml
 - dev-user.yaml
+- kapp-wait-crossplane-keycloak
 
 secretGenerator:
 - name: keycloak-home-dev-user
