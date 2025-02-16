@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  up:
+    cmd: kind create cluster --config kind-config.yaml
+    status:
+    - kind get clusters | grep ^kind$
+
+  down:
+    cmds:
+    - rm -f {{relPath .TASKFILE_DIR .ROOT_DIR}}/.task/checksum/*-deploy
+    - kind delete cluster
+    status:
+    - '! kind get clusters | grep ^kind$'

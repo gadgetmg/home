@@ -3,98 +3,261 @@ version: "3"
 
 run: when_changed
 
-shopt: [globstar]
-
 env:
   # renovate: datasource=github-releases depName=siderolabs/talos
   TALOS_VERSION: v1.9.4
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
   KUBERNETES_VERSION: v1.32.2
 
+vars:
+  BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins
+  BUILD_DIRS: infrastructure platform apps
+  ENV: kind
+
 includes:
-  clusters:production:
-    taskfile: clusters/production
+  production:
+    taskfile: clusters/production/Taskfile.yaml
     dir: clusters/production
+  kind:
+    taskfile: clusters/kind/Taskfile.yaml
+    dir: clusters/kind
   tests: tests/tasks.yaml
 
 tasks:
-  clusters:kind:create:
-    aliases: [up]
-    status:
-    - kind get clusters | grep ^kind$
-    cmds:
-    - kind create cluster --config clusters/kind/kind-config.yaml
-    - task: deploy
-      vars:
-        MANIFESTS:
-        - manifests/kind/infrastructure/controllers/metallb
-        - manifests/kind/infrastructure/configs/ipam
-
-  clusters:kind:delete:
-    aliases: [down]
-    status:
-    - '! kind get clusters | grep ^kind$'
-    cmd: kind delete cluster
-
-  deploy:
-    vars:
-      MANIFESTS: '{{ join " " .MANIFESTS | default .CLI_ARGS }}'
-    status:
-    - kubectl diff -f {{ splitList " " .MANIFESTS | join " -f " }}
-    cmds:
-    - for: {var: MANIFESTS}
-      cmd: kapp deploy -y -a {{ base .ITEM }} -f {{ .ITEM }}
-
-  build *:
-    vars:
-      KUSTOMIZATION: '{{ index .MATCH 0 }}'
-      APPLICATION: '{{ dir .KUSTOMIZATION }}'
-      ENVIRONMENT: "{{ base .KUSTOMIZATION }}"
-      OUTDIR: "manifests/{{ .ENVIRONMENT }}/{{ .APPLICATION }}"
-    label: build-{{ .KUSTOMIZATION | replace "/" "-" }}
-    sources:
-    - "{{ .KUSTOMIZATION }}/../base/**/*"
-    - "{{ .KUSTOMIZATION }}/**/*"
-    - shared/**/*
-    generates:
-    - "{{ .OUTDIR }}/**/*"
-    cmds:
-    - rm -rf {{ .OUTDIR }}/**
-    - mkdir -p {{ .OUTDIR }}
-    - kustomize build --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins {{ .KUSTOMIZATION }} -o {{ .OUTDIR }}/
-    # Replace colons with dashes in filenames
-    - find {{ .OUTDIR }} -name '*:*' -exec bash -c 'mv $0 $(echo $0 | tr ":" "-")' {} \;
-    internal: true
-
-  hydrate-env *:
-    vars:
-      DIRS:
-        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -path "*/{{ index .MATCH 0 }}/*" -exec dirname {} \;
-    deps:
-    - for: {var: DIRS}
-      task: build {{ .ITEM }}
-    silent: true
-    internal: true
-
-  hydrate:
-    vars:
-      ENVS:
-        sh: find infrastructure/controllers infrastructure/configs infrastructure platform apps -maxdepth 3 -name kustomization.yaml -not -path "*/base/*" -exec dirname {} \; | xargs -n 1 basename | sort -u
-    cmds:
-    - for: {var: ENVS}
-      task: hydrate-env {{ .ITEM }}
-    - git add --intent-to-add manifests/
-    silent: true
-
   kubeconform:
+    cmd: kubeconform -output pretty -kubernetes-version {{.KUBERNETES_VERSION | trimPrefix "v"}} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy,Backend,SecurityPolicy manifests/
     sources:
     - manifests/**/*
-    cmd: kubeconform -output pretty -kubernetes-version {{ .KUBERNETES_VERSION | trimPrefix "v" }} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy,Backend,SecurityPolicy manifests/
 
   renovate:
     env:
       LOG_LEVEL: DEBUG
-      GITHUB_COM_TOKEN:
-        sh: gh auth token
+      GITHUB_COM_TOKEN: {sh: gh auth token}
     cmds:
     - renovate --platform=local
+
+  build:
+    label: build {{.APP}} {{.ENV}}
+    requires:
+      vars: [APP, ENV]
+    cmds:
+    - rm -rf manifests/{{.ENV}}/{{.APP}}
+    - mkdir -p manifests/{{.ENV}}/{{.APP}}
+    - kustomize build {{.BUILD_ARGS}} {{.APP}}/{{.ENV}} -o manifests/{{.ENV}}/{{.APP}}
+    - find manifests/{{.ENV}}/{{.APP}} -name '*:*' -exec sh -c 'f="{}"; mv -- "$f" "${f//:/-}"' \;
+    sources:
+    - '{{.APP}}/**/*'
+    - shared/**/*
+    generates:
+    - manifests/{{.ENV}}/{{.APP}}/**/*
+
+  hydrate:
+    vars:
+      TARGETS: {sh: 'find {{.BUILD_DIRS}} -name base -prune -o -type d -exec test -e {}/kustomization.yaml \; -print -prune'}
+    cmds:
+    - for: {var: TARGETS, as: DIR}
+      vars: {APP: '{{dir .DIR}}', ENV: '{{base .DIR}}'}
+      task: build
+    - git add --intent-to-add manifests
+
+  deploy:
+    label: deploy {{.APP}} {{.ENV}}
+    deps: [{task: build, vars: {APP: '{{.APP}}', ENV: '{{.ENV}}'}}]
+    requires:
+      vars: [APP, ENV]
+    cmd: kapp deploy -y -a {{base .APP}} -f manifests/{{.ENV}}/{{.APP}}
+    sources:
+    - manifests/{{.ENV}}/{{.APP}}/**/*
+
+  apps:actual:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:controllers:kyverno
+    - infrastructure:controllers:trust-manager
+    - platform:idp
+    cmds:
+    - task: deploy
+      vars: {APP: apps/actual}
+
+  apps:ezxss:
+    deps: ['infrastructure:controllers:mariadb-operator']
+    cmds:
+    - task: deploy
+      vars: {APP: apps/ezxss}
+
+  apps:paperless-ngx:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:controllers:kyverno
+    - infrastructure:controllers:trust-manager
+    - infrastructure:controllers:cnpg
+    - infrastructure:controllers:external-secrets
+    - platform:idp
+    cmds:
+    - task: deploy
+      vars: {APP: apps/paperless-ngx}
+
+  infrastructure:configs:clusterissuers:
+    deps: ['infrastructure:controllers:cert-manager']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/clusterissuers}
+
+  infrastructure:configs:crossplane-keycloak:
+    deps: ['infrastructure:controllers:crossplane']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/crossplane-keycloak}
+
+  infrastructure:configs:gatewayclasses:
+    deps: ['infrastructure:controllers:envoy-gateway']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/gatewayclasses}
+
+  infrastructure:configs:ipam:
+    deps: ['infrastructure:controllers:metallb']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/ipam}
+
+  infrastructure:configs:oidc:
+    deps: ['platform:idp']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/oidc}
+
+  infrastructure:controllers:argocd:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:controllers:kyverno
+    - infrastructure:controllers:trust-manager
+    - platform:idp
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/argocd}
+
+  infrastructure:controllers:cert-manager:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/cert-manager}
+
+  infrastructure:controllers:cloudflare-gateway:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/cloudflare-gateway}
+
+  infrastructure:controllers:cnpg:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/cnpg}
+
+  infrastructure:controllers:coredns-external:
+    deps:
+    - infrastructure:crds
+    - infrastructure:configs:ipam
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/coredns-external}
+
+  infrastructure:controllers:crossplane:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/crossplane}
+
+  infrastructure:controllers:envoy-gateway:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/envoy-gateway}
+
+  infrastructure:controllers:external-secrets:
+    deps:
+    - infrastructure:crds
+    - infrastructure:configs:clusterissuers
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/external-secrets}
+
+  infrastructure:controllers:kyverno:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/kyverno}
+
+  infrastructure:controllers:mariadb-operator:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/mariadb-operator}
+
+  infrastructure:controllers:metallb:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/metallb}
+
+  infrastructure:controllers:sealed-secrets:
+    deps: ['infrastructure:crds:deploy']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/sealed-secrets}
+
+  infrastructure:controllers:trust-manager:
+    deps: ['infrastructure:controllers:cert-manager']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/trust-manager}
+
+  infrastructure:controllers:velero:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/velero}
+
+  infrastructure:controllers:virtink:
+    deps: ['infrastructure:configs:clusterissuers']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/virtink}
+
+  infrastructure:crds:
+  - task: deploy
+    vars: {APP: infrastructure/crds}
+
+  platform:idp:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:configs:crossplane-keycloak
+    - infrastructure:controllers:cnpg
+    cmds:
+    - task: deploy
+      vars: {APP: platform/idp}
+
+  platform:kubernetes-dashboard:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:configs:oidc
+    - infrastructure:controllers:kyverno
+    - infrastructure:controllers:trust-manager
+    - platform:idp
+    cmds:
+    - task: deploy
+      vars: {APP: platform/kubernetes-dashboard}
+
+  platform:monitoring:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:gatewayclasses
+    - infrastructure:configs:clusterissuers
+    - infrastructure:controllers:kyverno
+    - platform:idp
+    cmds:
+    - task: deploy
+      vars: {APP: platform/monitoring}
