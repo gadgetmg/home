@@ -24,6 +24,7 @@ spec:
       - args:
         - --leader-elect
         - --namespace=$(NAMESPACE)
+        - --zap-devel=$(ZAP_DEVEL)
         - --webhook-configuration-name=$(WEBHOOK_CONFIGURATION_NAME)
         - --webhook-service-name=$(WEBHOOK_SERVICE_NAME)
         - --webhook-tls-secret-name=$(WEBHOOK_TLS_SECRET_NAME)
@@ -40,7 +41,9 @@ spec:
           value: piraeus-operator-webhook-service
         - name: WEBHOOK_TLS_SECRET_NAME
           value: webhook-server-cert
-        image: quay.io/piraeusdatastore/piraeus-operator:v2.7.1
+        - name: ZAP_DEVEL
+          value: "false"
+        image: quay.io/piraeusdatastore/piraeus-operator:v2.8.0
         livenessProbe:
           httpGet:
             path: /healthz
