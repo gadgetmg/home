@@ -11,8 +11,8 @@ spec:
   hostnames:
   - actual.seigra.net
   parentRefs:
-  - kind: Gateway
-    name: actual
+  - name: actual
+  - name: actual-cloudflare
   rules:
   - backendRefs:
     - name: actual-server
