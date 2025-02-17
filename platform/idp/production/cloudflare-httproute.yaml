@@ -2,13 +2,19 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: actual
+  name: keycloak-cloudflare
+  namespace: keycloak
 spec:
-  hostnames:
-  - actual.seigra.net
   parentRefs:
-  - name: actual
+  - name: keycloak-cloudflare
+  hostnames:
+  - auth.seigra.net
   rules:
   - backendRefs:
-    - name: actual-server
+    - name: keycloak
       port: 80
+    matches:
+    - path:
+        value: /realms/home
+    - path:
+        value: /resources

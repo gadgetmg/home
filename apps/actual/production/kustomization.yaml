@@ -4,4 +4,8 @@ kind: Kustomization
 
 resources:
 - ../base
+- cloudflare-gateway.yaml
 - secrets/actual-server-env.yaml
+
+patches:
+- path: patches/httproute.yaml

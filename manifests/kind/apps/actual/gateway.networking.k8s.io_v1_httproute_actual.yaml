@@ -11,8 +11,7 @@ spec:
   hostnames:
   - actual.172.18.0.9.nip.io
   parentRefs:
-  - kind: Gateway
-    name: actual
+  - name: actual
   rules:
   - backendRefs:
     - name: actual-server
