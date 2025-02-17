@@ -38,6 +38,7 @@ helmCharts:
         controller.diff.server.side: true
         applicationsetcontroller.enable.progressive.syncs: true
       cm:
+        application.resourceTrackingMethod: annotation+label
         resource.ignoreResourceUpdatesEnabled: "true"
         resource.compareoptions: |
           ignoreResourceStatusField: all
