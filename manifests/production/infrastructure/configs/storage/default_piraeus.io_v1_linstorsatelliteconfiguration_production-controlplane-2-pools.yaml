@@ -1,6 +1,8 @@
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
   name: production-controlplane-2-pools
 spec:
   nodeSelector:
@@ -10,9 +12,9 @@ spec:
     name: ssd
     source:
       hostDevices:
-      - /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HMJP-00005_S3F6NX0KA09035
+      - /dev/sdb
   - lvmThinPool: {}
     name: hdd
     source:
       hostDevices:
-      - /dev/disk/by-id/usb-WD_easystore_264D_3654483237453243-0:0
+      - /dev/sda
