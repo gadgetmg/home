@@ -2,6 +2,8 @@ apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-1-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-1
@@ -10,17 +12,19 @@ spec:
     lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HMJP-00005_S3F6NX0KA09034
+      - /dev/sdb
   - name: hdd
     lvmThinPool: {}
     source:
       hostDevices:
-      - '/dev/disk/by-id/usb-WD_easystore_264D_3654475432533746-0:0'
+      - /dev/sda
 ---
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-2-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-2
@@ -29,17 +33,19 @@ spec:
     lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HMJP-00005_S3F6NX0KA09035
+      - /dev/sdb
   - name: hdd
     lvmThinPool: {}
     source:
       hostDevices:
-      - '/dev/disk/by-id/usb-WD_easystore_264D_3654483237453243-0:0'
+      - /dev/sda
 ---
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-3-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-3
@@ -48,4 +54,4 @@ spec:
     lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HMJP-00005_S3F6NX0KA09003
+      - /dev/sda
