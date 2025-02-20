@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 835ded4d42850f077f7fe9d51683b42f20dc8a5c01443f03675b641946040ed4
-        checksum/cmd-params: 717f3b0799f95c4a67ec055f34ebdfdffe1cdbe99e5211588c581905c563de3b
+        checksum/cm: f2c275a92b484e5214aa048dc8fc0a2a12c938dd53d43ea465afd4c3bf0c24c6
+        checksum/cmd-params: c033d167fd4665364f33ad90c44a4800e3fb90ae84732be131f0f620bbdedc0b
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
@@ -62,7 +62,7 @@ spec:
               key: dexserver.disable.tls
               name: argocd-cmd-params-cm
               optional: true
-        image: ghcr.io/dexidp/dex:v2.41.1
+        image: ghcr.io/dexidp/dex:v2.42.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
