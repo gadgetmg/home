@@ -143,11 +143,21 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/controllers/argocd}
 
+  infrastructure:controllers:cdi:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/cdi}
+
   infrastructure:controllers:cert-manager:
     deps: ['infrastructure:crds']
     cmds:
     - task: deploy
       vars: {APP: infrastructure/controllers/cert-manager}
+
+  infrastructure:controllers:cilium:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/cilium}
 
   infrastructure:controllers:cloudflare-gateway:
     deps: ['infrastructure:crds']
@@ -185,6 +195,10 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/controllers/external-secrets}
 
+  infrastructure:controllers:kubevirt:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/kubevirt}
+
   infrastructure:controllers:kyverno:
     deps: ['infrastructure:crds']
     cmds:
@@ -216,12 +230,6 @@ tasks:
   infrastructure:controllers:velero:
   - task: deploy
     vars: {APP: infrastructure/controllers/velero}
-
-  infrastructure:controllers:virtink:
-    deps: ['infrastructure:configs:clusterissuers']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/virtink}
 
   infrastructure:crds:
   - task: deploy
@@ -261,3 +269,12 @@ tasks:
     cmds:
     - task: deploy
       vars: {APP: platform/monitoring}
+
+  platform:test-sandbox:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:controllers:kubevirt
+    - infrastructure:controllers:cdi
+    cmds:
+    - task: deploy
+      vars: {APP: platform/test-sandbox}

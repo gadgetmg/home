@@ -25,3 +25,5 @@ nodes:
   - hostPath: config
     containerPath: /etc/config
     selinuxRelabel: false
+networking:
+  disableDefaultCNI: true

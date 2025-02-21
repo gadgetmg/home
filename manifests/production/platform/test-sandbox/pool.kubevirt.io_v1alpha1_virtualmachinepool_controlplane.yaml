@@ -1,0 +1,63 @@
+apiVersion: pool.kubevirt.io/v1alpha1
+kind: VirtualMachinePool
+metadata:
+  name: controlplane
+  namespace: test-sandbox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      kubevirt.io/vmpool: controlplane
+  virtualMachineTemplate:
+    metadata:
+      labels:
+        kubevirt.io/vmpool: controlplane
+    spec:
+      dataVolumeTemplates:
+      - metadata:
+          name: rootfs
+        spec:
+          source:
+            http:
+              url: https://factory.talos.dev/image/ce4c980550dd2ab1b17bbf2b08801c7eb59418eafe8f279833297925d67c7515/v1.9.4/nocloud-amd64-secureboot.raw.gz
+          storage:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 128Gi
+            storageClassName: standard
+      runStrategy: Always
+      template:
+        metadata:
+          labels:
+            kubevirt.io/vmpool: controlplane
+        spec:
+          domain:
+            devices:
+              disks:
+              - disk:
+                  bus: virtio
+                name: rootfs
+              interfaces:
+              - bridge: {}
+                name: default
+            firmware:
+              bootloader:
+                efi:
+                  secureBoot: false
+            memory:
+              guest: 1Gi
+          networks:
+          - name: default
+            pod: {}
+          subdomain: talos
+          terminationGracePeriodSeconds: 15
+          volumes:
+          - dataVolume:
+              name: rootfs
+            name: rootfs
+          - cloudInitNoCloud:
+              secretRef:
+                name: controlplane-userdata
+            name: nocloud

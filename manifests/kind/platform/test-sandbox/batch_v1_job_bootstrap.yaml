@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bootstrap
+  namespace: test-sandbox
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - bootstrap
+        - --talosconfig=/talosconfig
+        image: ghcr.io/siderolabs/talosctl:v1.9.4
+        name: bootstrap
+        volumeMounts:
+        - mountPath: /talosconfig
+          name: talosconfig
+          subPath: talosconfig
+      restartPolicy: Never
+      volumes:
+      - name: talosconfig
+        secret:
+          secretName: talosconfig
+  ttlSecondsAfterFinished: 5

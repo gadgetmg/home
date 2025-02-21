@@ -3,13 +3,15 @@ version: "3"
 
 tasks:
   up:
-    cmd: kind create cluster --config kind-config.yaml
+    cmds:
+    - kind create cluster --config kind-config.yaml
+    - task: :infrastructure:controllers:cilium
     status:
     - kind get clusters | grep ^kind$
 
   down:
     cmds:
-    - rm -f {{relPath .TASKFILE_DIR .ROOT_DIR}}/.task/checksum/*-deploy
+    - rm -f {{relPath .TASKFILE_DIR .ROOT_DIR}}/.task/checksum/deploy*
     - kind delete cluster
     status:
     - '! kind get clusters | grep ^kind$'

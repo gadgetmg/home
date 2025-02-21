@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.0.19/pkg/config/schemas/talconfig.json
+clusterName: talos
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.9.4
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
+kubernetesVersion: v1.32.2
+endpoint: https://controlplane-0:6443
+allowSchedulingOnControlPlanes: true
+clusterPodNets:
+- 10.245.0.0/16
+clusterSvcNets:
+- 10.112.0.0/12
+nodes:
+- hostname: controlplane
+  ignoreHostname: true
+  ipAddress: 10.244.0.2
+  installDisk: /dev/vda
+  talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
+  controlPlane: true
+  # kernelModules:
+  # - name: drbd
+  #   parameters:
+  #   - usermode_helper=disabled
+  # - name: drbd_transport_tcp
+  # - name: dm-thin-pool
+  networkInterfaces:
+  - interface: eno1
+    dhcp: true
+# controlPlane:
+#   patches:
+#   - '@clusterconfig/patches/disk-encryption.yaml'
+#   - '@clusterconfig/patches/metrics-scraping.yaml'
+#   - '@clusterconfig/patches/no-cni.yaml'
+#   - '@clusterconfig/patches/oidc.yaml'
+#   - '@clusterconfig/patches/pod-security.yaml'
