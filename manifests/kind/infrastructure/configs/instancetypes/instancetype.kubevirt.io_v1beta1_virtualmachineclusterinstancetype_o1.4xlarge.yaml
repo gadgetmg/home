@@ -1,0 +1,26 @@
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the U Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/displayName: Overcommitted
+  labels:
+    instancetype.kubevirt.io/class: overcommitted
+    instancetype.kubevirt.io/common-instancetypes-version: v1.3.0
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/icon-pf: pficon-virtual-machine
+    instancetype.kubevirt.io/memory: 64Gi
+    instancetype.kubevirt.io/size: 4xlarge
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
+  name: o1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: 64Gi
+    overcommitPercent: 50

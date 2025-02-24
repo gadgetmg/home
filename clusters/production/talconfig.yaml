@@ -5,64 +5,79 @@ talosVersion: v1.9.4
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 kubernetesVersion: v1.32.2
 endpoint: https://10.1.2.10:6443
-allowSchedulingOnControlPlanes: true
-clusterPodNets:
-- 10.244.0.0/16
-clusterSvcNets:
-- 10.96.0.0/12
 nodes:
 - hostname: production-controlplane-1
   ipAddress: 10.1.2.11
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.11/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - eno1
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.10
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
-  kernelModules:
-  - name: drbd
-    parameters:
-    - usermode_helper=disabled
-  - name: drbd_transport_tcp
-  - name: dm-thin-pool
-  networkInterfaces:
-  - interface: eno1
-    dhcp: true
-    vip:
-      ip: 10.1.2.10
 - hostname: production-controlplane-2
   ipAddress: 10.1.2.12
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.12/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - eno1
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.10
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
-  kernelModules:
-  - name: drbd
-    parameters:
-    - usermode_helper=disabled
-  - name: drbd_transport_tcp
-  - name: dm-thin-pool
-  networkInterfaces:
-  - interface: eno1
-    dhcp: true
-    vip:
-      ip: 10.1.2.10
 - hostname: production-controlplane-3
   ipAddress: 10.1.2.13
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.13/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - eno1
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.10
   installDisk: /dev/nvme0n1
   talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
+cniConfig:
+  name: none
+allowSchedulingOnControlPlanes: true
+controlPlane:
+  nameservers:
+  - 10.1.2.1
   kernelModules:
   - name: drbd
     parameters:
     - usermode_helper=disabled
   - name: drbd_transport_tcp
   - name: dm-thin-pool
-  networkInterfaces:
-  - interface: eno1
-    dhcp: true
-    vip:
-      ip: 10.1.2.10
-controlPlane:
   patches:
   - '@clusterconfig/patches/disk-encryption.yaml'
   - '@clusterconfig/patches/metrics-scraping.yaml'
-  - '@clusterconfig/patches/no-cni.yaml'
+  - '@clusterconfig/patches/disable-proxy.yaml'
   - '@clusterconfig/patches/oidc.yaml'
   - '@clusterconfig/patches/pod-security.yaml'

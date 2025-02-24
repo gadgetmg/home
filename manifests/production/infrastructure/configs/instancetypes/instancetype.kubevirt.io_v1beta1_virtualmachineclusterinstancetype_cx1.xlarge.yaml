@@ -1,0 +1,43 @@
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/displayName: Compute Exclusive
+  labels:
+    instancetype.kubevirt.io/class: compute.exclusive
+    instancetype.kubevirt.io/common-instancetypes-version: v1.3.0
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/icon-pf: pficon-registry
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 8Gi
+    instancetype.kubevirt.io/numa: "true"
+    instancetype.kubevirt.io/size: xlarge
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
+  name: cx1.xlarge
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 4
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 8Gi
+    hugepages:
+      pageSize: 2Mi

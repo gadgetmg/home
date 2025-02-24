@@ -119,6 +119,12 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/configs/gatewayclasses}
 
+  infrastructure:configs:instancetypes:
+    deps: ['infrastructure:controllers:kubevirt']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/instancetypes}
+
   infrastructure:configs:ipam:
     deps: ['infrastructure:controllers:metallb']
     cmds:
@@ -143,11 +149,21 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/controllers/argocd}
 
+  infrastructure:controllers:cdi:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/cdi}
+
   infrastructure:controllers:cert-manager:
     deps: ['infrastructure:crds']
     cmds:
     - task: deploy
       vars: {APP: infrastructure/controllers/cert-manager}
+
+  infrastructure:controllers:cilium:
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/cilium}
 
   infrastructure:controllers:cloudflare-gateway:
     deps: ['infrastructure:crds']
@@ -185,6 +201,10 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/controllers/external-secrets}
 
+  infrastructure:controllers:kubevirt:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/kubevirt}
+
   infrastructure:controllers:kyverno:
     deps: ['infrastructure:crds']
     cmds:
@@ -201,6 +221,10 @@ tasks:
   - task: deploy
     vars: {APP: infrastructure/controllers/metallb}
 
+  infrastructure:controllers:multus:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/multus}
+
   infrastructure:controllers:sealed-secrets:
     deps: ['infrastructure:crds:deploy']
     cmds:
@@ -216,12 +240,6 @@ tasks:
   infrastructure:controllers:velero:
   - task: deploy
     vars: {APP: infrastructure/controllers/velero}
-
-  infrastructure:controllers:virtink:
-    deps: ['infrastructure:configs:clusterissuers']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/virtink}
 
   infrastructure:crds:
   - task: deploy
@@ -261,3 +279,12 @@ tasks:
     cmds:
     - task: deploy
       vars: {APP: platform/monitoring}
+
+  platform:staging:
+    deps:
+    - infrastructure:configs:ipam
+    - infrastructure:configs:instancetypes
+    - infrastructure:controllers:cdi
+    cmds:
+    - task: deploy
+      vars: {APP: platform/staging}

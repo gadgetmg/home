@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.0.19/pkg/config/schemas/talconfig.json
+clusterName: staging
+# renovate: datasource=github-releases depName=siderolabs/talos
+talosVersion: v1.9.4
+# renovate: datasource=github-releases depName=kubernetes/kubernetes
+kubernetesVersion: v1.32.2
+endpoint: https://10.1.2.50:6443
+nodes:
+- hostname: staging-controlplane-1
+  ipAddress: 10.1.2.51
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.51/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - enp1s0
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.50
+  installDisk: /dev/vda
+  talosImageURL: factory.talos.dev/installer-secureboot/6adc7e7fba27948460e2231e5272e88b85159da3f3db980551976bf9898ff64b
+  controlPlane: true
+- hostname: staging-controlplane-2
+  ipAddress: 10.1.2.52
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.52/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - enp1s0
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.50
+  installDisk: /dev/vda
+  talosImageURL: factory.talos.dev/installer-secureboot/6adc7e7fba27948460e2231e5272e88b85159da3f3db980551976bf9898ff64b
+  controlPlane: true
+- hostname: staging-controlplane-3
+  ipAddress: 10.1.2.53
+  networkInterfaces:
+  - interface: br0
+    addresses:
+    - 10.1.2.53/24
+    bridge:
+      stp:
+        enabled: true
+      interfaces:
+      - enp1s0
+    routes:
+    - network: 0.0.0.0/0
+      gateway: 10.1.2.1
+    vip:
+      ip: 10.1.2.50
+  installDisk: /dev/vda
+  talosImageURL: factory.talos.dev/installer-secureboot/6adc7e7fba27948460e2231e5272e88b85159da3f3db980551976bf9898ff64b
+  controlPlane: true
+cniConfig:
+  name: none
+allowSchedulingOnControlPlanes: true
+controlPlane:
+  nameservers:
+  - 10.1.2.1
+  kernelModules:
+  - name: drbd
+    parameters:
+    - usermode_helper=disabled
+  - name: drbd_transport_tcp
+  - name: dm-thin-pool
+  patches:
+  - '@clusterconfig/patches/metrics-scraping.yaml'
+  - '@clusterconfig/patches/disable-proxy.yaml'
+  - '@clusterconfig/patches/oidc.yaml'
+  - '@clusterconfig/patches/pod-security.yaml'
