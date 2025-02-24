@@ -10,3 +10,7 @@ patches:
 - path: patches/vms.yaml
   target:
     kind: VirtualMachine
+- path: patches/hdd.yaml
+  target:
+    kind: VirtualMachine
+    name: staging-controlplane-(1|2)

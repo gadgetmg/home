@@ -30,8 +30,8 @@ spec:
         name: kube-multus
         resources:
           limits:
-            cpu: 100m
-            memory: 50Mi
+            cpu: 1000m
+            memory: 500Mi
           requests:
             cpu: 100m
             memory: 50Mi
@@ -65,19 +65,11 @@ spec:
       hostPID: true
       initContainers:
       - command:
-        - /install-cni.sh
-        image: ghcr.io/siderolabs/install-cni:v1.9.0@sha256:53bdeb6c8d238dd593ee75f265baf4625925a034d8d18f10ffeae88d7fcf2c3e
-        name: install-cni
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /host/opt/cni/bin
-          mountPropagation: Bidirectional
-          name: cnibin
-      - command:
-        - cp
-        - /usr/src/multus-cni/bin/multus-shim
-        - /host/opt/cni/bin/multus-shim
+        - /usr/src/multus-cni/bin/install_multus
+        - -d
+        - /host/opt/cni/bin
+        - -t
+        - thick
         image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
         name: install-multus-binary
         resources:
@@ -87,6 +79,16 @@ spec:
         securityContext:
           privileged: true
         terminationMessagePolicy: FallbackToLogsOnError
+        volumeMounts:
+        - mountPath: /host/opt/cni/bin
+          mountPropagation: Bidirectional
+          name: cnibin
+      - command:
+        - /install-cni.sh
+        image: ghcr.io/siderolabs/install-cni:v1.9.0@sha256:53bdeb6c8d238dd593ee75f265baf4625925a034d8d18f10ffeae88d7fcf2c3e
+        name: install-cni
+        securityContext:
+          privileged: true
         volumeMounts:
         - mountPath: /host/opt/cni/bin
           mountPropagation: Bidirectional
