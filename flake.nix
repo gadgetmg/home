@@ -77,6 +77,7 @@
                   kubevirt
                   kustomize
                   kyverno-chainsaw
+                  minikube
                   pre-commit
                   renovate
                   sops

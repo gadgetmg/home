@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://github.com/kubevirt/kubevirt/releases/download/v1.4.0/kubevirt-operator.yaml
+- https://github.com/kubevirt/kubevirt/releases/download/v1.4.0/kubevirt-cr.yaml
+
+patches:
+- patch: |
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: kubevirt
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/warn: privileged
+        pod-security.kubernetes.io/autit: privileged

@@ -14,6 +14,15 @@ helmCharts:
   apiVersions:
   - monitoring.coreos.com/v1
   valuesInline:
+    cni:
+      exclusive: false
+    devices: br0
+    bpf:
+      masquerade: true
+    routingMode: native
+    ipv4NativeRoutingCIDR: 10.244.0.0/16
+    endpointRoutes:
+      enabled: true
     k8sServiceHost: localhost
     k8sServicePort: 7445
     securityContext:
