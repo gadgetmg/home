@@ -28,19 +28,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 2T
-        storageClassName: standard
-  - metadata:
-      name: hdd-staging-controlplane-3
-    spec:
-      source:
-        blank: {}
-      storage:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 8T
+            storage: 500G
         storageClassName: standard
   instancetype:
     kind: VirtualMachineClusterInstanceType
@@ -60,7 +48,6 @@ spec:
           disks:
           - name: rootfs
           - name: ssd
-          - name: hdd
           interfaces:
           - bridge: {}
             name: default
@@ -77,6 +64,3 @@ spec:
       - dataVolume:
           name: ssd-staging-controlplane-3
         name: ssd
-      - dataVolume:
-          name: hdd-staging-controlplane-3
-        name: hdd

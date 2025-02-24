@@ -79,5 +79,7 @@ controlPlane:
   - '@clusterconfig/patches/disk-encryption.yaml'
   - '@clusterconfig/patches/metrics-scraping.yaml'
   - '@clusterconfig/patches/disable-proxy.yaml'
+  - '@clusterconfig/patches/disable-hostdns.yaml'
+  - '@clusterconfig/patches/containerd-config.yaml'
   - '@clusterconfig/patches/oidc.yaml'
   - '@clusterconfig/patches/pod-security.yaml'

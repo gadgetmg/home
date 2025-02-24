@@ -11,3 +11,5 @@ images:
 
 patches:
 - path: patches/install-cni.yaml
+- path: patches/memory-limit-fix.yaml
+- path: patches/install-binary-fix.yaml

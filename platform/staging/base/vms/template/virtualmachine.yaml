@@ -61,7 +61,7 @@ spec:
       storage:
         resources:
           requests:
-            storage: 2T
+            storage: 500G
         accessModes:
         - ReadWriteOnce
         storageClassName: ssd-r1
@@ -73,7 +73,7 @@ spec:
       storage:
         resources:
           requests:
-            storage: 8T
+            storage: 2T
         accessModes:
         - ReadWriteOnce
         storageClassName: hdd-r1

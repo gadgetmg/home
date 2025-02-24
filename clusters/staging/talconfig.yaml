@@ -4,7 +4,7 @@ clusterName: staging
 talosVersion: v1.9.4
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 kubernetesVersion: v1.32.2
-endpoint: https://10.1.2.50:6443
+endpoint: https://10.1.2.51:6443
 nodes:
 - hostname: staging-controlplane-1
   ipAddress: 10.1.2.51
@@ -78,5 +78,7 @@ controlPlane:
   patches:
   - '@clusterconfig/patches/metrics-scraping.yaml'
   - '@clusterconfig/patches/disable-proxy.yaml'
+  - '@clusterconfig/patches/disable-hostdns.yaml'
+  - '@clusterconfig/patches/containerd-config.yaml'
   - '@clusterconfig/patches/oidc.yaml'
   - '@clusterconfig/patches/pod-security.yaml'

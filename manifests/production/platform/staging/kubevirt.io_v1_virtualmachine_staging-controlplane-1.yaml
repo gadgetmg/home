@@ -28,7 +28,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 2T
+            storage: 500G
         storageClassName: ssd-r1
   - metadata:
       name: hdd-staging-controlplane-1
@@ -40,7 +40,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 8T
+            storage: 2T
         storageClassName: hdd-r1
   instancetype:
     kind: VirtualMachineClusterInstanceType

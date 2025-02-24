@@ -28,7 +28,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 2T
+            storage: 500G
         storageClassName: standard
   - metadata:
       name: hdd-staging-controlplane-2
@@ -40,7 +40,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 8T
+            storage: 2T
         storageClassName: standard
   instancetype:
     kind: VirtualMachineClusterInstanceType
