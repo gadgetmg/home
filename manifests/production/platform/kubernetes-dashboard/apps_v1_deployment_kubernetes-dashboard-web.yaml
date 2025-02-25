@@ -41,7 +41,7 @@ spec:
             resourceFieldRef:
               divisor: "1"
               resource: limits.memory
-        image: docker.io/kubernetesui/dashboard-web:1.6.1
+        image: docker.io/kubernetesui/dashboard-web:1.6.2
         imagePullPolicy: IfNotPresent
         name: kubernetes-dashboard-web
         ports:
