@@ -132,7 +132,7 @@ spec:
         envFrom:
         - secretRef:
             name: grafana-oidc-secret
-        image: docker.io/grafana/grafana:11.5.1
+        image: docker.io/grafana/grafana:11.5.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 10
@@ -186,6 +186,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 472
       serviceAccountName: grafana
+      shareProcessNamespace: false
       volumes:
       - configMap:
           name: grafana
