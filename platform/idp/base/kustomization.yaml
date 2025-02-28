@@ -20,7 +20,7 @@ components:
 helmCharts:
 - name: keycloak
   repo: oci://docker.io/bitnamicharts
-  version: 24.4.10
+  version: 24.4.11
   releaseName: keycloak
   namespace: keycloak
   valuesInline:
