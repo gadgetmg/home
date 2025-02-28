@@ -21,7 +21,7 @@ helmCharts:
   repo: https://argoproj.github.io/argo-helm
   releaseName: argocd
   namespace: argocd
-  version: 7.8.5
+  version: 7.8.6
   apiVersions:
   - monitoring.coreos.com/v1
   valuesInline:
