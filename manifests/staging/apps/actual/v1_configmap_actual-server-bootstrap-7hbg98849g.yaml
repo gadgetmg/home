@@ -1,8 +1,8 @@
 apiVersion: v1
 data:
   app.js: |
-    import runMigrations from "./src/migrations.js";
-    import finalConfig from "./src/load-config.js";
+    import { run as runMigrations } from "./src/migrations.js";
+    import { config as finalConfig } from "./src/load-config.js";
     import { bootstrapPassword } from "./src/accounts/password.js";
     import { enableOpenID } from "./src/account-db.js";
 
@@ -13,7 +13,7 @@ data:
         await enableOpenID(finalConfig);
         // Import the app here because initial migrations need to be run first - they are dependencies of the app.js
         const app = await import("./src/app.js");
-        app.default(); // run the app
+        app.run(); // run the app
       } catch (err) {
         console.log("Error starting app:", err);
         process.exit(1);
@@ -25,5 +25,5 @@ metadata:
     app.kubernetes.io/component: application
     app.kubernetes.io/instance: actual
     app.kubernetes.io/part-of: actual
-  name: actual-server-bootstrap-576fghcft5
+  name: actual-server-bootstrap-7hbg98849g
   namespace: actual
