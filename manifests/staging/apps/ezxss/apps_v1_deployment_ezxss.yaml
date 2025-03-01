@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: ezxss
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/part-of: ezxss
+  name: ezxss
+  namespace: ezxss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: ezxss
+      app.kubernetes.io/instance: ezxss
+      app.kubernetes.io/name: ezxss
+      app.kubernetes.io/part-of: ezxss
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: ezxss
+        app.kubernetes.io/instance: ezxss
+        app.kubernetes.io/name: ezxss
+        app.kubernetes.io/part-of: ezxss
+    spec:
+      containers:
+      - env:
+        - name: EZXSS_DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: ezxss-db-password
+        envFrom:
+        - configMapRef:
+            name: ezxss
+        image: ghcr.io/gadgetmg/ezxss:master@sha256:b73fa125b76ce0269401f977da58f4cd7172668e899111eb56e96813b42f0705
+        name: ezxss
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 33
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault

@@ -1,0 +1,24 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: kube-prometheus-stack
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    release: kube-prometheus-stack
+  name: k8s-kubernetes-system-controller-manager
+  namespace: monitoring
+spec:
+  groups:
+  - name: kubernetes-system-controller-manager
+    rules:
+    - alert: KubeControllerManagerDown
+      annotations:
+        description: KubeControllerManager has disappeared from Prometheus target
+          discovery.
+        runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubecontrollermanagerdown
+        summary: Target disappeared from Prometheus target discovery.
+      expr: absent(up{job="kube-controller-manager"} == 1)
+      for: 15m
+      labels:
+        severity: critical

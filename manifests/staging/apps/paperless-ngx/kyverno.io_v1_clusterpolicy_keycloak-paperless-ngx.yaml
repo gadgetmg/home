@@ -1,0 +1,66 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  labels:
+    app.kubernetes.io/component: paperless-ngx
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  name: keycloak-paperless-ngx
+  namespace: paperless-ngx
+spec:
+  generateExisting: true
+  rules:
+  - context:
+    - name: secret_name
+      variable:
+        jmesPath: request.object.spec.publishConnectionDetailsTo.name
+    - apiCall:
+        jmesPath: data."attribute.client_secret" | base64_decode(@)
+        method: GET
+        urlPath: /api/v1/namespaces/crossplane-system/secrets/{{ secret_name }}
+      name: client_secret
+    - configMap:
+        name: paperless-ngx-socialaccount-config
+        namespace: paperless-ngx
+      name: client
+    - name: paperlessSocialAccountProviders
+      variable:
+        value: |
+          {
+            "openid_connect": {
+              "APPS": [
+                {
+                  "provider_id": "{{ client.data.provider_id }}",
+                  "name": "{{ client.data.name }}",
+                  "client_id": "{{ client.data.client_id }}",
+                  "secret": "{{ client_secret }}",
+                  "settings": {
+                    "server_url": "{{ client.data.server_url }}"
+                  }
+                }
+              ],
+              "OAUTH_PKCE_ENABLED": "True"
+            }
+          }
+    generate:
+      apiVersion: v1
+      data:
+        data:
+          PAPERLESS_SOCIALACCOUNT_PROVIDERS: '{{ paperlessSocialAccountProviders |
+            base64_encode(@) }}'
+        type: Opaque
+      kind: Secret
+      name: paperless-ngx-socialaccount-providers
+      namespace: paperless-ngx
+      synchronize: true
+    match:
+      resources:
+        kinds:
+        - Client
+        names:
+        - paperless-ngx
+    name: keycloak-client-paperless-ngx
+    skipBackgroundRequests: true

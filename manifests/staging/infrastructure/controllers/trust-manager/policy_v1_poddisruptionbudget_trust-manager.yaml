@@ -1,0 +1,14 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: trust-manager
+    app.kubernetes.io/instance: trust-manager
+    app.kubernetes.io/name: trust-manager
+  name: trust-manager
+  namespace: cert-manager
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: trust-manager

@@ -1,0 +1,31 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: kube-prometheus-stack-operator
+    app.kubernetes.io/component: prometheus-operator
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/name: kube-prometheus-stack-prometheus-operator
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    release: kube-prometheus-stack
+  name: prometheus-operator
+  namespace: monitoring
+spec:
+  endpoints:
+  - honorLabels: true
+    port: https
+    scheme: https
+    tlsConfig:
+      ca:
+        secret:
+          key: ca
+          name: k8s-admission
+          optional: false
+      serverName: prometheus-operator
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  selector:
+    matchLabels:
+      app: kube-prometheus-stack-operator
+      release: kube-prometheus-stack

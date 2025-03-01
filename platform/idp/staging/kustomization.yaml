@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+- cloudflare-gateway.yaml
+- cloudflare-httproute.yaml
+- secrets/keycloak-admin.yaml
+- secrets/crossplane-credentials.yaml
+
+patches:
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+    name: keycloak
+
+replacements:
+- source:
+    kind: Gateway
+    name: keycloak
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: HTTPRoute
+      name: keycloak
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2

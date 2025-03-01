@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: argocd
+  namespace: argocd
+spec:
+  gatewayClassName: envoy-gateway
+  listeners:
+  - hostname: argocd.staging.seigra.net
+    name: argocd
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - name: argocd-gateway-tls
+      mode: Terminate

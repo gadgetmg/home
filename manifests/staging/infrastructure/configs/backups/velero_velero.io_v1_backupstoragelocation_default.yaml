@@ -1,0 +1,18 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  labels:
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/name: velero
+  name: default
+  namespace: velero
+spec:
+  accessMode: ReadWrite
+  config:
+    region: minio
+    s3ForcePathStyle: "true"
+    s3Url: https://truenas.lan.seigra.net:9000
+  default: true
+  objectStorage:
+    bucket: velero-staging
+  provider: aws

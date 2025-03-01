@@ -1,0 +1,43 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app: kube-prometheus-stack-prometheus
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    release: kube-prometheus-stack
+  name: k8s-prometheus
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - nodes
+  - nodes/metrics
+  - services
+  - endpoints
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
+  - watch
+- nonResourceURLs:
+  - /metrics
+  - /metrics/cadvisor
+  verbs:
+  - get

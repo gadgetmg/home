@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/name: actual-server
+    app.kubernetes.io/part-of: actual
+  name: actual-server
+  namespace: actual
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: application
+      app.kubernetes.io/instance: actual
+      app.kubernetes.io/name: actual-server
+      app.kubernetes.io/part-of: actual
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: application
+        app.kubernetes.io/instance: actual
+        app.kubernetes.io/name: actual-server
+        app.kubernetes.io/part-of: actual
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: application
+                app.kubernetes.io/instance: actual
+                app.kubernetes.io/name: actual-server
+                app.kubernetes.io/part-of: actual
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: actual-server-env-659mc2tgtm
+        - secretRef:
+            name: actual-server-env
+        image: ghcr.io/actualbudget/actual-server:25.2.1@sha256:3abc61d5f674a1043a93e448930142ce955b5e3938ee93e01f013c7d7d6f27d7
+        name: actual-server
+        ports:
+        - containerPort: 5006
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - mountPath: /data/config.json
+          name: config
+          subPath: config.json
+        - mountPath: /app/app.js
+          name: bootstrap
+          subPath: app.js
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: actual-server-data
+      - name: config
+        secret:
+          secretName: actual-server-config
+      - configMap:
+          name: actual-server-bootstrap-576fghcft5
+        name: bootstrap

@@ -1,0 +1,28 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  labels:
+    app.kubernetes.io/component: paperless-ngx
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  gatewayClassName: envoy-gateway
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: paperless.staging.seigra.net
+    name: paperless-ngx
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: paperless-gateway-tls
+      mode: Terminate

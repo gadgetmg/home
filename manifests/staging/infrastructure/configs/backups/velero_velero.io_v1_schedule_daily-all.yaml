@@ -1,0 +1,17 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: daily-all
+  namespace: velero
+spec:
+  schedule: 0 5 * * *
+  skipImmediately: false
+  template:
+    csiSnapshotTimeout: 0s
+    hooks: {}
+    includedNamespaces:
+    - '*'
+    itemOperationTimeout: 0s
+    metadata: {}
+    ttl: 0s
+  useOwnerReferencesInBackup: true

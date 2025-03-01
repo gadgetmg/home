@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana
+  namespace: monitoring
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [auth.generic_oauth]
+    allow_sign_up = true
+    api_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/userinfo
+    auth_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/auth
+    auto_login = true
+    client_id = grafana
+    email_attribute_path = email
+    enabled = true
+    login_attribute_path = username
+    name = seigra.net
+    name_attribute_path = full_name
+    role_attribute_path = contains(groups[*], 'admin') && 'Admin' || contains(groups[*], 'editor') && 'Editor' || contains(groups[*], 'viewer') && 'Viewer'
+    role_attribute_strict = true
+    scopes = openid email profile offline_access
+    tls_skip_verify_insecure = true
+    token_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/token
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [server]
+    domain = grafana.staging.seigra.net
+    root_url = https://grafana.staging.seigra.net

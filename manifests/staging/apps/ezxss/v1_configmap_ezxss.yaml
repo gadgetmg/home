@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  EZXSS_DBHOST: ezxss-db
+  EZXSS_DBNAME: ezxss
+  EZXSS_DBUSER: ezxss
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/part-of: ezxss
+  name: ezxss
+  namespace: ezxss
