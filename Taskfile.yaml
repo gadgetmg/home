@@ -119,12 +119,6 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/configs/gatewayclasses}
 
-  infrastructure:configs:instancetypes:
-    deps: ['infrastructure:controllers:kubevirt']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/instancetypes}
-
   infrastructure:configs:ipam:
     deps: ['infrastructure:controllers:metallb']
     cmds:
@@ -283,7 +277,6 @@ tasks:
   platform:staging:
     deps:
     - infrastructure:configs:ipam
-    - infrastructure:configs:instancetypes
     - infrastructure:controllers:cdi
     cmds:
     - task: deploy
