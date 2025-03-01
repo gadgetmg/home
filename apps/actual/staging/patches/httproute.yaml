@@ -6,4 +6,4 @@ metadata:
 spec:
   parentRefs:
   - name: actual
-  - name: actual-cloudflare
+  - name: actual-cloudflare-staging

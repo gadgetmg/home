@@ -7,7 +7,7 @@ spec:
   hostnames:
   - auth.staging.seigra.net
   parentRefs:
-  - name: keycloak-cloudflare
+  - name: keycloak-cloudflare-staging
   rules:
   - backendRefs:
     - name: keycloak
