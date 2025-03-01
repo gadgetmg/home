@@ -1,0 +1,30 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/component: paperless-ngx
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  hostnames:
+  - paperless.staging.seigra.net
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    name: paperless-ngx
+    sectionName: paperless-ngx
+  rules:
+  - backendRefs:
+    - group: ""
+      kind: Service
+      name: paperless-ngx
+      namespace: paperless-ngx
+      port: 8000
+      weight: 1
+    matches:
+    - path:
+        type: PathPrefix
+        value: /

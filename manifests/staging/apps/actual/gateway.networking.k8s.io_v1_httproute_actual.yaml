@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual
+  namespace: actual
+spec:
+  hostnames:
+  - actual.staging.seigra.net
+  parentRefs:
+  - name: actual
+  - name: actual-cloudflare
+  rules:
+  - backendRefs:
+    - name: actual-server
+      port: 80

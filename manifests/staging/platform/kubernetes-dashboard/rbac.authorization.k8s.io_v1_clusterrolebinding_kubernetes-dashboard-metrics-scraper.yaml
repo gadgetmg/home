@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: kubernetes-dashboard
+    app.kubernetes.io/part-of: kubernetes-dashboard
+  name: kubernetes-dashboard-metrics-scraper
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubernetes-dashboard-metrics-scraper
+subjects:
+- kind: ServiceAccount
+  name: kubernetes-dashboard-metrics-scraper
+  namespace: kubernetes-dashboard

@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: linstor-api-ca
+  namespace: piraeus-datastore
+spec:
+  commonName: linstor-api-ca
+  duration: 87600h0m0s
+  isCA: true
+  issuerRef:
+    kind: Issuer
+    name: ca-bootstrapper
+  secretName: linstor-api-ca
+  usages:
+  - signing
+  - key encipherment
+  - cert sign

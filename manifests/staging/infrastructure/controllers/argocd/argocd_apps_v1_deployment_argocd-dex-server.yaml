@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: dex-server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/name: argocd-dex-server
+    app.kubernetes.io/part-of: argocd
+  name: argocd-dex-server
+  namespace: argocd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: argocd
+      app.kubernetes.io/name: argocd-dex-server
+  template:
+    metadata:
+      annotations:
+        checksum/cm: 197eb64d6091f7aa24bebfa8ab4af673b59c62020a48b70a92d08982af0cf7de
+        checksum/cmd-params: 0f426ca52ccb5aff96928668de4da154b9c957862aadb6849cf9159f22b5188a
+      labels:
+        app.kubernetes.io/component: dex-server
+        app.kubernetes.io/instance: argocd
+        app.kubernetes.io/name: argocd-dex-server
+        app.kubernetes.io/part-of: argocd
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: argocd-dex-server
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - rundex
+        command:
+        - /shared/argocd-dex
+        - --logformat=text
+        - --loglevel=info
+        env:
+        - name: ARGOCD_DEX_SERVER_LOGFORMAT
+          valueFrom:
+            configMapKeyRef:
+              key: dexserver.log.format
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_DEX_SERVER_LOGLEVEL
+          valueFrom:
+            configMapKeyRef:
+              key: dexserver.log.level
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_DEX_SERVER_DISABLE_TLS
+          valueFrom:
+            configMapKeyRef:
+              key: dexserver.disable.tls
+              name: argocd-cmd-params-cm
+              optional: true
+        image: ghcr.io/dexidp/dex:v2.42.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/live
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: dex-server
+        ports:
+        - containerPort: 5556
+          name: http
+          protocol: TCP
+        - containerPort: 5557
+          name: grpc
+          protocol: TCP
+        - containerPort: 5558
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/ready
+            port: metrics
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /shared
+          name: static-files
+        - mountPath: /tmp
+          name: dexconfig
+        - mountPath: /tls
+          name: argocd-dex-server-tls
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - command:
+        - /bin/cp
+        - -n
+        - /usr/local/bin/argocd
+        - /shared/argocd-dex
+        image: quay.io/argoproj/argocd:v2.14.3
+        imagePullPolicy: IfNotPresent
+        name: copyutil
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /shared
+          name: static-files
+        - mountPath: /tmp
+          name: dexconfig
+      nodeSelector:
+        kubernetes.io/os: linux
+      serviceAccountName: argocd-dex-server
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: static-files
+      - emptyDir: {}
+        name: dexconfig
+      - name: argocd-dex-server-tls
+        secret:
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          - key: ca.crt
+            path: ca.crt
+          optional: true
+          secretName: argocd-dex-server-tls

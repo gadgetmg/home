@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: prometheus-adapter
+    app.kubernetes.io/name: prometheus-adapter
+    app.kubernetes.io/part-of: prometheus-adapter
+  name: prometheus-adapter
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: prometheus-adapter
+      app.kubernetes.io/name: prometheus-adapter
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/config: a165755b91c323bfad35304d9c3d92a03ef74dc16921b18b86a3003e4817d3ac
+      labels:
+        app.kubernetes.io/component: metrics
+        app.kubernetes.io/instance: prometheus-adapter
+        app.kubernetes.io/name: prometheus-adapter
+        app.kubernetes.io/part-of: prometheus-adapter
+      name: prometheus-adapter
+    spec:
+      affinity: {}
+      containers:
+      - args:
+        - /adapter
+        - --secure-port=6443
+        - --cert-dir=/tmp/cert
+        - --prometheus-url=http://k8s-prometheus.monitoring.svc:9090
+        - --metrics-relist-interval=1m
+        - --v=4
+        - --config=/etc/adapter/config.yaml
+        image: registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.12.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        name: prometheus-adapter
+        ports:
+        - containerPort: 6443
+          name: https
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 10001
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /etc/adapter/
+          name: config
+          readOnly: true
+        - mountPath: /tmp
+          name: tmp
+      nodeSelector: {}
+      securityContext:
+        fsGroup: 10001
+      serviceAccountName: prometheus-adapter
+      tolerations: []
+      topologySpreadConstraints: []
+      volumes:
+      - configMap:
+          name: prometheus-adapter
+        name: config
+      - emptyDir: {}
+        name: tmp
