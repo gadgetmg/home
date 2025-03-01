@@ -7,7 +7,7 @@ spec:
   hostnames:
   - staging.dm3.in
   parentRefs:
-  - name: ezxss-cloudflare
+  - name: ezxss-cloudflare-staging
   rules:
   - backendRefs:
     - name: ezxss

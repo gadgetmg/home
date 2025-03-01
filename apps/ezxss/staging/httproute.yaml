@@ -6,7 +6,7 @@ metadata:
   namespace: ezxss
 spec:
   parentRefs:
-  - name: ezxss-cloudflare
+  - name: ezxss-cloudflare-staging
   hostnames:
   - staging.dm3.in
   rules:

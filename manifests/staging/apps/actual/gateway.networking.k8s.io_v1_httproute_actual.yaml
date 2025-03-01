@@ -12,7 +12,7 @@ spec:
   - actual.staging.seigra.net
   parentRefs:
   - name: actual
-  - name: actual-cloudflare
+  - name: actual-cloudflare-staging
   rules:
   - backendRefs:
     - name: actual-server

@@ -6,7 +6,7 @@ metadata:
   namespace: keycloak
 spec:
   parentRefs:
-  - name: keycloak-cloudflare
+  - name: keycloak-cloudflare-staging
   hostnames:
   - auth.staging.seigra.net
   rules:
