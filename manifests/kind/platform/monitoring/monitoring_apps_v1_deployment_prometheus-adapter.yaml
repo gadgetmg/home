@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: a165755b91c323bfad35304d9c3d92a03ef74dc16921b18b86a3003e4817d3ac
+        checksum/config: 482356b47f475729465f1de9c1e8aad7071becae6f891370596d3f9a9acab841
       labels:
         app.kubernetes.io/component: metrics
         app.kubernetes.io/instance: prometheus-adapter
@@ -31,6 +31,7 @@ spec:
       name: prometheus-adapter
     spec:
       affinity: {}
+      automountServiceAccountToken: true
       containers:
       - args:
         - /adapter
