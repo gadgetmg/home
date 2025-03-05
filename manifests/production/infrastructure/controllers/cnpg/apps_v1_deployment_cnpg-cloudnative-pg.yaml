@@ -15,9 +15,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 48c8bf61a61641e9694d388c245fce772f55227907c7a1663c82f6fe634587a2
-        checksum/monitoring-config: ab59198d05bcab4496dd7f090dc1c64585ae275be1449424295c653b46923865
-        checksum/rbac: 350b2b29a66ac1926ccf932764501a51ca91d2304ca1cff810fa00c33d39302a
+        checksum/config: 099f072ed8945303b26c473514b2edb75f246dc6b39a981c6b4a5952015b024a
+        checksum/monitoring-config: 9a6b17455d5a86102be8ca04d0b275d6c84cb28192ddb1c553df6202cbc841e0
+        checksum/rbac: 52a816417de47a05cd0449212c52a45314cd27ab4c17188a81376d18e92fe50d
       labels:
         app.kubernetes.io/instance: cnpg
         app.kubernetes.io/name: cloudnative-pg
@@ -33,14 +33,14 @@ spec:
         - /manager
         env:
         - name: OPERATOR_IMAGE_NAME
-          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.0
+          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
         - name: OPERATOR_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
         - name: MONITORING_QUERIES_CONFIGMAP
           value: cnpg-default-monitoring
-        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.0
+        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.25.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -73,6 +73,13 @@ spec:
           runAsUser: 10001
           seccompProfile:
             type: RuntimeDefault
+        startupProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /readyz
+            port: 9443
+            scheme: HTTPS
+          periodSeconds: 5
         volumeMounts:
         - mountPath: /controller
           name: scratch-data
