@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.0.19/pkg/config/schemas/talconfig.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.0.20/pkg/config/schemas/talconfig.json
 clusterName: staging
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.9.4
