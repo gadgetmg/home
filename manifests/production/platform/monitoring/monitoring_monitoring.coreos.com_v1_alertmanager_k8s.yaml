@@ -29,7 +29,7 @@ spec:
   alertmanagerConfigSelector: {}
   automountServiceAccountToken: true
   externalUrl: http://k8s-alertmanager.monitoring:9093
-  image: quay.io/prometheus/alertmanager:v0.28.0
+  image: quay.io/prometheus/alertmanager:v0.28.1
   listenLocal: false
   logFormat: logfmt
   logLevel: info
@@ -46,4 +46,4 @@ spec:
     seccompProfile:
       type: RuntimeDefault
   serviceAccountName: k8s-alertmanager
-  version: v0.28.0
+  version: v0.28.1
