@@ -7,7 +7,7 @@ env:
   # renovate: datasource=github-releases depName=siderolabs/talos
   TALOS_VERSION: v1.9.4
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  KUBERNETES_VERSION: v1.32.2
+  KUBERNETES_VERSION: v1.32.3
 
 vars:
   BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins
