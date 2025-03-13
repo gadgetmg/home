@@ -14,6 +14,8 @@ spec:
     type: RollingUpdate
   template:
     metadata:
+      annotations:
+        openshift.io/required-scc: restricted-v2
       labels:
         kubevirt.io: virt-operator
         name: virt-operator
@@ -42,14 +44,14 @@ spec:
         - virt-operator
         env:
         - name: VIRT_OPERATOR_IMAGE
-          value: quay.io/kubevirt/virt-operator:v1.4.0
+          value: quay.io/kubevirt/virt-operator:v1.5.0
         - name: WATCH_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.annotations['olm.targetNamespaces']
         - name: KUBEVIRT_VERSION
-          value: v1.4.0
-        image: quay.io/kubevirt/virt-operator:v1.4.0
+          value: v1.5.0
+        image: quay.io/kubevirt/virt-operator:v1.5.0
         imagePullPolicy: IfNotPresent
         name: virt-operator
         ports:

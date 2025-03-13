@@ -423,6 +423,7 @@ rules:
   resources:
   - virtualmachinesnapshots
   - virtualmachinesnapshots/status
+  - virtualmachinesnapshots/finalizers
   - virtualmachinesnapshotcontents
   - virtualmachinesnapshotcontents/status
   - virtualmachinesnapshotcontents/finalizers
@@ -475,15 +476,18 @@ rules:
   - kubevirt.io
   resources:
   - virtualmachines/finalizers
+  - virtualmachineinstances/finalizers
   verbs:
   - update
 - apiGroups:
   - subresources.kubevirt.io
   resources:
+  - virtualmachines/stop
   - virtualmachineinstances/addvolume
   - virtualmachineinstances/removevolume
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
+  - virtualmachineinstances/reset
   - virtualmachineinstances/softreboot
   - virtualmachineinstances/sev/setupsession
   - virtualmachineinstances/sev/injectlaunchsecret
@@ -587,6 +591,14 @@ rules:
   verbs:
   - list
   - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - get
+  - delete
 - apiGroups:
   - kubevirt.io
   resources:
@@ -698,6 +710,7 @@ rules:
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
   - virtualmachineinstances/softreboot
+  - virtualmachineinstances/reset
   - virtualmachineinstances/sev/setupsession
   - virtualmachineinstances/sev/injectlaunchsecret
   verbs:
@@ -717,7 +730,6 @@ rules:
   - virtualmachines/restart
   - virtualmachines/addvolume
   - virtualmachines/removevolume
-  - virtualmachines/migrate
   - virtualmachines/memorydump
   verbs:
   - update
@@ -734,7 +746,6 @@ rules:
   - virtualmachineinstances
   - virtualmachineinstancepresets
   - virtualmachineinstancereplicasets
-  - virtualmachineinstancemigrations
   verbs:
   - get
   - delete
@@ -744,6 +755,14 @@ rules:
   - list
   - watch
   - deletecollection
+- apiGroups:
+  - kubevirt.io
+  resources:
+  - virtualmachineinstancemigrations
+  verbs:
+  - get
+  - list
+  - watch
 - apiGroups:
   - snapshot.kubevirt.io
   resources:
@@ -847,6 +866,7 @@ rules:
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
   - virtualmachineinstances/softreboot
+  - virtualmachineinstances/reset
   - virtualmachineinstances/sev/setupsession
   - virtualmachineinstances/sev/injectlaunchsecret
   verbs:
@@ -866,7 +886,6 @@ rules:
   - virtualmachines/restart
   - virtualmachines/addvolume
   - virtualmachines/removevolume
-  - virtualmachines/migrate
   - virtualmachines/memorydump
   verbs:
   - update
@@ -883,13 +902,20 @@ rules:
   - virtualmachineinstances
   - virtualmachineinstancepresets
   - virtualmachineinstancereplicasets
-  - virtualmachineinstancemigrations
   verbs:
   - get
   - delete
   - create
   - update
   - patch
+  - list
+  - watch
+- apiGroups:
+  - kubevirt.io
+  resources:
+  - virtualmachineinstancemigrations
+  verbs:
+  - get
   - list
   - watch
 - apiGroups:
@@ -1070,6 +1096,25 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - virtualmachines/migrate
+  verbs:
+  - update
+- apiGroups:
+  - kubevirt.io
+  resources:
+  - virtualmachineinstancemigrations
+  verbs:
+  - get
+  - delete
+  - create
+  - update
+  - patch
+  - list
+  - watch
+  - deletecollection
 - apiGroups:
   - authentication.k8s.io
   resources:
