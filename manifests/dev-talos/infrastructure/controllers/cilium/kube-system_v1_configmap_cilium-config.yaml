@@ -4,6 +4,7 @@ data:
   arping-refresh-period: 30s
   auto-direct-node-routes: "false"
   bgp-secrets-namespace: kube-system
+  bpf-distributed-lru: "false"
   bpf-events-drop-enabled: "true"
   bpf-events-policy-verdict-enabled: "true"
   bpf-events-trace-enabled: "true"
@@ -102,7 +103,6 @@ data:
   install-no-conntrack-iptables-rules: "false"
   ipam: kubernetes
   ipam-cilium-node-update-rate: 15s
-  ipam-multi-pool-pre-allocation: null
   iptables-random-fully: "false"
   ipv4-native-routing-cidr: 10.244.0.0/16
   k8s-require-ipv4-pod-cidr: "false"
@@ -150,6 +150,7 @@ data:
   tofqdns-max-deferred-connection-deletes: "10000"
   tofqdns-proxy-response-max-delay: 100ms
   tunnel-protocol: vxlan
+  tunnel-source-port-range: 0-0
   unmanaged-pod-watcher-interval: "15"
   vtep-cidr: ""
   vtep-endpoint: ""
