@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 840da1c5c4e2425b0747631de5f95682567f533042148d044ce44a546878786e
-        checksum/cmd-params: 0c3aee67d7748e6214aa3eec6c27e9776ba6504f120499c1d179c86e1b4abed3
+        checksum/cm: 676704805aff1e4f6fd9503295a377f8cb56835bad26d39a43568c26c03c5d9a
+        checksum/cmd-params: f92080556c951446ab9776c4cbc97f72de4c151a4a834caab070ab563d230c6b
       labels:
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: argocd
@@ -338,7 +338,7 @@ spec:
               key: hydrator.enabled
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v2.14.5
+        image: quay.io/argoproj/argocd:v2.14.6
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
