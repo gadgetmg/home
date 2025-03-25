@@ -13,7 +13,7 @@ helmCharts:
   repo: https://coredns.github.io/helm
   releaseName: coredns
   namespace: coredns-external
-  version: 1.39.1
+  version: 1.39.2
   valuesInline:
     serviceType: LoadBalancer
     prometheus:

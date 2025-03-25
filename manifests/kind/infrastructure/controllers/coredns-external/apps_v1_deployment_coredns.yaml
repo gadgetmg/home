@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: d8237b1def483d341f7c79f027afd37a947ddff31aada139b57b17802d473005
+        checksum/config: 6058abac75d0e786ab7970ad5a137cec7c64e5295aceff834849dcedcfe71cee
       labels:
         app.kubernetes.io/instance: coredns
         app.kubernetes.io/name: coredns
@@ -53,13 +53,13 @@ spec:
           name: tcp-9153
           protocol: TCP
         readinessProbe:
-          failureThreshold: 5
+          failureThreshold: 1
           httpGet:
             path: /ready
             port: 8181
             scheme: HTTP
           initialDelaySeconds: 30
-          periodSeconds: 10
+          periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 5
         resources:
