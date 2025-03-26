@@ -16,7 +16,7 @@ webhooks:
       namespace: mariadb-system
       path: /mutate-k8s-mariadb-com-v1alpha1-mariadb
   failurePolicy: Fail
-  name: mmariadb.kb.io
+  name: mmariadb-v1alpha1.kb.io
   rules:
   - apiGroups:
     - k8s.mariadb.com
