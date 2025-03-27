@@ -22,7 +22,7 @@ jobs:
 
     - name: Create app token for commit
       if: failure() && github.event_name == 'pull_request'
-      uses: actions/create-github-app-token@af35edadc00be37caa72ed9f3e6d5f7801bfdf09 # v1.11.7
+      uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1.12.0
       id: app-token
       with:
         app-id: ${{ vars.APP_ID }}
