@@ -50,9 +50,9 @@ spec:
         summary: An Alertmanager instance failed to send notifications.
       expr: |-
         (
-          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring"}[5m])
+          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring"}[15m])
         /
-          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring"}[5m])
+          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring"}[15m])
         )
         > 0.01
       for: 5m
@@ -68,9 +68,9 @@ spec:
           to a critical integration.
       expr: |-
         min by (namespace,service, integration) (
-          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring", integration=~`.*`}[5m])
+          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring", integration=~`.*`}[15m])
         /
-          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring", integration=~`.*`}[5m])
+          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring", integration=~`.*`}[15m])
         )
         > 0.01
       for: 5m
@@ -86,9 +86,9 @@ spec:
           to a non-critical integration.
       expr: |-
         min by (namespace,service, integration) (
-          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring", integration!~`.*`}[5m])
+          rate(alertmanager_notifications_failed_total{job="k8s-alertmanager",namespace="monitoring", integration!~`.*`}[15m])
         /
-          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring", integration!~`.*`}[5m])
+          ignoring (reason) group_left rate(alertmanager_notifications_total{job="k8s-alertmanager",namespace="monitoring", integration!~`.*`}[15m])
         )
         > 0.01
       for: 5m
