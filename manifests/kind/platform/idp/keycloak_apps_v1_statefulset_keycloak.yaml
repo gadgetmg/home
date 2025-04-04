@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: 423f73996db433e94e32275dd61f80b89d50b362a5366e6f562ba386dc381c46
+        checksum/configmap-env-vars: 8682a4d4b9eaf06a5460a3155ba47a152625aea58bc8cb7814c6762749d32446
       labels:
         app.kubernetes.io/component: keycloak
         app.kubernetes.io/instance: keycloak
@@ -48,36 +48,18 @@ spec:
               fieldPath: metadata.namespace
         - name: BITNAMI_DEBUG
           value: "false"
-        - name: KC_BOOTSTRAP_ADMIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: admin-password
-              name: keycloak-admin
-        - name: KEYCLOAK_DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: password
-              name: keycloak-db-app
-        - name: KEYCLOAK_DATABASE_HOST
-          valueFrom:
-            secretKeyRef:
-              key: host
-              name: keycloak-db-app
-        - name: KEYCLOAK_DATABASE_PORT
-          valueFrom:
-            secretKeyRef:
-              key: port
-              name: keycloak-db-app
-        - name: KEYCLOAK_DATABASE_USER
-          valueFrom:
-            secretKeyRef:
-              key: user
-              name: keycloak-db-app
-        - name: KEYCLOAK_DATABASE_NAME
-          valueFrom:
-            secretKeyRef:
-              key: dbname
-              name: keycloak-db-app
+        - name: KC_BOOTSTRAP_ADMIN_PASSWORD_FILE
+          value: /opt/bitnami/keycloak/secrets/admin-password
+        - name: KEYCLOAK_DATABASE_PASSWORD_FILE
+          value: /opt/bitnami/keycloak/secrets/password
+        - name: KEYCLOAK_DATABASE_HOST_FILE
+          value: /opt/bitnami/keycloak/secrets/host
+        - name: KEYCLOAK_DATABASE_PORT_FILE
+          value: /opt/bitnami/keycloak/secrets/port
+        - name: KEYCLOAK_DATABASE_USER_FILE
+          value: /opt/bitnami/keycloak/secrets/user
+        - name: KEYCLOAK_DATABASE_NAME_FILE
+          value: /opt/bitnami/keycloak/secrets/dbname
         - name: KEYCLOAK_HTTP_RELATIVE_PATH
           value: /
         - name: KC_SPI_ADMIN_REALM
@@ -155,6 +137,8 @@ spec:
         - mountPath: /opt/bitnami/keycloak/providers
           name: empty-dir
           subPath: app-providers-dir
+        - mountPath: /opt/bitnami/keycloak/secrets
+          name: keycloak-secrets
       enableServiceLinks: true
       initContainers:
       - args:
@@ -208,6 +192,13 @@ spec:
       volumes:
       - emptyDir: {}
         name: empty-dir
+      - name: keycloak-secrets
+        projected:
+          sources:
+          - secret:
+              name: keycloak-admin
+          - secret:
+              name: keycloak-db-app
   updateStrategy:
     rollingUpdate: {}
     type: RollingUpdate
