@@ -27,6 +27,7 @@ spec:
         - --namespace=$(NAMESPACE)
         - --zap-devel=$(ZAP_DEVEL)
         - --image-config-map-name=$(IMAGE_CONFIG_MAP_NAME)
+        - --requeue-interval=$(REQUEUE_INTERVAL)
         command:
         - /manager
         env:
@@ -38,7 +39,9 @@ spec:
           value: "false"
         - name: IMAGE_CONFIG_MAP_NAME
           value: piraeus-operator-image-config
-        image: quay.io/piraeusdatastore/piraeus-operator:v2.8.0
+        - name: REQUEUE_INTERVAL
+          value: 1m
+        image: quay.io/piraeusdatastore/piraeus-operator:v2.8.1
         livenessProbe:
           httpGet:
             path: /healthz
