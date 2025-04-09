@@ -69,7 +69,7 @@ spec:
             name: paperless-ngx-admin-password
         - secretRef:
             name: paperless-ngx-socialaccount-providers
-        image: ghcr.io/paperless-ngx/paperless-ngx:2.15.0@sha256:c47e30419416169858cade025fe44ff20bc191bc6fdbd7535b20bd767423fcdd
+        image: ghcr.io/paperless-ngx/paperless-ngx:2.15.1@sha256:a06d051e0c422e83498a36676d504d94de262686f167cccc826a71170ddef00a
         name: paperless-ngx
         ports:
         - containerPort: 8000
