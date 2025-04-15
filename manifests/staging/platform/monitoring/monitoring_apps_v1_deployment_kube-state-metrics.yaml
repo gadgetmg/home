@@ -67,6 +67,7 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
+      dnsPolicy: ClusterFirst
       hostNetwork: false
       securityContext:
         fsGroup: 65534
