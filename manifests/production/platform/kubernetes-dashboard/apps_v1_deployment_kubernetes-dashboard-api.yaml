@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: a415b827ead9b67337f1725a10aacab9e44e0617710d9f95c943a23e533fea5b
+        checksum/config: db3665680ac9f10759f847c0cb79fd6fbb296ce4d09e12669009ebf273cd4bee
       labels:
         app.kubernetes.io/component: api
         app.kubernetes.io/instance: kubernetes-dashboard
@@ -47,7 +47,7 @@ spec:
             resourceFieldRef:
               divisor: "1"
               resource: limits.memory
-        image: docker.io/kubernetesui/dashboard-api:1.11.1
+        image: docker.io/kubernetesui/dashboard-api:1.12.0
         imagePullPolicy: IfNotPresent
         name: kubernetes-dashboard-api
         ports:
