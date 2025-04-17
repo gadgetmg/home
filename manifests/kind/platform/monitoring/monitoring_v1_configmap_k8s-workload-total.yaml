@@ -1,22 +1,22 @@
 apiVersion: v1
 data:
   workload-total.json: '{"editable":true,"links":[{"asDropdown":true,"includeVars":true,"keepTime":true,"tags":["kubernetes-mixin"],"targetBlank":false,"title":"Kubernetes","type":"dashboards"}],"panels":[{"datasource":{"type":"datasource","uid":"--
-    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":0,"y":0},"id":1,"options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(sum(rate(container_network_receive_bytes_total{job=\"kubelet\",
+    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":0,"y":0},"id":1,"interval":"1m","options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(sum(rate(container_network_receive_bytes_total{job=\"kubelet\",
     metrics_path=\"/metrics/cadvisor\", cluster=\"$cluster\",namespace=~\"$namespace\"}[$__rate_interval])\n*
     on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",namespace=~\"$namespace\",
     workload=~\"$workload\", workload_type=~\"$type\"}) by (pod))\n","legendFormat":"__auto"}],"title":"Current
     Rate of Bytes Received","type":"bargauge"},{"datasource":{"type":"datasource","uid":"--
-    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":12,"y":0},"id":2,"options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(sum(rate(container_network_transmit_bytes_total{job=\"kubelet\",
+    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":12,"y":0},"id":2,"interval":"1m","options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(sum(rate(container_network_transmit_bytes_total{job=\"kubelet\",
     metrics_path=\"/metrics/cadvisor\", cluster=\"$cluster\",namespace=~\"$namespace\"}[$__rate_interval])\n*
     on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",namespace=~\"$namespace\",
     workload=~\"$workload\", workload_type=~\"$type\"}) by (pod))\n","legendFormat":"__auto"}],"title":"Current
     Rate of Bytes Transmitted","type":"bargauge"},{"datasource":{"type":"datasource","uid":"--
-    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":0,"y":9},"id":3,"options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(avg(rate(container_network_receive_bytes_total{job=\"kubelet\",
+    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":0,"y":9},"id":3,"interval":"1m","options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(avg(rate(container_network_receive_bytes_total{job=\"kubelet\",
     metrics_path=\"/metrics/cadvisor\", cluster=\"$cluster\",namespace=~\"$namespace\"}[$__rate_interval])\n*
     on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",namespace=~\"$namespace\",
     workload=~\"$workload\", workload_type=~\"$type\"}) by (pod))\n","legendFormat":"__auto"}],"title":"Average
     Rate of Bytes Received","type":"bargauge"},{"datasource":{"type":"datasource","uid":"--
-    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":12,"y":9},"id":4,"options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(avg(rate(container_network_transmit_bytes_total{job=\"kubelet\",
+    Mixed --"},"fieldConfig":{"defaults":{"color":{"fixedColor":"green","mode":"fixed"},"unit":"Bps"}},"gridPos":{"h":9,"w":12,"x":12,"y":9},"id":4,"interval":"1m","options":{"displayMode":"basic","showUnfilled":false},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sort_desc(avg(rate(container_network_transmit_bytes_total{job=\"kubelet\",
     metrics_path=\"/metrics/cadvisor\", cluster=\"$cluster\",namespace=~\"$namespace\"}[$__rate_interval])\n*
     on (namespace,pod)\ngroup_left(workload,workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",namespace=~\"$namespace\",
     workload=~\"$workload\", workload_type=~\"$type\"}) by (pod))\n","legendFormat":"__auto"}],"title":"Average
