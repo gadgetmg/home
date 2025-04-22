@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: 8b60b47a542795f45c33a7312d2fe47568a25e1a68f2ab1ef6585f68701a334c
+        checksum/configmap-env-vars: 1e755fab59737cdca6521b61a4fd9e04a01692cdb20c76d05ccf0b9a728f3d52
       labels:
         app.kubernetes.io/component: keycloak
         app.kubernetes.io/instance: keycloak
@@ -51,15 +51,15 @@ spec:
         - name: KC_BOOTSTRAP_ADMIN_PASSWORD_FILE
           value: /opt/bitnami/keycloak/secrets/admin-password
         - name: KEYCLOAK_DATABASE_PASSWORD_FILE
-          value: /opt/bitnami/keycloak/secrets/password
+          value: /opt/bitnami/keycloak/secrets/db-password
         - name: KEYCLOAK_DATABASE_HOST_FILE
-          value: /opt/bitnami/keycloak/secrets/host
+          value: /opt/bitnami/keycloak/secrets/db-host
         - name: KEYCLOAK_DATABASE_PORT_FILE
-          value: /opt/bitnami/keycloak/secrets/port
+          value: /opt/bitnami/keycloak/secrets/db-port
         - name: KEYCLOAK_DATABASE_USER_FILE
-          value: /opt/bitnami/keycloak/secrets/user
+          value: /opt/bitnami/keycloak/secrets/db-user
         - name: KEYCLOAK_DATABASE_NAME_FILE
-          value: /opt/bitnami/keycloak/secrets/dbname
+          value: /opt/bitnami/keycloak/secrets/db-dbname
         - name: KEYCLOAK_HTTP_RELATIVE_PATH
           value: /
         - name: KC_SPI_ADMIN_REALM
@@ -67,7 +67,7 @@ spec:
         envFrom:
         - configMapRef:
             name: keycloak-env-vars
-        image: docker.io/bitnami/keycloak:26.1.5-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.2.0-debian-12-r2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -137,6 +137,9 @@ spec:
         - mountPath: /opt/bitnami/keycloak/providers
           name: empty-dir
           subPath: app-providers-dir
+        - mountPath: /opt/bitnami/keycloak/themes
+          name: empty-dir
+          subPath: app-themes-dir
         - mountPath: /opt/bitnami/keycloak/secrets
           name: keycloak-secrets
       enableServiceLinks: true
@@ -152,10 +155,11 @@ spec:
           cp -r --preserve=mode /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
           cp -r --preserve=mode /opt/bitnami/keycloak/data /emptydir/app-data-dir
           cp -r --preserve=mode /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
+          cp -r --preserve=mode /opt/bitnami/keycloak/themes /emptydir/app-themes-dir
           info "Copy operation completed"
         command:
         - /bin/bash
-        image: docker.io/bitnami/keycloak:26.1.5-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.2.0-debian-12-r2
         imagePullPolicy: IfNotPresent
         name: prepare-write-dirs
         resources:
@@ -198,6 +202,17 @@ spec:
           - secret:
               name: keycloak-admin
           - secret:
+              items:
+              - key: password
+                path: db-password
+              - key: host
+                path: db-host
+              - key: host
+                path: db-port
+              - key: host
+                path: db-user
+              - key: host
+                path: db-dbname
               name: keycloak-db-app
   updateStrategy:
     rollingUpdate: {}
