@@ -3,7 +3,7 @@ clusterName: staging
 # renovate: datasource=github-releases depName=siderolabs/talos
 talosVersion: v1.9.5
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
-kubernetesVersion: v1.32.4
+kubernetesVersion: v1.33.0
 endpoint: https://10.1.2.51:6443
 nodes:
 - hostname: staging-controlplane-1
