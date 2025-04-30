@@ -16,7 +16,7 @@ helmCharts:
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: kube-prometheus-stack
   namespace: monitoring
-  version: 71.0.0
+  version: 71.1.0
   apiVersions:
   - discovery.k8s.io/v1/EndpointSlice
   valuesInline:
