@@ -21,11 +21,14 @@ spec:
       automountServiceAccountToken: true
       containers:
       - args:
+        - --tls-min-version=
+        - --tls-cipher-suites=
         - --log-format=text
         - --log-level=1
         - --metrics-port=9402
         - --readiness-probe-port=6060
         - --readiness-probe-path=/readyz
+        - --leader-elect=true
         - --leader-election-lease-duration=15s
         - --leader-election-renew-deadline=10s
         - --trust-namespace=cert-manager
@@ -33,7 +36,7 @@ spec:
         - --webhook-port=6443
         - --webhook-certificate-dir=/tls
         - --default-package-location=/packages/cert-manager-package-debian.json
-        image: quay.io/jetstack/trust-manager:v0.16.0
+        image: quay.io/jetstack/trust-manager:v0.17.0
         imagePullPolicy: IfNotPresent
         name: trust-manager
         ports:
