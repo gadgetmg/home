@@ -21,8 +21,6 @@ spec:
       automountServiceAccountToken: true
       containers:
       - args:
-        - --tls-min-version=
-        - --tls-cipher-suites=
         - --log-format=text
         - --log-level=1
         - --metrics-port=9402
@@ -36,7 +34,7 @@ spec:
         - --webhook-port=6443
         - --webhook-certificate-dir=/tls
         - --default-package-location=/packages/cert-manager-package-debian.json
-        image: quay.io/jetstack/trust-manager:v0.17.0
+        image: quay.io/jetstack/trust-manager:v0.17.1
         imagePullPolicy: IfNotPresent
         name: trust-manager
         ports:
