@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: fe79fd51fa7a3c98b917c8e9e69748ef2fde112e8015ff0f8fd089c428d396b1
-        checksum/cmd-params: 7f6b020c74dd826fdcc84ac4c59704912f1663b5ce02162f9bd2ddf8edffc2c1
+        checksum/cm: 4e30dcc97e8df297db43d60f8b5002ebcaa30f358c5a2d52715b46a6d6a81442
+        checksum/cmd-params: 9406c6e75945aebc4f815b6eea70f25096c7d6f60a3d4413d42444f774436230
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
@@ -52,6 +52,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: dexserver.log.level
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_LOG_FORMAT_TIMESTAMP
+          valueFrom:
+            configMapKeyRef:
+              key: log.format.timestamp
               name: argocd-cmd-params-cm
               optional: true
         - name: ARGOCD_DEX_SERVER_DISABLE_TLS
@@ -117,7 +123,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v2.14.11
+        image: quay.io/argoproj/argocd:v3.0.0
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
