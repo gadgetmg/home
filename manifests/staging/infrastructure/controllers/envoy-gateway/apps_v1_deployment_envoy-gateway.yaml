@@ -36,7 +36,7 @@ spec:
               fieldPath: metadata.namespace
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: cluster.local
-        image: docker.io/envoyproxy/gateway:v1.3.3
+        image: docker.io/envoyproxy/gateway:v1.4.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -54,6 +54,8 @@ spec:
           name: wasm
         - containerPort: 19001
           name: metrics
+        - containerPort: 9443
+          name: webhook
         readinessProbe:
           httpGet:
             path: /readyz
