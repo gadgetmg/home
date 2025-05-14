@@ -117,3 +117,14 @@ rules:
   - backendtlspolicies/status
   verbs:
   - update
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/binding
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
