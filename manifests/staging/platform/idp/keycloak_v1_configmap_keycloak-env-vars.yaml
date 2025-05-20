@@ -2,8 +2,9 @@ apiVersion: v1
 data:
   JAVA_OPTS_APPEND: -Djgroups.dns.query=keycloak-headless.keycloak.svc.cluster.local
   KC_BOOTSTRAP_ADMIN_USERNAME: admin
-  KEYCLOAK_CACHE_STACK: kubernetes
-  KEYCLOAK_CACHE_TYPE: ispn
+  KC_CACHE_CONFIG_FILE: cache-ispn.xml
+  KC_CACHE_STACK: kubernetes
+  KC_CACHE_TYPE: ispn
   KEYCLOAK_ENABLE_HTTPS: "false"
   KEYCLOAK_ENABLE_STATISTICS: "true"
   KEYCLOAK_HTTP_PORT: "8080"
