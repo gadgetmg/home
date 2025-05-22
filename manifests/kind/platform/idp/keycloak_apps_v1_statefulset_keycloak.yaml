@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: 4d3301027e3118d49f2fb08eef10b681451d7ab3d9bd119de5663dbccc9558b9
+        checksum/configmap-env-vars: 3eaca501b2abf588879d9019730c255c4c483630d64582fe5647577eee21d7fb
       labels:
         app.kubernetes.io/component: keycloak
         app.kubernetes.io/instance: keycloak
@@ -152,10 +152,10 @@ spec:
           info "Copying writable dirs to empty dir"
           # In order to not break the application functionality we need to make some
           # directories writable, so we need to copy it to an empty dir volume
-          cp -r --preserve=mode /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
-          cp -r --preserve=mode /opt/bitnami/keycloak/data /emptydir/app-data-dir
-          cp -r --preserve=mode /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
-          cp -r --preserve=mode /opt/bitnami/keycloak/themes /emptydir/app-themes-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/data /emptydir/app-data-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/themes /emptydir/app-themes-dir
           info "Copy operation completed"
         command:
         - /bin/bash
