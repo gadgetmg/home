@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 5d5ae944fea07e5d6d6d0945be9c03dbcda5fda00881a3aba973574ee5f45869
-        checksum/cmd-params: 3397828f3ec62aad43ee9616e90474368fc73f5358edc37c5b13ec1e1375541e
+        checksum/cm: 88219f36bbf822b511df4772aa9a319551902c06596061c8b89d97c9f88518c5
+        checksum/cmd-params: f3431bf4d7bca739be8c49b445242710becd3ef59cf8ff8fa4353d04ef70a6ae
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
@@ -66,7 +66,7 @@ spec:
               key: dexserver.disable.tls
               name: argocd-cmd-params-cm
               optional: true
-        image: ghcr.io/dexidp/dex:v2.42.1
+        image: ghcr.io/dexidp/dex:v2.43.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -126,7 +126,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v3.0.1
+        image: quay.io/argoproj/argocd:v3.0.6
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
