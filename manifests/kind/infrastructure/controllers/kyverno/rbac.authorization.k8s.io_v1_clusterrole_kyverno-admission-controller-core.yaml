@@ -35,6 +35,7 @@ rules:
   - rolebindings
   - clusterrolebindings
   verbs:
+  - get
   - list
   - watch
 - apiGroups:
@@ -48,7 +49,6 @@ rules:
   - updaterequests/status
   - globalcontextentries
   - globalcontextentries/status
-  - policyexceptions
   verbs:
   - create
   - delete
@@ -58,6 +58,44 @@ rules:
   - update
   - watch
   - deletecollection
+- apiGroups:
+  - kyverno.io
+  resources:
+  - policyexceptions
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - policies.kyverno.io
+  resources:
+  - validatingpolicies
+  - validatingpolicies/status
+  - imagevalidatingpolicies
+  - imagevalidatingpolicies/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - policies.kyverno.io
+  resources:
+  - policyexceptions
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
 - apiGroups:
   - reports.kyverno.io
   resources:
