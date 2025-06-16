@@ -61,6 +61,8 @@ spec:
         - mountPath: /hostroot
           mountPropagation: HostToContainer
           name: hostroot
+        - mountPath: /etc/cni/multus/net.d
+          name: multus-conf-dir
       hostNetwork: true
       hostPID: true
       initContainers:
@@ -131,5 +133,8 @@ spec:
       - hostPath:
           path: /run/netns/
         name: host-run-netns
+      - hostPath:
+          path: /etc/cni/multus/net.d
+        name: multus-conf-dir
   updateStrategy:
     type: RollingUpdate
