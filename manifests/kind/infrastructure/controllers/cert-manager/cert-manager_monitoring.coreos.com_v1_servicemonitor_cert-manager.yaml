@@ -15,7 +15,7 @@ spec:
     interval: 60s
     path: /metrics
     scrapeTimeout: 30s
-    targetPort: 9402
+    targetPort: http-metrics
   jobLabel: cert-manager
   selector:
     matchExpressions:
