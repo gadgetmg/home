@@ -37,6 +37,7 @@ spec:
   externalUrl: http://k8s-prometheus.monitoring:9090
   hostNetwork: false
   image: quay.io/prometheus/prometheus:v3.4.1
+  imagePullPolicy: IfNotPresent
   listenLocal: false
   logFormat: logfmt
   logLevel: info
