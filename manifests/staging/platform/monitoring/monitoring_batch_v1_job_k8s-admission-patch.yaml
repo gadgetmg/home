@@ -32,7 +32,7 @@ spec:
         - --namespace=monitoring
         - --secret-name=k8s-admission
         - --patch-failure-policy=
-        image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.5.3
+        image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.5.4
         imagePullPolicy: IfNotPresent
         name: patch
         resources: {}
