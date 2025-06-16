@@ -44,9 +44,16 @@ spec:
           else
             echo "no clusterpolicyreports"
           fi
-        image: bitnami/kubectl:1.30.2
+        image: bitnami/kubectl:1.32.3
         imagePullPolicy: null
         name: kubectl
+        resources:
+          limits:
+            cpu: 100m
+            memory: 256Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -60,4 +67,4 @@ spec:
           seccompProfile:
             type: RuntimeDefault
       restartPolicy: Never
-      serviceAccount: kyverno-admission-controller
+      serviceAccountName: kyverno-admission-controller
