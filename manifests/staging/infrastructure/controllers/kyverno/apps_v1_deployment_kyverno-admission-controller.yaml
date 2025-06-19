@@ -93,7 +93,7 @@ spec:
           value: /.sigstore
         - name: KYVERNO_DEPLOYMENT
           value: kyverno-admission-controller
-        image: reg.kyverno.io/kyverno/kyverno:v1.14.2
+        image: reg.kyverno.io/kyverno/kyverno:v1.14.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
@@ -176,7 +176,7 @@ spec:
           value: kyverno-admission-controller
         - name: KYVERNO_SVC
           value: kyverno-svc
-        image: reg.kyverno.io/kyverno/kyvernopre:v1.14.2
+        image: reg.kyverno.io/kyverno/kyvernopre:v1.14.3
         imagePullPolicy: IfNotPresent
         name: kyverno-pre
         resources:
