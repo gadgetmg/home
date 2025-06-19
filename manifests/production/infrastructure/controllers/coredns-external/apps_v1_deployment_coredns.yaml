@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: dd3b7d54315641eb7a7dcccfc8599930d772dc3a0b8b5212c1d3287dbb6dd2df
+        checksum/config: 27349f66644d6df72a2a3b51551b850e153bee87199fdea699f51cf83a5cfdc4
       labels:
         app.kubernetes.io/instance: coredns
         app.kubernetes.io/name: coredns
