@@ -47,3 +47,12 @@ helmCharts:
       existingSecretUserKey: user
       existingSecretDatabaseKey: dbname
       existingSecretPasswordKey: password
+    resources:
+      requests:
+        cpu: 500m
+        memory: 3Gi
+        ephemeral-storage: 50Mi
+      limits:
+        cpu: 750m
+        memory: 4Gi
+        ephemeral-storage: 2Gi
