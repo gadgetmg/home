@@ -35,6 +35,8 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
       - env:
+        - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
+          value: "1"
         - name: PAPERLESS_DBHOST
           valueFrom:
             secretKeyRef:
@@ -85,6 +87,8 @@ spec:
           runAsGroup: 1000
           runAsUser: 1000
         volumeMounts:
+        - mountPath: /run
+          name: run
         - mountPath: /usr/src/paperless/data
           name: data
         - mountPath: /usr/src/paperless/media
@@ -99,6 +103,8 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
+      - emptyDir: {}
+        name: run
       - name: data
         persistentVolumeClaim:
           claimName: paperless-ngx-data
