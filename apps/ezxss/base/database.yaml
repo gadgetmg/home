@@ -10,7 +10,7 @@ spec:
   database: ezxss
   image: ghcr.io/mariadb/mariadb
   storage:
-    size: 1Gi
+    size: 10Gi
     storageClassName: ssd-r1
   metrics:
     enabled: true

@@ -36,6 +36,6 @@ spec:
       drop:
       - ALL
   storage:
-    size: 1Gi
+    size: 10Gi
     storageClassName: ssd-r1
   username: ezxss
