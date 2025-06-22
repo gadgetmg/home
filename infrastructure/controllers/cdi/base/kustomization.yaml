@@ -5,3 +5,11 @@ kind: Kustomization
 resources:
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.62.0/cdi-operator.yaml
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.62.0/cdi-cr.yaml
+
+patches:
+- patch: | # Remove v1alpha1 version
+    - op: remove
+      path: /spec/versions/0
+  target:
+    kind: CustomResourceDefinition
+    name: cdis.cdi.kubevirt.io
