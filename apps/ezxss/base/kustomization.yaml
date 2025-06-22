@@ -15,7 +15,7 @@ images:
 - name: ghcr.io/gadgetmg/ezxss
   newTag: master@sha256:71aa70d053c10668741409cea1b224962c42f7e09cd890f9fcb26b5bee1e5f77
 - name: ghcr.io/mariadb/mariadb
-  newTag: 11.7.2-ubi9@sha256:005b8db1f45f3c661bf9392086d704d24e3f49026aa4978379ceb72a03d751c4
+  newTag: 11.8.2-ubi9@sha256:40354d6d7b6b3fef2a7b082362f30716ceb2ea9cf357e841f93a7690fda0f017
 
 components:
 - ../../../shared/components/crd-configurations
