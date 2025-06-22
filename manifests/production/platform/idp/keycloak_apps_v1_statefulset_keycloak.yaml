@@ -100,11 +100,11 @@ spec:
           limits:
             cpu: 750m
             ephemeral-storage: 2Gi
-            memory: 768Mi
+            memory: 4Gi
           requests:
             cpu: 500m
             ephemeral-storage: 50Mi
-            memory: 512Mi
+            memory: 3Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -166,11 +166,11 @@ spec:
           limits:
             cpu: 750m
             ephemeral-storage: 2Gi
-            memory: 768Mi
+            memory: 4Gi
           requests:
             cpu: 500m
             ephemeral-storage: 50Mi
-            memory: 512Mi
+            memory: 3Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
