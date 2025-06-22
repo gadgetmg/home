@@ -30,6 +30,8 @@ spec:
         - secretRef:
             name: paperless-ngx-socialaccount-providers
         env:
+        - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
+          value: "1"
         - name: PAPERLESS_DBHOST
           valueFrom:
             secretKeyRef:
@@ -56,6 +58,8 @@ spec:
               name: paperless-ngx-db-app
               key: password
         volumeMounts:
+        - name: run
+          mountPath: /run
         - name: data
           mountPath: /usr/src/paperless/data
         - name: media
@@ -73,6 +77,8 @@ spec:
           httpGet:
             port: 8000
       volumes:
+      - name: run
+        emptyDir: {}
       - name: data
         persistentVolumeClaim:
           claimName: paperless-ngx-data
