@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: envoy-gateway
   listeners:
-  - hostname: auth.staging.seigra.net
+  - hostname: auth-staging.seigra.net
     name: keycloak
     port: 443
     protocol: HTTPS

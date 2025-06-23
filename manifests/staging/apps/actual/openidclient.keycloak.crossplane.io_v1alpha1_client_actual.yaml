@@ -14,9 +14,9 @@ spec:
     clientId: actual
     realmIdRef:
       name: home
-    rootUrl: https://actual.staging.seigra.net
+    rootUrl: https://actual-staging.seigra.net
     standardFlowEnabled: true
     validRedirectUris:
-    - https://actual.staging.seigra.net/openid/callback
+    - https://actual-staging.seigra.net/openid/callback
   publishConnectionDetailsTo:
     name: keycloak-client-actual

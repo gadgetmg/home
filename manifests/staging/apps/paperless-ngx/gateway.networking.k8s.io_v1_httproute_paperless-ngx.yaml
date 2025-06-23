@@ -10,7 +10,7 @@ metadata:
   namespace: paperless-ngx
 spec:
   hostnames:
-  - paperless.staging.seigra.net
+  - paperless-staging.seigra.net
   parentRefs:
   - group: gateway.networking.k8s.io
     kind: Gateway

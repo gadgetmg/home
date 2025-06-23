@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   hostnames:
-  - grafana.staging.seigra.net
+  - grafana-staging.seigra.net
   parentRefs:
   - group: gateway.networking.k8s.io
     kind: Gateway

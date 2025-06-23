@@ -5,8 +5,8 @@ data:
     check_for_updates = true
     [auth.generic_oauth]
     allow_sign_up = true
-    api_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/userinfo
-    auth_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/auth
+    api_url = https://auth-staging.seigra.net/realms/home/protocol/openid-connect/userinfo
+    auth_url = https://auth-staging.seigra.net/realms/home/protocol/openid-connect/auth
     auto_login = true
     client_id = grafana
     email_attribute_path = email
@@ -18,7 +18,7 @@ data:
     role_attribute_strict = true
     scopes = openid email profile offline_access
     tls_skip_verify_insecure = true
-    token_url = https://auth.staging.seigra.net/realms/home/protocol/openid-connect/token
+    token_url = https://auth-staging.seigra.net/realms/home/protocol/openid-connect/token
     [grafana_net]
     url = https://grafana.net
     [log]
@@ -29,8 +29,8 @@ data:
     plugins = /var/lib/grafana/plugins
     provisioning = /etc/grafana/provisioning
     [server]
-    domain = grafana.staging.seigra.net
-    root_url = https://grafana.staging.seigra.net
+    domain = grafana-staging.seigra.net
+    root_url = https://grafana-staging.seigra.net
 kind: ConfigMap
 metadata:
   labels:

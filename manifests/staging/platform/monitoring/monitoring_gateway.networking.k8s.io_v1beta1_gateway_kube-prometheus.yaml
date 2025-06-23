@@ -11,7 +11,7 @@ spec:
   - allowedRoutes:
       namespaces:
         from: Same
-    hostname: grafana.staging.seigra.net
+    hostname: grafana-staging.seigra.net
     name: grafana
     port: 443
     protocol: HTTPS

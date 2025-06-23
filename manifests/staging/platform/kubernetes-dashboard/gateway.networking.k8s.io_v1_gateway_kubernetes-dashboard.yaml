@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: envoy-gateway
   listeners:
-  - hostname: k8s.staging.seigra.net
+  - hostname: k8s-staging.seigra.net
     name: kubernetes-dashboard
     port: 443
     protocol: HTTPS

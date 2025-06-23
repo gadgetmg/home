@@ -4,4 +4,4 @@ metadata:
   name: paperless-ngx-socialaccount-config
   namespace: paperless-ngx
 data:
-  server_url: https://auth.staging.seigra.net/realms/home/.well-known/openid-configuration
+  server_url: https://auth-staging.seigra.net/realms/home/.well-known/openid-configuration

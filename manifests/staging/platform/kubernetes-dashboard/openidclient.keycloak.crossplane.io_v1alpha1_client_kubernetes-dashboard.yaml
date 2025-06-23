@@ -11,9 +11,9 @@ spec:
     fullScopeAllowed: false
     realmIdRef:
       name: home
-    rootUrl: https://k8s.staging.seigra.net
+    rootUrl: https://k8s-staging.seigra.net
     standardFlowEnabled: true
     validRedirectUris:
-    - https://k8s.staging.seigra.net/oauth2/callback
+    - https://k8s-staging.seigra.net/oauth2/callback
   publishConnectionDetailsTo:
     name: kubernetes-dashboard-oidc-secret

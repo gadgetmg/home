@@ -12,7 +12,7 @@ metadata:
 spec:
   gatewayClassName: envoy-gateway
   listeners:
-  - hostname: actual.staging.seigra.net
+  - hostname: actual-staging.seigra.net
     name: actual
     port: 443
     protocol: HTTPS

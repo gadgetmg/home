@@ -13,15 +13,15 @@ spec:
       idToken: IdToken
     forwardAccessToken: true
     provider:
-      authorizationEndpoint: https://auth.staging.seigra.net/realms/home/protocol/openid-connect/auth
+      authorizationEndpoint: https://auth-staging.seigra.net/realms/home/protocol/openid-connect/auth
       backendSettings:
         retry:
           numRetries: 2
           retryOn:
             triggers:
             - reset
-      issuer: https://auth.staging.seigra.net/realms/home
-      tokenEndpoint: https://auth.staging.seigra.net/realms/home/protocol/openid-connect/token
+      issuer: https://auth-staging.seigra.net/realms/home
+      tokenEndpoint: https://auth-staging.seigra.net/realms/home/protocol/openid-connect/token
     refreshToken: true
   targetRefs:
   - group: gateway.networking.k8s.io

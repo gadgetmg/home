@@ -9,7 +9,7 @@ metadata:
   namespace: actual
 spec:
   hostnames:
-  - actual.staging.seigra.net
+  - actual-staging.seigra.net
   parentRefs:
   - name: actual
   - name: actual-cloudflare-staging
