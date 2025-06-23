@@ -16,7 +16,7 @@ spec:
   - allowedRoutes:
       namespaces:
         from: Same
-    hostname: paperless.staging.seigra.net
+    hostname: paperless-staging.seigra.net
     name: paperless-ngx
     port: 443
     protocol: HTTPS

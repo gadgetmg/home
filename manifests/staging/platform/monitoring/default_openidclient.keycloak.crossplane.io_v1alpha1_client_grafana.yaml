@@ -10,9 +10,9 @@ spec:
     fullScopeAllowed: false
     realmIdRef:
       name: home
-    rootUrl: https://grafana.staging.seigra.net
+    rootUrl: https://grafana-staging.seigra.net
     standardFlowEnabled: true
     validRedirectUris:
-    - https://grafana.staging.seigra.net/login/generic_oauth
+    - https://grafana-staging.seigra.net/login/generic_oauth
   publishConnectionDetailsTo:
     name: grafana-oidc-secret

@@ -4,4 +4,4 @@ metadata:
   name: actual-server-openid-config
   namespace: actual
 data:
-  issuer: https://auth.staging.seigra.net/realms/home
+  issuer: https://auth-staging.seigra.net/realms/home

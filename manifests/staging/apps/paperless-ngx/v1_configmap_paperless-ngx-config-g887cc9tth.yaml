@@ -8,7 +8,7 @@ data:
   PAPERLESS_TIKA_ENABLED: "1"
   PAPERLESS_TIKA_ENDPOINT: http://paperless-ngx-tika:9998
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ngx-gotenberg:3000
-  PAPERLESS_URL: https://paperless.staging.seigra.net
+  PAPERLESS_URL: https://paperless-staging.seigra.net
   REQUESTS_CA_BUNDLE: /bundle.pem
 kind: ConfigMap
 metadata:
@@ -17,5 +17,5 @@ metadata:
     app.kubernetes.io/instance: paperless-ngx
     app.kubernetes.io/name: paperless-ngx
     app.kubernetes.io/part-of: paperless-ngx
-  name: paperless-ngx-config-mm6mm5k75g
+  name: paperless-ngx-config-g887cc9tth
   namespace: paperless-ngx

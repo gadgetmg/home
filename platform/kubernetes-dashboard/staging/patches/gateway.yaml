@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=https://json.schemastore.org/json-patch
 - op: replace
   path: /spec/listeners/0/hostname
-  value: k8s.staging.seigra.net
+  value: k8s-staging.seigra.net

@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   hostnames:
-  - argocd.staging.seigra.net
+  - argocd-staging.seigra.net
   parentRefs:
   - group: gateway.networking.k8s.io
     kind: Gateway

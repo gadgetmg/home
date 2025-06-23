@@ -5,7 +5,7 @@ metadata:
   namespace: keycloak
 spec:
   hostnames:
-  - auth.staging.seigra.net
+  - auth-staging.seigra.net
   parentRefs:
   - name: keycloak
   rules:

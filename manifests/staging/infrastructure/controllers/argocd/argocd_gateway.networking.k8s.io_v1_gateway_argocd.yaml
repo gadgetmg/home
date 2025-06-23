@@ -8,7 +8,7 @@ metadata:
 spec:
   gatewayClassName: envoy-gateway
   listeners:
-  - hostname: argocd.staging.seigra.net
+  - hostname: argocd-staging.seigra.net
     name: argocd
     port: 443
     protocol: HTTPS

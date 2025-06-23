@@ -10,9 +10,9 @@ spec:
     fullScopeAllowed: false
     realmIdRef:
       name: home
-    rootUrl: https://argocd.staging.seigra.net
+    rootUrl: https://argocd-staging.seigra.net
     standardFlowEnabled: true
     validRedirectUris:
-    - https://argocd.staging.seigra.net/api/dex/callback
+    - https://argocd-staging.seigra.net/api/dex/callback
   publishConnectionDetailsTo:
     name: argocd-oidc-secret

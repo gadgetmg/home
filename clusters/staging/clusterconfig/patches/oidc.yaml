@@ -2,7 +2,7 @@
 cluster:
   apiServer:
     extraArgs:
-      oidc-issuer-url: https://auth.staging.seigra.net/realms/home
+      oidc-issuer-url: https://auth-staging.seigra.net/realms/home
       oidc-client-id: kubernetes
       oidc-username-claim: email
       oidc-groups-claim: groups
