@@ -52,7 +52,7 @@ dashboard as well as with the `talosctl get securitystate` command.
 The Talos Image Factory generates and signs images with a configurable set of
 extensions and kernel parameters. The following customization generates the
 schematic ID of
-`a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799` used in the
+`59a4a77747c72d3ccb71981770dd71a1cd38b9e17805b3e81774171e9cc112e5` used in the
 cluster:
 
 ```lang=yaml
@@ -60,8 +60,9 @@ customization:
   systemExtensions:
     officialExtensions:
     - siderolabs/drbd
-    - siderolabs/i915-ucode
+    - siderolabs/i915
     - siderolabs/intel-ucode
+    - siderolabs/tailscale
 ```
 
 ## Network configuration

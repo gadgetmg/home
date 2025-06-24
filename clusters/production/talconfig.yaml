@@ -7,9 +7,12 @@ kubernetesVersion: v1.33.2
 endpoint: https://10.1.2.10:6443
 nodes:
 - hostname: production-controlplane-1
-  ipAddress: 10.1.2.11
+  ipAddress: 100.120.217.123
+  certSANs:
+  - 10.1.2.11
   networkInterfaces:
   - interface: br0
+    # dhcp: true
     addresses:
     - 10.1.2.11/24
     bridge:
@@ -23,12 +26,14 @@ nodes:
     vip:
       ip: 10.1.2.10
   installDisk: /dev/nvme0n1
-  talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
 - hostname: production-controlplane-2
-  ipAddress: 10.1.2.12
+  ipAddress: 100.96.204.17
+  certSANs:
+  - 10.1.2.12
   networkInterfaces:
   - interface: br0
+    # dhcp: true
     addresses:
     - 10.1.2.12/24
     bridge:
@@ -42,12 +47,14 @@ nodes:
     vip:
       ip: 10.1.2.10
   installDisk: /dev/nvme0n1
-  talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
 - hostname: production-controlplane-3
-  ipAddress: 10.1.2.13
+  ipAddress: 100.101.252.23
+  certSANs:
+  - 10.1.2.13
   networkInterfaces:
   - interface: br0
+    # dhcp: true
     addresses:
     - 10.1.2.13/24
     bridge:
@@ -61,7 +68,6 @@ nodes:
     vip:
       ip: 10.1.2.10
   installDisk: /dev/nvme0n1
-  talosImageURL: factory.talos.dev/installer-secureboot/a13c1e1cdb9e135b5ae8ca3e977a5bee91bb4a503493d9204b6433239f462799
   controlPlane: true
 cniConfig:
   name: none
@@ -69,6 +75,14 @@ allowSchedulingOnControlPlanes: true
 controlPlane:
   nameservers:
   - 10.1.2.1
+  talosImageURL: factory.talos.dev/installer-secureboot/59a4a77747c72d3ccb71981770dd71a1cd38b9e17805b3e81774171e9cc112e5
+  extensionServices:
+  - name: tailscale
+    environment:
+    - TS_AUTHKEY=${TS_AUTHKEY}
+    - TS_ROUTES=10.1.2.10/32
+    - TS_ACCEPT_DNS=true
+    - TS_AUTH_ONCE=true
   kernelModules:
   - name: drbd
     parameters:
