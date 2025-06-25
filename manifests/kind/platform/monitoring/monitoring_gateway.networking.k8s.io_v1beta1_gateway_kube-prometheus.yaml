@@ -6,7 +6,7 @@ metadata:
   name: kube-prometheus
   namespace: monitoring
 spec:
-  gatewayClassName: envoy-gateway
+  gatewayClassName: cilium
   infrastructure:
     annotations:
       metallb.universe.tf/loadBalancerIPs: 172.18.0.7

@@ -28,7 +28,8 @@ functionality including networking and persistent storage to applications.
   [cert-manager](https://cert-manager.io/) controller
 - [`infrastructure/controllers/cilium`](infrastructure/controllers/cilium) -
   [Cilium](https://cilium.io/) Container Network Interface (CNI) plugin handling
-  all networking including access from outside the cluster using BGP.
+  all networking including access from outside the cluster via the Gateway API
+  and BGP.
 - [`infrastructure/controllers/cloudflare-gateway`](infrastructure/controllers/cloudflare-gateway) -
   [Cloudflare Gateway](https://github.com/pl4nty/cloudflare-kubernetes-gateway/tree/main)
   for Cloudflare tunnels via
@@ -43,7 +44,7 @@ functionality including networking and persistent storage to applications.
   component to implement volume snapshots.
 - [`infrastructure/controllers/envoy-gateway`](infrastructure/controllers/envoy-gateway) -
   [Envoy Gateway](https://gateway.envoyproxy.io/) for handling ingress
-  connections into the cluster via the Gateway API.
+  connections that require built-in OIDC into the cluster via the Gateway API.
 - [`infrastructure/controllers/external-dns`](infrastructure/controllers/external-dns) -
   [ExternalDNS](https://kubernetes-sigs.github.io/external-dns/latest/) for
   adding DNS records from Gateway API routes
