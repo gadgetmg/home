@@ -6,7 +6,7 @@ metadata:
   name: kube-prometheus
   namespace: monitoring
 spec:
-  gatewayClassName: cilium
+  gatewayClassName: envoy-gateway
   listeners:
   - allowedRoutes:
       namespaces:

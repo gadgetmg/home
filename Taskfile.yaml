@@ -114,7 +114,7 @@ tasks:
       vars: {APP: infrastructure/configs/crossplane-keycloak}
 
   infrastructure:configs:gatewayclasses:
-    deps: ['infrastructure:controllers:cilium', 'infrastructure:controllers:envoy-gateway']
+    deps: ['infrastructure:controllers:envoy-gateway']
     cmds:
     - task: deploy
       vars: {APP: infrastructure/configs/gatewayclasses}
