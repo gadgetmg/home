@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+- secret.yaml
+
+components:
+- ../../../../shared/components/strip-helm-labels
+
+images:
+- name: renanqts/external-dns-openwrt-webhook
+  newTag: v0.1.0@sha256:a356eb7ead234dc673108c30de761ed9f9542709fc0d8cc8332f81dd53a74d63
+
+helmCharts:
+- name: external-dns
+  repo: https://kubernetes-sigs.github.io/external-dns
+  releaseName: openwrt
+  namespace: external-dns
+  version: 1.17.0
+  valuesInline:
+    sources:
+    - gateway-grpcroute
+    - gateway-httproute
+    - gateway-tcproute
+    - gateway-udproute
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: renanqts/external-dns-openwrt-webhook
+          tag: latest
+        securityContext:
+          privileged: false
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 65532
+          runAsGroup: 65532
+          capabilities:
+            drop: ["ALL"]
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: 8888
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 8888
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        env:
+        - name: PROVIDER_OPENWRT_LUCIRPC_HOSTNAME
+          value: router.lan.seigra.net
+        - name: PROVIDER_OPENWRT_LUCIRPC_AUTH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: openwrt-provider-lucirpc-auth
+              key: username
+        - name: PROVIDER_OPENWRT_LUCIRPC_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: openwrt-provider-lucirpc-auth
+              key: password

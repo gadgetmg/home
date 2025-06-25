@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: coredns
-  namespace: coredns-external
-  annotations:
-    metallb.universe.tf/loadBalancerIPs: 172.18.0.3

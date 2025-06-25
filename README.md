@@ -44,6 +44,9 @@ functionality including networking and persistent storage to applications.
 - [`infrastructure/controllers/envoy-gateway`](infrastructure/controllers/envoy-gateway) -
   [Envoy Gateway](https://gateway.envoyproxy.io/) for handling ingress
   connections into the cluster via the Gateway API.
+- [`infrastructure/controllers/external-dns`](infrastructure/controllers/external-dns) -
+  [ExternalDNS](https://kubernetes-sigs.github.io/external-dns/latest/) for
+  adding DNS records from Gateway API routes
 - [`infrastructure/controllers/external-secrets`](infrastructure/controllers/external-secrets) -
   [External Secrets Operator](https://external-secrets.io/) for secrets
   management
