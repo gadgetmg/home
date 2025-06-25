@@ -47,6 +47,9 @@ helmCharts:
       enabled: true
     l2announcements:
       enabled: true
+    gatewayAPI:
+      enabled: true
+      enableAlpn: true
     encryption:
       enabled: true
       type: wireguard

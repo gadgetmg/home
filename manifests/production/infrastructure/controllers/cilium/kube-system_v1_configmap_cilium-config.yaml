@@ -44,7 +44,13 @@ data:
   enable-endpoint-health-checking: "true"
   enable-endpoint-lockdown-on-policy-overflow: "false"
   enable-endpoint-routes: "true"
+  enable-envoy-config: "true"
   enable-experimental-lb: "false"
+  enable-gateway-api: "true"
+  enable-gateway-api-alpn: "true"
+  enable-gateway-api-app-protocol: "true"
+  enable-gateway-api-proxy-protocol: "false"
+  enable-gateway-api-secrets-sync: "true"
   enable-health-check-loadbalancer-ip: "false"
   enable-health-check-nodeport: "true"
   enable-health-checking: "true"
@@ -82,8 +88,14 @@ data:
   encrypt-node: "true"
   envoy-access-log-buffer-size: "4096"
   envoy-base-id: "0"
+  envoy-config-retry-interval: 15s
   envoy-keep-cap-netbindservice: "false"
   external-envoy-proxy: "true"
+  gateway-api-hostnetwork-enabled: "false"
+  gateway-api-hostnetwork-nodelabelselector: ""
+  gateway-api-secrets-namespace: cilium-secrets
+  gateway-api-service-externaltrafficpolicy: Cluster
+  gateway-api-xff-num-trusted-hops: "0"
   health-check-icmp-failure-threshold: "3"
   http-retry-count: "3"
   hubble-disable-tls: "false"
