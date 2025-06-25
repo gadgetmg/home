@@ -5,4 +5,5 @@ metadata:
   name: lb-pool
 spec:
   blocks:
-  - cidr: 10.1.3.0/24
+  - start: 10.1.3.1
+    stop: 10.1.3.254
