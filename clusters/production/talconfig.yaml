@@ -4,83 +4,43 @@ clusterName: production
 talosVersion: v1.10.4
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 kubernetesVersion: v1.33.2
-endpoint: https://10.1.2.10:6443
+endpoint: https://10.1.4.10:6443
 nodes:
 - hostname: production-controlplane-1
-  ipAddress: 100.120.217.123
+  ipAddress: 10.1.4.11
   certSANs:
-  - 10.1.2.11
-  networkInterfaces:
-  - interface: br0
-    # dhcp: true
-    addresses:
-    - 10.1.2.11/24
-    bridge:
-      stp:
-        enabled: true
-      interfaces:
-      - eno1
-    routes:
-    - network: 0.0.0.0/0
-      gateway: 10.1.2.1
-    vip:
-      ip: 10.1.2.10
+  - production-controlplane-1.tail073351.ts.net
   installDisk: /dev/nvme0n1
   controlPlane: true
 - hostname: production-controlplane-2
-  ipAddress: 100.96.204.17
+  ipAddress: 10.1.4.12
   certSANs:
-  - 10.1.2.12
-  networkInterfaces:
-  - interface: br0
-    # dhcp: true
-    addresses:
-    - 10.1.2.12/24
-    bridge:
-      stp:
-        enabled: true
-      interfaces:
-      - eno1
-    routes:
-    - network: 0.0.0.0/0
-      gateway: 10.1.2.1
-    vip:
-      ip: 10.1.2.10
+  - production-controlplane-2.tail073351.ts.net
   installDisk: /dev/nvme0n1
   controlPlane: true
 - hostname: production-controlplane-3
-  ipAddress: 100.101.252.23
+  ipAddress: 10.1.4.13
   certSANs:
-  - 10.1.2.13
-  networkInterfaces:
-  - interface: br0
-    # dhcp: true
-    addresses:
-    - 10.1.2.13/24
-    bridge:
-      stp:
-        enabled: true
-      interfaces:
-      - eno1
-    routes:
-    - network: 0.0.0.0/0
-      gateway: 10.1.2.1
-    vip:
-      ip: 10.1.2.10
+  - production-controlplane-3.tail073351.ts.net
   installDisk: /dev/nvme0n1
   controlPlane: true
 cniConfig:
   name: none
 allowSchedulingOnControlPlanes: true
 controlPlane:
-  nameservers:
-  - 10.1.2.1
+  networkInterfaces:
+  - interface: br0
+    dhcp: true
+    bridge:
+      interfaces:
+      - eno1
+    vip:
+      ip: 10.1.4.10
   talosImageURL: factory.talos.dev/installer-secureboot/59a4a77747c72d3ccb71981770dd71a1cd38b9e17805b3e81774171e9cc112e5
   extensionServices:
   - name: tailscale
     environment:
     - TS_AUTHKEY=${TS_AUTHKEY}
-    - TS_ROUTES=10.1.2.10/32
     - TS_ACCEPT_DNS=true
     - TS_AUTH_ONCE=true
   kernelModules:
