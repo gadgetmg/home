@@ -19,6 +19,10 @@ secretGenerator:
   options:
     disableNameSuffixHash: true
 
+replicas:
+- name: keycloak
+  count: 1
+
 patches:
 - path: patches/resources.yaml
 - path: patches/gateway.yaml

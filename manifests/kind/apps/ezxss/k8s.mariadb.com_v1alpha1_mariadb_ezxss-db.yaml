@@ -30,6 +30,7 @@ spec:
     runAsUser: 999
     seccompProfile:
       type: RuntimeDefault
+  replicas: 1
   securityContext:
     allowPrivilegeEscalation: false
     capabilities:
