@@ -97,14 +97,9 @@ spec:
           successThreshold: 1
           timeoutSeconds: 1
         resources:
-          limits:
-            cpu: 750m
-            ephemeral-storage: 2Gi
-            memory: 4Gi
           requests:
-            cpu: 500m
-            ephemeral-storage: 50Mi
-            memory: 3Gi
+            cpu: 50m
+            memory: 1Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -163,14 +158,9 @@ spec:
         imagePullPolicy: IfNotPresent
         name: prepare-write-dirs
         resources:
-          limits:
-            cpu: 750m
-            ephemeral-storage: 2Gi
-            memory: 4Gi
           requests:
-            cpu: 500m
-            ephemeral-storage: 50Mi
-            memory: 3Gi
+            cpu: 50m
+            memory: 1Gi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:

@@ -9,7 +9,7 @@ spec:
   bootstrap:
     initdb:
       database: keycloak
-  instances: 1
+  instances: 3
   storage:
     size: 10Gi
     storageClass: ssd-r1

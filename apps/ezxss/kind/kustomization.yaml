@@ -9,3 +9,4 @@ patches:
 - path: patches/pvcs.patch.yaml
   target:
     kind: MariaDB
+- path: patches/replicas.patch.yaml
