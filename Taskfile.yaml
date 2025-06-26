@@ -37,6 +37,7 @@ tasks:
     - renovate --platform=local
 
   build:
+    internal: true
     label: build {{.APP}} {{.ENV}}
     requires:
       vars: [APP, ENV]
