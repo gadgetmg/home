@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/part-of: ezxss
 spec:
   replicas: 3
+  galera:
+    enabled: true
   username: ezxss
   database: ezxss
   image: ghcr.io/mariadb/mariadb
