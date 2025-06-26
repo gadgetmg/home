@@ -5,3 +5,5 @@ metadata:
   name: ezxss-db
 spec:
   replicas: 1
+  galera:
+    $patch: delete
