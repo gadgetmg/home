@@ -37,7 +37,7 @@ spec:
   enableOTLPReceiver: false
   externalUrl: http://k8s-prometheus.monitoring:9090
   hostNetwork: false
-  image: quay.io/prometheus/prometheus:v3.4.1
+  image: quay.io/prometheus/prometheus:v3.4.2
   imagePullPolicy: IfNotPresent
   listenLocal: false
   logFormat: logfmt
@@ -78,5 +78,5 @@ spec:
   shards: 1
   tsdb:
     outOfOrderTimeWindow: 0s
-  version: v3.4.1
+  version: v3.4.2
   walCompression: true

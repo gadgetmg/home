@@ -39,7 +39,7 @@ spec:
         - --config-reloader-cpu-limit=0
         - --config-reloader-memory-request=0
         - --config-reloader-memory-limit=0
-        - --thanos-default-base-image=quay.io/thanos/thanos:v0.38.0
+        - --thanos-default-base-image=quay.io/thanos/thanos:v0.39.0
         - --secret-field-selector=type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1
         - --web.enable-tls=true
         - --web.cert-file=/cert/cert
