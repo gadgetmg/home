@@ -20,6 +20,8 @@ helmCharts:
   valuesInline:
     crds:
       enabled: true
+    image:
+      repository: ghcr.io/mariadb-operator/mariadb-operator
     metrics:
       enabled: true
       serviceMonitor:

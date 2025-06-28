@@ -1,3 +1,7 @@
 images:
 - path: spec/image
   kind: MariaDB
+- path: spec/galera/initContainer/image
+  kind: MariaDB
+- path: spec/galera/agent/image
+  kind: MariaDB
