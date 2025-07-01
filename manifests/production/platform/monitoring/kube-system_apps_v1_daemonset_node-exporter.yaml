@@ -60,7 +60,7 @@ spec:
           httpGet:
             httpHeaders: null
             path: /
-            port: 9100
+            port: http-metrics
             scheme: HTTP
           initialDelaySeconds: 0
           periodSeconds: 10
@@ -76,7 +76,7 @@ spec:
           httpGet:
             httpHeaders: null
             path: /
-            port: 9100
+            port: http-metrics
             scheme: HTTP
           initialDelaySeconds: 0
           periodSeconds: 10
