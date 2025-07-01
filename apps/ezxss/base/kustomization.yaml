@@ -13,7 +13,7 @@ resources:
 
 images:
 - name: ghcr.io/gadgetmg/ezxss
-  newTag: master@sha256:cbac41ee394292952974d0805becdf05900911b59862e9124e3adb90b5709100
+  newTag: master@sha256:271533ee56ca5487be2cf5b9594cc9a016ba73899d68206fd414aaf327fb43e5
 - name: ghcr.io/mariadb/mariadb
   newTag: 11.8.2-noble@sha256:7343151b13f73297477ae8062700eca00a1473d3dc68338c912452e1fb75652d
 - name: ghcr.io/mariadb-operator/mariadb-operator
