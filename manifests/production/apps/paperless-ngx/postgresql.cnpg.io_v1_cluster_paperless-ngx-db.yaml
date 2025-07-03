@@ -1,6 +1,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
   labels:
     app.kubernetes.io/component: database
     app.kubernetes.io/instance: paperless-ngx
@@ -12,9 +14,21 @@ spec:
   affinity:
     podAntiAffinityType: required
   bootstrap:
-    initdb:
+    recovery:
       database: paperless-ngx
+      source: origin
+  externalClusters:
+  - name: origin
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: paperless-ngx-db
   instances: 3
+  plugins:
+  - isWALArchiver: true
+    name: barman-cloud.cloudnative-pg.io
+    parameters:
+      barmanObjectName: paperless-ngx-db
   storage:
     size: 10Gi
     storageClass: ssd-r1

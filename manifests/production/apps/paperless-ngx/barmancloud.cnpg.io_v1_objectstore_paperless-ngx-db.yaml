@@ -1,0 +1,21 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: paperless-ngx-db
+  namespace: paperless-ngx
+spec:
+  configuration:
+    data:
+      compression: gzip
+    destinationPath: s3://paperless-ngx-db
+    endpointURL: https://truenas.lan.seigra.net:9000
+    s3Credentials:
+      accessKeyId:
+        key: ACCESS_KEY_ID
+        name: paperless-ngx-db-s3-credentials
+      secretAccessKey:
+        key: ACCESS_SECRET_KEY
+        name: paperless-ngx-db-s3-credentials
+    wal:
+      compression: lz4
+  retentionPolicy: 30d

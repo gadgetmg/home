@@ -4,3 +4,9 @@ kind: Kustomization
 
 resources:
 - ../base
+- objectstore.yaml
+- scheduledbackup.yaml
+- secrets/s3-credentials.yaml
+
+patches:
+- path: patches/production-backups.yaml
