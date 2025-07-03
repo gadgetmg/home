@@ -1,29 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  annotations:
-    cnpg.io/skipEmptyWalArchiveCheck: enabled
   name: keycloak-db
   namespace: keycloak
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled
 spec:
-  affinity:
-    podAntiAffinityType: required
   bootstrap:
+    initdb:
+      $patch: delete
     recovery:
-      database: keycloak
       source: origin
+      database: keycloak
   externalClusters:
   - name: origin
     plugin:
       name: barman-cloud.cloudnative-pg.io
       parameters:
         barmanObjectName: keycloak-db
-  instances: 3
   plugins:
-  - isWALArchiver: true
-    name: barman-cloud.cloudnative-pg.io
+  - name: barman-cloud.cloudnative-pg.io
+    isWALArchiver: true
     parameters:
       barmanObjectName: keycloak-db
-  storage:
-    size: 10Gi
-    storageClass: ssd-r1

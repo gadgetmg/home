@@ -2,16 +2,20 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: daily-all
+  name: paperless-ngx-daily
   namespace: velero
 spec:
   schedule: 0 5 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
-    - '*'
+    - paperless-ngx
+    includedResources:
+    - pvc
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: paperless-ngx
     itemOperationTimeout: 0s
     metadata: {}
     ttl: 0s

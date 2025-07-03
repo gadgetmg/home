@@ -6,5 +6,11 @@ resources:
 - ../base
 - cloudflare-gateway.yaml
 - cloudflare-httproute.yaml
+- objectstore.yaml
+- scheduledbackup.yaml
 - secrets/keycloak-admin.yaml
 - secrets/crossplane-credentials.yaml
+- secrets/s3-credentials.yaml
+
+patches:
+- path: patches/production-backups.yaml
