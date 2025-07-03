@@ -54,6 +54,7 @@ helmCharts:
       backupStorageLocation: []
       volumeSnapshotLocation: []
       features: EnableCSI
+      fsBackupTimeout: 24h
     credentials:
       existingSecret: velero
     snapshotsEnabled: true
