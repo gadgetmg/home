@@ -22,3 +22,11 @@ tasks:
     - talhelper gencommand bootstrap | sh
     - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
     - talhelper gencommand kubeconfig | sh
+
+  upgrade:
+    deps: [genconfig]
+    cmd: talhelper gencommand upgrade --extra-flags "--stage" | sh
+
+  upgrade-k8s:
+    deps: [genconfig]
+    cmd: talhelper gencommand upgrade-k8s | sh
