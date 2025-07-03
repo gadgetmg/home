@@ -8,6 +8,7 @@ setup_file() {
   setup_kind_cluster
   kapp deploy -y -a setup \
     -f manifests/kind/infrastructure/crds \
+    -f manifests/kind/infrastructure/controllers/cert-manager \
     -f manifests/kind/infrastructure/controllers/cnpg
 }
 
