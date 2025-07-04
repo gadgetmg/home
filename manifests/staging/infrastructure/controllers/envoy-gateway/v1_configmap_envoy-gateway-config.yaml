@@ -25,7 +25,7 @@ data:
                     - imagePullPolicy: IfNotPresent
                       name: envoy-ratelimit
         shutdownManager:
-          image: docker.io/envoyproxy/gateway:v1.4.1
+          image: docker.io/envoyproxy/gateway:v1.4.2
       type: Kubernetes
 kind: ConfigMap
 metadata:
