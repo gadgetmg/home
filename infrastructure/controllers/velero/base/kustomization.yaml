@@ -26,7 +26,7 @@ helmCharts:
   valuesInline:
     initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:v1.11.1@sha256:3b0c402e0d55eb797a7ebe1f2525f18bdcdca8ee826680cd2d7cf657071e9d58
+      image: velero/velero-plugin-for-aws
       volumeMounts:
       - mountPath: /target
         name: plugins
@@ -38,7 +38,6 @@ helmCharts:
         capabilities:
           drop:
           - ALL
-        readOnlyRootFilesystem: true
     containerSecurityContext:
       runAsUser: 1002
       runAsNonRoot: true
@@ -46,15 +45,14 @@ helmCharts:
         type: RuntimeDefault
       allowPrivilegeEscalation: false
       capabilities:
-        drop: ["ALL"]
-        add: []
-      readOnlyRootFilesystem: true
+        drop:
+        - ALL
     upgradeCRDs: false
     configuration:
       backupStorageLocation: []
       volumeSnapshotLocation: []
       features: EnableCSI
-      fsBackupTimeout: 24h
+      defaultSnapshotMoveData: true
     credentials:
       existingSecret: velero
-    snapshotsEnabled: true
+    deployNodeAgent: true

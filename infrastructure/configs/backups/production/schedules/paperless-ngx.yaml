@@ -6,9 +6,7 @@ metadata:
   namespace: velero
 spec:
   schedule: 0 5 * * *
-  skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
     includedNamespaces:
     - paperless-ngx
     includedResources:
@@ -16,7 +14,4 @@ spec:
     labelSelector:
       matchLabels:
         app.kubernetes.io/component: paperless-ngx
-    itemOperationTimeout: 0s
-    metadata: {}
-    ttl: 0s
   useOwnerReferencesInBackup: true
