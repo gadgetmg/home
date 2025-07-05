@@ -31,7 +31,7 @@ spec:
       - args:
         - server
         - --uploader-type=kopia
-        - --fs-backup-timeout=24h
+        - --default-snapshot-move-data=true
         - --features=EnableCSI
         - --keep-latest-maintenance-jobs=3
         command:
@@ -83,10 +83,8 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
-            add: []
             drop:
             - ALL
-          readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1002
           seccompProfile:
@@ -98,8 +96,6 @@ spec:
           name: cloud-credentials
         - mountPath: /scratch
           name: scratch
-        - mountPath: /tmp
-          name: tmpdir
       dnsPolicy: ClusterFirst
       initContainers:
       - image: velero/velero-plugin-for-aws:v1.12.1@sha256:b9735c9d08c3244c462bb81263ff5f4ad4e24b96865338c14733a59e3624dfaf
@@ -109,7 +105,6 @@ spec:
           capabilities:
             drop:
             - ALL
-          readOnlyRootFilesystem: true
           runAsNonRoot: true
           seccompProfile:
             type: RuntimeDefault
@@ -127,5 +122,3 @@ spec:
         name: plugins
       - emptyDir: {}
         name: scratch
-      - emptyDir: {}
-        name: tmpdir

@@ -1,16 +1,16 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: paperless-ngx-daily
+  name: actual-daily
   namespace: velero
 spec:
   schedule: 0 5 * * *
   template:
     includedNamespaces:
-    - paperless-ngx
+    - actual
     includedResources:
     - pvc
     labelSelector:
       matchLabels:
-        app.kubernetes.io/component: paperless-ngx
+        app.kubernetes.io/component: application
   useOwnerReferencesInBackup: true

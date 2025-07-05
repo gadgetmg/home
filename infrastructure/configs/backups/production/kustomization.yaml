@@ -5,5 +5,5 @@ kind: Kustomization
 resources:
 - backupstoragelocation.yaml
 - volumesnapshotclass.yaml
-- volumesnapshotlocation.yaml
+- schedules/actual.yaml
 - schedules/paperless-ngx.yaml
