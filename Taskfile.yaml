@@ -274,11 +274,3 @@ tasks:
     cmds:
     - task: deploy
       vars: {APP: platform/monitoring}
-
-  platform:staging:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:controllers:cdi
-    cmds:
-    - task: deploy
-      vars: {APP: platform/staging}
