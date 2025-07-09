@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.2/statefulset.json
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nfs-server
+  labels:
+    app.kubernetes.io/name: nfs-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nfs-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nfs-server
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: nfs-server
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: nfs-server
+        image: registry.opensuse.org/opensuse/nfs-server
+        ports:
+        - containerPort: 2049
+          protocol: TCP
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: config
+          mountPath: /etc/sysconfig/nfs
+          subPath: nfs
+        - name: config
+          mountPath: /etc/exports
+          subPath: exports
+        - name: export
+          mountPath: /export
+        - name: export-standard
+          mountPath: /export/standard
+      volumes:
+      - name: config
+        configMap:
+          name: nfs-server-config
+      - name: export
+        emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: export-standard
+    spec:
+      storageClassName: standard
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Ti

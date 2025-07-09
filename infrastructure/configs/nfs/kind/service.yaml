@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.2/service.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: nfs-server
+  labels:
+    app.kubernetes.io/name: nfs-server
+spec:
+  ports:
+  - port: 2049
+    targetPort: 2049
+    protocol: TCP
+    name: nfs
+  selector:
+    app.kubernetes.io/name: nfs-server

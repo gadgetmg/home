@@ -1,0 +1,28 @@
+apiVersion: v1
+data:
+  exports: |
+    /export *(rw,sync,no_subtree_check,no_root_squash,fsid=0)
+  nfs: |
+    USE_KERNEL_NFSD_NUMBER="4"
+    MOUNTD_PORT=""
+    NFS3_SERVER_SUPPORT="no"
+    NFS4_SUPPORT="yes"
+    SM_NOTIFY_OPTIONS=""
+    STATD_PORT=""
+    STATD_HOSTNAME=""
+    LOCKD_TCPPORT=""
+    LOCKD_UDPPORT=""
+    STATD_OPTIONS=""
+    NFSV4LEASETIME="90"
+    NFSV4GRACETIME="90"
+    RPC_PIPEFS_DIR=""
+    SVCGSSD_OPTIONS=""
+    NFSD_OPTIONS=""
+    GSSD_OPTIONS=""
+    MOUNTD_OPTIONS=""
+    NFS_GSSD_AVOID_DNS="no"
+    NFSD_SCOPE=""
+kind: ConfigMap
+metadata:
+  name: nfs-server-config-74gmctcghk
+  namespace: nfs

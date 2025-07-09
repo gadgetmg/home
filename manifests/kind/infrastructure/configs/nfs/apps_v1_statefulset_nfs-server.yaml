@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app.kubernetes.io/name: nfs-server
+  name: nfs-server
+  namespace: nfs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nfs-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nfs-server
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: nfs-server
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - image: registry.opensuse.org/opensuse/nfs-server:2.8.2-3.261@sha256:606c9ce99088745aedaa60d8842b894e29648c384a9d760a073625b34c7810e3
+        name: nfs-server
+        ports:
+        - containerPort: 2049
+          protocol: TCP
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /etc/sysconfig/nfs
+          name: config
+          subPath: nfs
+        - mountPath: /etc/exports
+          name: config
+          subPath: exports
+        - mountPath: /export
+          name: export
+        - mountPath: /export/standard
+          name: export-standard
+      volumes:
+      - configMap:
+          name: nfs-server-config-74gmctcghk
+        name: config
+      - emptyDir: {}
+        name: export
+  volumeClaimTemplates:
+  - metadata:
+      name: export-standard
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Ti
+      storageClassName: standard

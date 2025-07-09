@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: nfs
+
+resources:
+- namespace.yaml
+- statefulset.yaml
+- service.yaml
+- storageclasses.yaml
+
+configMapGenerator:
+- name: nfs-server-config
+  files:
+  - config/sysconfig/nfs
+  - config/exports
+
+components:
+- ../../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: csi-driver-nfs
+  repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+  releaseName: csi-driver-nfs
+  namespace: nfs
+  version: 4.11.0
+
+images:
+- name: registry.opensuse.org/opensuse/nfs-server
+  newTag: 2.8.2-3.261@sha256:606c9ce99088745aedaa60d8842b894e29648c384a9d760a073625b34c7810e3

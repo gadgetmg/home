@@ -126,6 +126,11 @@ tasks:
     - task: deploy
       vars: {APP: infrastructure/configs/ipam}
 
+  infrastructure:configs:nfs:
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/configs/nfs}
+
   infrastructure:configs:oidc:
     deps: ['platform:idp']
     cmds:
