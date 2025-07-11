@@ -2,13 +2,15 @@ apiVersion: v1
 data:
   PAPERLESS_ADMIN_USER: root
   PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+  PAPERLESS_CONSUMER_ENABLE_BARCODES: "True"
+  PAPERLESS_DATE_ORDER: MDY
   PAPERLESS_DISABLE_REGULAR_LOGIN: "True"
   PAPERLESS_REDIS: redis://paperless-ngx-redis:6379
   PAPERLESS_SOCIAL_AUTO_SIGNUP: "True"
   PAPERLESS_TIKA_ENABLED: "1"
   PAPERLESS_TIKA_ENDPOINT: http://paperless-ngx-tika:9998
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ngx-gotenberg:3000
-  PAPERLESS_URL: https://paperless.172.18.0.8.nip.io
+  PAPERLESS_URL: https://paperless.seigra.net
   REQUESTS_CA_BUNDLE: /bundle.pem
 kind: ConfigMap
 metadata:
@@ -17,5 +19,5 @@ metadata:
     app.kubernetes.io/instance: paperless-ngx
     app.kubernetes.io/name: paperless-ngx
     app.kubernetes.io/part-of: paperless-ngx
-  name: paperless-ngx-config-67775hcgd5
+  name: paperless-ngx-config-hh4b4d67bb
   namespace: paperless-ngx

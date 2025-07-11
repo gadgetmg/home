@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  name: pvc-paperless-ngx-consume
+spec:
+  accessModes:
+  - ReadWriteMany
+  capacity:
+    storage: 10Gi
+  csi:
+    driver: smb.csi.k8s.io
+    nodeStageSecretRef:
+      name: paperless-ngx-consume-credentials
+      namespace: paperless-ngx
+    volumeAttributes:
+      source: //truenas.lan.seigra.net/paperless-consume
+    volumeHandle: truenas.lan.seigra.net/paperless-consume##
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: smb
