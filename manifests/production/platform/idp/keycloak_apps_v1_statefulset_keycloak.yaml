@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: b8b47c9b4bb48c86c8b35340d52cc24f3c48c8fca14bfe7bd331896653838f2a
+        checksum/configmap-env-vars: 7baf31c1cd8b9d05155fe809a5f46fff68cef3d698275cabbe1884a448f23b97
       labels:
         app.kubernetes.io/component: keycloak
         app.kubernetes.io/instance: keycloak
@@ -67,7 +67,7 @@ spec:
         envFrom:
         - configMapRef:
             name: keycloak-env-vars
-        image: docker.io/bitnami/keycloak:26.3.1-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.3.1-debian-12-r1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -154,7 +154,7 @@ spec:
           info "Copy operation completed"
         command:
         - /bin/bash
-        image: docker.io/bitnami/keycloak:26.3.1-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.3.1-debian-12-r1
         imagePullPolicy: IfNotPresent
         name: prepare-write-dirs
         resources:
