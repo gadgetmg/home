@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.2/persistentvolumeclaim.json
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperless-ngx-consume
+  namespace: paperless-ngx
+spec:
+  storageClassName: smb
+  volumeName: pvc-paperless-ngx-consume
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.2/persistentvolume.json
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: smb.csi.k8s.io
+  name: pvc-paperless-ngx-consume
+spec:
+  storageClassName: smb
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: smb.csi.k8s.io
+    volumeHandle: truenas.lan.seigra.net/paperless-consume##
+    volumeAttributes:
+      source: //truenas.lan.seigra.net/paperless-consume
+    nodeStageSecretRef:
+      name: paperless-ngx-consume-credentials
+      namespace: paperless-ngx

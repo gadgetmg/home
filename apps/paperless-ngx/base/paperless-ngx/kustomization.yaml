@@ -28,6 +28,8 @@ configMapGenerator:
   - PAPERLESS_TIKA_GOTENBERG_ENDPOINT=http://paperless-ngx-gotenberg:3000
   - PAPERLESS_URL=https://paperless.seigra.net
   - REQUESTS_CA_BUNDLE=/bundle.pem
+  - PAPERLESS_DATE_ORDER=MDY
+  - PAPERLESS_CONSUMER_ENABLE_BARCODES=True
 - name: paperless-ngx-socialaccount-config
   literals:
   - name=seigra.net

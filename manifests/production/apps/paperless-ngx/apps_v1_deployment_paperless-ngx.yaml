@@ -15,6 +15,8 @@ spec:
       app.kubernetes.io/instance: paperless-ngx
       app.kubernetes.io/name: paperless-ngx
       app.kubernetes.io/part-of: paperless-ngx
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -23,18 +25,10 @@ spec:
         app.kubernetes.io/name: paperless-ngx
         app.kubernetes.io/part-of: paperless-ngx
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: paperless-ngx
-                app.kubernetes.io/instance: paperless-ngx
-                app.kubernetes.io/name: paperless-ngx
-                app.kubernetes.io/part-of: paperless-ngx
-            topologyKey: kubernetes.io/hostname
       containers:
       - env:
+        - name: PAPERLESS_CONSUMER_POLLING
+          value: "5"
         - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
           value: "1"
         - name: PAPERLESS_DBHOST
@@ -64,7 +58,7 @@ spec:
               name: paperless-ngx-db-app
         envFrom:
         - configMapRef:
-            name: paperless-ngx-config-5b8tcmg5fc
+            name: paperless-ngx-config-hh4b4d67bb
         - secretRef:
             name: paperless-ngx-secret-key
         - secretRef:
@@ -87,6 +81,8 @@ spec:
           runAsGroup: 1000
           runAsUser: 1000
         volumeMounts:
+        - mountPath: /usr/src/paperless/consume
+          name: consume
         - mountPath: /run
           name: run
         - mountPath: /usr/src/paperless/data
@@ -103,6 +99,9 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
+      - name: consume
+        persistentVolumeClaim:
+          claimName: paperless-ngx-consume
       - emptyDir: {}
         name: run
       - name: data

@@ -15,6 +15,8 @@ spec:
       app.kubernetes.io/instance: paperless-ngx
       app.kubernetes.io/name: paperless-ngx
       app.kubernetes.io/part-of: paperless-ngx
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -23,16 +25,6 @@ spec:
         app.kubernetes.io/name: paperless-ngx
         app.kubernetes.io/part-of: paperless-ngx
     spec:
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app.kubernetes.io/component: paperless-ngx
-                app.kubernetes.io/instance: paperless-ngx
-                app.kubernetes.io/name: paperless-ngx
-                app.kubernetes.io/part-of: paperless-ngx
-            topologyKey: kubernetes.io/hostname
       containers:
       - env:
         - name: S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES
@@ -64,7 +56,7 @@ spec:
               name: paperless-ngx-db-app
         envFrom:
         - configMapRef:
-            name: paperless-ngx-config-67775hcgd5
+            name: paperless-ngx-config-5btk68t8mc
         - secretRef:
             name: paperless-ngx-secret-key
         - secretRef:

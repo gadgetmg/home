@@ -6,7 +6,10 @@ resources:
 - ../base
 - objectstore.yaml
 - scheduledbackup.yaml
+- consume-share.yaml
 - secrets/s3-credentials.yaml
+- secrets/consume-credentials.yaml
 
 patches:
 - path: patches/production-backups.yaml
+- path: patches/consume-share.yaml

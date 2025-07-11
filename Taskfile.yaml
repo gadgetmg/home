@@ -97,6 +97,7 @@ tasks:
     - infrastructure:controllers:trust-manager
     - infrastructure:controllers:cnpg
     - infrastructure:controllers:external-secrets
+    - infrastructure:controllers:csi-driver-smb
     - platform:idp
     cmds:
     - task: deploy
@@ -167,8 +168,10 @@ tasks:
       vars: {APP: infrastructure/controllers/cloudflare-gateway}
 
   infrastructure:controllers:cnpg:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/cnpg}
+    deps: ['infrastructure:crds']
+    cmds:
+    - task: deploy
+      vars: {APP: infrastructure/controllers/cnpg}
 
   infrastructure:controllers:coredns-external:
     deps:
@@ -181,6 +184,10 @@ tasks:
   infrastructure:controllers:crossplane:
   - task: deploy
     vars: {APP: infrastructure/controllers/crossplane}
+
+  infrastructure:controllers:csi-driver-smb:
+  - task: deploy
+    vars: {APP: infrastructure/controllers/csi-driver-smb}
 
   infrastructure:controllers:envoy-gateway:
     deps: ['infrastructure:crds']

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.33.2/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+spec:
+  template:
+    spec:
+      containers:
+      - name: paperless-ngx
+        env:
+        - name: PAPERLESS_CONSUMER_POLLING
+          value: "5"
+        volumeMounts:
+        - name: consume
+          mountPath: /usr/src/paperless/consume
+      volumes:
+      - name: consume
+        persistentVolumeClaim:
+          claimName: paperless-ngx-consume
