@@ -58,9 +58,6 @@ spec:
         - mountPath: /data/config.json
           name: config
           subPath: config.json
-        - mountPath: /app/app.js
-          name: bootstrap
-          subPath: app.js
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001

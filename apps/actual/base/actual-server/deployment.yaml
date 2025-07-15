@@ -38,9 +38,6 @@ spec:
         - name: config
           mountPath: /data/config.json
           subPath: config.json
-        - name: bootstrap
-          mountPath: /app/app.js
-          subPath: app.js
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
