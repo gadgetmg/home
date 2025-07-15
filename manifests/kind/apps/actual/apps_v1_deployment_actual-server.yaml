@@ -78,6 +78,3 @@ spec:
       - name: config
         secret:
           secretName: actual-server-config
-      - configMap:
-          name: actual-server-bootstrap-7hbg98849g
-        name: bootstrap
