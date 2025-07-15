@@ -32,6 +32,3 @@ configMapGenerator:
   - client_id=actual
   - server_hostname=https://actual.seigra.net
   - authMethod=oauth2
-- name: actual-server-bootstrap
-  files:
-  - bootstrap/app.js
