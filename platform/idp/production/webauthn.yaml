@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/flow_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Flow
+metadata:
+  name: home-webauthn
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    alias: webauthn
+    description: passkey authentication
+    realmId: home
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-cookie
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    authenticator: auth-cookie
+    priority: 1
+    requirement: ALTERNATIVE
+    realmId: home
+    parentFlowAliasRef:
+      name: home-webauthn
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-kerberos
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    authenticator: auth-spnego
+    priority: 2
+    realmId: home
+    parentFlowAliasRef:
+      name: home-webauthn
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-identity-provider-redirector
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    authenticator: identity-provider-redirector
+    priority: 3
+    requirement: ALTERNATIVE
+    realmId: home
+    parentFlowAliasRef:
+      name: home-webauthn
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/subflow_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Subflow
+metadata:
+  name: home-webauthn-forms
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    alias: webauthn forms
+    priority: 4
+    description: Username, password, otp and other auth forms.
+    requirement: ALTERNATIVE
+    realmId: home
+    parentFlowAliasRef:
+      name: home-webauthn
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-forms-username
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    authenticator: auth-username-form
+    priority: 1
+    requirement: REQUIRED
+    realmId: home
+    parentFlowAlias: webauthn forms
+---
+# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-forms-passwordless
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    authenticator: webauthn-authenticator-passwordless
+    priority: 2
+    requirement: REQUIRED
+    realmId: home
+    parentFlowAlias: webauthn forms
+# ---
+# # yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/bindings_v1alpha1.json
+# apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+# kind: Bindings
+# metadata:
+#   name: home
+# spec:
+#   deletionPolicy: Delete
+#   forProvider:
+#     browserFlow: webauthn
+#     realmId: home
