@@ -1,0 +1,10 @@
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Flow
+metadata:
+  name: home-webauthn
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    alias: webauthn
+    description: passkey authentication
+    realmId: home

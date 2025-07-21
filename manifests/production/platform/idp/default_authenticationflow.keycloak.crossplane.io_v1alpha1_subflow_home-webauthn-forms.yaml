@@ -1,0 +1,14 @@
+apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
+kind: Subflow
+metadata:
+  name: home-webauthn-forms
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    alias: webauthn forms
+    description: Username, password, otp and other auth forms.
+    parentFlowAliasRef:
+      name: home-webauthn
+    priority: 4
+    realmId: home
+    requirement: ALTERNATIVE
