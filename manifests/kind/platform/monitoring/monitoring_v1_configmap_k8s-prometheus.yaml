@@ -15,7 +15,7 @@ data:
     job=~\"$job\",instance=~\"$instance\"})","format":"time_series","legendFormat":"{{cluster}}:{{job}}:{{instance}}"}],"title":"Targets","type":"timeseries"},{"collapsed":false,"gridPos":{"h":1,"w":24,"x":0,"y":16},"id":6,"panels":[],"title":"Retrieval","type":"row"},{"datasource":{"type":"prometheus","uid":"$datasource"},"fieldConfig":{"defaults":{"custom":{"fillOpacity":10,"showPoints":"never"},"min":0,"unit":"ms"}},"gridPos":{"h":7,"w":8,"x":0,"y":17},"id":7,"options":{"tooltip":{"mode":"multi","sort":"desc"}},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"$datasource"},"expr":"rate(prometheus_target_interval_length_seconds_sum{cluster=~\"$cluster\",
     job=~\"$job\",instance=~\"$instance\"}[5m]) / rate(prometheus_target_interval_length_seconds_count{cluster=~\"$cluster\",
     job=~\"$job\",instance=~\"$instance\"}[5m]) * 1e3","format":"time_series","legendFormat":"{{cluster}}:{{job}}:{{instance}}
-    {{interval}} configured"}],"title":"Average Scrape Interval Duration","type":"timeseries"},{"datasource":{"type":"prometheus","uid":"$datasource"},"fieldConfig":{"defaults":{"custom":{"fillOpacity":100,"lineWidth":0,"showPoints":"never","stacking":{"mode":"normal"}},"min":0,"unit":"ms"}},"gridPos":{"h":7,"w":8,"x":8,"y":17},"id":8,"options":{"tooltip":{"mode":"multi","sort":"desc"}},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"$datasource"},"expr":"sum
+    {{interval}} configured"}],"title":"Average Scrape Interval Duration","type":"timeseries"},{"datasource":{"type":"prometheus","uid":"$datasource"},"fieldConfig":{"defaults":{"custom":{"fillOpacity":100,"lineWidth":0,"showPoints":"never","stacking":{"mode":"normal"}},"min":0,"unit":"short"}},"gridPos":{"h":7,"w":8,"x":8,"y":17},"id":8,"options":{"tooltip":{"mode":"multi","sort":"desc"}},"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"$datasource"},"expr":"sum
     by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_body_size_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))","format":"time_series","legendFormat":"exceeded
     body size limit: {{cluster}} {{job}} {{instance}}"},{"datasource":{"type":"prometheus","uid":"$datasource"},"expr":"sum
     by (cluster, job, instance) (rate(prometheus_target_scrapes_exceeded_sample_limit_total{cluster=~\"$cluster\",job=~\"$job\",instance=~\"$instance\"}[1m]))","format":"time_series","legendFormat":"exceeded
@@ -38,7 +38,7 @@ data:
     cluster)","refresh":2,"sort":2,"type":"query"},{"allValue":".+","datasource":{"type":"prometheus","uid":"${datasource}"},"includeAll":true,"label":"job","multi":true,"name":"job","query":"label_values(prometheus_build_info{cluster=~\"$cluster\"},
     job)","refresh":2,"sort":2,"type":"query"},{"allValue":".+","datasource":{"type":"prometheus","uid":"${datasource}"},"includeAll":true,"label":"instance","multi":true,"name":"instance","query":"label_values(prometheus_build_info{cluster=~\"$cluster\",
     job=~\"$job\"}, instance)","refresh":2,"sort":2,"type":"query"}]},"time":{"from":"now-1h","to":"now"},"timepicker":{"refresh_intervals":["60s"]},"timezone":
-    "utc","title":"Prometheus / Overview"}'
+    "utc","title":"Prometheus / Overview","uid":"9fa0d141-d019-4ad7-8bc5-42196ee308bd"}'
 kind: ConfigMap
 metadata:
   labels:
