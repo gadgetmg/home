@@ -15,6 +15,8 @@ rules:
   - poolers
   - publications
   - scheduledbackups
+  - imagecatalogs
+  - clusterimagecatalogs
   - subscriptions
   verbs:
   - get
