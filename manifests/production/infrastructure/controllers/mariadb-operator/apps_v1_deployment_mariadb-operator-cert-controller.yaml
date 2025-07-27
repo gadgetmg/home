@@ -37,7 +37,7 @@ spec:
         env:
         - name: CLUSTER_NAME
           value: cluster.local
-        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:0.38.1
+        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:25.8.1
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
