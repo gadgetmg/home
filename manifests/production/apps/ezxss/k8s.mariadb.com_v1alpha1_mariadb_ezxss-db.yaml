@@ -10,7 +10,7 @@ spec:
   database: ezxss
   galera:
     agent:
-      image: ghcr.io/mariadb-operator/mariadb-operator:25.8.1@sha256:ffd970434c8fa28e9c4eb8f9a3b630e620d86b977475f102f64f59545fa614cc
+      image: ghcr.io/mariadb-operator/mariadb-operator:25.8.2@sha256:a3e1acd57f72822d695cdb5c516408002ca2600e6182e5fac4a474beb983e4f4
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
@@ -26,7 +26,7 @@ spec:
         storageClassName: ssd-r1
     enabled: true
     initContainer:
-      image: ghcr.io/mariadb-operator/mariadb-operator:25.8.1@sha256:ffd970434c8fa28e9c4eb8f9a3b630e620d86b977475f102f64f59545fa614cc
+      image: ghcr.io/mariadb-operator/mariadb-operator:25.8.2@sha256:a3e1acd57f72822d695cdb5c516408002ca2600e6182e5fac4a474beb983e4f4
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:
