@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: velero/velero
-  newTag: v1.16.1@sha256:c790429fcd543f0a5eed3a490e85a2c39bf9aefb8ce7ddbc7a158557745ab33f
+  newTag: v1.16.2@sha256:ff208717857140f0b51a440fe9611f7d19f21eacc17318cb4bcd44d66ed04086
 - name: velero/velero-plugin-for-aws
   newTag: v1.12.1@sha256:b9735c9d08c3244c462bb81263ff5f4ad4e24b96865338c14733a59e3624dfaf
 
