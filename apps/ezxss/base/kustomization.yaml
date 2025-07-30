@@ -17,7 +17,7 @@ images:
 - name: ghcr.io/mariadb/mariadb
   newTag: 11.8.2-noble@sha256:fc43f87194ead6abeded5fe2eb4c11d82efe62862c5ee2bd2a89b9f96739bb10
 - name: ghcr.io/mariadb-operator/mariadb-operator
-  newTag: 25.8.1@sha256:ffd970434c8fa28e9c4eb8f9a3b630e620d86b977475f102f64f59545fa614cc
+  newTag: 25.8.2@sha256:a3e1acd57f72822d695cdb5c516408002ca2600e6182e5fac4a474beb983e4f4
 
 components:
 - ../../../shared/components/crd-configurations
