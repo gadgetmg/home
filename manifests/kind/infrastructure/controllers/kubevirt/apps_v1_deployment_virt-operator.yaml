@@ -44,15 +44,22 @@ spec:
         - virt-operator
         env:
         - name: VIRT_OPERATOR_IMAGE
-          value: quay.io/kubevirt/virt-operator:v1.5.2
+          value: quay.io/kubevirt/virt-operator:v1.6.0
         - name: WATCH_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.annotations['olm.targetNamespaces']
         - name: KUBEVIRT_VERSION
-          value: v1.5.2
-        image: quay.io/kubevirt/virt-operator:v1.5.2
+          value: v1.6.0
+        image: quay.io/kubevirt/virt-operator:v1.6.0
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          timeoutSeconds: 10
         name: virt-operator
         ports:
         - containerPort: 8443
@@ -79,6 +86,7 @@ spec:
             - ALL
           seccompProfile:
             type: RuntimeDefault
+        terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /etc/virt-operator/certificates
           name: kubevirt-operator-certs
