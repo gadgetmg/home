@@ -17,6 +17,7 @@ spec:
     metadata:
       labels: {}
     spec:
+      automountServiceAccountToken: true
       containers:
       - command:
         - /bin/bash
