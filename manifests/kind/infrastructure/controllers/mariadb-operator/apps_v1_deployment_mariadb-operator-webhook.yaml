@@ -28,7 +28,7 @@ spec:
         - --metrics-addr=:8080
         - --health-addr=:8081
         - --log-level=INFO
-        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:25.8.2
+        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:25.8.3
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:
