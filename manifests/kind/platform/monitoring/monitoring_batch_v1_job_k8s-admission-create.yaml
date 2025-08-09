@@ -31,7 +31,7 @@ spec:
         - --host=prometheus-operator,prometheus-operator.monitoring.svc
         - --namespace=monitoring
         - --secret-name=k8s-admission
-        image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.0
+        image: registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.1
         imagePullPolicy: IfNotPresent
         name: create
         resources: {}
