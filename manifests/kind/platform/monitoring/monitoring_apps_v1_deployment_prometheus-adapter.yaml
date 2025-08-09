@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 535093ecc91fe15a9405e899bce3d7280d73acb699a7e2de45353315c50eab9e
+        checksum/config: fa9bfaeea209140e0e295aa5d7bedefced159f45ad19503212713a0ac6f312f6
       labels:
         app.kubernetes.io/component: metrics
         app.kubernetes.io/instance: prometheus-adapter
