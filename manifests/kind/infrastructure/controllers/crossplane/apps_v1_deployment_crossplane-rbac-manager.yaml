@@ -52,7 +52,7 @@ spec:
               resource: limits.memory
         - name: LEADER_ELECTION
           value: "true"
-        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.0
+        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.1
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -90,7 +90,7 @@ spec:
               containerName: crossplane-init
               divisor: "1"
               resource: limits.memory
-        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.0
+        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.1
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:
