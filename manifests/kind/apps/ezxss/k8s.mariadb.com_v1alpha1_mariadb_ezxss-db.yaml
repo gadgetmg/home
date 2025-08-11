@@ -8,7 +8,7 @@ metadata:
   namespace: ezxss
 spec:
   database: ezxss
-  image: ghcr.io/mariadb/mariadb:12.0.2-noble@sha256:d27ad58a138b519b6c4a8f51a2546439d02bdd1d1795f238d584446e952cc32c
+  image: ghcr.io/mariadb/mariadb:12.0.2-noble@sha256:a3e0d3802e1a07a95bd0d6dbcd221c4de27dc609450974572af6d347f74e0428
   metrics:
     enabled: true
     exporter:
