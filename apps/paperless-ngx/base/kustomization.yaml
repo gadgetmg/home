@@ -18,7 +18,7 @@ images:
 - name: gotenberg/gotenberg
   newTag: 8.21.1@sha256:91486863744f7420ca985ee6cef7c216910e40faffd378f3da7c0fad724d01ba
 - name: ghcr.io/paperless-ngx/paperless-ngx
-  newTag: 2.18.0@sha256:13ef2894816c68672367acb75e896d8eb2ab8057e5059d39ae93f80d49ab8725
+  newTag: 2.18.1@sha256:2dbee2d7fea624af8f12877936f6d728f351d2b8f4ddb34bdc06d933f0f47200
 
 labels:
 - pairs:
