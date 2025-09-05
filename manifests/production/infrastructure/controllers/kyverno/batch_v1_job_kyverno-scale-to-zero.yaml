@@ -4,7 +4,7 @@ metadata:
   annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded,hook-failed
-    helm.sh/hook-weight: "100"
+    helm.sh/hook-weight: "90"
   labels:
     app.kubernetes.io/component: hooks
     app.kubernetes.io/instance: kyverno
@@ -20,15 +20,15 @@ spec:
       automountServiceAccountToken: true
       containers:
       - command:
-        - /bin/bash
-        - -c
-        - |-
-          set -euo pipefail
-          kubectl scale -n kyverno deployment -l app.kubernetes.io/part-of=kyverno --replicas=0
-          sleep 30
-          kubectl delete validatingwebhookconfiguration -l webhook.kyverno.io/managed-by=kyverno
-          kubectl delete mutatingwebhookconfiguration -l webhook.kyverno.io/managed-by=kyverno
-        image: bitnami/kubectl:1.32.3
+        - kubectl
+        - scale
+        - -n
+        - kyverno
+        - deployment
+        - -l
+        - app.kubernetes.io/part-of=kyverno
+        - --replicas=0
+        image: registry.k8s.io/kubectl:v1.32.7
         imagePullPolicy: null
         name: kubectl
         resources:
