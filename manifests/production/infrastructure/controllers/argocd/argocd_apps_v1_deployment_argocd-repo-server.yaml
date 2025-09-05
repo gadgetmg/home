@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: b4b24dbd402d31714932d9ab69dfd6567d97aa7e640d330db31d8adcb73e04f0
-        checksum/cmd-params: a807b05041b57b54e7655161267fed1752b9e572cdb0b2bdc96c9dbbc0196bb6
+        checksum/cm: f1a00276f06c09b21151efb52bd237f27bb753ba139515c0d3f174bdec06db73
+        checksum/cmd-params: 61ef3bf55db16c2d8edd67696a90428cdc8a29c0adee79a46a3aab63aa6790fd
       labels:
         app.kubernetes.io/component: repo-server
         app.kubernetes.io/instance: argocd
@@ -254,6 +254,24 @@ spec:
               key: reposerver.git.request.timeout
               name: argocd-cmd-params-cm
               optional: true
+        - name: ARGOCD_REPO_SERVER_OCI_MANIFEST_MAX_EXTRACTED_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.oci.manifest.max.extracted.size
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_REPO_SERVER_DISABLE_OCI_MANIFEST_MAX_EXTRACTED_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.disable.oci.manifest.max.extracted.size
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_REPO_SERVER_OCI_LAYER_MEDIA_TYPES
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.oci.layer.media.types
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_REVISION_CACHE_LOCK_TIMEOUT
           valueFrom:
             configMapKeyRef:
@@ -272,7 +290,7 @@ spec:
           value: /helm-working-dir
         - name: HELM_DATA_HOME
           value: /helm-working-dir
-        image: quay.io/argoproj/argocd:v3.0.12
+        image: quay.io/argoproj/argocd:v3.1.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -334,7 +352,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
-        image: quay.io/argoproj/argocd:v3.0.12
+        image: quay.io/argoproj/argocd:v3.1.3
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}
