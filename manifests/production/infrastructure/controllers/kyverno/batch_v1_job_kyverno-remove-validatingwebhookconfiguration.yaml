@@ -2,14 +2,14 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   annotations:
-    helm.sh/hook: post-upgrade
+    helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded,hook-failed
-    helm.sh/hook-weight: "200"
+    helm.sh/hook-weight: "100"
   labels:
     app.kubernetes.io/component: hooks
     app.kubernetes.io/instance: kyverno
     app.kubernetes.io/part-of: kyverno
-  name: kyverno-migrate-resources
+  name: kyverno-remove-validatingwebhookconfiguration
   namespace: kyverno
 spec:
   backoffLimit: 2
@@ -19,24 +19,14 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-      - args:
-        - migrate
-        - --resource
-        - cleanuppolicies.kyverno.io
-        - --resource
-        - clustercleanuppolicies.kyverno.io
-        - --resource
-        - clusterpolicies.kyverno.io
-        - --resource
-        - globalcontextentries.kyverno.io
-        - --resource
-        - policies.kyverno.io
-        - --resource
-        - policyexceptions.kyverno.io
-        - --resource
-        - updaterequests.kyverno.io
-        image: reg.kyverno.io/kyverno/kyverno-cli:v1.15.1
-        imagePullPolicy: IfNotPresent
+      - command:
+        - kubectl
+        - delete
+        - validatingwebhookconfiguration
+        - -l
+        - webhook.kyverno.io/managed-by=kyverno
+        image: registry.k8s.io/kubectl:v1.32.7
+        imagePullPolicy: null
         name: kubectl
         resources:
           limits:
@@ -58,4 +48,4 @@ spec:
           seccompProfile:
             type: RuntimeDefault
       restartPolicy: Never
-      serviceAccountName: kyverno-migrate-resources
+      serviceAccountName: kyverno-admission-controller
