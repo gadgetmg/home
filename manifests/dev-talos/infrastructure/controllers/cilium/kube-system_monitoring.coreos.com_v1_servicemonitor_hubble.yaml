@@ -2,6 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   labels:
+    app.kubernetes.io/name: hubble
     app.kubernetes.io/part-of: cilium
   name: hubble
   namespace: kube-system

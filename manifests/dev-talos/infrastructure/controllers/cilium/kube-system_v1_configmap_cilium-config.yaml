@@ -41,6 +41,7 @@ data:
   enable-auto-protect-node-port-range: "true"
   enable-bgp-control-plane: "true"
   enable-bgp-control-plane-status-report: "true"
+  enable-bgp-legacy-origin-attribute: "false"
   enable-bpf-clock-probe: "false"
   enable-bpf-masquerade: "true"
   enable-endpoint-health-checking: "true"
