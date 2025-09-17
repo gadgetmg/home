@@ -19,7 +19,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/cilium-configmap-checksum: 122544adef12bdd8eed4cf74428f720df353ffdd440b93f11708be99669d4ebf
+        cilium.io/cilium-configmap-checksum: 6cb3deaaf48513f7a9080bf760a4316a797671926486d9143d2d77f5ab05cc8a
       labels:
         app.kubernetes.io/name: cilium-operator
         app.kubernetes.io/part-of: cilium
@@ -61,7 +61,7 @@ spec:
           value: localhost
         - name: KUBERNETES_SERVICE_PORT
           value: "7445"
-        image: quay.io/cilium/operator-generic:v1.18.1@sha256:97f4553afa443465bdfbc1cc4927c93f16ac5d78e4dd2706736e7395382201bc
+        image: quay.io/cilium/operator-generic:v1.18.2@sha256:cb4e4ffc5789fd5ff6a534e3b1460623df61cba00f5ea1c7b40153b5efb81805
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -113,6 +113,8 @@ spec:
       - key: node-role.kubernetes.io/master
         operator: Exists
       - key: node.kubernetes.io/not-ready
+        operator: Exists
+      - key: node.cloudprovider.kubernetes.io/uninitialized
         operator: Exists
       - key: node.cilium.io/agent-not-ready
         operator: Exists
