@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: mariadb-operator
+    app.kubernetes.io/name: mariadb-operator-cert-controller
+  name: mariadb-operator-cert-controller
+  namespace: mariadb-system
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mariadb-operator
+      app.kubernetes.io/name: mariadb-operator-cert-controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: mariadb-operator
+        app.kubernetes.io/name: mariadb-operator-cert-controller
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - cert-controller
+        - --ca-secret-name=mariadb-operator-webhook-ca
+        - --ca-secret-namespace=mariadb-system
+        - --ca-lifetime=26280h
+        - --cert-secret-name=mariadb-operator-webhook-cert
+        - --cert-secret-namespace=mariadb-system
+        - --cert-lifetime=2160h
+        - --renew-before-percentage=33
+        - --service-name=mariadb-operator-webhook
+        - --service-namespace=mariadb-system
+        - --requeue-duration=5m
+        - --metrics-addr=:8080
+        - --health-addr=:8081
+        - --log-level=INFO
+        env:
+        - name: CLUSTER_NAME
+          value: cluster.local
+        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:25.8.4
+        imagePullPolicy: IfNotPresent
+        name: cert-controller
+        ports:
+        - containerPort: 8080
+          name: metrics
+          protocol: TCP
+        - containerPort: 8081
+          name: health
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+      serviceAccountName: mariadb-operator-cert-controller-cert-controller
