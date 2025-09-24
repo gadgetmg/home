@@ -72,7 +72,7 @@ spec:
               resticIdentifier:
                 description: |-
                   ResticIdentifier is the full restic-compatible string for identifying
-                  this repository.
+                  this repository. This field is only used when RepositoryType is "restic".
                 type: string
               volumeNamespace:
                 description: |-
@@ -82,7 +82,6 @@ spec:
             required:
             - backupStorageLocation
             - maintenanceFrequency
-            - resticIdentifier
             - volumeNamespace
             type: object
           status:

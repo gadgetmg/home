@@ -33,7 +33,7 @@ spec:
         - --uploader-type=kopia
         - --default-snapshot-move-data=true
         - --features=EnableCSI
-        - --keep-latest-maintenance-jobs=3
+        - --repo-maintenance-job-configmap=velero-repo-maintenance
         command:
         - /velero
         env:
