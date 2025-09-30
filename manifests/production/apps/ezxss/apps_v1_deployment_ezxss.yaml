@@ -36,7 +36,7 @@ spec:
         envFrom:
         - configMapRef:
             name: ezxss
-        image: ghcr.io/gadgetmg/ezxss:master@sha256:0a403e2098827f7d494e5eb0edb1778d06b4afd604efbb0904495b868fe9c4e6
+        image: ghcr.io/gadgetmg/ezxss:master@sha256:0d459d8f1c1fdc94ae3aa5fab11ed1cdadefad87ba2aa9bdb7a52423a35ca08e
         name: ezxss
         ports:
         - containerPort: 8080
