@@ -39,7 +39,7 @@ spec:
             name: actual-server-env-9h4m7b42th
         - secretRef:
             name: actual-server-env
-        image: ghcr.io/actualbudget/actual-server:25.9.0@sha256:a96e38821a56843a5473204cbd3773ffee816c49c23e0a9187fb80498bd3e154
+        image: ghcr.io/actualbudget/actual-server:25.10.0@sha256:32dceb536149fcfe6e5292a6a568403c363e9fd59a41596da002b994a0b2216e
         name: actual-server
         ports:
         - containerPort: 5006
