@@ -6,14 +6,14 @@ resources:
 - https://github.com/kubernetes-csi/external-snapshotter/client/config/crd?ref=v8.3.0
 - https://github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.3.0
 - https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backends.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyextensionpolicies.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoypatchpolicies.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_httproutefilters.yaml
-- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.1/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backends.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_backendtrafficpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyextensionpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoypatchpolicies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_envoyproxies.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_httproutefilters.yaml
+- https://raw.githubusercontent.com/envoyproxy/gateway/v1.5.2/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_securitypolicies.yaml
 
 components:
 - ../../../shared/components/strip-helm-labels
