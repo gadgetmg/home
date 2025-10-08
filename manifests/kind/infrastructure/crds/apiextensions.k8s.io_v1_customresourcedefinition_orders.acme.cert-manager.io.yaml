@@ -78,6 +78,7 @@ spec:
                 items:
                   type: string
                 type: array
+                x-kubernetes-list-type: atomic
               duration:
                 description: |-
                   Duration is the duration for the not after date for the requested certificate.
@@ -91,6 +92,7 @@ spec:
                 items:
                   type: string
                 type: array
+                x-kubernetes-list-type: atomic
               issuerRef:
                 description: |-
                   IssuerRef references a properly configured ACME-type Issuer which should
@@ -100,13 +102,15 @@ spec:
                   Order will be marked as failed.
                 properties:
                   group:
-                    description: Group of the resource being referred to.
+                    default: cert-manager.io
+                    description: Group of the issuer being referred to.
                     type: string
                   kind:
-                    description: Kind of the resource being referred to.
+                    default: Issuer
+                    description: Kind of the issuer being referred to.
                     type: string
                   name:
-                    description: Name of the resource being referred to.
+                    description: Name of the issuer being referred to.
                     type: string
                 required:
                 - name
@@ -176,6 +180,7 @@ spec:
                         - url
                         type: object
                       type: array
+                      x-kubernetes-list-type: atomic
                     identifier:
                       description: Identifier is the DNS name to be validated as part
                         of this authorization
@@ -215,6 +220,7 @@ spec:
                   - url
                   type: object
                 type: array
+                x-kubernetes-list-type: atomic
               certificate:
                 description: |-
                   Certificate is a copy of the PEM encoded certificate for this Order.

@@ -5,6 +5,7 @@ metadata:
     helm.sh/resource-policy: keep
   labels:
     app: cert-manager
+    app.kubernetes.io/component: crds
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/name: cert-manager
   name: certificaterequests.cert-manager.io
@@ -23,13 +24,13 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=="Approved")].status
+    - jsonPath: .status.conditions[?(@.type == "Approved")].status
       name: Approved
       type: string
-    - jsonPath: .status.conditions[?(@.type=="Denied")].status
+    - jsonPath: .status.conditions[?(@.type == "Denied")].status
       name: Denied
       type: string
-    - jsonPath: .status.conditions[?(@.type=="Ready")].status
+    - jsonPath: .status.conditions[?(@.type == "Ready")].status
       name: Ready
       type: string
     - jsonPath: .spec.issuerRef.name
@@ -38,7 +39,7 @@ spec:
     - jsonPath: .spec.username
       name: Requester
       type: string
-    - jsonPath: .status.conditions[?(@.type=="Ready")].message
+    - jsonPath: .status.conditions[?(@.type == "Ready")].message
       name: Status
       priority: 1
       type: string
@@ -129,13 +130,15 @@ spec:
                   The `name` field of the reference must always be specified.
                 properties:
                   group:
-                    description: Group of the resource being referred to.
+                    default: cert-manager.io
+                    description: Group of the issuer being referred to.
                     type: string
                   kind:
-                    description: Kind of the resource being referred to.
+                    default: Issuer
+                    description: Kind of the issuer being referred to.
                     type: string
                   name:
-                    description: Name of the resource being referred to.
+                    description: Name of the issuer being referred to.
                     type: string
                 required:
                 - name
@@ -225,6 +228,7 @@ spec:
                   - netscape sgc
                   type: string
                 type: array
+                x-kubernetes-list-type: atomic
               username:
                 description: |-
                   Username contains the name of the user that created the CertificateRequest.
