@@ -14,7 +14,6 @@ rules:
   - get
   - list
   - watch
-  - patch
 - apiGroups:
   - trust.cert-manager.io
   resources:
@@ -30,6 +29,14 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
   - configmaps
   verbs:
   - get
@@ -38,14 +45,6 @@ rules:
   - patch
   - watch
   - delete
-- apiGroups:
-  - ""
-  resources:
-  - namespaces
-  verbs:
-  - get
-  - list
-  - watch
 - apiGroups:
   - ""
   resources:
