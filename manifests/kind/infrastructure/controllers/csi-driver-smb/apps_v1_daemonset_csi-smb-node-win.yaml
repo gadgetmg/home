@@ -36,7 +36,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.15.0
         imagePullPolicy: IfNotPresent
         name: node-driver-registrar
         resources:
@@ -67,7 +67,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: registry.k8s.io/sig-storage/smbplugin:v1.18.0-windows-hp
+        image: registry.k8s.io/sig-storage/smbplugin:v1.19.0-windows-hp
         imagePullPolicy: IfNotPresent
         name: smb
         resources:
@@ -87,7 +87,7 @@ spec:
         - -c
         - New-Item -ItemType Directory -Path C:\var\lib\kubelet\plugins\smb.csi.k8s.io\
           -Force
-        image: registry.k8s.io/sig-storage/smbplugin:v1.18.0-windows-hp
+        image: registry.k8s.io/sig-storage/smbplugin:v1.19.0-windows-hp
         imagePullPolicy: IfNotPresent
         name: init
         securityContext:
