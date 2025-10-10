@@ -1,0 +1,23 @@
+apiVersion: realm.keycloak.crossplane.io/v1alpha1
+kind: Realm
+metadata:
+  name: home
+  namespace: keycloak
+spec:
+  forProvider:
+    browserFlow: webauthn
+    displayName: seigra.net
+    realm: home
+    smtpServer:
+    - auth:
+      - passwordSecretRef:
+          key: password
+          name: keycloak-home-smtp-credentials
+          namespace: keycloak
+        username: 6ff69586806c8fee67b2e91476d732e9
+      envelopeFrom: account@seigra.net
+      from: account@seigra.net
+      fromDisplayName: seigra.net
+      host: in-v3.mailjet.com
+      port: "587"
+      starttls: true
