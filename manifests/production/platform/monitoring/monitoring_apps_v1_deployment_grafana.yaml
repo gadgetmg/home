@@ -132,7 +132,7 @@ spec:
         envFrom:
         - secretRef:
             name: grafana-oidc-secret
-        image: docker.io/grafana/grafana:12.1.1
+        image: docker.io/grafana/grafana:12.2.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 10
