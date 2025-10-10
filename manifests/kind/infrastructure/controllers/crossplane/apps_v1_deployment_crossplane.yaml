@@ -67,7 +67,7 @@ spec:
           value: crossplane-tls-client
         - name: TLS_CLIENT_CERTS_DIR
           value: /tls/client
-        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.1
+        image: xpkg.crossplane.io/crossplane/crossplane:v2.0.2
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -111,6 +111,8 @@ spec:
       - args:
         - core
         - init
+        - --activation
+        - '*'
         env:
         - name: GOMAXPROCS
           valueFrom:
@@ -146,7 +148,7 @@ spec:
           value: crossplane-tls-server
         - name: TLS_CLIENT_SECRET_NAME
           value: crossplane-tls-client
-        image: xpkg.crossplane.io/crossplane/crossplane:v1.20.1
+        image: xpkg.crossplane.io/crossplane/crossplane:v2.0.2
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:
