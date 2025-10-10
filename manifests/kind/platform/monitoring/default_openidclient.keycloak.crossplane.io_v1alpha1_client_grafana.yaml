@@ -14,5 +14,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://grafana.172.18.0.7.nip.io/login/generic_oauth
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: grafana-oidc-secret
+    namespace: crossplane-system

@@ -14,5 +14,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://argocd.172.18.0.6.nip.io/api/dex/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: argocd-oidc-secret
+    namespace: crossplane-system

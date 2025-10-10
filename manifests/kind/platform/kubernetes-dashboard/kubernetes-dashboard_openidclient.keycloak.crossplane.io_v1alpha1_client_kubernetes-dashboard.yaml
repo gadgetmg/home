@@ -15,5 +15,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://k8s.172.18.0.5.nip.io/oauth2/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: kubernetes-dashboard-oidc-secret
+    namespace: crossplane-system

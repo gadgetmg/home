@@ -15,5 +15,6 @@ spec:
     rootUrl: https://k8s.seigra.net
     validRedirectUris:
     - https://k8s.seigra.net/oauth2/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: kubernetes-dashboard-oidc-secret
+    namespace: crossplane-system
