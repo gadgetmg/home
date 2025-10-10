@@ -5,18 +5,14 @@ metadata:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   name: keycloak
   namespace: keycloak
 spec:
   endpoints:
-  - interval: 30s
-    path: /metrics
-    port: metrics
-    scheme: http
-  - interval: 30s
-    path: /realms/master/metrics
-    port: http
-    scheme: http
+  - path: /metrics
+    port: tcp-metrics
+  jobLabel: ""
   namespaceSelector:
     matchNames:
     - keycloak

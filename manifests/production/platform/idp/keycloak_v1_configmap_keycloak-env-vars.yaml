@@ -1,23 +1,32 @@
 apiVersion: v1
 data:
+  BITNAMI_DEBUG: "false"
   JAVA_OPTS_APPEND: -Djgroups.dns.query=keycloak-headless.keycloak.svc.cluster.local
+  KC_BOOTSTRAP_ADMIN_PASSWORD_FILE: /opt/bitnami/keycloak/secrets/admin-password
   KC_BOOTSTRAP_ADMIN_USERNAME: admin
+  KC_CACHE: ispn
   KC_CACHE_CONFIG_FILE: cache-ispn.xml
-  KC_CACHE_STACK: kubernetes
-  KC_CACHE_TYPE: ispn
-  KEYCLOAK_DATABASE_SCHEMA: public
-  KEYCLOAK_ENABLE_HTTPS: "false"
-  KEYCLOAK_ENABLE_STATISTICS: "true"
-  KEYCLOAK_HTTP_PORT: "8080"
-  KEYCLOAK_LOG_LEVEL: INFO
-  KEYCLOAK_LOG_OUTPUT: default
+  KC_CACHE_STACK: jdbc-ping
+  KC_DB_PASSWORD_FILE: /opt/bitnami/keycloak/secrets/db-password
+  KC_DB_SCHEMA: public
+  KC_DB_URL: jdbc:postgresql://keycloak-db:5432/bitnami_keycloak?currentSchema=public
+  KC_DB_USERNAME_FILE: /opt/bitnami/keycloak/secrets/db-user
+  KC_HTTP_ENABLED: "true"
+  KC_HTTP_MANAGEMENT_PORT: "9000"
+  KC_HTTP_PORT: "8080"
+  KC_HTTP_RELATIVE_PATH: /
+  KC_LOG_CONSOLE_OUTPUT: default
+  KC_LOG_LEVEL: INFO
+  KC_METRICS_ENABLED: "true"
+  KC_PROXY_HEADERS: xforwarded
+  KC_SPI_ADMIN_REALM: master
   KEYCLOAK_PRODUCTION: "true"
-  KEYCLOAK_PROXY_HEADERS: xforwarded
 kind: ConfigMap
 metadata:
   labels:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   name: keycloak-env-vars
   namespace: keycloak

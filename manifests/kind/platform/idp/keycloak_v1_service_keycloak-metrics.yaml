@@ -8,20 +8,18 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   name: keycloak-metrics
   namespace: keycloak
 spec:
   ports:
-  - name: metrics
+  - name: tcp-metrics
     port: 9000
     protocol: TCP
-    targetPort: 9000
-  - name: http
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
+    targetPort: management
   selector:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   type: ClusterIP

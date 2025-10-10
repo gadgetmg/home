@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   name: keycloak
   namespace: keycloak
 spec:
@@ -12,14 +13,15 @@ spec:
   - {}
   ingress:
   - ports:
-    - port: 7800
-    - port: 9000
     - port: 8080
+    - port: 9000
+    - port: 7800
   podSelector:
     matchLabels:
       app.kubernetes.io/component: keycloak
       app.kubernetes.io/instance: keycloak
       app.kubernetes.io/name: keycloak
+      app.kubernetes.io/part-of: keycloak
   policyTypes:
   - Ingress
   - Egress

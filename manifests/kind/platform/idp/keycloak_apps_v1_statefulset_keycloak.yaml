@@ -5,6 +5,7 @@ metadata:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
   name: keycloak
   namespace: keycloak
 spec:
@@ -16,15 +17,17 @@ spec:
       app.kubernetes.io/component: keycloak
       app.kubernetes.io/instance: keycloak
       app.kubernetes.io/name: keycloak
+      app.kubernetes.io/part-of: keycloak
   serviceName: keycloak-headless
   template:
     metadata:
       annotations:
-        checksum/configmap-env-vars: d4bbb0df15edbfb88d11960f2c961ba403b078d91ec00afa2fc1a8777cf28a1f
+        checksum/configmap-env-vars: a410beecb25d9c2eb19d7f708fdb256a44cb82e7c5314e747326adb0e25811f0
       labels:
         app.kubernetes.io/component: keycloak
         app.kubernetes.io/instance: keycloak
         app.kubernetes.io/name: keycloak
+        app.kubernetes.io/part-of: keycloak
     spec:
       affinity:
         nodeAffinity: null
@@ -34,6 +37,7 @@ spec:
           - podAffinityTerm:
               labelSelector:
                 matchLabels:
+                  app.kubernetes.io/component: keycloak
                   app.kubernetes.io/instance: keycloak
                   app.kubernetes.io/name: keycloak
               topologyKey: kubernetes.io/hostname
@@ -46,32 +50,14 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        - name: BITNAMI_DEBUG
-          value: "false"
-        - name: KC_BOOTSTRAP_ADMIN_PASSWORD_FILE
-          value: /opt/bitnami/keycloak/secrets/admin-password
-        - name: KEYCLOAK_DATABASE_PASSWORD_FILE
-          value: /opt/bitnami/keycloak/secrets/db-password
-        - name: KEYCLOAK_DATABASE_HOST_FILE
-          value: /opt/bitnami/keycloak/secrets/db-host
-        - name: KEYCLOAK_DATABASE_PORT_FILE
-          value: /opt/bitnami/keycloak/secrets/db-port
-        - name: KEYCLOAK_DATABASE_USER_FILE
-          value: /opt/bitnami/keycloak/secrets/db-user
-        - name: KEYCLOAK_DATABASE_NAME_FILE
-          value: /opt/bitnami/keycloak/secrets/db-dbname
-        - name: KEYCLOAK_HTTP_RELATIVE_PATH
-          value: /
-        - name: KC_SPI_ADMIN_REALM
-          value: master
         envFrom:
         - configMapRef:
             name: keycloak-env-vars
-        image: docker.io/bitnami/keycloak:26.3.2-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.3.3-debian-12-r0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
-          initialDelaySeconds: 300
+          initialDelaySeconds: 120
           periodSeconds: 1
           successThreshold: 1
           tcpSocket:
@@ -83,7 +69,7 @@ spec:
           name: http
           protocol: TCP
         - containerPort: 9000
-          name: metrics
+          name: management
           protocol: TCP
         - containerPort: 7800
           name: discovery
@@ -92,6 +78,7 @@ spec:
           httpGet:
             path: /realms/master
             port: http
+            scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1
@@ -154,13 +141,18 @@ spec:
           info "Copy operation completed"
         command:
         - /bin/bash
-        image: docker.io/bitnami/keycloak:26.3.2-debian-12-r0
+        image: docker.io/bitnami/keycloak:26.3.3-debian-12-r0
         imagePullPolicy: IfNotPresent
         name: prepare-write-dirs
         resources:
+          limits:
+            cpu: 150m
+            ephemeral-storage: 2Gi
+            memory: 192Mi
           requests:
-            cpu: 50m
-            memory: 1Gi
+            cpu: 100m
+            ephemeral-storage: 50Mi
+            memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -195,15 +187,8 @@ spec:
               items:
               - key: password
                 path: db-password
-              - key: host
-                path: db-host
-              - key: port
-                path: db-port
               - key: user
                 path: db-user
-              - key: dbname
-                path: db-dbname
               name: keycloak-db-app
   updateStrategy:
-    rollingUpdate: {}
     type: RollingUpdate

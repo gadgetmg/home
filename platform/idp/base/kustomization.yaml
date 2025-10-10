@@ -20,7 +20,7 @@ components:
 helmCharts:
 - name: keycloak
   repo: oci://docker.io/bitnamicharts
-  version: 24.9.0
+  version: 25.2.0
   releaseName: keycloak
   namespace: keycloak
   valuesInline:
@@ -42,6 +42,7 @@ helmCharts:
     postgresql:
       enabled: false
     externalDatabase:
+      host: keycloak-db
       existingSecret: keycloak-db-app
       existingSecretHostKey: host
       existingSecretPortKey: port
