@@ -15,7 +15,7 @@ spec:
   - context:
     - name: secret_name
       variable:
-        jmesPath: request.object.spec.publishConnectionDetailsTo.name
+        jmesPath: request.object.spec.writeConnectionSecretToRef.name
     - apiCall:
         jmesPath: data."attribute.client_secret" | base64_decode(@)
         method: GET

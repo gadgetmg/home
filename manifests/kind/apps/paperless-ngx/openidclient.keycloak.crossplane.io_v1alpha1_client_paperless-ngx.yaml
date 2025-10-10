@@ -19,5 +19,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://paperless.172.18.0.8.nip.io/accounts/oidc/keycloak/login/callback/
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: keycloak-client-paperless-ngx
+    namespace: crossplane-system

@@ -18,5 +18,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://actual.seigra.net/openid/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: keycloak-client-actual
+    namespace: crossplane-system

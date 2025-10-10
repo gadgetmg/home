@@ -18,5 +18,6 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - https://actual.172.18.0.9.nip.io/openid/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: keycloak-client-actual
+    namespace: crossplane-system

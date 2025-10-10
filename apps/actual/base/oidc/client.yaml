@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
@@ -13,5 +14,6 @@ spec:
     rootUrl: https://actual.seigra.net
     validRedirectUris:
     - https://actual.seigra.net/openid/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: keycloak-client-actual
+    namespace: crossplane-system

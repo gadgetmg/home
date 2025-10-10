@@ -15,5 +15,6 @@ spec:
     fullScopeAllowed: false
     validRedirectUris:
     - https://grafana.seigra.net/login/generic_oauth
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: grafana-oidc-secret
+    namespace: crossplane-system

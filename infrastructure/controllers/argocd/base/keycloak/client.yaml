@@ -15,5 +15,6 @@ spec:
     rootUrl: https://argocd.seigra.net
     validRedirectUris:
     - https://argocd.seigra.net/api/dex/callback
-  publishConnectionDetailsTo:
+  writeConnectionSecretToRef:
     name: argocd-oidc-secret
+    namespace: crossplane-system
