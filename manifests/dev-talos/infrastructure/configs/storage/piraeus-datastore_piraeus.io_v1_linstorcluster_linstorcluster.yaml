@@ -7,7 +7,7 @@ spec:
   apiTLS:
     certManager:
       kind: Issuer
-      name: linstor-api-ca
+      name: linstor-internal-ca
   internalTLS:
     certManager:
       kind: Issuer
