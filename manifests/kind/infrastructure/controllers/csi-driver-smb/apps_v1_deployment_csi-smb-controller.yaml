@@ -105,7 +105,7 @@ spec:
         env:
         - name: CSI_ENDPOINT
           value: unix:///csi/csi.sock
-        image: registry.k8s.io/sig-storage/smbplugin:v1.19.0
+        image: registry.k8s.io/sig-storage/smbplugin:v1.19.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
