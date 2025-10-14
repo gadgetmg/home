@@ -7,7 +7,6 @@ namespace: piraeus-datastore
 resources:
 - ca-bootstrapper.yaml
 - internal-ca.yaml
-- api-ca.yaml
 - cluster.yaml
 - satellite-internal-tls.yaml
 - talos-loader-overrides.yaml
