@@ -19,7 +19,7 @@ components:
 
 images:
 - name: docker.io/bitnami/keycloak
-  newName: ecr.aws/bitnami/keycloak
+  newName: public.ecr.aws/bitnami/keycloak
 
 helmCharts:
 - name: keycloak
