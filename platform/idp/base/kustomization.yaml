@@ -17,6 +17,10 @@ resources:
 components:
 - ../../../shared/components/strip-helm-labels
 
+images:
+- name: docker.io/bitnami/keycloak
+  newName: ecr.aws/bitnami/keycloak
+
 helmCharts:
 - name: keycloak
   repo: oci://docker.io/bitnamicharts
