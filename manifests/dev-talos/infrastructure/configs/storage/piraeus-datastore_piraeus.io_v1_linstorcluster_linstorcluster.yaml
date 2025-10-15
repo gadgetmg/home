@@ -4,12 +4,4 @@ metadata:
   name: linstorcluster
   namespace: piraeus-datastore
 spec:
-  apiTLS:
-    certManager:
-      kind: Issuer
-      name: linstor-internal-ca
-  internalTLS:
-    certManager:
-      kind: Issuer
-      name: linstor-internal-ca
   linstorPassphraseSecret: linstorcluster-passphrase

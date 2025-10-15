@@ -5,8 +5,5 @@ kind: Kustomization
 namespace: piraeus-datastore
 
 resources:
-- ca-bootstrapper.yaml
-- internal-ca.yaml
 - cluster.yaml
-- satellite-internal-tls.yaml
 - talos-loader-overrides.yaml

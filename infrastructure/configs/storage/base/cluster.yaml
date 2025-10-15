@@ -4,11 +4,3 @@ metadata:
   name: linstorcluster
 spec:
   linstorPassphraseSecret: linstorcluster-passphrase
-  internalTLS:
-    certManager:
-      name: linstor-internal-ca
-      kind: Issuer
-  apiTLS:
-    certManager:
-      name: linstor-internal-ca
-      kind: Issuer
