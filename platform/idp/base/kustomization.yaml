@@ -46,7 +46,7 @@ helmCharts:
     postgresql:
       enabled: false
     externalDatabase:
-      host: keycloak-db
+      host: keycloak-db-rw
       existingSecret: keycloak-db-app
       existingSecretHostKey: host
       existingSecretPortKey: port
