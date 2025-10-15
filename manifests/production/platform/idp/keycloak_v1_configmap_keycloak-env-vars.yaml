@@ -9,7 +9,7 @@ data:
   KC_CACHE_STACK: jdbc-ping
   KC_DB_PASSWORD_FILE: /opt/bitnami/keycloak/secrets/db-password
   KC_DB_SCHEMA: public
-  KC_DB_URL: jdbc:postgresql://keycloak-db:5432/bitnami_keycloak?currentSchema=public
+  KC_DB_URL: jdbc:postgresql://keycloak-db-rw:5432/bitnami_keycloak?currentSchema=public
   KC_DB_USERNAME_FILE: /opt/bitnami/keycloak/secrets/db-user
   KC_HTTP_ENABLED: "true"
   KC_HTTP_MANAGEMENT_PORT: "9000"
