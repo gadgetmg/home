@@ -53,7 +53,7 @@ spec:
         envFrom:
         - configMapRef:
             name: keycloak-env-vars
-        image: ecr.aws/bitnami/keycloak:26.3.3-debian-12-r0
+        image: public.ecr.aws/bitnami/keycloak:26.3.3-debian-12-r0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -141,7 +141,7 @@ spec:
           info "Copy operation completed"
         command:
         - /bin/bash
-        image: ecr.aws/bitnami/keycloak:26.3.3-debian-12-r0
+        image: public.ecr.aws/bitnami/keycloak:26.3.3-debian-12-r0
         imagePullPolicy: IfNotPresent
         name: prepare-write-dirs
         resources:
