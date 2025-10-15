@@ -41,7 +41,7 @@ spec:
           value: piraeus-operator-image-config
         - name: REQUEUE_INTERVAL
           value: 1m
-        image: quay.io/piraeusdatastore/piraeus-operator:v2.9.1
+        image: quay.io/piraeusdatastore/piraeus-operator:v2.8.1
         livenessProbe:
           httpGet:
             path: /healthz
