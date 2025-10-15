@@ -47,11 +47,9 @@ helmCharts:
       enabled: false
     externalDatabase:
       host: keycloak-db-rw
+      database: keycloak
       existingSecret: keycloak-db-app
-      existingSecretHostKey: host
-      existingSecretPortKey: port
       existingSecretUserKey: user
-      existingSecretDatabaseKey: dbname
       existingSecretPasswordKey: password
     resources:
       requests:
