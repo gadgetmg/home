@@ -19,7 +19,7 @@ webhooks:
       namespace: monitoring
       path: /admission-prometheusrules/validate
   failurePolicy: Ignore
-  name: prometheusrulemutate.monitoring.coreos.com
+  name: prometheusrulevalidate.monitoring.coreos.com
   rules:
   - apiGroups:
     - monitoring.coreos.com
@@ -30,5 +30,27 @@ webhooks:
     - UPDATE
     resources:
     - prometheusrules
+  sideEffects: None
+  timeoutSeconds: 10
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: prometheus-operator
+      namespace: monitoring
+      path: /admission-alertmanagerconfigs/validate
+  failurePolicy: Ignore
+  name: alertmanagerconfigsvalidate.monitoring.coreos.com
+  rules:
+  - apiGroups:
+    - monitoring.coreos.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - alertmanagerconfigs
   sideEffects: None
   timeoutSeconds: 10
