@@ -13,7 +13,7 @@ helmCharts:
   repo: oci://docker.io/envoyproxy
   releaseName: envoy-gateway
   namespace: envoy-gateway-system
-  version: 1.5.3
+  version: 1.5.4
   valuesInline:
     config:
       envoyGateway:
