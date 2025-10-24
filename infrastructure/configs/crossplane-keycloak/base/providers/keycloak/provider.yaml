@@ -5,6 +5,6 @@ metadata:
   name: provider-keycloak
 spec:
   # renovate: datasource=github-releases depName=crossplane-contrib/provider-keycloak
-  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v2.8.0
+  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v2.9.0
   runtimeConfigRef:
     name: provider-keycloak
