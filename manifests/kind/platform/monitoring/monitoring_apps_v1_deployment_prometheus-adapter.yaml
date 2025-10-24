@@ -10,6 +10,7 @@ metadata:
   namespace: monitoring
 spec:
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/instance: prometheus-adapter
@@ -22,7 +23,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 0745b5409ab400f557db74fce0535fbf08e14653f79cc20bfd89f3d43858e969
+        checksum/config: a808990a51addb9cf1b03ee245524e8d604aef1d10a4f4e611f059e87acb1053
       labels:
         app.kubernetes.io/component: metrics
         app.kubernetes.io/instance: prometheus-adapter
