@@ -38,7 +38,7 @@ spec:
         envFrom:
         - configMapRef:
             name: mariadb-operator-env
-        image: ghcr.io/mariadb-operator/mariadb-operator:25.10.1
+        image: ghcr.io/mariadb-operator/mariadb-operator:25.10.2
         imagePullPolicy: IfNotPresent
         name: controller
         ports:
