@@ -20,7 +20,7 @@ spec:
       annotations:
         checksum/config: 2b6512d0c765c5d8f5ef7b30387c87a63bebb8b2168f73a66c88b30091af5632
         checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
-        checksum/secret: 63f53155e8074bb5a6c2877a0cf9e4a09353809590970a49b1101989572b782f
+        checksum/secret: 85958bb5bd8868892babf48be7bcb0232f25f0d74b656eda2297d2b9ac2239ea
         kubectl.kubernetes.io/default-container: grafana
       labels:
         app.kubernetes.io/instance: kube-prometheus-stack
