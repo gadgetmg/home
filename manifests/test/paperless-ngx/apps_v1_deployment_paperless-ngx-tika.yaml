@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/part-of: paperless-ngx
     spec:
       containers:
-      - image: apache/tika:2.9.1.0@sha256:6c0b636dc050643d4e2dee66dd85357568f003963d976ae938df446a17ce6ca8
+      - image: apache/tika:3.2.3.0@sha256:c0154cb95587cde64be74f35ada1a2bd7892219f3f0ac3c9dc6cab34046b3573
         name: tika
         readinessProbe:
           httpGet:
