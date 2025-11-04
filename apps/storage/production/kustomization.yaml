@@ -5,12 +5,5 @@ kind: Kustomization
 resources:
 - ../base
 - pools.yaml
+- secrets.yaml
 - storageclasses.yaml
-
-secretGenerator:
-- name: linstorcluster-passphrase
-  namespace: piraeus-datastore
-  literals:
-  - MASTER_PASSPHRASE=password
-  options:
-    disableNameSuffixHash: true
