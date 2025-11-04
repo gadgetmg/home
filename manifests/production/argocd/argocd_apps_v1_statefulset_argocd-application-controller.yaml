@@ -19,8 +19,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 75e360c90a7b7dff6b684dba76faf4ea9fe4579a128da9b43d299d7781fbb718
-        checksum/cmd-params: 073ca39768a733c0f2d93bdc960087da20ecdf034fd6f79d33661a5f0073acf7
+        checksum/cm: 01be11883aacceed942a8c02fff2f7f236854e9780a2bbd727f9975ad1a4832d
+        checksum/cmd-params: 010695d03173ff3598ca2659a76c28cf9ee80d594282e5ff68dbe7d7c0b80635
       labels:
         app.kubernetes.io/component: application-controller
         app.kubernetes.io/instance: argocd
@@ -146,6 +146,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: controller.self.heal.backoff.cooldown.seconds
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_SYNC_WAVE_DELAY
+          valueFrom:
+            configMapKeyRef:
+              key: controller.sync.wave.delay.seconds
               name: argocd-cmd-params-cm
               optional: true
         - name: ARGOCD_APPLICATION_CONTROLLER_SYNC_TIMEOUT
@@ -318,7 +324,7 @@ spec:
               optional: true
         - name: KUBECACHEDIR
           value: /tmp/kubecache
-        image: quay.io/argoproj/argocd:v3.1.9
+        image: quay.io/argoproj/argocd:v3.2.0
         imagePullPolicy: IfNotPresent
         name: application-controller
         ports:
