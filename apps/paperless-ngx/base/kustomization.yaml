@@ -14,7 +14,7 @@ images:
 - name: valkey/valkey
   newTag: 7.2.5-alpine3.19@sha256:4054fe7fc607b9326ac7c4691ed26e9670d2ff17a9fb28c2577adecf928acbcc
 - name: apache/tika
-  newTag: 2.9.1.0@sha256:6c0b636dc050643d4e2dee66dd85357568f003963d976ae938df446a17ce6ca8
+  newTag: 2.9.2.1@sha256:2be134745fcb59826c54041489946c66218b948ea0c0be3a37cb7919ecc845ba
 - name: gotenberg/gotenberg
   newTag: 8.24.0@sha256:b116a40a1c24917e2bf3e153692da5acd2e78e7cd67e1b2d243b47c178f31c90
 - name: ghcr.io/paperless-ngx/paperless-ngx
