@@ -7,9 +7,9 @@ DETIK_CLIENT_NAME="kubectl"
 setup_file() {
   setup_kind_cluster
   kapp deploy -y -a setup \
-    -f manifests/kind/infrastructure/crds \
-    -f manifests/kind/infrastructure/controllers/envoy-gateway \
-    -f manifests/kind/infrastructure/configs/gatewayclasses
+    -f crds/test \
+    -f manifests/test/envoy-gateway \
+    -f manifests/test/gatewayclasses
 }
 
 teardown_file() {

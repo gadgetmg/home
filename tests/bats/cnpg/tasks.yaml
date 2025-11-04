@@ -5,6 +5,7 @@ tasks:
   default:
     sources:
     - '{{.TASKFILE_DIR}}/**/*'
-    - manifests/kind/infrastructure/crds/*
-    - manifests/kind/infrastructure/controllers/cnpg/*
+    - crds/test/*
+    - manifests/test/cert-manager/*
+    - manifests/test/cnpg/*
     cmd: bats {{.TASKFILE_DIR}}

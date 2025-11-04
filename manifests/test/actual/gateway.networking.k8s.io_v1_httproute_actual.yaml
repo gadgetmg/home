@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual
+  namespace: actual
+spec:
+  hostnames:
+  - actual.10.5.0.59.nip.io
+  parentRefs:
+  - name: actual
+  rules:
+  - backendRefs:
+    - name: actual-server
+      port: 80

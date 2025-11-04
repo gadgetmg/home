@@ -1,0 +1,215 @@
+apiVersion: v1
+data:
+  admin.enabled: "true"
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  application.resourceTrackingMethod: annotation+label
+  application.sync.impersonation.enabled: "false"
+  dex.config: |
+    connectors:
+    - type: oidc
+      id: keycloak
+      name: seigra.net
+      config:
+        issuer: https://auth.10.5.0.54.nip.io/realms/home
+        clientID: argocd
+        clientSecret: $argocd-oidc-secret:client_secret
+        scopes:
+        - openid
+        - profile
+        - email
+        getUserInfo: true
+        userNameKey: preferred_username
+        insecureEnableGroups: true
+  exec.enabled: "false"
+  kustomize.buildOptions: --enable-helm
+  resource.compareoptions: |
+    ignoreResourceStatusField: all
+  resource.customizations: |
+    argoproj.io/Application:
+      health.lua: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = ""
+        if obj.status ~= nil then
+          if obj.status.health ~= nil then
+            hs.status = obj.status.health.status
+            if obj.status.health.message ~= nil then
+              hs.message = obj.status.health.message
+            end
+          end
+        end
+        return hs
+    "*.keycloak.crossplane.io/*":
+      health.lua: |
+        local hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            local ready = false
+            local synced = false
+            local suspended = false
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" then
+                ready = condition.status == "True"
+                ready_message = condition.reason
+              elseif condition.type == "Synced" then
+                synced = condition.status == "True"
+                if condition.reason == "ReconcileError" then
+                  synced_message = condition.message
+                elseif condition.reason == "ReconcilePaused" then
+                  suspended = true
+                  suspended_message = condition.reason
+                end
+              end
+            end
+            if ready and synced then
+              hs.status = "Healthy"
+              hs.message = ready_message
+            elseif synced == false and suspended == true then
+              hs.status = "Suspended"
+              hs.message = suspended_message
+            elseif ready == false and synced == true and suspended == false then
+              hs.status = "Progressing"
+              hs.message = "Waiting for resource to be available"
+            else
+              hs.status = "Degraded"
+              hs.message = synced_message
+            end
+            return hs
+          end
+        end
+
+        hs.status = "Progressing"
+        hs.message = "Waiting for resource to be created"
+        return hs
+    "k8s.keycloak.org/Keycloak":
+      health.lua: |
+        local hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            local ready = false
+            local haserrors = false
+            local rollingupdate = false
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" then
+                ready = condition.status == "True"
+                ready_message = condition.message
+              elseif condition.type == "HasErrors" then
+                haserrors = condition.status == "True"
+                haserrors_message = condition.message
+              elseif condition.type == "RollingUpdate" then
+                rollingupdate = condition.status == "True"
+                rollingupdate_message = condition.message
+              end
+            end
+            if ready and haserrors == false and rollingupdate == false then
+              hs.status = "Healthy"
+              hs.message = ready_message
+            elseif rollingupdate == true then
+              hs.status = "Progressing"
+              hs.message = rollingupdate_message
+            elseif ready == false and haserrors == false then
+              hs.status = "Progressing"
+              hs.message = "Waiting for resource to be available"
+            else
+              hs.status = "Degraded"
+              hs.message = haserrors_message
+            end
+            return hs
+          end
+        end
+
+        hs.status = "Progressing"
+        hs.message = "Waiting for resource to be created"
+        return hs
+    "postgresql.cnpg.io/Cluster":
+      health.lua: |
+        local hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            local ready = false
+            local continuousarchiving = false
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" then
+                ready = condition.status == "True"
+                ready_message = condition.message
+              elseif condition.type == "ContinuousArchiving" then
+                continuousarchiving = condition.status == "True"
+                continuousarchiving_message = condition.message
+              end
+            end
+            if ready and continuousarchiving then
+              hs.status = "Healthy"
+              hs.message = ready_message
+            else
+              hs.status = "Progressing"
+              hs.message = ready_message
+            end
+            return hs
+          end
+        end
+
+        hs.status = "Progressing"
+        hs.message = "Waiting for resource to be created"
+        return hs
+  resource.customizations.ignoreResourceUpdates.ConfigMap: |
+    jqPathExpressions:
+      # Ignore the cluster-autoscaler status
+      - '.metadata.annotations."cluster-autoscaler.kubernetes.io/last-updated"'
+      # Ignore the annotation of the legacy Leases election
+      - '.metadata.annotations."control-plane.alpha.kubernetes.io/leader"'
+  resource.customizations.ignoreResourceUpdates.Endpoints: |
+    jsonPointers:
+      - /metadata
+      - /subsets
+  resource.customizations.ignoreResourceUpdates.all: |
+    jsonPointers:
+    - /status
+    - /metadata/resourceVersion
+  resource.customizations.ignoreResourceUpdates.apps_ReplicaSet: |
+    jqPathExpressions:
+      - '.metadata.annotations."deployment.kubernetes.io/desired-replicas"'
+      - '.metadata.annotations."deployment.kubernetes.io/max-replicas"'
+      - '.metadata.annotations."rollout.argoproj.io/desired-replicas"'
+  resource.customizations.ignoreResourceUpdates.argoproj.io_Application: |
+    jqPathExpressions:
+      - '.metadata.annotations."notified.notifications.argoproj.io"'
+      - '.metadata.annotations."argocd.argoproj.io/refresh"'
+      - '.metadata.annotations."argocd.argoproj.io/hydrate"'
+      - '.operation'
+  resource.customizations.ignoreResourceUpdates.argoproj.io_Rollout: |
+    jqPathExpressions:
+      - '.metadata.annotations."notified.notifications.argoproj.io"'
+  resource.customizations.ignoreResourceUpdates.autoscaling_HorizontalPodAutoscaler: |
+    jqPathExpressions:
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/behavior"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/conditions"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/metrics"'
+      - '.metadata.annotations."autoscaling.alpha.kubernetes.io/current-metrics"'
+  resource.customizations.ignoreResourceUpdates.discovery.k8s.io_EndpointSlice: |
+    jsonPointers:
+      - /metadata
+      - /endpoints
+      - /ports
+  resource.exclusions: |
+    - apiGroups:
+        - cilium.io
+      kinds:
+        - CiliumIdentity
+      clusters:
+        - "*"
+  resource.ignoreResourceUpdatesEnabled: "true"
+  server.rbac.log.enforce.enable: "false"
+  statusbadge.enabled: "false"
+  timeout.hard.reconciliation: 0s
+  timeout.reconciliation: 180s
+  timeout.reconciliation.jitter: 1m
+  url: https://argocd.10.5.0.53.nip.io
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd

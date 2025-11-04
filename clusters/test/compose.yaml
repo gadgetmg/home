@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-go/master/schema/compose-spec.json
+services:
+  git-mirror:
+    build:
+      context: ./git-mirror
+      network: host
+    volumes:
+    - ../../.git:/git/repo.git:ro
+    ports:
+    - 8888:80

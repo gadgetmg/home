@@ -7,10 +7,10 @@ DETIK_CLIENT_NAME="kubectl"
 setup_file() {
   setup_kind_cluster
   kapp deploy -y -a setup \
-    -f manifests/kind/infrastructure/crds \
-    -f manifests/kind/infrastructure/controllers/cert-manager \
-    -f manifests/kind/infrastructure/controllers/external-secrets \
-    -f manifests/kind/infrastructure/configs/clusterissuers
+    -f crds/test \
+    -f manifests/test/cert-manager \
+    -f manifests/test/external-secrets \
+    -f manifests/test/clusterissuers
 }
 
 teardown_file() {

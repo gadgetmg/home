@@ -5,7 +5,7 @@ tasks:
   default:
     sources:
     - '{{.TASKFILE_DIR}}/**/*'
-    - manifests/kind/infrastructure/crds/*
-    - manifests/kind/infrastructure/controllers/crossplane/*
-    - manifests/kind/infrastructure/configs/crossplane-keycloak/*
+    - crds/test/*
+    - manifests/test/crossplane/*
+    - manifests/test/crossplane-keycloak/*
     cmd: bats {{.TASKFILE_DIR}}

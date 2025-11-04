@@ -5,7 +5,7 @@ tasks:
   default:
     sources:
     - '{{.TASKFILE_DIR}}/**/*'
-    - manifests/kind/infrastructure/crds/*
-    - manifests/kind/infrastructure/controllers/envoy-gateway/*
-    - manifests/kind/infrastructure/configs/gatewayclasses/*
+    - crds/test/*
+    - manifests/test/envoy-gateway/*
+    - manifests/test/gatewayclasses/*
     cmd: bats {{.TASKFILE_DIR}}

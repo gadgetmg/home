@@ -3,9 +3,9 @@
 setup_kind_cluster() {
   export KUBECONFIG=$(mktemp)
   export KIND_CLUSTER_NAME=$RANDOM
-  cd clusters/kind
+  cd tests
   kind create cluster --config kind-config.yaml
-  cd ../..
+  cd ..
 }
 
 teardown_kind_cluster() {

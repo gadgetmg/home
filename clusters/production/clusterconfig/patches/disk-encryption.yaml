@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://www.talos.dev/v1.7/schemas/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 machine:
   systemDiskEncryption:
     ephemeral:

@@ -1,0 +1,15 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  name: talos-default-worker-3-pools
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: talos-default-worker-3
+  storagePools:
+  - lvmThinPool: {}
+    name: ssd
+    source:
+      hostDevices:
+      - /dev/vdb

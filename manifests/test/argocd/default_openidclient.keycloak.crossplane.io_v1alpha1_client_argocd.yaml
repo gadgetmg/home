@@ -1,0 +1,19 @@
+apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: argocd
+spec:
+  deletionPolicy: Delete
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: argocd
+    fullScopeAllowed: false
+    realmIdRef:
+      name: home
+    rootUrl: https://argocd.10.5.0.53.nip.io
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://argocd.10.5.0.53.nip.io/api/dex/callback
+  writeConnectionSecretToRef:
+    name: argocd-oidc-secret
+    namespace: crossplane-system

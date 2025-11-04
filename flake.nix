@@ -79,6 +79,7 @@
                   kyverno-chainsaw
                   minikube
                   pre-commit
+                  qemu
                   renovate
                   sops
                   ssh-to-age
@@ -94,6 +95,7 @@
                       deepdiff
                     ]
                   ))
+                  OVMF
                 ];
                 shellHook = ''
                   export PATH="$HOME/.krew/bin:$PATH"

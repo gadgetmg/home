@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.8.0/manifest.yaml
+
+components:
+- ../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: cloudnative-pg
+  repo: https://cloudnative-pg.io/charts
+  releaseName: cnpg
+  namespace: cnpg-system
+  version: 0.26.1
+  valuesInline:
+    replicaCount: 1

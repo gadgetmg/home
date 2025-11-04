@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+patches:
+- target:
+    annotationSelector: helm.sh/hook in (pre-delete, post-delete, test)
+  patch: |
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: noop
+      annotations:
+        kapp.k14s.io/noop: ""

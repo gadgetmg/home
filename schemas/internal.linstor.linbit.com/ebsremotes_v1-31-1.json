@@ -1,0 +1,50 @@
+{
+  "properties": {
+    "spec": {
+      "properties": {
+        "access_key": {
+          "format": "byte",
+          "type": "string"
+        },
+        "availability_zone": {
+          "type": "string"
+        },
+        "dsp_name": {
+          "type": "string"
+        },
+        "flags": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "secret_key": {
+          "format": "byte",
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "x-kubernetes-group-version-kind": [
+    {
+      "kind": [
+        "EbsRemotes"
+      ],
+      "version": "v1-31-1",
+      "group": "internal.linstor.linbit.com"
+    }
+  ],
+  "$schema": "http://json-schema.org/schema#"
+}

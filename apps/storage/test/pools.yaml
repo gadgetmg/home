@@ -1,0 +1,47 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: talos-default-worker-1-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: talos-default-worker-1
+  storagePools:
+  - name: ssd
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/vdb
+---
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: talos-default-worker-2-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: talos-default-worker-2
+  storagePools:
+  - name: ssd
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/vdb
+---
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  name: talos-default-worker-3-pools
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: talos-default-worker-3
+  storagePools:
+  - name: ssd
+    lvmThinPool: {}
+    source:
+      hostDevices:
+      - /dev/vdb

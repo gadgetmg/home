@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://json.schemastore.org/json-patch
+- op: replace
+  path: /metadata/annotations/cert-manager.io~1cluster-issuer
+  value: cluster-ca
+- op: replace
+  path: /spec/listeners/0/hostname
+  value: paperless.10.5.0.58.nip.io
+- op: add
+  path: /spec/infrastructure
+  value:
+    annotations:
+      lbipam.cilium.io/ips: 10.5.0.58

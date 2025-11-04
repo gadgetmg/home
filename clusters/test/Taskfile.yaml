@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  # renovate: datasource=github-releases depName=siderolabs/talos
+  TALOS_VERSION: v1.11.3
+  # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  KUBERNETES_VERSION: v1.34.1
+
+tasks:
+  up:
+    cmds:
+    - sudo iptables -N talos-qemu
+    - sudo iptables -A talos-qemu -i talos+ -j ACCEPT
+    - sudo iptables -I INPUT 1 -j talos-qemu
+    - |
+      sudo -E talosctl cluster create \
+        --provisioner qemu \
+        --talos-version {{.TALOS_VERSION}} \
+        --kubernetes-version {{.KUBERNETES_VERSION}} \
+        --extra-uefi-search-paths=$(nix eval --raw nixpkgs#OVMF.fd)/FV \
+        --uki-path=https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/metal-amd64-uki.efi \
+        --install-image=factory.talos.dev/metal-installer-secureboot/e048aaf4461ff9f9576c9a42f760f2fef566559bd4933f322853ac291e46f238:{{.TALOS_VERSION}} \
+        --config-patch @clusterconfig/patches/containerd-config.yaml \
+        --config-patch @clusterconfig/patches/disable-hostdns.yaml \
+        --config-patch @clusterconfig/patches/disable-proxy.yaml \
+        --config-patch @clusterconfig/patches/metrics-scraping.yaml \
+        --config-patch @clusterconfig/patches/no-cni.yaml \
+        --config-patch @clusterconfig/patches/pod-security.yaml \
+        --config-patch @clusterconfig/patches/kernel-modules.yaml \
+        --config-patch @clusterconfig/patches/parallel-image-pulls.yaml \
+        --config-patch-control-plane @clusterconfig/patches/etcd-max-request-bytes.yaml \
+        --skip-k8s-node-readiness-check \
+        --disk-preallocate=false \
+        --use-vip \
+        --controlplanes 1 \
+        --cpus 2 \
+        --memory 8192 \
+        --workers 3 \
+        --cpus-workers 4 \
+        --memory-workers 8192 \
+        --disk 40000 \
+        --extra-disks 1 \
+        --extra-disks-size 100000 \
+        --extra-disks-drivers virtio
+    - docker compose up -d --build
+
+  down:
+    cmds:
+    - sudo iptables -D INPUT -j talos-qemu
+    - sudo iptables -F talos-qemu
+    - sudo iptables -X talos-qemu
+    - sudo -E talosctl cluster destroy --provisioner qemu -f
+    - docker compose down
+
+  update:
+    status:
+    - kubectl get --namespace argocd applicationset/home
+    sources:
+    - home.yaml
+    - ../../manifests/test/**/*
+    cmds:
+    - git add -A
+    - git update-ref refs/heads/local $(git commit-tree -m "local snapshot" $(git write-tree))
+    - kubectl apply --server-side --force-conflicts -f home.yaml

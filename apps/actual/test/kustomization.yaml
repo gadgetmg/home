@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+- bundle.yaml
+- secrets/actual-server-env.yaml
+
+patches:
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+- path: patches/configmap.yaml
+- path: patches/cluster-ca.yaml
+
+replacements:
+- path: ../../../shared/replacements/gateway-hostnames.yaml
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: ConfigMap
+      name: actual-server-openid-config
+    fieldPaths:
+    - data.server_hostname
+    options:
+      delimiter: '/'
+      index: 2
