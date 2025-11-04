@@ -1,0 +1,93 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.4.0
+
+components:
+- ../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: cilium
+  repo: https://helm.cilium.io
+  releaseName: cilium
+  namespace: kube-system
+  version: 1.18.3
+  apiVersions:
+  - monitoring.coreos.com/v1
+  valuesInline:
+    cni:
+      exclusive: false
+    bpf:
+      masquerade: true
+    k8sServiceHost: localhost
+    k8sServicePort: 7445
+    securityContext:
+      capabilities:
+        ciliumAgent:
+        - CHOWN
+        - KILL
+        - NET_ADMIN
+        - NET_RAW
+        - IPC_LOCK
+        - SYS_ADMIN
+        - SYS_RESOURCE
+        - DAC_OVERRIDE
+        - FOWNER
+        - SETGID
+        - SETUID
+        cleanCiliumState:
+        - NET_ADMIN
+        - SYS_ADMIN
+        - SYS_RESOURCE
+    bgpControlPlane:
+      enabled: true
+    l2announcements:
+      enabled: true
+    encryption:
+      enabled: true
+      type: wireguard
+      nodeEncryption: true
+    rollOutCiliumPods: true
+    hubble:
+      enabled: true
+      metrics:
+        enabled:
+        - dns
+        - drop
+        - tcp
+        - flow
+        - port-distribution
+        - icmp
+        - httpV2:labelsContext=source_ip,source_namespace,source_workload,destination_ip,destination_namespace,destination_workload,traffic_direction
+        serviceMonitor:
+          enabled: true
+      tls:
+        auto:
+          method: cronJob
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          enabled: true
+      ui:
+        enabled: true
+        rollOutPods: true
+    ipam:
+      mode: kubernetes
+    kubeProxyReplacement: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    operator:
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup

@@ -11,21 +11,21 @@ env:
 
 vars:
   BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins
-  BUILD_DIRS: infrastructure platform apps
-  ENV: kind
+  ENV: test
 
 includes:
   production:
     taskfile: clusters/production/Taskfile.yaml
     dir: clusters/production
-  kind:
-    taskfile: clusters/kind/Taskfile.yaml
-    dir: clusters/kind
+  test:
+    taskfile: clusters/test/Taskfile.yaml
+    dir: clusters/test
   tests: tests/tasks.yaml
+  apps: apps/tasks.yaml
 
 tasks:
   kubeconform:
-    cmd: kubeconform -output pretty -kubernetes-version {{.KUBERNETES_VERSION | trimPrefix "v"}} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip CustomResourceDefinition,EnvoyProxy,Backend,SecurityPolicy manifests/
+    cmd: kubeconform -output pretty -kubernetes-version {{.KUBERNETES_VERSION | trimPrefix "v"}} -schema-location default -schema-location 'schemas/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json' -skip EnvoyProxy,Backend,SecurityPolicy manifests/
     sources:
     - manifests/**/*
 
@@ -43,241 +43,76 @@ tasks:
       vars: [APP, ENV]
     cmds:
     - rm -rf manifests/{{.ENV}}/{{.APP}}
+    - mkdir -p crds/{{.ENV}}
     - mkdir -p manifests/{{.ENV}}/{{.APP}}
-    - kustomize build {{.BUILD_ARGS}} {{.APP}}/{{.ENV}} -o manifests/{{.ENV}}/{{.APP}}
+    - kustomize build {{.BUILD_ARGS}} apps/{{.APP}}/{{.ENV}} -o manifests/{{.ENV}}/{{.APP}}
     - find manifests/{{.ENV}}/{{.APP}} -name '*:*' -exec sh -c 'f="{}"; mv -- "$f" "${f//:/-}"' \;
+    - find manifests/{{.ENV}}/{{.APP}} -name 'apiextensions.k8s.io_v1_customresourcedefinition_*' -exec mv -f {} crds/{{.ENV}} \;
     sources:
-    - '{{.APP}}/**/*'
+    - apps/{{.APP}}/**/*
     - shared/**/*
     generates:
     - manifests/{{.ENV}}/{{.APP}}/**/*
 
   hydrate:
     vars:
-      TARGETS: {sh: 'find {{.BUILD_DIRS}} -name base -prune -o -type d -exec test -e {}/kustomization.yaml \; -print -prune'}
+      TARGETS: {sh: 'find apps -name base -prune -o -type d -exec test -e {}/kustomization.yaml \; -print -prune'}
     cmds:
     - for: {var: TARGETS, as: DIR}
-      vars: {APP: '{{dir .DIR}}', ENV: '{{base .DIR}}'}
+      vars: {APP: '{{dir .DIR | base}}', ENV: '{{base .DIR}}'}
       task: build
     - git add --intent-to-add manifests
 
+  crds:
+    cmd: kubectl apply --server-side -f crds/{{.ENV}}
+    status:
+    - kubectl diff -f crds/{{.ENV}}
+
+  login:
+  - kubectl config set-context --current --namespace argocd
+  - argocd login --core
+
   deploy:
     label: deploy {{.APP}} {{.ENV}}
-    deps: [{task: build, vars: {APP: '{{.APP}}', ENV: '{{.ENV}}'}}]
+    deps:
+    - bootstrap
+    - login
+    - {task: build, vars: {APP: '{{.APP}}', ENV: '{{.ENV}}'}}
     requires:
       vars: [APP, ENV]
-    cmd: kapp deploy -y -a {{base .APP}} -f manifests/{{.ENV}}/{{.APP}}
+    cmds:
+    - argocd app create {{.APP}} --dest-name in-cluster --repo /nonexistent --path / --validate=false --upsert
+    # Handle intermittent disconnects from the argocd-server service with a loop
+    - for i in {1..3}; do argocd app sync {{.APP}} --local manifests/{{.ENV}}/{{.APP}} --server-side --apply-out-of-sync-only --retry-limit 3 --output tree && break; sleep 1; done
+
+  bootstrap:
+    deps:
+    - {task: build, vars: {APP: 'cilium', ENV: '{{.ENV}}'}}
+    - {task: build, vars: {APP: 'argocd', ENV: '{{.ENV}}'}}
+    status:
+    - kubectl get namespace argocd
     sources:
-    - manifests/{{.ENV}}/{{.APP}}/**/*
-
-  apps:actual:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:controllers:kyverno
-    - infrastructure:controllers:trust-manager
-    - platform:idp
+    - manifests/{{.ENV}}/cilium/*.yaml
+    - manifests/{{.ENV}}/argocd/rbac.authorization.k8s.io_v1_*.yaml
+    - manifests/{{.ENV}}/argocd/argocd_v1_*.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-applicationset-controller.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-notifications-controller.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-redis.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-repo-server.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-server.yaml
+    - manifests/{{.ENV}}/argocd/argocd_apps_v1_statefulset_argocd-application-controller.yaml
+    - manifests/{{.ENV}}/argocd/argocd_batch_v1_job_argocd-redis-secret-init.yaml
+    - manifests/{{.ENV}}/argocd/argocd_rbac.authorization.k8s.io_v1_*.yaml
+    - manifests/{{.ENV}}/argocd/apiextensions.k8s.io_v1_customresourcedefinition_*.yaml
     cmds:
-    - task: deploy
-      vars: {APP: apps/actual}
-
-  apps:ezxss:
-    deps: ['infrastructure:controllers:mariadb-operator']
-    cmds:
-    - task: deploy
-      vars: {APP: apps/ezxss}
-
-  apps:paperless-ngx:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:controllers:kyverno
-    - infrastructure:controllers:trust-manager
-    - infrastructure:controllers:cnpg
-    - infrastructure:controllers:external-secrets
-    - infrastructure:controllers:csi-driver-smb
-    - platform:idp
-    cmds:
-    - task: deploy
-      vars: {APP: apps/paperless-ngx}
-
-  infrastructure:configs:clusterissuers:
-    deps: ['infrastructure:controllers:cert-manager']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/clusterissuers}
-
-  infrastructure:configs:crossplane-keycloak:
-    deps: ['infrastructure:controllers:crossplane']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/crossplane-keycloak}
-
-  infrastructure:configs:gatewayclasses:
-    deps: ['infrastructure:controllers:envoy-gateway']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/gatewayclasses}
-
-  infrastructure:configs:ipam:
-    deps: ['infrastructure:controllers:metallb']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/ipam}
-
-  infrastructure:configs:oidc:
-    deps: ['platform:idp']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/configs/oidc}
-
-  infrastructure:controllers:argocd:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:controllers:kyverno
-    - infrastructure:controllers:trust-manager
-    - platform:idp
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/argocd}
-
-  infrastructure:controllers:cdi:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/cdi}
-
-  infrastructure:controllers:cert-manager:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/cert-manager}
-
-  infrastructure:controllers:cilium:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/cilium}
-
-  infrastructure:controllers:cloudflare-gateway:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/cloudflare-gateway}
-
-  infrastructure:controllers:cnpg:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/cnpg}
-
-  infrastructure:controllers:coredns-external:
-    deps:
-    - infrastructure:crds
-    - infrastructure:configs:ipam
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/coredns-external}
-
-  infrastructure:controllers:crossplane:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/crossplane}
-
-  infrastructure:controllers:csi-driver-smb:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/csi-driver-smb}
-
-  infrastructure:controllers:envoy-gateway:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/envoy-gateway}
-
-  infrastructure:controllers:external-secrets:
-    deps:
-    - infrastructure:crds
-    - infrastructure:configs:clusterissuers
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/external-secrets}
-
-  infrastructure:controllers:kubevirt:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/kubevirt}
-
-  infrastructure:controllers:kyverno:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/kyverno}
-
-  infrastructure:controllers:mariadb-operator:
-    deps: ['infrastructure:crds']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/mariadb-operator}
-
-  infrastructure:controllers:metallb:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/metallb}
-
-  infrastructure:controllers:multus:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/multus}
-
-  infrastructure:controllers:sealed-secrets:
-    deps: ['infrastructure:crds:deploy']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/sealed-secrets}
-
-  infrastructure:controllers:trust-manager:
-    deps: ['infrastructure:controllers:cert-manager']
-    cmds:
-    - task: deploy
-      vars: {APP: infrastructure/controllers/trust-manager}
-
-  infrastructure:controllers:velero:
-  - task: deploy
-    vars: {APP: infrastructure/controllers/velero}
-
-  infrastructure:crds:
-  - task: deploy
-    vars: {APP: infrastructure/crds}
-
-  platform:idp:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:configs:crossplane-keycloak
-    - infrastructure:controllers:cnpg
-    cmds:
-    - task: deploy
-      vars: {APP: platform/idp}
-
-  platform:kubernetes-dashboard:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:configs:oidc
-    - infrastructure:controllers:kyverno
-    - infrastructure:controllers:trust-manager
-    - platform:idp
-    cmds:
-    - task: deploy
-      vars: {APP: platform/kubernetes-dashboard}
-
-  platform:monitoring:
-    deps:
-    - infrastructure:configs:ipam
-    - infrastructure:configs:gatewayclasses
-    - infrastructure:configs:clusterissuers
-    - infrastructure:controllers:kyverno
-    - platform:idp
-    cmds:
-    - task: deploy
-      vars: {APP: platform/monitoring}
+    - task: crds
+    - kubectl apply --server-side -f manifests/{{.ENV}}/cilium/v1_namespace_cilium-secrets.yaml
+    - kubectl apply --server-side -f manifests/{{.ENV}}/argocd/v1_namespace_argocd.yaml
+    - for: sources
+      cmd: kubectl apply --server-side -f {{.ITEM}}
+    - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-applicationset-controller
+    - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-notifications-controller
+    - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-redis
+    - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-repo-server
+    - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-server
+    - kubectl rollout status --namespace argocd --watch --timeout=5m statefulset/argocd-application-controller

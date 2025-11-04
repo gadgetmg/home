@@ -7,8 +7,8 @@ DETIK_CLIENT_NAME="kubectl"
 setup_file() {
   setup_kind_cluster
   kapp deploy -y -a setup \
-    -f manifests/kind/infrastructure/crds \
-    -f manifests/kind/infrastructure/controllers/mariadb-operator
+    -f crds/test \
+    -f manifests/test/mariadb-operator
 }
 
 teardown_file() {

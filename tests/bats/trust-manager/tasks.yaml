@@ -5,8 +5,8 @@ tasks:
   default:
     sources:
     - '{{.TASKFILE_DIR}}/**/*'
-    - manifests/kind/infrastructure/crds/*
-    - manifests/kind/infrastructure/controllers/cert-manager/*
-    - manifests/kind/infrastructure/configs/clusterissuers/*
-    - manifests/kind/infrastructure/controllers/trust-manager/*
+    - crds/test/*
+    - manifests/test/cert-manager/*
+    - manifests/test/clusterissuers/*
+    - manifests/test/trust-manager/*
     cmd: bats {{.TASKFILE_DIR}}

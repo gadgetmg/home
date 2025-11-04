@@ -1,0 +1,251 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  default:
+    vars:
+      APPS: {sh: "find apps/* -maxdepth 1 -name {{.ENV}} -type d | xargs -n1 dirname | xargs -n1 basename"}
+    deps:
+    - for: {var: APPS}
+      task: "{{.ITEM}}"
+
+  actual:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: actual
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - kyverno
+    - trust-manager
+    - idp
+    - storage
+
+  argocd:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: argocd
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - kyverno
+    - trust-manager
+    - idp
+
+  cdi:
+  - task: ':deploy'
+    vars:
+      APP: cdi
+
+  cert-manager:
+  - task: ':deploy'
+    vars:
+      APP: cert-manager
+
+  cilium:
+  - task: ':deploy'
+    vars:
+      APP: cilium
+
+  cloudflare-gateway:
+  - task: ':deploy'
+    vars:
+      APP: cloudflare-gateway
+
+  clusterissuers:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: clusterissuers
+    deps:
+    - cert-manager
+
+  cnpg:
+  - task: ':deploy'
+    vars:
+      APP: cnpg
+
+  crossplane:
+  - task: ':deploy'
+    vars:
+      APP: crossplane
+
+  crossplane-keycloak:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: crossplane-keycloak
+    deps:
+    - crossplane
+
+  csi-driver-smb:
+  - task: ':deploy'
+    vars:
+      APP: csi-driver-smb
+
+  csi-snapshotter:
+  - task: ':deploy'
+    vars:
+      APP: csi-snapshotter
+
+  envoy-gateway:
+  - task: ':deploy'
+    vars:
+      APP: envoy-gateway
+
+  external-secrets:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: external-secrets
+    deps:
+    - clusterissuers
+
+  ezxss:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: ezxss
+    deps:
+    - mariadb-operator
+    - storage
+
+  gatewayclasses:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: gatewayclasses
+    deps:
+    - envoy-gateway
+
+  idp:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: idp
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - crossplane-keycloak
+    - cnpg
+    - storage
+
+  ipam:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: ipam
+    deps:
+    - cilium
+
+  kubernetes-dashboard:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: kubernetes-dashboard
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - oidc
+    - kyverno
+    - trust-manager
+    - idp
+    - storage
+
+  kubevirt:
+  - task: ':deploy'
+    vars:
+      APP: kubevirt
+
+  kyverno:
+  - task: ':deploy'
+    vars:
+      APP: kyverno
+
+  mariadb-operator:
+  - task: ':deploy'
+    vars:
+      APP: mariadb-operator
+
+  monitoring:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: monitoring
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - kyverno
+    - idp
+    - storage
+
+  multus:
+  - task: ':deploy'
+    vars:
+      APP: multus
+
+  oidc:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: oidc
+    deps:
+    - idp
+
+  paperless-ngx:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: paperless-ngx
+    deps:
+    - ipam
+    - gatewayclasses
+    - clusterissuers
+    - kyverno
+    - trust-manager
+    - cnpg
+    - external-secrets
+    - csi-driver-smb
+    - idp
+    - storage
+
+  piraeus-operator:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: piraeus-operator
+    deps:
+    - cert-manager
+
+  sealed-secrets:
+  - task: ':deploy'
+    vars:
+      APP: sealed-secrets
+
+  storage:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: storage
+    deps:
+    - piraeus-operator
+
+  trust-manager:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: trust-manager
+    deps:
+    - cert-manager
+
+  velero:
+  - task: ':deploy'
+    vars:
+      APP: velero

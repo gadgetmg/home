@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../schemas/k8s.mariadb.com/mariadb_v1alpha1.json
-apiVersion: k8s.mariadb.com/v1alpha1
-kind: MariaDB
-metadata:
-  name: ezxss-db
-spec:
-  replicas: 1
-  galera:
-    $patch: delete

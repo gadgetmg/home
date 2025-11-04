@@ -5,6 +5,6 @@ tasks:
   default:
     sources:
     - '{{.TASKFILE_DIR}}/**/*'
-    - manifests/kind/infrastructure/crds/*
-    - manifests/kind/infrastructure/controllers/kyverno/*
+    - crds/test/*
+    - manifests/test/kyverno/*
     cmd: bats {{.TASKFILE_DIR}}

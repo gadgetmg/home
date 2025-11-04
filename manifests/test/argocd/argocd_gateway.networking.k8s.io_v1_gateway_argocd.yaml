@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: cluster-ca
+  name: argocd
+  namespace: argocd
+spec:
+  gatewayClassName: envoy-gateway
+  infrastructure:
+    annotations:
+      lbipam.cilium.io/ips: 10.5.0.53
+  listeners:
+  - hostname: argocd.10.5.0.53.nip.io
+    name: argocd
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - name: argocd-gateway-tls
+      mode: Terminate

@@ -1,0 +1,33 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  oidc:
+    clientID: kubernetes-dashboard
+    clientSecret:
+      name: kubernetes-dashboard-oidc-secret
+    cookieNames:
+      accessToken: AccessToken
+      idToken: IdToken
+    forwardAccessToken: true
+    provider:
+      authorizationEndpoint: https://auth.10.5.0.54.nip.io/realms/home/protocol/openid-connect/auth
+      backendRefs:
+      - group: gateway.envoyproxy.io
+        kind: Backend
+        name: keycloak
+      backendSettings:
+        retry:
+          numRetries: 2
+          retryOn:
+            triggers:
+            - reset
+      issuer: https://auth.10.5.0.54.nip.io/realms/home
+      tokenEndpoint: https://auth.10.5.0.54.nip.io/realms/home/protocol/openid-connect/token
+    refreshToken: true
+  targetRefs:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: kubernetes-dashboard

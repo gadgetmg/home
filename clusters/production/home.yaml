@@ -12,15 +12,7 @@ spec:
       repoURL: https://github.com/gadgetmg/home
       revision: HEAD
       directories:
-      - path: manifests/production/infrastructure/controllers/*
-      - path: manifests/production/infrastructure/controllers
-        exclude: true
-      - path: manifests/production/infrastructure/configs/*
-      - path: manifests/production/infrastructure/configs
-        exclude: true
-      - path: manifests/production/infrastructure/*
-      - path: manifests/production/platform/*
-      - path: manifests/production/apps/*
+      - path: manifests/production/*
   template:
     metadata:
       name: '{{.path.basename}}'
@@ -51,3 +43,31 @@ spec:
     - /spec/syncPolicy
   syncPolicy:
     preserveResourcesOnDeletion: true
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/application_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crds
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-deployed.github: ""
+    notifications.argoproj.io/subscribe.on-health-degraded.github: ""
+    notifications.argoproj.io/subscribe.on-sync-failed.github: ""
+    notifications.argoproj.io/subscribe.on-sync-running.github: ""
+    notifications.argoproj.io/subscribe.on-sync-status-unknown.github: ""
+spec:
+  source:
+    path: crds/production
+    repoURL: https://github.com/gadgetmg/home
+    targetRevision: HEAD
+  destination:
+    name: in-cluster
+  project: default
+  syncPolicy:
+    syncOptions:
+    - ServerSideApply=true
+    - ApplyOutOfSyncOnly=true
+    automated:
+      prune: true
+      selfHeal: true

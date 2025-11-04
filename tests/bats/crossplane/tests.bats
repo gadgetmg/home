@@ -7,12 +7,12 @@ DETIK_CLIENT_NAME="kubectl"
 setup_file() {
   setup_kind_cluster
   kapp deploy -y -a setup \
-    -f manifests/kind/infrastructure/crds \
-    -f manifests/kind/infrastructure/controllers/crossplane
+    -f crds/test \
+    -f manifests/test/crossplane
   kapp deploy -y -a setup \
-    -f manifests/kind/infrastructure/crds \
-    -f manifests/kind/infrastructure/controllers/crossplane \
-    -f manifests/kind/infrastructure/configs/crossplane-keycloak
+    -f crds/test \
+    -f manifests/test/crossplane \
+    -f manifests/test/crossplane-keycloak
 }
 
 teardown_file() {

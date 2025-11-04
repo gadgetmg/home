@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  kernel:
+    modules:
+    - name: drbd
+      parameters:
+      - usermode_helper=disabled
+    - name: drbd_transport_tcp
+    - name: dm-thin-pool

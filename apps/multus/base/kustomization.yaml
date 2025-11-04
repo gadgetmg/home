@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/v4.2.3/deployments/multus-daemonset-thick.yml
+
+images:
+- name: ghcr.io/siderolabs/install-cni
+  newTag: v1.9.0@sha256:53bdeb6c8d238dd593ee75f265baf4625925a034d8d18f10ffeae88d7fcf2c3e
+
+patches:
+- path: patches/install-cni.yaml
+- path: patches/memory-limit-fix.yaml
+- path: patches/install-binary-fix.yaml
+- path: patches/talos-host-run-netns.yaml

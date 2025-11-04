@@ -18,30 +18,22 @@ nodes:
   ipAddress: 10.1.4.13
   installDisk: /dev/nvme0n1
   controlPlane: true
-cniConfig:
-  name: none
 allowSchedulingOnControlPlanes: true
 controlPlane:
   networkInterfaces:
-  - interface: br0
+  - interface: eno1
     dhcp: true
-    bridge:
-      interfaces:
-      - eno1
     vip:
       ip: 10.1.4.10
   talosImageURL: factory.talos.dev/installer-secureboot/9c4964a2abdf6ef1fd114d60d37dd8288a37731d839860169e456ec7b9ff590e
-  kernelModules:
-  - name: drbd
-    parameters:
-    - usermode_helper=disabled
-  - name: drbd_transport_tcp
-  - name: dm-thin-pool
   patches:
-  - '@clusterconfig/patches/disk-encryption.yaml'
-  - '@clusterconfig/patches/metrics-scraping.yaml'
-  - '@clusterconfig/patches/disable-proxy.yaml'
-  - '@clusterconfig/patches/disable-hostdns.yaml'
   - '@clusterconfig/patches/containerd-config.yaml'
+  - '@clusterconfig/patches/disable-hostdns.yaml'
+  - '@clusterconfig/patches/disable-proxy.yaml'
+  - '@clusterconfig/patches/disk-encryption.yaml'
+  - '@clusterconfig/patches/kernel-modules.yaml'
+  - '@clusterconfig/patches/metrics-scraping.yaml'
+  - '@clusterconfig/patches/no-cni.yaml'
   - '@clusterconfig/patches/oidc.yaml'
+  - '@clusterconfig/patches/parallel-image-pulls.yaml'
   - '@clusterconfig/patches/pod-security.yaml'
