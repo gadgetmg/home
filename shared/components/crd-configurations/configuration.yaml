@@ -5,3 +5,5 @@ images:
   kind: MariaDB
 - path: spec/galera/agent/image
   kind: MariaDB
+- path: spec/imageName
+  kind: Cluster

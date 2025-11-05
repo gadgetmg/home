@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/trust.cert-manager.io/bundle_v1alpha1.json
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: immich-server-cluster-ca
+  namespace: immich
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      name: cluster-ca
+      key: ca.crt
+  target:
+    configMap:
+      key: bundle.pem
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: immich

@@ -1,0 +1,23 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-db
+  namespace: immich
+spec:
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      postInitApplicationSQL:
+      - CREATE EXTENSION vectors;
+      - CREATE EXTENSION earthdistance CASCADE;
+      - ALTER DATABASE immich SET search_path TO "$user", public, vectors;
+      - ALTER SCHEMA vectors OWNER TO immich;
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0@sha256:be3f025d79aa1b747817f478e07e71be43236e14d00d8a9eb3914146245035ba
+  instances: 1
+  postgresql:
+    shared_preload_libraries:
+    - vectors.so
+  storage:
+    size: 4Gi
+    storageClass: ssd-r2

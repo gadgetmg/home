@@ -1,0 +1,14 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: immich
+  namespace: immich
+spec:
+  hostnames:
+  - immich.10.5.0.60.nip.io
+  parentRefs:
+  - name: immich
+  rules:
+  - backendRefs:
+    - name: immich-server
+      port: 80

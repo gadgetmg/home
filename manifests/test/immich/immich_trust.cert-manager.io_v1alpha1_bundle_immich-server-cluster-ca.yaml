@@ -1,0 +1,17 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: immich-server-cluster-ca
+  namespace: immich
+spec:
+  sources:
+  - useDefaultCAs: true
+  - secret:
+      key: ca.crt
+      name: cluster-ca
+  target:
+    configMap:
+      key: bundle.pem
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: immich

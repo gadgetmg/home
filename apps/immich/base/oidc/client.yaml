@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.m.crossplane.io/client_v1alpha1.json
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: immich
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: immich
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    standardFlowEnabled: true
+    rootUrl: https://immich.seigra.net
+    validRedirectUris:
+    - https://immich.seigra.net/openid/callback
+  publishConnectionDetailsTo:
+    name: keycloak-client-immich

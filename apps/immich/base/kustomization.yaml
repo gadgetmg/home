@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: immich
+
+resources:
+- namespace.yaml
+- database.yaml
+- pvc.yaml
+- gateway.yaml
+- httproute.yaml
+
+components:
+- ../../../shared/components/strip-helm-labels
+- ../../../shared/components/crd-configurations
+
+images:
+- name: ghcr.io/immich-app/immich-server
+  newTag: v1.126.1@sha256:f8a3c78ec0a0ace20517acedaab9c2f3edcfc9b96e03080ba401acf55792470e
+- name: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  # newTag: 16-v0.2.1
+  newTag: 16.5-v0.3.0@sha256:be3f025d79aa1b747817f478e07e71be43236e14d00d8a9eb3914146245035ba
+
+helmCharts:
+- name: immich
+  repo: https://immich-app.github.io/immich-charts
+  releaseName: immich
+  version: 0.9.0
+  namespace: immich
+  valuesMerge: replace
+  valuesInline:
+    env:
+      DB_HOSTNAME:
+        secretKeyRef:
+          name: immich-db-app
+          key: host
+      DB_USERNAME:
+        secretKeyRef:
+          name: immich-db-app
+          key: user
+      DB_DATABASE_NAME:
+        secretKeyRef:
+          name: immich-db-app
+          key: dbname
+      DB_PASSWORD:
+        secretKeyRef:
+          name: immich-db-app
+          key: password
+    immich:
+      metrics:
+        enabled: true
+      persistence:
+        library:
+          existingClaim: immich-library
+    redis:
+      enabled: true
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: [ALL]
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault

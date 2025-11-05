@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-db
+spec:
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs
+  instances: 1
+  postgresql:
+    shared_preload_libraries:
+    - "vectors.so"
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      postInitApplicationSQL:
+      - CREATE EXTENSION vectors;
+      - CREATE EXTENSION earthdistance CASCADE;
+      - ALTER DATABASE immich SET search_path TO "$user", public, vectors;
+      - ALTER SCHEMA vectors OWNER TO immich;
+  storage:
+    size: 4Gi
+    storageClass: ssd-r2
