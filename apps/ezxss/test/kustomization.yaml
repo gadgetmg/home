@@ -4,3 +4,11 @@ kind: Kustomization
 
 resources:
 - ../base
+
+patches:
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+
+replacements:
+- path: ../../../shared/replacements/gateway-hostnames.yaml

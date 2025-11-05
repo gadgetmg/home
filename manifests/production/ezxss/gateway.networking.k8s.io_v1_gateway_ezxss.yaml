@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: ezxss
+  namespace: ezxss
+spec:
+  gatewayClassName: envoy-gateway
+  listeners:
+  - hostname: dm3.in
+    name: ezxss
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: ezxss-gateway-tls
+      mode: Terminate

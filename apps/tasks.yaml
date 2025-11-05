@@ -113,6 +113,7 @@ tasks:
     deps:
     - mariadb-operator
     - storage
+    - gatewayclasses
 
   gatewayclasses:
     cmds:

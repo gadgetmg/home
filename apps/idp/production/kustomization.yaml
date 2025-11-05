@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
 - ../base
 - cloudflare-gateway.yaml
-- cloudflare-httproute.yaml
 - objectstore.yaml
 - scheduledbackup.yaml
 - webauthn.yaml
@@ -18,3 +17,4 @@ patches:
 - path: patches/production-backups.yaml
 - path: patches/realm-smtp.yaml
 - path: patches/realm-webauthn.yaml
+- path: patches/httproute.yaml
