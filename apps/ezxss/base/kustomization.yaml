@@ -10,6 +10,8 @@ resources:
 - configmap.yaml
 - deployment.yaml
 - service.yaml
+- gateway.yaml
+- httproute.yaml
 
 images:
 - name: ghcr.io/gadgetmg/ezxss
