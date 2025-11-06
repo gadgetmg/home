@@ -50,3 +50,19 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - protection.crossplane.io
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ops.crossplane.io
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
