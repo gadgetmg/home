@@ -50,3 +50,15 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - protection.crossplane.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - ops.crossplane.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
