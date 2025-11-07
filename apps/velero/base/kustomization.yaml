@@ -9,7 +9,7 @@ images:
 - name: velero/velero
   newTag: v1.17.0@sha256:22d17d9a7e9cda10b1ffc63b4baebc35f805a22b203cb5ca65fffee51ddbde92
 - name: velero/velero-plugin-for-aws
-  newTag: v1.13.0@sha256:0b08ec0d150424fa914487e6665d7c84fff0c6a8eca76a23fa6d09e621d36d8a
+  newTag: v1.13.1@sha256:472d0e486d5d5c23c782b1b123530c7df8645784523ec36ca661a326d47885ff
 
 components:
 - ../../../shared/components/strip-helm-labels
