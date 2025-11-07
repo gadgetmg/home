@@ -49,7 +49,7 @@ spec:
           value: /credentials/cloud
         - name: ALIBABA_CLOUD_CREDENTIALS_FILE
           value: /credentials/cloud
-        image: velero/velero:v1.17.0@sha256:22d17d9a7e9cda10b1ffc63b4baebc35f805a22b203cb5ca65fffee51ddbde92
+        image: velero/velero:v1.17.1@sha256:58f551f0d89a9ef1919771bdc7475c08bc1795a50a51a57b5f14316d68fc3baa
         imagePullPolicy: IfNotPresent
         name: node-agent
         ports:
