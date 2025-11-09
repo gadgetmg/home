@@ -83,7 +83,7 @@ tasks:
     cmds:
     - argocd app create {{.APP}} --dest-name in-cluster --repo /nonexistent --path / --validate=false --upsert
     # Handle intermittent disconnects from the argocd-server service with a loop
-    - for i in {1..3}; do argocd app sync {{.APP}} --local manifests/{{.ENV}}/{{.APP}} --server-side --apply-out-of-sync-only --retry-limit 3 --output tree && break; sleep 1; done
+    - for i in {1..3}; do argocd app sync {{.APP}} --local manifests/{{.ENV}}/{{.APP}} --server-side --apply-out-of-sync-only --prune --retry-limit 3 --output tree && break; sleep 1; done
 
   bootstrap:
     deps:
@@ -109,7 +109,7 @@ tasks:
     - kubectl apply --server-side -f manifests/{{.ENV}}/cilium/v1_namespace_cilium-secrets.yaml
     - kubectl apply --server-side -f manifests/{{.ENV}}/argocd/v1_namespace_argocd.yaml
     - for: sources
-      cmd: kubectl apply --server-side -f {{.ITEM}}
+      cmd: kubectl apply --server-side --force-conflicts -f {{.ITEM}}
     - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-applicationset-controller
     - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-notifications-controller
     - kubectl wait --namespace argocd --for=condition=available --timeout=5m deployment/argocd-redis

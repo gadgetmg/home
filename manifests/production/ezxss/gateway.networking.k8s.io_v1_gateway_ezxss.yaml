@@ -2,11 +2,12 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
     cert-manager.io/cluster-issuer: letsencrypt
   name: ezxss
   namespace: ezxss
 spec:
-  gatewayClassName: envoy-gateway
+  gatewayClassName: cilium
   listeners:
   - hostname: dm3.in
     name: ezxss

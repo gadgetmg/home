@@ -4,6 +4,8 @@ kind: Gateway
 metadata:
   name: keycloak-cloudflare
   namespace: keycloak
+  annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   gatewayClassName: cloudflare
   listeners:

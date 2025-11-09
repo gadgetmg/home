@@ -4,6 +4,8 @@ kind: Gateway
 metadata:
   name: ezxss-cloudflare
   namespace: ezxss
+  annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   gatewayClassName: cloudflare
   listeners:
