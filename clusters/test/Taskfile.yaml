@@ -30,6 +30,7 @@ tasks:
         --config-patch @clusterconfig/patches/kernel-modules.yaml \
         --config-patch @clusterconfig/patches/parallel-image-pulls.yaml \
         --config-patch-control-plane @clusterconfig/patches/etcd-max-request-bytes.yaml \
+        --config-patch-control-plane @clusterconfig/patches/oidc.yaml \
         --skip-k8s-node-readiness-check \
         --disk-preallocate=false \
         --use-vip \

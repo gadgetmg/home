@@ -16,6 +16,7 @@ helmCharts:
   version: 1.18.3
   apiVersions:
   - monitoring.coreos.com/v1
+  - gateway.networking.k8s.io/v1/GatewayClass
   valuesInline:
     cni:
       exclusive: false
@@ -45,6 +46,11 @@ helmCharts:
       enabled: true
     l2announcements:
       enabled: true
+    gatewayAPI:
+      enabled: true
+      enableProxyProtocol: false
+      enableAppProtocol: true
+      enableAlpn: true
     encryption:
       enabled: true
       type: wireguard
@@ -71,6 +77,8 @@ helmCharts:
         rollOutPods: true
         prometheus:
           enabled: true
+          serviceMonitor:
+            enabled: true
       ui:
         enabled: true
         rollOutPods: true
@@ -81,6 +89,12 @@ helmCharts:
       enabled: true
       serviceMonitor:
         enabled: true
+    envoy:
+      rollOutPods: true
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
     operator:
       rollOutPods: true
       prometheus:

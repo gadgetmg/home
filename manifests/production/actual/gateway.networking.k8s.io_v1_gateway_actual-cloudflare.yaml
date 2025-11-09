@@ -1,6 +1,8 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
   name: actual-cloudflare
   namespace: actual
 spec:

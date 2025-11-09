@@ -2,11 +2,12 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
     cert-manager.io/cluster-issuer: cluster-ca
   name: argocd
   namespace: argocd
 spec:
-  gatewayClassName: envoy-gateway
+  gatewayClassName: cilium
   infrastructure:
     annotations:
       lbipam.cilium.io/ips: 10.5.0.53

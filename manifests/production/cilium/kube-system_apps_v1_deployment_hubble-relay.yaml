@@ -20,8 +20,6 @@ spec:
     metadata:
       annotations:
         cilium.io/hubble-relay-configmap-checksum: da07254ba8b05a70e1fd8a27fbe5298b360205947f3bf3c53f58cfc7cc74159e
-        prometheus.io/port: "9966"
-        prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: hubble-relay
         app.kubernetes.io/part-of: cilium

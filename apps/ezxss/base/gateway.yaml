@@ -5,8 +5,9 @@ metadata:
   name: ezxss
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
-  gatewayClassName: envoy-gateway
+  gatewayClassName: cilium
   listeners:
   - hostname: dm3.in
     name: ezxss

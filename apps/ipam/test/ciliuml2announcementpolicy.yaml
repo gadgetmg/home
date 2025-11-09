@@ -4,9 +4,5 @@ kind: CiliumL2AnnouncementPolicy
 metadata:
   name: policy1
 spec:
-  nodeSelector:
-    matchExpressions:
-    - key: node-role.kubernetes.io/control-plane
-      operator: DoesNotExist
   externalIPs: true
   loadBalancerIPs: true
