@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: kubevirt-manager
+  namespace: kubevirt-manager
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: kubevirt-manager.seigra.net
+    name: kubevirt-manager
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: paperless-gateway-tls
+      mode: Terminate

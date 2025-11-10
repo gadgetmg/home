@@ -164,6 +164,15 @@ tasks:
     vars:
       APP: kubevirt
 
+  kubevirt-manager:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: kubevirt-manager
+    deps:
+    - cdi
+    - kubevirt
+
   kyverno:
   - task: ':deploy'
     vars:
