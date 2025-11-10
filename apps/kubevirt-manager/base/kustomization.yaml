@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/v1.5.3/kubernetes/ns.yaml
+- https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/v1.5.3/kubernetes/crd.yaml
+- https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/v1.5.3/kubernetes/deployment.yaml
+- https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/v1.5.3/kubernetes/service.yaml
+- https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/v1.5.3/kubernetes/pc.yaml
+- rbac/serviceaccount.yaml
+- rbac/clusterroles.yaml
+- rbac/clusterrolebinding.yaml
+- rbac/vms-rolebindings.yaml
+- vms-namespace.yaml
+- gateway.yaml
+- httproute.yaml
+
+images:
+- name: kubevirtmanager/kubevirt-manager
+  newTag: 1.5.3
+
+components:
+- ../../../shared/components/restricted-pod-security

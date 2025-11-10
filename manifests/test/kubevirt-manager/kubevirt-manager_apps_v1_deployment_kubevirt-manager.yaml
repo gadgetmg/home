@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kubevirt-manager
+    kubevirt-manager.io/version: nightly
+  name: kubevirt-manager
+  namespace: kubevirt-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubevirt-manager
+      kubevirt-manager.io/version: nightly
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kubevirt-manager
+        kubevirt-manager.io/version: nightly
+    spec:
+      containers:
+      - image: kubevirtmanager/kubevirt-manager:1.5.3
+        imagePullPolicy: IfNotPresent
+        name: kubevirtmgr
+        ports:
+        - containerPort: 8080
+          name: http
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 30000
+          runAsUser: 10000
+        volumeMounts:
+        - mountPath: /var/cache/nginx
+          name: cache-volume
+        - mountPath: /var/run
+          name: run-volume
+        - mountPath: /etc/nginx/oauth.d/
+          name: oauth-config
+        - mountPath: /etc/nginx/auth.d/
+          name: auth-config
+        - mountPath: /etc/nginx/secret.d/
+          name: auth-secret
+        - mountPath: /etc/nginx/location.d/
+          name: prometheus-config
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: kubevirt-manager
+      volumes:
+      - emptyDir: {}
+        name: cache-volume
+      - emptyDir: {}
+        name: run-volume
+      - configMap:
+          name: oauth-config
+          optional: true
+        name: oauth-config
+      - configMap:
+          name: auth-config
+          optional: true
+        name: auth-config
+      - name: auth-secret
+        secret:
+          optional: true
+          secretName: auth-secret
+      - configMap:
+          name: prometheus-config
+          optional: true
+        name: prometheus-config

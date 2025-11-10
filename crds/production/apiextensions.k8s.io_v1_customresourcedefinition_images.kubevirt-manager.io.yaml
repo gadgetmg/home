@@ -1,0 +1,83 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: images.kubevirt-manager.io
+spec:
+  group: kubevirt-manager.io
+  names:
+    kind: Image
+    plural: images
+    shortNames:
+    - img
+    singular: image
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.type
+      name: Type
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1
+    schema:
+      openAPIV3Schema:
+        properties:
+          spec:
+            oneOf:
+            - required:
+              - http
+            - required:
+              - registry
+            - required:
+              - s3
+            - required:
+              - gcs
+            - required:
+              - pvc
+            properties:
+              credentials:
+                type: string
+              gcs:
+                properties:
+                  url:
+                    type: string
+                type: object
+              http:
+                properties:
+                  url:
+                    type: string
+                type: object
+              pvc:
+                properties:
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+                type: object
+              readableDescription:
+                type: string
+              readableName:
+                type: string
+              registry:
+                properties:
+                  url:
+                    type: string
+                type: object
+              s3:
+                properties:
+                  url:
+                    type: string
+                type: object
+              type:
+                type: string
+            required:
+            - type
+            - readableName
+            type: object
+            x-kubernetes-validations:
+            - message: 'spec.type should be: http, registry, s3, gcs, pvc'
+              rule: self.type.matches('^(http)|(gcs)|(s3)|(registry)|(pvc)$')
+        type: object
+    served: true
+    storage: true

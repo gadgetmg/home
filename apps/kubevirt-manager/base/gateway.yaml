@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: kubevirt-manager
+  namespace: kubevirt-manager
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: Same
+    hostname: kubevirt-manager.seigra.net
+    name: kubevirt-manager
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: paperless-gateway-tls
+      mode: Terminate
