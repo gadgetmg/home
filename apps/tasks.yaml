@@ -16,7 +16,7 @@ tasks:
         APP: actual
     deps:
     - ipam
-    - gatewayclasses
+    - cloudflare-gateway
     - clusterissuers
     - kyverno
     - trust-manager
@@ -30,7 +30,6 @@ tasks:
         APP: argocd
     deps:
     - ipam
-    - gatewayclasses
     - clusterissuers
     - kyverno
     - trust-manager
@@ -92,11 +91,6 @@ tasks:
     vars:
       APP: csi-snapshotter
 
-  envoy-gateway:
-  - task: ':deploy'
-    vars:
-      APP: envoy-gateway
-
   external-secrets:
     cmds:
     - task: ':deploy'
@@ -113,15 +107,18 @@ tasks:
     deps:
     - mariadb-operator
     - storage
-    - gatewayclasses
+    - cloudflare-gateway
 
-  gatewayclasses:
+  headlamp:
     cmds:
     - task: ':deploy'
       vars:
-        APP: gatewayclasses
+        APP: headlamp
     deps:
-    - envoy-gateway
+    - ipam
+    - clusterissuers
+    - oidc
+    - idp
 
   idp:
     cmds:
@@ -130,7 +127,7 @@ tasks:
         APP: idp
     deps:
     - ipam
-    - gatewayclasses
+    - cloudflare-gateway
     - clusterissuers
     - crossplane-keycloak
     - cnpg
@@ -143,21 +140,6 @@ tasks:
         APP: ipam
     deps:
     - cilium
-
-  kubernetes-dashboard:
-    cmds:
-    - task: ':deploy'
-      vars:
-        APP: kubernetes-dashboard
-    deps:
-    - ipam
-    - gatewayclasses
-    - clusterissuers
-    - oidc
-    - kyverno
-    - trust-manager
-    - idp
-    - storage
 
   kubevirt:
   - task: ':deploy'
@@ -181,7 +163,6 @@ tasks:
         APP: monitoring
     deps:
     - ipam
-    - gatewayclasses
     - clusterissuers
     - kyverno
     - idp
@@ -207,7 +188,6 @@ tasks:
         APP: paperless-ngx
     deps:
     - ipam
-    - gatewayclasses
     - clusterissuers
     - kyverno
     - trust-manager

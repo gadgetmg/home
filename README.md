@@ -50,9 +50,6 @@ functionality including networking and persistent storage to applications.
 - [`csi-snapshotter`](apps/csi-snapshotter) -
   [CSI Snapshotter](https://github.com/kubernetes-csi/external-snapshotter)
   component to implement volume snapshots.
-- [`envoy-gateway`](apps/envoy-gateway) -
-  [Envoy Gateway](https://gateway.envoyproxy.io/) for handling ingress
-  connections into the cluster via the Gateway API.
 - [`external-dns`](apps/external-dns) -
   [ExternalDNS](https://kubernetes-sigs.github.io/external-dns/latest/) for
   adding DNS records from Gateway API routes.
@@ -93,6 +90,7 @@ functionality including networking and persistent storage to applications.
 Platform services are used by user applications or provide some global utility
 to the cluster's services.
 
+- [`headlamp`](apps/headlamp) - [Headlamp](https://headlamp.dev/) Kubernetes UI
 - [`idp`](apps/idp) - [Keycloak](https://www.keycloak.org/) for identity and
   access management (IAM)
 - [`monitoring`](apps/monitoring) - Kubernetes monitoring platform with the

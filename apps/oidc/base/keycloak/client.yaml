@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
@@ -14,3 +14,4 @@ spec:
     fullScopeAllowed: false
     validRedirectUris:
     - http://localhost:8000
+    - https://headlamp.seigra.net/oidc-callback

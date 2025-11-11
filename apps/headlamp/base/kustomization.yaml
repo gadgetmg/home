@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: headlamp
+
+resources:
+- namespace.yaml
+- gateway.yaml
+- httproute.yaml
+
+components:
+- ../../../shared/components/strip-helm-labels
+- ../../../shared/components/restricted-pod-security
+
+images:
+- name: ghcr.io/magohl/external-secrets-operator-headlamp-plugin
+  newTag: 0.1.0-beta7@sha256:7a48e51b90337ff3b5bf74e326047fc5886257b316be7c5a17e707dcce4cbd64
+- name: ghcr.io/buttahtoast/headlamp-plugins/kubevirt
+  newTag: v0.0.1-beta6@sha256:e2c9c498517b18d2d1ae47949be6a7e74453b049b6173095e3e350e301ba1222
+- name: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
+  newTag: v0.1.0@sha256:d7d0321a90c0347e2e4f9f7e362ecaa10a36592cc5ac8fd1514df11c476b43fe
+
+helmCharts:
+- name: headlamp
+  repo: https://kubernetes-sigs.github.io/headlamp
+  releaseName: headlamp
+  version: 0.37.0
+  namespace: headlamp
+  valuesInline:
+    config:
+      oidc:
+        secret:
+          create: false
+        clientID: kubernetes
+        issuerURL: https://auth.seigra.net/realms/home
+        scopes: email,profile
+        callbackURL: https://headlamp.seigra.net/oidc-callback
+    volumes:
+    - name: plugins-dir
+      emptyDir: {}
+    volumeMounts:
+    - name: plugins-dir
+      mountPath: /headlamp/plugins
+    initContainers:
+    - name: install-cert-manager-plugin
+      image: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
+      command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
+      volumeMounts:
+      - name: plugins-dir
+        mountPath: /headlamp/plugins
+      securityContext:
+        runAsUser: 100
+        runAsGroup: 101
+    - name: install-kubevirt-plugin
+      image: ghcr.io/buttahtoast/headlamp-plugins/kubevirt
+      command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
+      volumeMounts:
+      - name: plugins-dir
+        mountPath: /headlamp/plugins
+      securityContext:
+        runAsUser: 100
+        runAsGroup: 101
+    - name: install-external-secrets-operator-plugin
+      command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
+      image: ghcr.io/magohl/external-secrets-operator-headlamp-plugin
+      volumeMounts:
+      - name: plugins-dir
+        mountPath: /headlamp/plugins
+      securityContext:
+        runAsUser: 100
+        runAsGroup: 101
+
+patches:
+- path: patches/oidc-use-pkce.yaml
+  target:
+    kind: Deployment
+    name: headlamp

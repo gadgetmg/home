@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: headlamp
+  namespace: headlamp
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - hostname: headlamp.seigra.net
+    name: headlamp
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - name: headlamp-gateway-tls
+      mode: Terminate
