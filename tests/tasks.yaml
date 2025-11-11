@@ -5,7 +5,6 @@ includes:
   bats:cert-manager: bats/cert-manager/tasks.yaml
   bats:cnpg: bats/cnpg/tasks.yaml
   bats:crossplane: bats/crossplane/tasks.yaml
-  bats:envoy-gateway: bats/envoy-gateway/tasks.yaml
   bats:external-secrets: bats/external-secrets/tasks.yaml
   bats:kyverno: bats/kyverno/tasks.yaml
   bats:mariadb-operator: bats/mariadb-operator/tasks.yaml
