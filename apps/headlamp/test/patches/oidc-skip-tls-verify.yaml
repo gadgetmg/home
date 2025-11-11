@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/json-patch
+- op: add
+  path: /spec/template/spec/containers/0/args/-
+  value: -oidc-skip-tls-verify

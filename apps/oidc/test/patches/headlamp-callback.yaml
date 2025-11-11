@@ -1,16 +1,10 @@
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
 apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
 kind: Client
 metadata:
   name: kubernetes
 spec:
-  deletionPolicy: Delete
   forProvider:
-    accessType: PUBLIC
-    clientId: kubernetes
-    fullScopeAllowed: false
-    realmIdRef:
-      name: home
-    standardFlowEnabled: true
     validRedirectUris:
     - http://localhost:8000
     - https://headlamp.10.5.0.55.nip.io/oidc-callback

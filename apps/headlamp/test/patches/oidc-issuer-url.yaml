@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.1/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headlamp
+  namespace: headlamp
+spec:
+  template:
+    spec:
+      containers:
+      - name: headlamp
+        env:
+        - name: OIDC_ISSUER_URL
+          value: https://auth.10.5.0.54.nip.io/realms/home

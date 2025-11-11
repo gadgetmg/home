@@ -13,3 +13,4 @@ spec:
     standardFlowEnabled: true
     validRedirectUris:
     - http://localhost:8000
+    - https://headlamp.seigra.net/oidc-callback

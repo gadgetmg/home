@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base
+
+patches:
+- path: patches/oidc-issuer-url.yaml
+- path: patches/oidc-skip-tls-verify.yaml
+  target:
+    kind: Deployment
+    name: headlamp
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+
+replacements:
+- path: ../../../shared/replacements/gateway-hostnames.yaml
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: Deployment
+      name: headlamp
+    fieldPaths:
+    - spec.template.spec.containers.0.env.3.value
+    options:
+      delimiter: '/'
+      index: 2
