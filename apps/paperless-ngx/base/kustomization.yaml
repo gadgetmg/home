@@ -16,7 +16,7 @@ images:
 - name: apache/tika
   newTag: 2.9.2.1@sha256:2be134745fcb59826c54041489946c66218b948ea0c0be3a37cb7919ecc845ba
 - name: gotenberg/gotenberg
-  newTag: 8.24.0@sha256:b116a40a1c24917e2bf3e153692da5acd2e78e7cd67e1b2d243b47c178f31c90
+  newTag: 8.25.0@sha256:e304e45acee3c400f8ef76afa195c76b1d0eaf0ab6fe9651e305067ab6a1560c
 - name: ghcr.io/paperless-ngx/paperless-ngx
   newTag: 2.19.6@sha256:719a4e4c4314b417646b00e58bfbfbe55e4cb59017a2dec1533e96d8deb66ec1
 
