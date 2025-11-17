@@ -7,6 +7,10 @@ targets:
   fieldPaths:
   - spec.hostnames.0
 - select:
+    kind: TLSRoute
+  fieldPaths:
+  - spec.hostnames.0
+- select:
     kind: Client
   fieldPaths:
   - spec.forProvider.rootUrl

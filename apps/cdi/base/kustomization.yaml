@@ -5,8 +5,12 @@ kind: Kustomization
 resources:
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.63.1/cdi-operator.yaml
 - https://github.com/kubevirt/containerized-data-importer/releases/download/v1.63.1/cdi-cr.yaml
+- gateway.yaml
+- httproute.yaml
+- certificate.yaml
 
 patches:
+- path: patches/cdi-config.yaml
 - patch: | # Remove v1alpha1 version
     - op: remove
       path: /spec/versions/0

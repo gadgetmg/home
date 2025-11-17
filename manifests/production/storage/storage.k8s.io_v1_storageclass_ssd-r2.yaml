@@ -4,10 +4,12 @@ kind: StorageClass
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
+    storageclass.kubernetes.io/is-default-class: "true"
   name: ssd-r2
 parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
+  DrbdOptions/Net/allow-two-primaries: "yes"
   DrbdOptions/Net/max-buffers: "10000"
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/autoPlace: "2"

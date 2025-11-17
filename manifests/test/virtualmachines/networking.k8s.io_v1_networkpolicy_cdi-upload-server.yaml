@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cdi-upload-server
+  namespace: virtualmachines
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cdi
+      podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-uploadproxy
+    - podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-clone-source
+    ports:
+    - port: 8443
+  podSelector:
+    matchLabels:
+      cdi.kubevirt.io: cdi-upload-server
+  policyTypes:
+  - Ingress

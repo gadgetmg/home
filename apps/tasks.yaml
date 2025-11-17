@@ -226,6 +226,18 @@ tasks:
     deps:
     - cert-manager
 
+  virtualmachines:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: virtualmachines
+    deps:
+    - ipam
+    - clusterissuers
+    - storage
+    - kubevirt
+    - cdi
+
   velero:
   - task: ':deploy'
     vars:

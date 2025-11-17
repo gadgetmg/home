@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/tlsroute_v1alpha2.json
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
+metadata:
+  name: cdi-uploadproxy
+  namespace: cdi
+spec:
+  hostnames:
+  - cdi-uploadproxy.seigra.net
+  parentRefs:
+  - name: cdi
+  rules:
+  - backendRefs:
+    - name: cdi-uploadproxy
+      port: 443
