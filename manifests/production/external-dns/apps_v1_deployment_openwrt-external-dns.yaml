@@ -28,6 +28,7 @@ spec:
         - --interval=1m
         - --source=gateway-grpcroute
         - --source=gateway-httproute
+        - --source=gateway-tlsroute
         - --source=gateway-tcproute
         - --source=gateway-udproute
         - --policy=upsert-only
