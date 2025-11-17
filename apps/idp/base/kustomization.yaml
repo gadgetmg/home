@@ -39,7 +39,7 @@ helmCharts:
       enabled: true
       serviceMonitor:
         enabled: true
-        namespace: monitoring
+        namespace: keycloak
       prometheusRule:
         enabled: true
         namespace: monitoring
