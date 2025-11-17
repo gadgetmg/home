@@ -10,11 +10,18 @@ resources:
 components:
 - ../../../shared/components/strip-helm-labels
 
+patches:
+- patch: |
+    - op: add
+      path: /metadata/namespace
+      value: mariadb-system
+  target:
+    kind: (ValidatingWebHookConfiguration|Deployment|ServiceMonitor|RoleBinding|Role|ConfigMap|ServiceAccount|Service)
+
 helmCharts:
 - name: mariadb-operator
   repo: https://mariadb-operator.github.io/mariadb-operator
   releaseName: mariadb-operator
-  namespace: mariadb-system
   version: 25.10.2
   includeCRDs: true
   valuesInline:
