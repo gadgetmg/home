@@ -23,6 +23,7 @@ helmCharts:
     sources:
     - gateway-grpcroute
     - gateway-httproute
+    - gateway-tlsroute
     - gateway-tcproute
     - gateway-udproute
     provider:
