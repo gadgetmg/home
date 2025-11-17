@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../schemas/cdi.kubevirt.io/cdi_v1beta1.json
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: CDI
+metadata:
+  name: cdi
+spec:
+  config:
+    uploadProxyURLOverride: https://cdi-uploadproxy.seigra.net

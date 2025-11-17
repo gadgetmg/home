@@ -4,3 +4,29 @@ kind: Kustomization
 
 resources:
 - ../base
+
+patches:
+- path: patches/certificate.yaml
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+
+replacements:
+- path: ../../../shared/replacements/gateway-hostnames.yaml
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: CDI
+      name: cdi
+    fieldPaths:
+    - spec.config.uploadProxyURLOverride
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: Certificate
+      name: cdi-uploadproxy-server-cert
+    fieldPaths:
+    - spec.dnsNames.0

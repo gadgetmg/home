@@ -1,15 +1,12 @@
+# yaml-language-server: $schema=../../../../schemas/kubevirt.io/kubevirt_v1.json
 apiVersion: kubevirt.io/v1
 kind: KubeVirt
 metadata:
   name: kubevirt
   namespace: kubevirt
 spec:
-  certificateRotateStrategy: {}
   configuration:
     developerConfiguration:
       featureGates:
       - ExpandDisks
       - Snapshot
-  customizeComponents: {}
-  imagePullPolicy: IfNotPresent
-  workloadUpdateStrategy: {}

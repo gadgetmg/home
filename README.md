@@ -106,6 +106,8 @@ User applications provide direct functionality to end users.
   testing for XSS vulnerabilities, particularly useful for blind XSS injections.
 - [`paperless-ngx`](apps/paperless-ngx) -
   [Paperless-ngx](https://docs.paperless-ngx.com/) document management system
+- [`virtualmachines`](apps/virtualmachines) - Namespace for creating virtual
+  machines
 
 ## Rendered manifests pattern
 

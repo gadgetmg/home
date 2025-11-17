@@ -25,6 +25,7 @@ metadata:
   name: ssd-r2
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
+    storageclass.kubernetes.io/is-default-class: "true"
 provisioner: linstor.csi.linbit.com
 parameters:
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
@@ -34,6 +35,7 @@ parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
+  DrbdOptions/Net/allow-two-primaries: "yes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer

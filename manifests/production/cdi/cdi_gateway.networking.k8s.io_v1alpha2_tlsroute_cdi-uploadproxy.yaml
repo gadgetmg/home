@@ -1,0 +1,14 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
+metadata:
+  name: cdi-uploadproxy
+  namespace: cdi
+spec:
+  hostnames:
+  - cdi-uploadproxy.seigra.net
+  parentRefs:
+  - name: cdi
+  rules:
+  - backendRefs:
+    - name: cdi-uploadproxy
+      port: 443
