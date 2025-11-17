@@ -43,7 +43,7 @@ spec:
           value: webhook-server-cert
         - name: ZAP_DEVEL
           value: "false"
-        image: quay.io/piraeusdatastore/piraeus-operator:v2.10.0
+        image: quay.io/piraeusdatastore/piraeus-operator:v2.10.1
         livenessProbe:
           httpGet:
             path: /healthz
