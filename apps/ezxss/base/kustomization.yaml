@@ -17,7 +17,7 @@ images:
 - name: ghcr.io/gadgetmg/ezxss
   newTag: master@sha256:8d1c1a92beb84327b7623dc545791e3010c16626db4fa09733437ee10ca3468a
 - name: ghcr.io/mariadb/mariadb
-  newTag: 12.0.2-noble@sha256:551c3f6dfef258db3cf30991eecd5d4125a72ed983fadec67126c0a02b6b79d3
+  newTag: 12.1.2-noble@sha256:df5ccb0009d270953134c3ee157f9f1f781298b06d6eac4b9a05403991826527
 - name: ghcr.io/mariadb-operator/mariadb-operator
   newTag: 25.10.2@sha256:14eeefa4956770f973ac707b7969f2e99e0af2cf2c34ac63d4c7eb3f7c3cf3eb
 
