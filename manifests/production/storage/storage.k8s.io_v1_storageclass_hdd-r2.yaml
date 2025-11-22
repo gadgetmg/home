@@ -16,4 +16,4 @@ parameters:
   linstor.csi.linbit.com/storagePool: hdd
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
-volumeBindingMode: Immediate
+volumeBindingMode: WaitForFirstConsumer

@@ -80,6 +80,28 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  name: cdi-deployment
+spec:
+  podSelector:
+    matchLabels:
+      cdi.kubevirt.io: cdi-clone-source
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cdi
+      podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-deployment
+    ports:
+    - port: 8443
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/networkpolicy.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: virtualmachine-egress
 spec:
   podSelector:
@@ -94,3 +116,23 @@ spec:
         except:
         - 10.244.0.0/16
         - 10.96.0.0/12
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/networkpolicy.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: virtualmachine-port-forward-ingress
+spec:
+  podSelector:
+    matchLabels:
+      kubevirt.io: virt-launcher
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kubevirt
+      podSelector:
+        matchLabels:
+          kubevirt.io: virt-api
