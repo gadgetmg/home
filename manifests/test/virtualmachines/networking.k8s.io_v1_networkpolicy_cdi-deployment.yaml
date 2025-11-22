@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cdi-deployment
+  namespace: virtualmachines
+spec:
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cdi
+      podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-deployment
+    ports:
+    - port: 8443
+  podSelector:
+    matchLabels:
+      cdi.kubevirt.io: cdi-clone-source
+  policyTypes:
+  - Ingress

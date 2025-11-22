@@ -4,17 +4,16 @@ kind: StorageClass
 metadata:
   annotations:
     argocd.argoproj.io/sync-options: Replace=true
-    storageclass.kubernetes.io/is-default-class: "true"
-  name: ssd-r2
+  name: hdd-r2-remote
 parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/allow-two-primaries: "yes"
   DrbdOptions/Net/max-buffers: "10000"
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/layerList: drbd luks storage
-  linstor.csi.linbit.com/storagePool: ssd
+  linstor.csi.linbit.com/storagePool: hdd
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
