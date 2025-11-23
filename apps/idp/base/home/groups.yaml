@@ -1,31 +1,34 @@
+# yaml-language-server: $schema=../../../../schemas/group.keycloak.crossplane.io/group_v1alpha1.json
 apiVersion: group.keycloak.crossplane.io/v1alpha1
 kind: Group
 metadata:
   name: home-admins
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     name: Admins
     realmIdRef:
       name: home
 ---
+# yaml-language-server: $schema=../../../../schemas/group.keycloak.crossplane.io/group_v1alpha1.json
 apiVersion: group.keycloak.crossplane.io/v1alpha1
 kind: Group
 metadata:
   name: home-members
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     name: Members
     realmIdRef:
       name: home
 ---
+# yaml-language-server: $schema=../../../../schemas/group.keycloak.crossplane.io/group_v1alpha1.json
 apiVersion: group.keycloak.crossplane.io/v1alpha1
 kind: Group
 metadata:
   name: home-guests
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     name: Guests
     realmIdRef:

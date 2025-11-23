@@ -4,7 +4,7 @@ kind: Client
 metadata:
   name: argocd
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     accessType: CONFIDENTIAL
     clientId: argocd

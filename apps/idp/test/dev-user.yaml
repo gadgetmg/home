@@ -1,8 +1,10 @@
+# yaml-language-server: $schema=../../../schemas/user.keycloak.crossplane.io/user_v1alpha1.json
 apiVersion: user.keycloak.crossplane.io/v1alpha1
 kind: User
 metadata:
   name: home-dev-user
 spec:
+  deletionPolicy: Orphan
   forProvider:
     username: dev
     firstName: Dev
@@ -17,11 +19,13 @@ spec:
     realmIdRef:
       name: home
 ---
+# yaml-language-server: $schema=../../../schemas/group.keycloak.crossplane.io/group_v1alpha1.json
 apiVersion: group.keycloak.crossplane.io/v1alpha1
 kind: Memberships
 metadata:
   name: home-dev-user
 spec:
+  deletionPolicy: Orphan
   forProvider:
     groupIdRef:
       name: home-admins

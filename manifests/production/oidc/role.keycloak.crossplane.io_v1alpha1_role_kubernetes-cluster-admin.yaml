@@ -5,6 +5,7 @@ metadata:
     seigra.net/roles: admin
   name: kubernetes-cluster-admin
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: kubernetes

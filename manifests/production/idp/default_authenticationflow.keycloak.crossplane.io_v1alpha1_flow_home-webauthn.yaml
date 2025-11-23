@@ -3,7 +3,7 @@ kind: Flow
 metadata:
   name: home-webauthn
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     alias: webauthn
     description: passkey authentication

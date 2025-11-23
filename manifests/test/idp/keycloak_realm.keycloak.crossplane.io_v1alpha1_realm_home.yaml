@@ -4,6 +4,7 @@ metadata:
   name: home
   namespace: keycloak
 spec:
+  deletionPolicy: Orphan
   forProvider:
     displayName: seigra.net
     realm: home

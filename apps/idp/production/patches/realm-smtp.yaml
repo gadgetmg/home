@@ -4,6 +4,7 @@ kind: Realm
 metadata:
   name: home
 spec:
+  deletionPolicy: Orphan
   forProvider:
     smtpServer:
     - auth:

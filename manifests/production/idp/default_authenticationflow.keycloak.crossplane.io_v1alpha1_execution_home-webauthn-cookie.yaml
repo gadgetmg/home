@@ -3,7 +3,7 @@ kind: Execution
 metadata:
   name: home-webauthn-cookie
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: auth-cookie
     parentFlowAliasRef:

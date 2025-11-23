@@ -4,6 +4,7 @@ kind: ProtocolMapper
 metadata:
   name: argocd-client-roles
 spec:
+  deletionPolicy: Orphan
   forProvider:
     realmIdRef:
       name: home

@@ -9,7 +9,7 @@ metadata:
   name: paperless-ngx
   namespace: paperless-ngx
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     accessType: CONFIDENTIAL
     clientId: paperless-ngx

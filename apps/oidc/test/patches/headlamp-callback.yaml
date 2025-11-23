@@ -4,6 +4,7 @@ kind: Client
 metadata:
   name: kubernetes
 spec:
+  deletionPolicy: Orphan
   forProvider:
     validRedirectUris:
     - http://localhost:8000

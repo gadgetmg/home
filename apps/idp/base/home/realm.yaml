@@ -1,8 +1,10 @@
+# yaml-language-server: $schema=../../../../schemas/realm.keycloak.crossplane.io/realm_v1alpha1.json
 apiVersion: realm.keycloak.crossplane.io/v1alpha1
 kind: Realm
 metadata:
   name: home
 spec:
+  deletionPolicy: Orphan
   forProvider:
     realm: home
     displayName: seigra.net

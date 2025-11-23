@@ -3,7 +3,7 @@ kind: Execution
 metadata:
   name: home-webauthn-forms-username
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: auth-username-form
     parentFlowAlias: webauthn forms

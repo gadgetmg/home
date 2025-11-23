@@ -3,6 +3,7 @@ kind: User
 metadata:
   name: home-dev-user
 spec:
+  deletionPolicy: Orphan
   forProvider:
     email: dev@dev.local
     emailVerified: true
