@@ -8,7 +8,7 @@ metadata:
   name: actual
   namespace: actual
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     accessType: CONFIDENTIAL
     clientId: actual

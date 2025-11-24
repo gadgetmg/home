@@ -3,6 +3,7 @@ kind: Memberships
 metadata:
   name: home-dev-user
 spec:
+  deletionPolicy: Orphan
   forProvider:
     groupIdRef:
       name: home-admins

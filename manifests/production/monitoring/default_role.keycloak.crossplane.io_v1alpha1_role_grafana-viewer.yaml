@@ -5,6 +5,7 @@ metadata:
     seigra.net/roles: readonly
   name: grafana-viewer
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana

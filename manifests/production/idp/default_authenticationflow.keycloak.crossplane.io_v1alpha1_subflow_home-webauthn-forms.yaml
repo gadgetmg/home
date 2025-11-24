@@ -3,7 +3,7 @@ kind: Subflow
 metadata:
   name: home-webauthn-forms
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     alias: webauthn forms
     description: Username, password, otp and other auth forms.

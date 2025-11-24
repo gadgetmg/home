@@ -4,7 +4,7 @@ kind: Client
 metadata:
   name: kubernetes
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     accessType: PUBLIC
     clientId: kubernetes

@@ -11,8 +11,6 @@ spec:
         spec:
           containers:
           - name: package-runtime
-            args:
-            - --enable-external-secret-stores
             securityContext:
               allowPrivilegeEscalation: false
               privileged: false

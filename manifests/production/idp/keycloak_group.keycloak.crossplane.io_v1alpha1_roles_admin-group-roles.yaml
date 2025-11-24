@@ -4,6 +4,7 @@ metadata:
   name: admin-group-roles
   namespace: keycloak
 spec:
+  deletionPolicy: Orphan
   forProvider:
     groupIdRef:
       name: home-admins

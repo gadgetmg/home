@@ -3,7 +3,7 @@ kind: Execution
 metadata:
   name: home-webauthn-identity-provider-redirector
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: identity-provider-redirector
     parentFlowAliasRef:

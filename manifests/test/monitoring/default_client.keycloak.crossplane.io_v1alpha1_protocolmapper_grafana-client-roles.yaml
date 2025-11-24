@@ -3,6 +3,7 @@ kind: ProtocolMapper
 metadata:
   name: grafana-client-roles
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana

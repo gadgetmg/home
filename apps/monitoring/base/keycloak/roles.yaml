@@ -6,6 +6,7 @@ metadata:
     seigra.net/roles: admin
   name: grafana-admin
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana
@@ -23,6 +24,7 @@ metadata:
     seigra.net/roles: editor
   name: grafana-editor
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana
@@ -30,8 +32,8 @@ spec:
     name: editor
     realmIdRef:
       name: home
-# yaml-language-server: $schema=../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
 ---
+# yaml-language-server: $schema=../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
 apiVersion: role.keycloak.crossplane.io/v1alpha1
 kind: Role
 metadata:
@@ -39,6 +41,7 @@ metadata:
     seigra.net/roles: readonly
   name: grafana-viewer
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana

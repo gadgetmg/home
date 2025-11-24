@@ -4,5 +4,6 @@ kind: Realm
 metadata:
   name: home
 spec:
+  deletionPolicy: Orphan
   forProvider:
     browserFlow: webauthn

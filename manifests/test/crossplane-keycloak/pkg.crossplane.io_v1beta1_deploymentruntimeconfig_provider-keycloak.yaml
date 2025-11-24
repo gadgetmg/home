@@ -9,9 +9,7 @@ spec:
       template:
         spec:
           containers:
-          - args:
-            - --enable-external-secret-stores
-            name: package-runtime
+          - name: package-runtime
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

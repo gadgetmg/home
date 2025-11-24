@@ -5,6 +5,7 @@ metadata:
     seigra.net/roles: editor
   name: grafana-editor
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: grafana

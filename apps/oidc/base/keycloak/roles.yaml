@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
+# yaml-language-server: $schema=../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
 apiVersion: role.keycloak.crossplane.io/v1alpha1
 kind: Role
 metadata:
@@ -6,6 +6,7 @@ metadata:
   labels:
     seigra.net/roles: admin
 spec:
+  deletionPolicy: Orphan
   forProvider:
     description: kubernetes cluster-admin
     name: cluster-admin

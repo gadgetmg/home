@@ -1,22 +1,22 @@
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/flow_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/flow_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Flow
 metadata:
   name: home-webauthn
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     alias: webauthn
     description: passkey authentication
     realmId: home
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Execution
 metadata:
   name: home-webauthn-cookie
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: auth-cookie
     priority: 1
@@ -25,13 +25,13 @@ spec:
     parentFlowAliasRef:
       name: home-webauthn
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Execution
 metadata:
   name: home-webauthn-kerberos
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: auth-spnego
     priority: 2
@@ -39,13 +39,13 @@ spec:
     parentFlowAliasRef:
       name: home-webauthn
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Execution
 metadata:
   name: home-webauthn-identity-provider-redirector
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: identity-provider-redirector
     priority: 3
@@ -54,13 +54,13 @@ spec:
     parentFlowAliasRef:
       name: home-webauthn
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/subflow_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/subflow_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Subflow
 metadata:
   name: home-webauthn-forms
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     alias: webauthn forms
     priority: 4
@@ -70,13 +70,13 @@ spec:
     parentFlowAliasRef:
       name: home-webauthn
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Execution
 metadata:
   name: home-webauthn-forms-username
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: auth-username-form
     priority: 1
@@ -84,13 +84,13 @@ spec:
     realmId: home
     parentFlowAlias: webauthn forms
 ---
-# yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
+# yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/execution_v1alpha1.json
 apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 kind: Execution
 metadata:
   name: home-webauthn-forms-passwordless
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     authenticator: webauthn-authenticator-passwordless
     priority: 2
@@ -98,13 +98,13 @@ spec:
     realmId: home
     parentFlowAlias: webauthn forms
 # ---
-# # yaml-language-server: $schema=../../../../schemas/authenticationflow.keycloak.crossplane.io/bindings_v1alpha1.json
+# # yaml-language-server: $schema=../../../schemas/authenticationflow.keycloak.crossplane.io/bindings_v1alpha1.json
 # apiVersion: authenticationflow.keycloak.crossplane.io/v1alpha1
 # kind: Bindings
 # metadata:
 #   name: home
 # spec:
-#   deletionPolicy: Delete
+#   deletionPolicy: Orphan
 #   forProvider:
 #     browserFlow: webauthn
 #     realmId: home

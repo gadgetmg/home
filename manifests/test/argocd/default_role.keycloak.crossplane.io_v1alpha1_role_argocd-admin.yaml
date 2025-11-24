@@ -5,6 +5,7 @@ metadata:
     seigra.net/roles: admin
   name: argocd-admin
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: argocd

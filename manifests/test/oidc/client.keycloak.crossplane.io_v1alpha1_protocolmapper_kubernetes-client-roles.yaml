@@ -3,6 +3,7 @@ kind: ProtocolMapper
 metadata:
   name: kubernetes-client-roles
 spec:
+  deletionPolicy: Orphan
   forProvider:
     clientIdRef:
       name: kubernetes

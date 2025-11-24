@@ -4,7 +4,7 @@ kind: Client
 metadata:
   name: grafana
 spec:
-  deletionPolicy: Delete
+  deletionPolicy: Orphan
   forProvider:
     accessType: CONFIDENTIAL
     clientId: grafana
