@@ -13,7 +13,7 @@ resources:
 - gateway.yaml
 - httproute.yaml
 - keycloak.yaml
-- clusterpolicy.yaml
+- keycloak-secret-sync.yaml
 
 configMapGenerator:
 - name: paperless-ngx-config

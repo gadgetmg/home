@@ -41,6 +41,7 @@ rules:
   - delete
 - apiGroups:
   - openidclient.keycloak.crossplane.io
+  - openidclient.keycloak.m.crossplane.io
   resources:
   - clients
   verbs:

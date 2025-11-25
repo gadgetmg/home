@@ -1,15 +1,23 @@
-# yaml-language-server: $schema=../../../../schemas/group.keycloak.crossplane.io/roles_v1alpha1.json
-apiVersion: group.keycloak.crossplane.io/v1alpha1
+# yaml-language-server: $schema=../../../../schemas/group.keycloak.m.crossplane.io/roles_v1alpha1.json
+apiVersion: group.keycloak.m.crossplane.io/v1alpha1
 kind: Roles
 metadata:
   name: admin-group-roles
 spec:
-  deletionPolicy: Orphan
   forProvider:
     groupIdRef:
       name: home-admins
     realmIdRef:
       name: home
-    roleIdsSelector:
-      matchLabels:
-        seigra.net/roles: admin
+    roleIdsRefs:
+    - name: argocd-admin
+      namespace: argocd
+    - name: grafana-admin
+      namespace: monitoring
+    - name: kubernetes-cluster-admin
+      namespace: kube-system
+    # roleIdsSelector:
+    #   matchLabels:
+    #     seigra.net/roles: admin
+    #   policy:
+    #     resolve: Always

@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
 - providers/keycloak/provider.yaml
 - providers/keycloak/deploymentruntimeconfig.yaml
+- mrap.yaml

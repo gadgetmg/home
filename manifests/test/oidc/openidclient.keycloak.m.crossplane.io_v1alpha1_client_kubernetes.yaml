@@ -1,0 +1,17 @@
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: kubernetes
+  namespace: kube-system
+spec:
+  forProvider:
+    accessType: PUBLIC
+    clientId: kubernetes
+    fullScopeAllowed: false
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    standardFlowEnabled: true
+    validRedirectUris:
+    - http://localhost:8000
+    - https://headlamp.10.5.0.55.nip.io/oidc-callback

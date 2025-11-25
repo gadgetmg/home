@@ -1,0 +1,13 @@
+apiVersion: authenticationflow.keycloak.m.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-identity-provider-redirector
+  namespace: keycloak
+spec:
+  forProvider:
+    authenticator: identity-provider-redirector
+    parentFlowAliasRef:
+      name: home-webauthn
+    priority: 3
+    realmId: home
+    requirement: ALTERNATIVE

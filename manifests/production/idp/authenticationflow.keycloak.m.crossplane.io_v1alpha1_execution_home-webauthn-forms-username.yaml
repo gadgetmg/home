@@ -1,0 +1,12 @@
+apiVersion: authenticationflow.keycloak.m.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-forms-username
+  namespace: keycloak
+spec:
+  forProvider:
+    authenticator: auth-username-form
+    parentFlowAlias: webauthn forms
+    priority: 1
+    realmId: home
+    requirement: REQUIRED

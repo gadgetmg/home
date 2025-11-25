@@ -2,6 +2,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: keycloak
+
 resources:
 - ../base
 - secrets/keycloak-admin.yaml
@@ -10,7 +12,6 @@ resources:
 
 secretGenerator:
 - name: keycloak-home-dev-user
-  namespace: keycloak
   type: kubernetes.io/basic-auth
   literals:
   - username=dev

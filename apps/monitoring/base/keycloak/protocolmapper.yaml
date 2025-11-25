@@ -1,13 +1,13 @@
-# yaml-language-server: $schema=../../../../schemas/client.keycloak.crossplane.io/protocolmapper_v1alpha1.json
-apiVersion: client.keycloak.crossplane.io/v1alpha1
+# yaml-language-server: $schema=../../../../schemas/client.keycloak.m.crossplane.io/protocolmapper_v1alpha1.json
+apiVersion: client.keycloak.m.crossplane.io/v1alpha1
 kind: ProtocolMapper
 metadata:
   name: grafana-client-roles
 spec:
-  deletionPolicy: Orphan
   forProvider:
     realmIdRef:
       name: home
+      namespace: keycloak
     clientIdRef:
       name: grafana
     name: client roles

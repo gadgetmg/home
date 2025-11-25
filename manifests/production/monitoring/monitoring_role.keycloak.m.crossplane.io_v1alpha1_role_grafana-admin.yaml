@@ -1,0 +1,17 @@
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: admin
+  name: grafana-admin
+  namespace: monitoring
+spec:
+  forProvider:
+    clientIdRef:
+      name: grafana
+    description: Has access to all organization resources, including dashboards, users,
+      and teams.
+    name: admin
+    realmIdRef:
+      name: home
+      namespace: keycloak

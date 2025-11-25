@@ -1,0 +1,13 @@
+apiVersion: group.keycloak.m.crossplane.io/v1alpha1
+kind: Memberships
+metadata:
+  name: home-dev-user
+  namespace: keycloak
+spec:
+  forProvider:
+    groupIdRef:
+      name: home-admins
+    members:
+    - dev
+    realmIdRef:
+      name: home

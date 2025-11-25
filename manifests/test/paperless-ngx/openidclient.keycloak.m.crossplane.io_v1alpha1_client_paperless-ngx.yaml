@@ -1,0 +1,23 @@
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  labels:
+    app.kubernetes.io/component: paperless-ngx
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: paperless-ngx
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    rootUrl: https://paperless.10.5.0.58.nip.io
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://paperless.10.5.0.58.nip.io/accounts/oidc/keycloak/login/callback/
+  writeConnectionSecretToRef:
+    name: keycloak-client-paperless-ngx

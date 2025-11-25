@@ -1,0 +1,13 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  name: test-pools
+spec:
+  storagePools:
+  - lvmThinPool: {}
+    name: ssd
+    source:
+      hostDevices:
+      - /dev/vdb

@@ -111,8 +111,6 @@ spec:
       - args:
         - core
         - init
-        - --activation
-        - '*'
         env:
         - name: GOMAXPROCS
           valueFrom:

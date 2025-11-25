@@ -1,0 +1,19 @@
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: argocd
+    fullScopeAllowed: false
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    rootUrl: https://argocd.seigra.net
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://argocd.seigra.net/api/dex/callback
+  writeConnectionSecretToRef:
+    name: argocd-oidc-secret

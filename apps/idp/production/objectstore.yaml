@@ -3,7 +3,6 @@ apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
   name: keycloak-db
-  namespace: keycloak
 spec:
   retentionPolicy: 30d
   configuration:
