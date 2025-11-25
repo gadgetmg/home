@@ -12,4 +12,3 @@ spec:
   - realms.realm.keycloak.m.crossplane.io
   - roles.group.keycloak.m.crossplane.io
   - roles.role.keycloak.m.crossplane.io
-  - users.user.keycloak.m.crossplane.io
