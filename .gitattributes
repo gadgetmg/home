@@ -1,2 +1,9 @@
-*.yaml linguist-detectable
-vendor/** linguist-vendored
+# Include .yaml files in source config dirs
+apps/**/*.yaml linguist-detectable
+clusters/**/*.yaml linguist-detectable
+shared/**/*.yaml linguist-detectable
+tests/**/*.yaml linguist-detectable
+
+# Exclude all go-task files from detection
+**/Taskfile.yaml -linguist-detectable
+**/tasks.yaml -linguist-detectable
