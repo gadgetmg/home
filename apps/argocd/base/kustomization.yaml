@@ -8,7 +8,6 @@ resources:
 - namespace.yaml
 - gateway/gateway.yaml
 - gateway/httproute.yaml
-- keycloak-argocd-secret-sync.yaml
 - keycloak/client.yaml
 - keycloak/protocolmapper.yaml
 - keycloak/roles.yaml
@@ -33,6 +32,12 @@ helmCharts:
         enabled: true
       livenessProbe:
         enabled: true
+      env:
+      - name: KEYCLOAK_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: keycloak-client-argocd
+            key: attribute.client_secret
     configs:
       params:
         server.insecure: true
@@ -277,7 +282,7 @@ helmCharts:
             config:
               issuer: https://auth.seigra.net/realms/home
               clientID: argocd
-              clientSecret: $argocd-oidc-secret:client_secret
+              clientSecret: $KEYCLOAK_CLIENT_SECRET
               scopes:
               - openid
               - profile

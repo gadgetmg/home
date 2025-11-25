@@ -16,4 +16,4 @@ spec:
     validRedirectUris:
     - https://grafana.seigra.net/login/generic_oauth
   writeConnectionSecretToRef:
-    name: grafana-oidc-secret
+    name: keycloak-client-grafana

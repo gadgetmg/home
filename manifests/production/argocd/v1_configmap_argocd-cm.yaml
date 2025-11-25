@@ -12,7 +12,7 @@ data:
       config:
         issuer: https://auth.seigra.net/realms/home
         clientID: argocd
-        clientSecret: $argocd-oidc-secret:client_secret
+        clientSecret: $KEYCLOAK_CLIENT_SECRET
         scopes:
         - openid
         - profile

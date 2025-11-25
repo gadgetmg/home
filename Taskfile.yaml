@@ -140,3 +140,15 @@ tasks:
     - '{{.KUBECTL}} wait --namespace {{.ARGOCD_NAMESPACE}} --for=condition=available --timeout=5m deployment/argocd-repo-server'
     - '{{.KUBECTL}} wait --namespace {{.ARGOCD_NAMESPACE}} --for=condition=available --timeout=5m deployment/argocd-server'
     - '{{.KUBECTL}} rollout status --namespace {{.ARGOCD_NAMESPACE}} --watch --timeout=5m statefulset/argocd-application-controller'
+
+  kubeseal:validate:
+    label: kubeseal:validate {{.ENV}}
+    requires:
+      vars: [ENV]
+    cmd: find manifests/{{.ENV}} -name '*bitnami.com_v1alpha1_sealedsecret*.yaml' | xargs -I {} sh -c 'kubeseal --context {{.KUBECTL_CTX}} --validate < "{}"'
+
+  kubeseal:re-encrypt:
+    label: kubeseal:re-encrypt {{.ENV}}
+    requires:
+      vars: [ENV]
+    cmd: 'grep -Rl "^kind: SealedSecret$" --exclude-dir "*charts*" apps/*/{{.ENV}} | xargs -I {} sh -c "kubeseal --context {{.KUBECTL_CTX}} --re-encrypt -o yaml -w {} < \"{}\""'

@@ -129,9 +129,10 @@ spec:
           value: /var/lib/grafana/plugins
         - name: GF_PATHS_PROVISIONING
           value: /etc/grafana/provisioning
-        envFrom:
-        - secretRef:
-            name: grafana-oidc-secret
+        - name: secretKeyRef
+          valueFrom:
+            key: attribute.client_secret
+            name: keycloak-client-grafana
         image: docker.io/grafana/grafana:12.2.0
         imagePullPolicy: IfNotPresent
         livenessProbe:

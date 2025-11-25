@@ -6,4 +6,3 @@ resources:
 - client.yaml
 - roles.yaml
 - protocolmapper.yaml
-- secret-sync.yaml

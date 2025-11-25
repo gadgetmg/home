@@ -16,4 +16,4 @@ spec:
     validRedirectUris:
     - https://argocd.seigra.net/api/dex/callback
   writeConnectionSecretToRef:
-    name: argocd-oidc-secret
+    name: keycloak-client-argocd

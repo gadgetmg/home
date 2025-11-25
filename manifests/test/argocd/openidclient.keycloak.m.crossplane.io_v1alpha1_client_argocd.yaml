@@ -16,4 +16,4 @@ spec:
     validRedirectUris:
     - https://argocd.10.5.0.53.nip.io/api/dex/callback
   writeConnectionSecretToRef:
-    name: argocd-oidc-secret
+    name: keycloak-client-argocd

@@ -13,7 +13,6 @@ spec:
       - passwordSecretRef:
           key: password
           name: keycloak-home-smtp-credentials
-          namespace: keycloak
         username: 6ff69586806c8fee67b2e91476d732e9
       envelopeFrom: account@seigra.net
       from: account@seigra.net
