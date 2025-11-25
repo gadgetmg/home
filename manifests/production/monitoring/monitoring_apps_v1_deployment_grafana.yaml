@@ -129,10 +129,11 @@ spec:
           value: /var/lib/grafana/plugins
         - name: GF_PATHS_PROVISIONING
           value: /etc/grafana/provisioning
-        - name: secretKeyRef
+        - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
           valueFrom:
-            key: attribute.client_secret
-            name: keycloak-client-grafana
+            secretKeyRef:
+              key: attribute.client_secret
+              name: keycloak-client-grafana
         image: docker.io/grafana/grafana:12.2.0
         imagePullPolicy: IfNotPresent
         livenessProbe:

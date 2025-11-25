@@ -52,9 +52,9 @@ helmCharts:
           root_url: https://grafana.seigra.net
       envValueFrom:
         GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET:
-        secretKeyRef:
-          name: keycloak-client-grafana
-          key: attribute.client_secret
+          secretKeyRef:
+            name: keycloak-client-grafana
+            key: attribute.client_secret
     prometheusOperator:
       fullnameOverride: prometheus-operator
     cleanPrometheusOperatorObjectNames: true
