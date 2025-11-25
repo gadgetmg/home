@@ -31,3 +31,5 @@ helmCharts:
       runAsNonRoot: true
       seccompProfile:
         type: RuntimeDefault
+    provider:
+      defaultActivations: []

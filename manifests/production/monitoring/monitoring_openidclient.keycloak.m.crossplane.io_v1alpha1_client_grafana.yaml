@@ -1,0 +1,19 @@
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: grafana
+    fullScopeAllowed: false
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    rootUrl: https://grafana.seigra.net
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://grafana.seigra.net/login/generic_oauth
+  writeConnectionSecretToRef:
+    name: grafana-oidc-secret

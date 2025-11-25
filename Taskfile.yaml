@@ -94,16 +94,15 @@ tasks:
     sources:
     - manifests/{{.ENV}}/cilium/*.yaml
     - manifests/{{.ENV}}/argocd/rbac.authorization.k8s.io_v1_*.yaml
-    - manifests/{{.ENV}}/argocd/argocd_v1_*.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-applicationset-controller.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-notifications-controller.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-redis.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-repo-server.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_deployment_argocd-server.yaml
-    - manifests/{{.ENV}}/argocd/argocd_apps_v1_statefulset_argocd-application-controller.yaml
-    - manifests/{{.ENV}}/argocd/argocd_batch_v1_job_argocd-redis-secret-init.yaml
-    - manifests/{{.ENV}}/argocd/argocd_rbac.authorization.k8s.io_v1_*.yaml
-    - manifests/{{.ENV}}/argocd/apiextensions.k8s.io_v1_customresourcedefinition_*.yaml
+    - manifests/{{.ENV}}/argocd/v1_*.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_deployment_argocd-applicationset-controller.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_deployment_argocd-notifications-controller.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_deployment_argocd-redis.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_deployment_argocd-repo-server.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_deployment_argocd-server.yaml
+    - manifests/{{.ENV}}/argocd/apps_v1_statefulset_argocd-application-controller.yaml
+    - manifests/{{.ENV}}/argocd/batch_v1_job_argocd-redis-secret-init.yaml
+    - manifests/{{.ENV}}/argocd/rbac.authorization.k8s.io_v1_*.yaml
     cmds:
     - task: crds
     - kubectl apply --server-side -f manifests/{{.ENV}}/cilium/v1_namespace_cilium-secrets.yaml

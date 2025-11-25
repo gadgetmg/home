@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/json-patch
+- op: add
+  path: /spec/activate/-
+  value: users.user.keycloak.m.crossplane.io

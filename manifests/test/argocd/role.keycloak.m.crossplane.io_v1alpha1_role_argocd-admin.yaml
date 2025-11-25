@@ -1,0 +1,16 @@
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    seigra.net/roles: admin
+  name: argocd-admin
+  namespace: argocd
+spec:
+  forProvider:
+    clientIdRef:
+      name: argocd
+    description: unrestricted access to all resources
+    name: admin
+    realmIdRef:
+      name: home
+      namespace: keycloak

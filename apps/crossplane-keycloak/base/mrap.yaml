@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../../../schemas/apiextensions.crossplane.io/managedresourceactivationpolicy_v1alpha1.json
+apiVersion: apiextensions.crossplane.io/v1alpha1
+kind: ManagedResourceActivationPolicy
+metadata:
+  name: keycloak
+spec:
+  activate:
+  - clients.openidclient.keycloak.m.crossplane.io
+  - groups.group.keycloak.m.crossplane.io
+  - memberships.group.keycloak.m.crossplane.io
+  - protocolmappers.client.keycloak.m.crossplane.io
+  - realms.realm.keycloak.m.crossplane.io
+  - roles.group.keycloak.m.crossplane.io
+  - roles.role.keycloak.m.crossplane.io

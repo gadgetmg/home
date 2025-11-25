@@ -1,0 +1,13 @@
+apiVersion: authenticationflow.keycloak.m.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-cookie
+  namespace: keycloak
+spec:
+  forProvider:
+    authenticator: auth-cookie
+    parentFlowAliasRef:
+      name: home-webauthn
+    priority: 1
+    realmId: home
+    requirement: ALTERNATIVE

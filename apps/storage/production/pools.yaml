@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
@@ -19,6 +20,7 @@ spec:
       hostDevices:
       - /dev/sda
 ---
+# yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:
@@ -40,6 +42,7 @@ spec:
       hostDevices:
       - /dev/sda
 ---
+# yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
 kind: LinstorSatelliteConfiguration
 metadata:

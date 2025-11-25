@@ -1,0 +1,12 @@
+apiVersion: authenticationflow.keycloak.m.crossplane.io/v1alpha1
+kind: Execution
+metadata:
+  name: home-webauthn-kerberos
+  namespace: keycloak
+spec:
+  forProvider:
+    authenticator: auth-spnego
+    parentFlowAliasRef:
+      name: home-webauthn
+    priority: 2
+    realmId: home

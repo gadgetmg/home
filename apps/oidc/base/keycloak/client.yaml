@@ -1,15 +1,15 @@
-# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.crossplane.io/client_v1alpha1.json
-apiVersion: openidclient.keycloak.crossplane.io/v1alpha1
+# yaml-language-server: $schema=../../../../schemas/openidclient.keycloak.m.crossplane.io/client_v1alpha1.json
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
 kind: Client
 metadata:
   name: kubernetes
 spec:
-  deletionPolicy: Orphan
   forProvider:
     accessType: PUBLIC
     clientId: kubernetes
     realmIdRef:
       name: home
+      namespace: keycloak
     standardFlowEnabled: true
     fullScopeAllowed: false
     validRedirectUris:

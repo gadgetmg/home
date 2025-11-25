@@ -4,3 +4,9 @@ kind: Kustomization
 
 resources:
 - ../base
+
+patches:
+- path: patches/mrap.yaml
+  target:
+    kind: ManagedResourceActivationPolicy
+    name: keycloak

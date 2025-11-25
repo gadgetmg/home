@@ -1,33 +1,33 @@
-# yaml-language-server: $schema=../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
-apiVersion: role.keycloak.crossplane.io/v1alpha1
+# yaml-language-server: $schema=../../../../schemas/role.keycloak.m.crossplane.io/role_v1alpha1.json
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
 kind: Role
 metadata:
   name: argocd-admin
   labels:
     seigra.net/roles: admin
 spec:
-  deletionPolicy: Orphan
   forProvider:
     description: unrestricted access to all resources
     name: admin
     realmIdRef:
       name: home
+      namespace: keycloak
     clientIdRef:
       name: argocd
 ---
-# yaml-language-server: $schema=../../../../schemas/role.keycloak.crossplane.io/role_v1alpha1.json
-apiVersion: role.keycloak.crossplane.io/v1alpha1
+# yaml-language-server: $schema=../../../../schemas/role.keycloak.m.crossplane.io/role_v1alpha1.json
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
 kind: Role
 metadata:
   name: argocd-readonly
   labels:
     seigra.net/roles: readonly
 spec:
-  deletionPolicy: Orphan
   forProvider:
     description: read-only access to all resources
     name: readonly
     realmIdRef:
       name: home
+      namespace: keycloak
     clientIdRef:
       name: argocd

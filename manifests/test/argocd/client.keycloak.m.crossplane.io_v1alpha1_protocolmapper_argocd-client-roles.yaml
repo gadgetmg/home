@@ -1,0 +1,23 @@
+apiVersion: client.keycloak.m.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: argocd-client-roles
+  namespace: argocd
+spec:
+  forProvider:
+    clientIdRef:
+      name: argocd
+    config:
+      access.token.claim: "false"
+      claim.name: groups
+      id.token.claim: "false"
+      introspection.token.claim: "false"
+      multivalued: "true"
+      userinfo.token.claim: "true"
+      usermodel.clientRoleMapping.clientId: argocd
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
+    realmIdRef:
+      name: home
+      namespace: keycloak

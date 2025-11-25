@@ -3,7 +3,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: keycloak-db
-  namespace: keycloak
   annotations:
     cnpg.io/skipEmptyWalArchiveCheck: enabled
 spec:
