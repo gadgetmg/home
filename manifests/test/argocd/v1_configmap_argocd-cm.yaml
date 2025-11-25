@@ -12,7 +12,7 @@ data:
       config:
         issuer: https://auth.10.5.0.54.nip.io/realms/home
         clientID: argocd
-        clientSecret: $argocd-oidc-secret:client_secret
+        clientSecret: $KEYCLOAK_CLIENT_SECRET
         scopes:
         - openid
         - profile
