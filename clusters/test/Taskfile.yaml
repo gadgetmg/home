@@ -9,12 +9,16 @@ env:
 
 tasks:
   up:
+    status:
+    - talosctl config use-context test
     cmds:
+    - task: down
     - sudo iptables -N talos-qemu
     - sudo iptables -A talos-qemu -i talos+ -j ACCEPT
     - sudo iptables -I INPUT 1 -j talos-qemu
     - |
       sudo -E talosctl cluster create \
+        --name test \
         --provisioner qemu \
         --talos-version {{.TALOS_VERSION}} \
         --kubernetes-version {{.KUBERNETES_VERSION}} \
@@ -47,20 +51,25 @@ tasks:
     - docker compose up -d --build
 
   down:
+    ignore_error: true
     cmds:
+    - sudo -E talosctl cluster destroy --name test --provisioner qemu -f
+    - docker compose down
+    - yq -i 'del(.contexts.test)' ~/.talos/config
+    - kubectl config delete-context admin@test
+    - kubectl config delete-user admin@test
+    - kubectl config delete-cluster test
     - sudo iptables -D INPUT -j talos-qemu
     - sudo iptables -F talos-qemu
     - sudo iptables -X talos-qemu
-    - sudo -E talosctl cluster destroy --provisioner qemu -f
-    - docker compose down
 
   update:
     status:
-    - kubectl get --namespace argocd applicationset/home
+    - kubectl --context admin@test get --namespace argocd applicationset/home
     sources:
     - home.yaml
     - ../../manifests/test/**/*
     cmds:
     - git add -A
     - git update-ref refs/heads/local $(git commit-tree -m "local snapshot" $(git write-tree))
-    - kubectl apply --server-side --force-conflicts -f home.yaml
+    - kubectl --context admin@test --namespace argocd apply --server-side --force-conflicts -f home.yaml
