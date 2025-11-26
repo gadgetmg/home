@@ -3,6 +3,6 @@ kind: Provider
 metadata:
   name: provider-keycloak
 spec:
-  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v2.10.0
+  package: xpkg.upbound.io/crossplane-contrib/provider-keycloak:v2.11.0
   runtimeConfigRef:
     name: provider-keycloak
