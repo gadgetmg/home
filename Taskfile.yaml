@@ -25,10 +25,13 @@ includes:
     taskfile: clusters/test/Taskfile.yaml
     dir: clusters/test
   tests: tests/tasks.yaml
-  apps: apps/tasks.yaml
+  apps:
+    taskfile: apps/tasks.yaml
+    internal: true
 
 tasks:
   kubeconform:
+    desc: Validate schema of all manifests under manifests/
     cmd: |
       kubeconform -output pretty \
         -kubernetes-version {{.KUBERNETES_VERSION | trimPrefix "v"}} \
@@ -40,6 +43,7 @@ tasks:
     - manifests/**/*
 
   renovate:
+    desc: Local run of Mend Renovate
     env:
       LOG_LEVEL: DEBUG
       GITHUB_COM_TOKEN: {sh: gh auth token}
@@ -47,7 +51,7 @@ tasks:
     - renovate --platform=local
 
   build:
-    internal: true
+    desc: Build sources for app (APP) in environment (ENV)
     label: build {{.APP}} {{.ENV}}
     requires:
       vars: [APP, ENV]
@@ -67,6 +71,7 @@ tasks:
     - '{{.APP_MANIFEST_DIR}}/**/*'
 
   hydrate:
+    desc: Hydrate all apps and environments to /manifests
     vars:
       TARGETS: {sh: 'find apps -name base -prune -o -type d -exec test -e {}/kustomization.yaml \; -print -prune'}
     cmds:
@@ -76,17 +81,24 @@ tasks:
     - git add --intent-to-add manifests
 
   crds:
+    desc: Apply CRDs to environment (ENV)
     cmd: '{{.KUBECTL}} apply --server-side -f crds/{{.ENV}}'
+    requires:
+      vars: [ENV]
     status:
     - '{{.KUBECTL}} diff -f crds/{{.ENV}}'
 
   login:
+    desc: Login to Argo CD CLI in environment (ENV)
+    silent: true
     vars:
+      USERNAME: admin
       PASSWORD:
         sh: '{{.KUBECTL}} --namespace {{.ARGOCD_NAMESPACE}} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
-    cmd: '{{.ARGOCD}} login --port-forward --plaintext --username admin --password {{.PASSWORD}}'
+    cmd: '{{.ARGOCD}} login --port-forward --plaintext --username {{.USERNAME}} --password {{.PASSWORD}}'
 
   create:
+    internal: true
     status:
     - '{{.ARGOCD}} app get {{.APP}}'
     requires:
@@ -94,6 +106,7 @@ tasks:
     cmd: '{{.ARGOCD}} app create {{.APP}} --dest-name in-cluster --repo /nonexistent --path / --validate=false'
 
   deploy:
+    desc: Deploy local rendered manifests of app (APP) to environment (ENV)
     label: deploy {{.APP}} {{.ENV}}
     deps:
     - {task: build, vars: {APP: '{{.APP}}', ENV: '{{.ENV}}'}}
@@ -110,6 +123,7 @@ tasks:
     - '{{.ARGOCD}} app sync {{.APP}} --local {{.APP_MANIFEST_DIR}} --server-side --apply-out-of-sync-only --prune --retry-limit 2 --output tree'
 
   bootstrap:
+    desc: Bootstrap environment (ENV) with CRDs, Cilium, and Argo CD
     label: bootstrap {{.ENV}}
     deps:
     - {task: build, vars: {APP: 'cilium', ENV: '{{.ENV}}'}}
@@ -142,13 +156,44 @@ tasks:
     - '{{.KUBECTL}} rollout status --namespace {{.ARGOCD_NAMESPACE}} --watch --timeout=5m statefulset/argocd-application-controller'
 
   kubeseal:validate:
+    desc: Validate all sealed secrets in environment (ENV) can be decrypted with kubeseal
     label: kubeseal:validate {{.ENV}}
     requires:
       vars: [ENV]
     cmd: find manifests/{{.ENV}} -name '*bitnami.com_v1alpha1_sealedsecret*.yaml' | xargs -I {} sh -c 'kubeseal --context {{.KUBECTL_CTX}} --validate < "{}"'
 
   kubeseal:re-encrypt:
+    desc: Re-encrypt all sealed secrets in environment (ENV)
     label: kubeseal:re-encrypt {{.ENV}}
     requires:
       vars: [ENV]
     cmd: 'grep -Rl "^kind: SealedSecret$" --exclude-dir "*charts*" apps/*/{{.ENV}} | xargs -I {} sh -c "kubeseal --context {{.KUBECTL_CTX}} --re-encrypt -o yaml -w {} < \"{}\""'
+
+  init:
+    desc: Initialize a new app (APP) definition from templates/app
+    silent: true
+    requires:
+      vars: [APP]
+    cmds:
+    - cp -r templates/app apps/{{.APP}}
+    - find apps/{{.APP}} -type f -exec sed -i "s/APP_NAME/{{.APP}}/g" {} \;
+
+  up:
+    desc: Bring up app (APP) with dependencies in environment (ENV)
+    requires:
+      vars: [APP, ENV]
+    cmds:
+    - task: '{{.ENV}}:up'
+    - task: bootstrap
+    - task: apps:{{.APP}}
+
+  all-up:
+    aliases: [default]
+    desc: Bring up all apps in environment (ENV)
+    vars:
+      APPS: {sh: "find apps/* -maxdepth 1 -name {{.ENV}} -type d | xargs -n1 dirname | xargs -n1 basename"}
+    deps:
+    - for: {var: APPS}
+      task: up
+      vars:
+        APP: '{{.APP}}'
