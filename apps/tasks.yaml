@@ -2,13 +2,6 @@
 version: "3"
 
 tasks:
-  default:
-    vars:
-      APPS: {sh: "find apps/* -maxdepth 1 -name {{.ENV}} -type d | xargs -n1 dirname | xargs -n1 basename"}
-    deps:
-    - for: {var: APPS}
-      task: "{{.ITEM}}"
-
   actual:
     cmds:
     - task: ':deploy'
