@@ -10,6 +10,7 @@ spec:
       featureGates:
       - ExpandDisks
       - Snapshot
+    imagePullPolicy: IfNotPresent
   customizeComponents: {}
   imagePullPolicy: IfNotPresent
   workloadUpdateStrategy: {}
