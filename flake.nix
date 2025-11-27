@@ -2,10 +2,17 @@
   description = "Home";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    talhelper.url = "github:budimanjojo/talhelper";
-    krewfile.url = "github:brumhard/krewfile";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    talhelper = {
+      url = "github:budimanjojo/talhelper";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+    krewfile = {
+      url = "github:brumhard/krewfile";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -59,11 +66,8 @@
                   ]))
                   cilium-cli
                   crossplane-cli
-                  go
-                  go-jsonnet
                   go-task
                   hubble
-                  jsonnet-bundler
                   k9s
                   kapp
                   kfilt
@@ -77,7 +81,6 @@
                   kubevirt
                   kustomize
                   kyverno-chainsaw
-                  minikube
                   pre-commit
                   qemu
                   renovate
@@ -95,7 +98,6 @@
                       deepdiff
                     ]
                   ))
-                  OVMF
                 ];
                 shellHook = ''
                   export PATH="$HOME/.krew/bin:$PATH"
