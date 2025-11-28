@@ -74,6 +74,9 @@ functionality including networking and persistent storage to applications.
 - [`piraeus-operator`](apps/piraeus-operator) - Container Storage Interface
   (CSI) plugin and [operator](https://piraeus.io/) for
   [LINSTOR](https://linbit.com/linstor/).
+- [`redis-operator`](apps/redis-operator) -
+  [Redis Operator](https://github.com/freshworks/redis-operator) for Redis
+  databases.
 - [`sealed-secrets`](apps/sealed-secrets) -
   [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets) controller to
   safely encrypt and store secrets in source control.
