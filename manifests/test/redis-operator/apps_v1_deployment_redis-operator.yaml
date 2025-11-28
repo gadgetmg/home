@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: redis-operator
+    app.kubernetes.io/name: redis-operator
+    app.kubernetes.io/version: 1.3.0
+  name: redis-operator
+  namespace: redis-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: redis-operator
+      app.kubernetes.io/name: redis-operator
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: redis-operator
+        app.kubernetes.io/name: redis-operator
+    spec:
+      containers:
+      - image: ghcr.io/freshworks/redis-operator:v3.3.2@sha256:1ea859add694dc9da5800e8fbcb05e300ebdf3d49ced6815d53d019380d20973
+        imagePullPolicy: IfNotPresent
+        name: redis-operator
+        ports:
+        - containerPort: 9710
+          name: metrics
+          protocol: TCP
+        resources:
+          limits:
+            memory: 50Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: redis-operator

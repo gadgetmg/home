@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: redis-operator
+
+resources:
+- namespace.yaml
+- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.2
+
+components:
+- ../../../shared/components/restricted-pod-security
+
+images:
+- name: quay.io/spotahome/redis-operator
+  newName: ghcr.io/freshworks/redis-operator
+  newTag: v3.3.2@sha256:1ea859add694dc9da5800e8fbcb05e300ebdf3d49ced6815d53d019380d20973
