@@ -196,4 +196,4 @@ tasks:
     - for: {var: APPS}
       task: up
       vars:
-        APP: '{{.APP}}'
+        APP: '{{.ITEM}}'
