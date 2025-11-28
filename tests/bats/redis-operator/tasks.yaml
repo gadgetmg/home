@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  default:
+    sources:
+    - '{{.TASKFILE_DIR}}/**/*'
+    - crds/test/*
+    - manifests/test/redis-operator/*
+    cmd: bats {{.TASKFILE_DIR}}

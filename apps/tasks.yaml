@@ -198,6 +198,11 @@ tasks:
     deps:
     - cert-manager
 
+  redis-operator:
+  - task: ':deploy'
+    vars:
+      APP: redis-operator
+
   sealed-secrets:
   - task: ':deploy'
     vars:

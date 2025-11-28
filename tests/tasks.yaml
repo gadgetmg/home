@@ -8,6 +8,7 @@ includes:
   bats:external-secrets: bats/external-secrets/tasks.yaml
   bats:kyverno: bats/kyverno/tasks.yaml
   bats:mariadb-operator: bats/mariadb-operator/tasks.yaml
+  bats:redis-operator: bats/redis-operator/tasks.yaml
   bats:trust-manager: bats/trust-manager/tasks.yaml
 
 tasks:
