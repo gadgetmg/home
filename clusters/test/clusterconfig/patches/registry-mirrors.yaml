@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  registries:
+    mirrors:
+      docker-registry3.mariadb.com:
+        endpoints:
+        - https://harbor.segira.net/v2/docker-registry3.mariadb.com
+        overridePath: true
+      docker.io:
+        endpoints:
+        - https://harbor.segira.net/v2/docker.io
+        overridePath: true
+      ghcr.io:
+        endpoints:
+        - https://harbor.segira.net/v2/ghcr.io
+        overridePath: true
+      public.ecr.aws:
+        endpoints:
+        - https://harbor.segira.net/v2/public.ecr.aws
+        overridePath: true
+      quay.io:
+        endpoints:
+        - https://harbor.segira.net/v2/quay.io
+        overridePath: true
+      reg.kyverno.io:
+        endpoints:
+        - https://harbor.segira.net/v2/reg.kyverno.io
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+        - https://harbor.segira.net/v2/registry.k8s.io
+        overridePath: true
+      xpkg.crossplane.io:
+        endpoints:
+        - https://harbor.segira.net/v2/xpkg.crossplane.io
+        overridePath: true
+      xpkg.upbound.io:
+        endpoints:
+        - https://harbor.segira.net/v2/xpkg.upbound.io
+        overridePath: true

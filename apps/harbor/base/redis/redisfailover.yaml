@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=../../../..//schemas/databases.spotahome.com/redisfailover_v1.json
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  name: harbor
+  labels:
+    app.kubernetes.io/name: redis
+spec:
+  redis:
+    replicas: 3
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution: []
+    image: valkey/valkey:alpine
+    exporter:
+      enabled: true
+      image: oliver006/redis_exporter:alpine
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      fsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    storage:
+      persistentVolumeClaim:
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          labels:
+            app.kubernetes.io/name: redis
+          name: data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: ssd-r1
+  sentinel:
+    replicas: 3
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution: []
+    image: valkey/valkey:alpine
+    exporter:
+      enabled: true
+      image: oliver006/redis_exporter:alpine
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL

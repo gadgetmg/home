@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: harbor
+
+resources:
+- ../base
+
+secretGenerator:
+- name: harbor-common
+  literals:
+  - REGISTRY_CREDENTIAL_PASSWORD=harbor_registry_password
+- name: harbor-core
+  literals:
+  - CORE_SECRET=EdRvHQ2NtIbGvngG
+  - CSRF_KEY=Wf6QO5QEuGYgvTIDIjq466lH4Wacrav7
+  - HARBOR_ADMIN_PASSWORD=admin
+- name: harbor-jobservice
+  literals:
+  - JOBSERVICE_SECRET=QmXRw9M8rjWFitTC
+- name: harbor-registry
+  literals:
+  - REGISTRY_HTTP_SECRET=2VyPvkL7oD7etS6e
+- name: harbor-core-key
+  literals:
+  - key=XnbRWlX96bJoU7pe
+- name: harbor-registry-passwd
+  literals:
+  - passwd=harbor_registry_user:$2a$10$9sj2Wzui4XqvfwL69POdp.Y9TsCiKU6GCNGZ0LuRmPBbAi38mk/oy
+
+patches:
+- path: patches/oidc-endpoint.yaml
+- path: patches/gateway.yaml
+  target:
+    kind: Gateway
+
+replacements:
+- path: ../../../shared/replacements/gateway-hostnames.yaml
+- source:
+    kind: Gateway
+    fieldPath: spec.listeners.0.hostname
+  targets:
+  - select:
+      kind: ConfigMap
+      name: harbor-core
+    fieldPaths:
+    - data.EXT_ENDPOINT
+    options:
+      delimiter: '/'
+      index: 2

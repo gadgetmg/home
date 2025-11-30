@@ -1,0 +1,24 @@
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: harbor
+  name: harbor
+  namespace: harbor
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: harbor
+    fullScopeAllowed: false
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    rootUrl: https://harbor.10.5.0.60.nip.io
+    standardFlowEnabled: true
+    validRedirectUris:
+    - https://harbor.10.5.0.60.nip.io/c/oidc/callback
+  writeConnectionSecretToRef:
+    name: keycloak-client-harbor

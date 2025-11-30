@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: registry
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: registry
+    app.kubernetes.io/part-of: harbor
+  name: harbor-registry
+  namespace: harbor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: registry
+      app.kubernetes.io/instance: harbor
+      app.kubernetes.io/name: registry
+      app.kubernetes.io/part-of: harbor
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: registry
+        app.kubernetes.io/instance: harbor
+        app.kubernetes.io/name: registry
+        app.kubernetes.io/part-of: harbor
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: registry
+                app.kubernetes.io/instance: harbor
+                app.kubernetes.io/name: registry
+                app.kubernetes.io/part-of: harbor
+            topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      containers:
+      - envFrom:
+        - secretRef:
+            name: harbor-registry
+        image: goharbor/registry-photon:v2.14.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        name: registry
+        ports:
+        - containerPort: 5000
+        - containerPort: 5001
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /storage
+          name: data
+        - mountPath: /etc/registry/passwd
+          name: passwd
+          subPath: passwd
+        - mountPath: /etc/registry/config.yml
+          name: config
+          subPath: config.yml
+      - env:
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: CORE_SECRET
+              name: harbor-core
+        - name: JOBSERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: JOBSERVICE_SECRET
+              name: harbor-jobservice
+        envFrom:
+        - secretRef:
+            name: harbor-registry
+        image: goharbor/harbor-registryctl:v2.14.0
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        name: registryctl
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /storage
+          name: data
+        - mountPath: /etc/registry/config.yml
+          name: config
+          subPath: config.yml
+        - mountPath: /etc/registryctl/config.yml
+          name: config
+          subPath: ctl-config.yml
+      securityContext:
+        fsGroup: 10000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsUser: 10000
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - name: passwd
+        secret:
+          items:
+          - key: passwd
+            path: passwd
+          secretName: harbor-registry-passwd
+      - configMap:
+          name: harbor-registry-conf-t9567td9kg
+        name: config
+      - name: data
+        persistentVolumeClaim:
+          claimName: harbor-registry-data

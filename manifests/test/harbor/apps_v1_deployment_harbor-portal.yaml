@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: portal
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: portal
+    app.kubernetes.io/part-of: harbor
+  name: harbor-portal
+  namespace: harbor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: portal
+      app.kubernetes.io/instance: harbor
+      app.kubernetes.io/name: portal
+      app.kubernetes.io/part-of: harbor
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: portal
+        app.kubernetes.io/instance: harbor
+        app.kubernetes.io/name: portal
+        app.kubernetes.io/part-of: harbor
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: portal
+                app.kubernetes.io/instance: harbor
+                app.kubernetes.io/name: portal
+                app.kubernetes.io/part-of: harbor
+            topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      containers:
+      - image: goharbor/harbor-portal:v2.14.0
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        name: portal
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /etc/nginx/nginx.conf
+          name: config
+          subPath: nginx.conf
+      securityContext:
+        fsGroup: 10000
+        runAsUser: 10000
+      volumes:
+      - configMap:
+          name: harbor-portal-conf-7dmd2bg285
+        name: config
