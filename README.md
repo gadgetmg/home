@@ -93,6 +93,8 @@ functionality including networking and persistent storage to applications.
 Platform services are used by user applications or provide some global utility
 to the cluster's services.
 
+- [`harbor`](apps/harbor) - [Harbor](https://goharbor.io/) repository for
+  registry mirroring and hosting internal images
 - [`headlamp`](apps/headlamp) - [Headlamp](https://headlamp.dev/) Kubernetes UI
 - [`idp`](apps/idp) - [Keycloak](https://www.keycloak.org/) for identity and
   access management (IAM)

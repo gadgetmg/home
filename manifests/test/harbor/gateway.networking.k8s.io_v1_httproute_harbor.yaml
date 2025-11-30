@@ -1,0 +1,39 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/component: gateway
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: gateway
+    app.kubernetes.io/part-of: harbor
+  name: harbor
+  namespace: harbor
+spec:
+  hostnames:
+  - harbor.10.5.0.60.nip.io
+  parentRefs:
+  - name: harbor
+  rules:
+  - backendRefs:
+    - name: harbor-core
+      port: 80
+    matches:
+    - path:
+        type: PathPrefix
+        value: /api/
+    - path:
+        type: PathPrefix
+        value: /service/
+    - path:
+        type: PathPrefix
+        value: /v2/
+    - path:
+        type: PathPrefix
+        value: /c/
+  - backendRefs:
+    - name: harbor-portal
+      port: 80
+    matches:
+    - path:
+        type: PathPrefix
+        value: /

@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/service.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-trivy
+  labels:
+    app.kubernetes.io/name: trivy
+spec:
+  selector:
+    app.kubernetes.io/name: trivy
+  ports:
+  - name: http-trivy
+    port: 8080
+    protocol: TCP

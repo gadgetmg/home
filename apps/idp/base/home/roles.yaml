@@ -16,6 +16,8 @@ spec:
       namespace: monitoring
     - name: kubernetes-cluster-admin
       namespace: kube-system
+    - name: harbor-admin
+      namespace: harbor
     # roleIdsSelector:
     #   matchLabels:
     #     seigra.net/roles: admin

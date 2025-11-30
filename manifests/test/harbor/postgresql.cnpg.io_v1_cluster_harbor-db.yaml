@@ -1,0 +1,20 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  labels:
+    app.kubernetes.io/component: database
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: database
+    app.kubernetes.io/part-of: harbor
+  name: harbor-db
+  namespace: harbor
+spec:
+  affinity:
+    podAntiAffinityType: required
+  bootstrap:
+    initdb:
+      database: registry
+  instances: 3
+  storage:
+    size: 10Gi
+    storageClass: ssd-r1

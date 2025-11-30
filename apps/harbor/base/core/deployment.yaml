@@ -1,0 +1,119 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: harbor-core
+  labels:
+    app.kubernetes.io/name: core
+spec:
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: core
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: core
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: core
+            topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      containers:
+      - name: core
+        image: goharbor/harbor-core:v2.14.0
+        env:
+        - name: JOBSERVICE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: JOBSERVICE_SECRET
+              name: harbor-jobservice
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: harbor-db-app
+        envFrom:
+        - configMapRef:
+            name: harbor-core
+        - configMapRef:
+            name: harbor-common
+        - secretRef:
+            name: harbor-core
+        - secretRef:
+            name: harbor-common
+        - secretRef:
+            name: harbor-config-override
+        ports:
+        - containerPort: 8080
+        startupProbe:
+          failureThreshold: 360
+          httpGet:
+            path: /api/v2.0/ping
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /api/v2.0/ping
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: /api/v2.0/ping
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /etc/core/app.conf
+          name: config
+          subPath: app.conf
+        - mountPath: /etc/core/key
+          name: key
+          subPath: key
+        - mountPath: /etc/core/private_key.pem
+          name: token
+          subPath: tls.key
+        - mountPath: /etc/core/token
+          name: psc
+      securityContext:
+        fsGroup: 10000
+        runAsUser: 10000
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - name: config
+        configMap:
+          items:
+          - key: app.conf
+            path: app.conf
+          name: harbor-core-conf
+      - name: key
+        secret:
+          items:
+          - key: key
+            path: key
+          secretName: harbor-core-key
+      - name: token
+        secret:
+          secretName: harbor-core-token-tls
+      - emptyDir: {}
+        name: psc

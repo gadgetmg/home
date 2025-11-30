@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: registry
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: registry
+    app.kubernetes.io/part-of: harbor
+  name: harbor-registry
+  namespace: harbor
+spec:
+  ports:
+  - name: http-registry
+    port: 5000
+  - name: http-controller
+    port: 8080
+  selector:
+    app.kubernetes.io/component: registry
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: registry
+    app.kubernetes.io/part-of: harbor

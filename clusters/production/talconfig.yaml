@@ -37,3 +37,4 @@ controlPlane:
   - '@clusterconfig/patches/oidc.yaml'
   - '@clusterconfig/patches/parallel-image-pulls.yaml'
   - '@clusterconfig/patches/pod-security.yaml'
+  - '@clusterconfig/patches/registry-mirrors.yaml'

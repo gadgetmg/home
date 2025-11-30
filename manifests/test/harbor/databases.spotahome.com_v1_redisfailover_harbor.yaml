@@ -1,0 +1,65 @@
+apiVersion: databases.spotahome.com/v1
+kind: RedisFailover
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/part-of: harbor
+  name: harbor
+  namespace: harbor
+spec:
+  redis:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution: []
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    exporter:
+      enabled: true
+      image: oliver006/redis_exporter:alpine
+    image: valkey/valkey:alpine
+    replicas: 3
+    securityContext:
+      fsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault
+    storage:
+      persistentVolumeClaim:
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          labels:
+            app.kubernetes.io/name: redis
+          name: data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: ssd-r1
+  sentinel:
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution: []
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    exporter:
+      enabled: true
+      image: oliver006/redis_exporter:alpine
+    image: valkey/valkey:alpine
+    replicas: 3
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      seccompProfile:
+        type: RuntimeDefault

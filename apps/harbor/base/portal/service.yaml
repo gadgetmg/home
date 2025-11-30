@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/service.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-portal
+  labels:
+    app.kubernetes.io/name: portal
+spec:
+  selector:
+    app.kubernetes.io/name: portal
+  ports:
+  - port: 80
+    targetPort: 8080

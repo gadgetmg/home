@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/service.json
+apiVersion: v1
+kind: Service
+metadata:
+  name: harbor-registry
+  labels:
+    app.kubernetes.io/name: registry
+spec:
+  selector:
+    app.kubernetes.io/name: registry
+  ports:
+  - name: http-registry
+    port: 5000
+  - name: http-controller
+    port: 8080

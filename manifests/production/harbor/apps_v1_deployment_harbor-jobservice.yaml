@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: jobservice
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: jobservice
+    app.kubernetes.io/part-of: harbor
+  name: harbor-jobservice
+  namespace: harbor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: jobservice
+      app.kubernetes.io/instance: harbor
+      app.kubernetes.io/name: jobservice
+      app.kubernetes.io/part-of: harbor
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: jobservice
+        app.kubernetes.io/instance: harbor
+        app.kubernetes.io/name: jobservice
+        app.kubernetes.io/part-of: harbor
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: jobservice
+                app.kubernetes.io/instance: harbor
+                app.kubernetes.io/name: jobservice
+                app.kubernetes.io/part-of: harbor
+            topologyKey: kubernetes.io/hostname
+      automountServiceAccountToken: false
+      containers:
+      - env:
+        - name: CORE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: CORE_SECRET
+              name: harbor-core
+        envFrom:
+        - configMapRef:
+            name: harbor-jobservice-tghkfh8h8c
+        - configMapRef:
+            name: harbor-common-kbtct2g5dm
+        - secretRef:
+            name: harbor-jobservice
+        - secretRef:
+            name: harbor-common
+        image: goharbor/harbor-jobservice:v2.14.0
+        livenessProbe:
+          httpGet:
+            path: /api/v1/stats
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 300
+          periodSeconds: 10
+        name: jobservice
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /api/v1/stats
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - mountPath: /etc/jobservice/config.yml
+          name: config
+          subPath: config.yml
+        - mountPath: /var/log/jobs
+          name: logs
+      securityContext:
+        fsGroup: 10000
+        runAsUser: 10000
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - configMap:
+          name: harbor-jobservice-conf-d9989htkhd
+        name: config
+      - name: logs
+        persistentVolumeClaim:
+          claimName: harbor-jobservice-logs

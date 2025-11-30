@@ -113,6 +113,19 @@ tasks:
     - oidc
     - idp
 
+  harbor:
+    cmds:
+    - task: ':deploy'
+      vars:
+        APP: harbor
+    deps:
+    - ipam
+    - clusterissuers
+    - cnpg
+    - redis-operator
+    - storage
+    - idp
+
   idp:
     cmds:
     - task: ':deploy'
