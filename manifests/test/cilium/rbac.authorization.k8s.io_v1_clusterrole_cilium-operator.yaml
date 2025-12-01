@@ -221,6 +221,21 @@ rules:
   - get
   - update
 - apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - ingressclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses/status
+  verbs:
+  - update
+- apiGroups:
   - gateway.networking.k8s.io
   resources:
   - gatewayclasses

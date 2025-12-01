@@ -46,10 +46,11 @@ helmCharts:
       enabled: true
     l2announcements:
       enabled: true
+    ingressController:
+      enabled: true
+      default: true
     gatewayAPI:
       enabled: true
-      enableProxyProtocol: false
-      enableAppProtocol: true
       enableAlpn: true
     encryption:
       enabled: true
