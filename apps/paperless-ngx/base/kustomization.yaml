@@ -23,7 +23,7 @@ images:
 - name: ghcr.io/paperless-ngx/paperless-ngx
   newTag: 2.20.0@sha256:8ffd737c69a569bbdadc118e7f54b0b1050ffac2868fdf9e390a68cb7c82a79d
 - name: ghcr.io/cloudnative-pg/postgresql
-  newTag: 17.7-minimal-trixie@sha256:82d8d5b447a8926111d839cb3aa458e812e2171f35359300b8907beff0137433
+  newTag: 17.7-standard-trixie@sha256:429834dbb542490236ae6e5088897dcb3053b6e73fd05745467fc816bd2f474a
 
 labels:
 - pairs:
