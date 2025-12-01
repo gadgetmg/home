@@ -6,6 +6,7 @@ namespace: keycloak
 
 resources:
 - namespace.yaml
+- keycloak
 - database.yaml
 - gateway.yaml
 - httproute.yaml
@@ -15,46 +16,10 @@ resources:
 - home/roles.yaml
 
 components:
-- ../../../shared/components/strip-helm-labels
 - ../../../shared/components/crd-configurations
 
 images:
-- name: docker.io/bitnami/keycloak
-  newName: public.ecr.aws/bitnami/keycloak
 - name: ghcr.io/cloudnative-pg/postgresql
   newTag: 17.7-standard-trixie@sha256:11ce23b56a29206e7749bdaa2e2f0b62052a26834c998a631d4ec0ca0a7bef29
-
-helmCharts:
-- name: keycloak
-  repo: oci://docker.io/bitnamicharts
-  version: 25.2.0
-  releaseName: keycloak
-  namespace: keycloak
-  valuesInline:
-    replicaCount: 2
-    auth:
-      adminUser: admin
-      existingSecret: keycloak-admin
-      passwordSecretKey: admin-password
-    production: true
-    proxyHeaders: xforwarded
-    metrics:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        namespace: keycloak
-      prometheusRule:
-        enabled: true
-        namespace: monitoring
-    postgresql:
-      enabled: false
-    externalDatabase:
-      host: keycloak-db-rw
-      database: keycloak
-      existingSecret: keycloak-db-app
-      existingSecretUserKey: user
-      existingSecretPasswordKey: password
-    resources:
-      requests:
-        cpu: 50m
-        memory: 1Gi
+- name: quay.io/keycloak/keycloak
+  newTag: 26.4.7-0@sha256:9409c59bdfb65dbffa20b11e6f18b8abb9281d480c7ca402f51ed3d5977e6007

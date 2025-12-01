@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/networkpolicy.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: keycloak
+  name: keycloak
+  namespace: keycloak
+spec:
+  egress:
+  - {}
+  ingress:
+  - ports:
+    - port: 8080
+    - port: 9000
+    - port: 7800
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: keycloak
+  policyTypes:
+  - Ingress
+  - Egress

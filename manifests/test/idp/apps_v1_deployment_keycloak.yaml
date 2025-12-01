@@ -1,0 +1,170 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
+  name: keycloak
+  namespace: keycloak
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: keycloak
+      app.kubernetes.io/instance: keycloak
+      app.kubernetes.io/name: keycloak
+      app.kubernetes.io/part-of: keycloak
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: keycloak
+        app.kubernetes.io/instance: keycloak
+        app.kubernetes.io/name: keycloak
+        app.kubernetes.io/part-of: keycloak
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - args:
+        - start
+        - --http-enabled=true
+        - --hostname-strict=false
+        - --proxy-headers=xforwarded
+        - --http-port=8080
+        - --https-port=8443
+        - --db=postgres
+        - --db-url=jdbc:postgresql://keycloak-db-rw:5432/keycloak
+        - --metrics-enabled=true
+        command:
+        - /opt/keycloak/bin/kc.sh
+        env:
+        - name: KC_HTTP_RELATIVE_PATH
+          value: /
+        - name: KC_BOOTSTRAP_ADMIN_USERNAME
+          value: admin
+        - name: KC_BOOTSTRAP_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: admin-password
+              name: keycloak-admin
+        - name: KC_DB
+          value: postgres
+        - name: KC_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: user
+              name: keycloak-db-app
+        - name: KC_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: keycloak-db-app
+        image: quay.io/keycloak/keycloak:26.4.7-0@sha256:9409c59bdfb65dbffa20b11e6f18b8abb9281d480c7ca402f51ed3d5977e6007
+        imagePullPolicy: Always
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /realms/master
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 5
+        name: keycloak
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 9000
+          name: http-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /realms/master
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          requests:
+            cpu: 50m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /realms/master
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /opt/keycloak/data
+          name: data
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /opt/keycloak/work
+          name: keycloak-work
+        - mountPath: /opt/keycloak/lib/quarkus
+          name: keycloak-lib-quarkus
+        - mountPath: /opt/keycloak/themes
+          name: keycloak-themes
+        - mountPath: /opt/keycloak/providers
+          name: keycloak-providers
+      initContainers:
+      - command:
+        - sh
+        - -c
+        - cp -r /opt/keycloak/lib/quarkus/* /shared-quarkus/
+        image: quay.io/keycloak/keycloak:26.4.7-0@sha256:9409c59bdfb65dbffa20b11e6f18b8abb9281d480c7ca402f51ed3d5977e6007
+        imagePullPolicy: Always
+        name: copy-quarkus-lib
+        resources:
+          requests:
+            cpu: 50m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+        volumeMounts:
+        - mountPath: /shared-quarkus
+          name: keycloak-lib-quarkus
+      securityContext:
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: default
+      volumes:
+      - emptyDir: {}
+        name: data
+      - emptyDir: {}
+        name: tmp
+      - emptyDir: {}
+        name: keycloak-work
+      - emptyDir: {}
+        name: keycloak-lib-quarkus
+      - emptyDir: {}
+        name: keycloak-themes
+      - emptyDir: {}
+        name: keycloak-providers
