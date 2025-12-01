@@ -20,6 +20,6 @@ components:
 
 images:
 - name: ghcr.io/cloudnative-pg/postgresql
-  newTag: 17.7-standard-trixie@sha256:11ce23b56a29206e7749bdaa2e2f0b62052a26834c998a631d4ec0ca0a7bef29
+  newTag: 18.1-standard-trixie@sha256:06fc3ac8e8b830cc97d08b8ad8dc471d29767c92882ee2a917f2decd502da128
 - name: quay.io/keycloak/keycloak
   newTag: 26.4.7-0@sha256:9409c59bdfb65dbffa20b11e6f18b8abb9281d480c7ca402f51ed3d5977e6007
