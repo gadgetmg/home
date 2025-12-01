@@ -4,6 +4,7 @@ kind: Cluster
 metadata:
   name: keycloak-db
 spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql
   instances: 3
   affinity:
     podAntiAffinityType: required

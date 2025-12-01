@@ -10,15 +10,20 @@ resources:
 - gotenberg
 - paperless-ngx
 
+components:
+- ../../../shared/components/crd-configurations
+
 images:
-- name: valkey/valkey
-  newTag: 7.2.5-alpine3.19@sha256:4054fe7fc607b9326ac7c4691ed26e9670d2ff17a9fb28c2577adecf928acbcc
+- name: ghcr.io/valkey-io/valkey
+  newTag: 9.0.0-alpine3.22@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394
 - name: apache/tika
   newTag: 3.2.3.0@sha256:c0154cb95587cde64be74f35ada1a2bd7892219f3f0ac3c9dc6cab34046b3573
 - name: gotenberg/gotenberg
   newTag: 8.25.0@sha256:e304e45acee3c400f8ef76afa195c76b1d0eaf0ab6fe9651e305067ab6a1560c
 - name: ghcr.io/paperless-ngx/paperless-ngx
   newTag: 2.20.0@sha256:8ffd737c69a569bbdadc118e7f54b0b1050ffac2868fdf9e390a68cb7c82a79d
+- name: ghcr.io/cloudnative-pg/postgresql
+  newTag: 17.7-minimal-trixie@sha256:82d8d5b447a8926111d839cb3aa458e812e2171f35359300b8907beff0137433
 
 labels:
 - pairs:

@@ -8,6 +8,7 @@ metadata:
     app.kubernetes.io/name: paperless-ngx-db
     app.kubernetes.io/component: database
 spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql
   instances: 3
   affinity:
     podAntiAffinityType: required

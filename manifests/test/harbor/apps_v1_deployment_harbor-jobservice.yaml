@@ -54,7 +54,7 @@ spec:
             name: harbor-jobservice-hghdcm6gcd
         - secretRef:
             name: harbor-common-9t272ddf42
-        image: goharbor/harbor-jobservice:v2.14.0
+        image: ghcr.io/goharbor/harbor-jobservice:v2.14.1@sha256:7805addd56a150dcd9dcbaf5c27218e1fb029bad50e0ba3e570994acc4b3d803
         livenessProbe:
           httpGet:
             path: /api/v1/stats

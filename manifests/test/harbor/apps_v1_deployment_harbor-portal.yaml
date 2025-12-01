@@ -39,7 +39,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       automountServiceAccountToken: false
       containers:
-      - image: goharbor/harbor-portal:v2.14.0
+      - image: ghcr.io/goharbor/harbor-portal:v2.14.1@sha256:deebd48edd53f349a568da577949997d7c6b01749a493ad61d8beeeb148d6dd2
         livenessProbe:
           httpGet:
             path: /

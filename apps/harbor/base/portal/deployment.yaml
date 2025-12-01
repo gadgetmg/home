@@ -27,7 +27,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: portal
-        image: goharbor/harbor-portal:v2.14.0
+        image: ghcr.io/goharbor/harbor-portal
         ports:
         - containerPort: 8080
         livenessProbe:

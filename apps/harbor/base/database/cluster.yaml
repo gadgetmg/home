@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: database
 spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql
   instances: 3
   affinity:
     podAntiAffinityType: required
