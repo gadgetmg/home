@@ -30,6 +30,7 @@ secretGenerator:
   - passwd=harbor_registry_user:$2a$10$9sj2Wzui4XqvfwL69POdp.Y9TsCiKU6GCNGZ0LuRmPBbAi38mk/oy
 
 patches:
+- path: patches/resources.yaml
 - path: patches/oidc-endpoint.yaml
 - path: patches/gateway.yaml
   target:
