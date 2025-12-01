@@ -9,7 +9,7 @@ spec:
   bootstrap:
     initdb:
       database: keycloak
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.7-standard-trixie@sha256:429834dbb542490236ae6e5088897dcb3053b6e73fd05745467fc816bd2f474a
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.7-standard-trixie@sha256:11ce23b56a29206e7749bdaa2e2f0b62052a26834c998a631d4ec0ca0a7bef29
   instances: 3
   storage:
     size: 10Gi
