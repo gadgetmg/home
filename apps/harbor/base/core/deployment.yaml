@@ -27,7 +27,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: core
-        image: goharbor/harbor-core:v2.14.0
+        image: ghcr.io/goharbor/harbor-core
         env:
         - name: JOBSERVICE_SECRET
           valueFrom:

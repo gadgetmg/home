@@ -42,7 +42,7 @@ spec:
       - envFrom:
         - secretRef:
             name: harbor-registry
-        image: goharbor/registry-photon:v2.14.0
+        image: ghcr.io/goharbor/registry-photon:v2.14.1@sha256:986c9ad18ff754269fac3c388cb5dacc2e886b816439c8e8bf11cd92e76b6cdb
         livenessProbe:
           httpGet:
             path: /
@@ -93,7 +93,7 @@ spec:
         envFrom:
         - secretRef:
             name: harbor-registry
-        image: goharbor/harbor-registryctl:v2.14.0
+        image: ghcr.io/goharbor/harbor-registryctl:v2.14.1@sha256:b9645ccc017dd694a3c8f34c39556e74e7cfe371e3abd9f1a7bc0f32401e354f
         livenessProbe:
           httpGet:
             path: /api/health

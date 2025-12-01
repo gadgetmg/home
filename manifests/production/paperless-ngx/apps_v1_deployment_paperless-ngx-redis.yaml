@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/part-of: paperless-ngx
     spec:
       containers:
-      - image: valkey/valkey:7.2.5-alpine3.19@sha256:4054fe7fc607b9326ac7c4691ed26e9670d2ff17a9fb28c2577adecf928acbcc
+      - image: ghcr.io/valkey-io/valkey:9.0.0-alpine3.22@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394
         name: redis
         readinessProbe:
           tcpSocket:

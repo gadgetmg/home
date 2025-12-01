@@ -17,6 +17,9 @@ resources:
 - trivy
 - keycloak
 
+components:
+- ../../../shared/components/crd-configurations
+
 configMapGenerator:
 - name: harbor-common
   literals:
@@ -70,3 +73,23 @@ replicas:
   count: 2
 - name: harbor-trivy
   count: 2
+
+images:
+- name: ghcr.io/cloudnative-pg/postgresql
+  newTag: 18.1-minimal-trixie@sha256:6f52f3adc69a4416300f5cabc511ed334b585fd5f8bb7df33bb0003202efea13
+- name: ghcr.io/goharbor/harbor-core
+  newTag: v2.14.1@sha256:9c16d47ff207e7c83ba4b411eb02f6d919948118d8824b0d359711edeca55823
+- name: ghcr.io/goharbor/harbor-jobservice
+  newTag: v2.14.1@sha256:7805addd56a150dcd9dcbaf5c27218e1fb029bad50e0ba3e570994acc4b3d803
+- name: ghcr.io/goharbor/harbor-portal
+  newTag: v2.14.1@sha256:deebd48edd53f349a568da577949997d7c6b01749a493ad61d8beeeb148d6dd2
+- name: ghcr.io/goharbor/harbor-registryctl
+  newTag: v2.14.1@sha256:b9645ccc017dd694a3c8f34c39556e74e7cfe371e3abd9f1a7bc0f32401e354f
+- name: ghcr.io/goharbor/registry-photon
+  newTag: v2.14.1@sha256:986c9ad18ff754269fac3c388cb5dacc2e886b816439c8e8bf11cd92e76b6cdb
+- name: ghcr.io/goharbor/trivy-adapter-photon
+  newTag: v2.14.1@sha256:13dddb2adef7e28530e04e5659c49f550e5463e5f2536378ffd9207f7b23aac4
+- name: oliver006/redis_exporter
+  newTag: v1.80.1-alpine@sha256:9c6a2f80054875ab36ca7020edbe68a1d05dd6745d030cc6317812ad14333897
+- name: ghcr.io/valkey-io/valkey
+  newTag: 9.0.0-alpine3.22@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394

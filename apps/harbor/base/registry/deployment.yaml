@@ -27,7 +27,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: registry
-        image: goharbor/registry-photon:v2.14.0
+        image: ghcr.io/goharbor/registry-photon
         envFrom:
         - secretRef:
             name: harbor-registry
@@ -67,7 +67,7 @@ spec:
           name: config
           subPath: config.yml
       - name: registryctl
-        image: goharbor/harbor-registryctl:v2.14.0
+        image: ghcr.io/goharbor/harbor-registryctl
         env:
         - name: CORE_SECRET
           valueFrom:

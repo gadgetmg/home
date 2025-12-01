@@ -28,7 +28,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: trivy
-        image: goharbor/trivy-adapter-photon:v2.14.0
+        image: ghcr.io/goharbor/trivy-adapter-photon
         envFrom:
         - configMapRef:
             name: harbor-trivy

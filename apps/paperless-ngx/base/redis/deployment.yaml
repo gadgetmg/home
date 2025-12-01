@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: valkey/valkey
+        image: ghcr.io/valkey-io/valkey
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:

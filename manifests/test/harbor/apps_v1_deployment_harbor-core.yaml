@@ -61,7 +61,7 @@ spec:
             name: harbor-common-9t272ddf42
         - secretRef:
             name: harbor-config-override
-        image: goharbor/harbor-core:v2.14.0
+        image: ghcr.io/goharbor/harbor-core:v2.14.1@sha256:9c16d47ff207e7c83ba4b411eb02f6d919948118d8824b0d359711edeca55823
         livenessProbe:
           failureThreshold: 2
           httpGet:
