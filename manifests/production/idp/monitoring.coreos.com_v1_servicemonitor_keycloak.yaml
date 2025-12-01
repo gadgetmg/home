@@ -10,9 +10,9 @@ metadata:
   namespace: keycloak
 spec:
   endpoints:
-  - path: /metrics
-    port: tcp-metrics
-  jobLabel: ""
+  - interval: 30s
+    path: /metrics
+    port: http-metrics
   namespaceSelector:
     matchNames:
     - keycloak

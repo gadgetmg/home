@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: keycloak
+
+resources:
+- networkpolicy.yaml
+- poddisruptionbudget.yaml
+
+components:
+- ../../../../shared/components/strip-helm-labels
+
+helmCharts:
+- name: keycloak
+  repo: oci://ghcr.io/cloudpirates-io/helm-charts
+  version: 0.11.2
+  releaseName: keycloak
+  valuesFile: values.yaml
+
+labels:
+- pairs:
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/instance: keycloak
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/part-of: keycloak
+  includeSelectors: true
+  includeTemplates: true

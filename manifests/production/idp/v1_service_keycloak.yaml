@@ -11,14 +11,12 @@ metadata:
 spec:
   ports:
   - name: http
-    nodePort: null
-    port: 80
+    port: 8080
     protocol: TCP
-    targetPort: http
+    targetPort: 8080
   selector:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak
     app.kubernetes.io/name: keycloak
     app.kubernetes.io/part-of: keycloak
-  sessionAffinity: None
   type: ClusterIP

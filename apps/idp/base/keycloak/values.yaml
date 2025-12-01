@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/CloudPirates-io/helm-charts/main/charts/keycloak/values.schema.json
+image:
+  registry: quay.io
+  repository: keycloak/keycloak
+replicaCount: 2
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+keycloak:
+  adminUser: admin
+  existingSecret: keycloak-admin
+  secretKeys:
+    adminPasswordKey: admin-password
+  production: true
+  proxyHeaders: xforwarded
+database:
+  host: keycloak-db-rw
+  existingSecret: keycloak-db-app
+  secretKeys:
+    usernameKey: user
+    passwordKey: password
+resources:
+  requests:
+    cpu: 50m
+    memory: 1Gi
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    namespace: keycloak
+postgres:
+  enabled: false
