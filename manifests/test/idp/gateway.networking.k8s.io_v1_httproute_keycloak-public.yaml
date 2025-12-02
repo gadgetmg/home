@@ -11,7 +11,7 @@ spec:
   rules:
   - backendRefs:
     - name: keycloak
-      port: 8080
+      port: 80
     matches:
     - path:
         value: /realms/home

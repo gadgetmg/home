@@ -13,6 +13,8 @@ keycloak:
     adminPasswordKey: admin-password
   production: true
   proxyHeaders: xforwarded
+service:
+  httpPort: 80
 database:
   host: keycloak-db-rw
   existingSecret: keycloak-db-app
