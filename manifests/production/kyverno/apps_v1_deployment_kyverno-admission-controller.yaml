@@ -96,7 +96,7 @@ spec:
           value: /.sigstore
         - name: KYVERNO_DEPLOYMENT
           value: kyverno-admission-controller
-        image: ghcr.io/kyverno/kyverno:v1.16.0@sha256:2fad29572e08010884f0f89792af2c734fdf401c850dbeb1b610822980d9afdf
+        image: ghcr.io/kyverno/kyverno:v1.16.1@sha256:8d78ccacaf2f961e6be1fceec658f34b7f3410ac24822f0d12812bdb022b355f
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
