@@ -6,8 +6,7 @@ namespace: argocd
 
 resources:
 - namespace.yaml
-- gateway/gateway.yaml
-- gateway/httproute.yaml
+- gateway.yaml
 - keycloak/client.yaml
 - keycloak/protocolmapper.yaml
 - keycloak/roles.yaml
@@ -41,6 +40,14 @@ helmCharts:
     redis:
       image:
         repository: ghcr.io/valkey-io/valkey
+    server:
+      httproute:
+        enabled: true
+        hostnames:
+        - argocd.seigra.net
+        parentRefs:
+        - name: argocd
+          sectionName: argocd
     configs:
       params:
         server.insecure: true

@@ -118,9 +118,8 @@ tasks:
     - task: login
     - {task: create, vars: {APP: '{{.APP}}'}}
     - '{{.ARGOCD}} app set {{.APP}} --sync-policy manual --validate=false'
-    - cmd: '{{.ARGOCD}} app terminate-op {{.APP}} 2> /dev/null'
-      ignore_error: true
-    - '{{.ARGOCD}} app sync {{.APP}} --local {{.APP_MANIFEST_DIR}} --server-side --apply-out-of-sync-only --prune --retry-limit 2 --output tree'
+    - defer: '{{.ARGOCD}} app terminate-op {{.APP}} 2> /dev/null'
+    - '{{.ARGOCD}} app sync {{.APP}} --local {{.APP_MANIFEST_DIR}} --server-side --apply-out-of-sync-only --prune --retry-limit 5 --output tree'
 
   bootstrap:
     desc: Bootstrap environment (ENV) with CRDs, Cilium, and Argo CD
