@@ -6,9 +6,9 @@ resources:
 - namespace.yaml
 
 images:
-- name: velero/velero
+- name: docker.io/velero/velero
   newTag: v1.17.1@sha256:58f551f0d89a9ef1919771bdc7475c08bc1795a50a51a57b5f14316d68fc3baa
-- name: velero/velero-plugin-for-aws
+- name: docker.io/velero/velero-plugin-for-aws
   newTag: v1.13.1@sha256:472d0e486d5d5c23c782b1b123530c7df8645784523ec36ca661a326d47885ff
 
 components:
@@ -24,9 +24,11 @@ helmCharts:
   apiVersions:
   - monitoring.coreos.com/v1
   valuesInline:
+    image:
+      repository: docker.io/velero/velero
     initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws
+      image: docker.io/velero/velero-plugin-for-aws
       volumeMounts:
       - mountPath: /target
         name: plugins
