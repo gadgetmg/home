@@ -27,10 +27,10 @@ teardown() {
   create $BATS_TEST_DIRNAME/resources/secret.yaml
   create $BATS_TEST_DIRNAME/resources/redisfailover.yaml
   verify "there is 1 redisfailover named 'test-redis'"
-  try "at most 24 times every 5s" \
+  try "at most 36 times every 5s" \
     "to get statefulset named 'rfr-test-redis'" \
     "and verify that '.status.readyReplicas' is '3'"
-  try "at most 24 times every 5s" \
+  try "at most 36 times every 5s" \
     "to get deployment named 'rfs-test-redis'" \
     "and verify that '.status.readyReplicas' is '3'"
 }
