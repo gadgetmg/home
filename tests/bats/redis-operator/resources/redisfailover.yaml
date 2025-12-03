@@ -14,7 +14,7 @@ spec:
     image: valkey/valkey:alpine
     exporter:
       enabled: true
-      image: docker.io/oliver006/redis_exporter:alpine
+      image: oliver006/redis_exporter:alpine
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
@@ -34,7 +34,7 @@ spec:
     image: valkey/valkey:alpine
     exporter:
       enabled: true
-      image: docker.iooliver006/redis_exporter:alpine
+      image: oliver006/redis_exporter:alpine
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
