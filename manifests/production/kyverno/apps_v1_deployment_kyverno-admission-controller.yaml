@@ -180,7 +180,7 @@ spec:
           value: kyverno-admission-controller
         - name: KYVERNO_SVC
           value: kyverno-svc
-        image: ghcr.io/kyverno/kyvernopre:v1.16.0@sha256:65265d5012b9630bd4387d5eef1d58fa30c0cfad7ace485969e8da8d465bc128
+        image: ghcr.io/kyverno/kyvernopre:v1.16.1@sha256:e9b3a40f8da712abeb1d3896dac7af6d81a96284036d73a214e15d2c5e0f0e09
         imagePullPolicy: IfNotPresent
         name: kyverno-pre
         resources:
