@@ -58,7 +58,7 @@ spec:
         env:
         - name: ADDRESS
           value: /csi/csi.sock
-        image: registry.k8s.io/sig-storage/csi-resizer:v1.14.0@sha256:5e7cbb63fd497fa913caa21fee1a69f727c220c6fa83c5f8bb0995e2ad73a474
+        image: registry.k8s.io/sig-storage/csi-resizer:v2.0.0@sha256:4a95d94e57ad82f6977cd8d4fdcfcfc0b83f02d990e4e7715b688c20970a906d
         imagePullPolicy: IfNotPresent
         name: csi-resizer
         resources:

@@ -24,4 +24,4 @@ images:
 - name: registry.k8s.io/sig-storage/csi-provisioner
   newTag: v5.3.0@sha256:bb057f866177d5f4139a1527e594499cbe0feeb67b63aaca8679dfdf0a6016f9
 - name: registry.k8s.io/sig-storage/csi-resizer
-  newTag: v1.14.0@sha256:5e7cbb63fd497fa913caa21fee1a69f727c220c6fa83c5f8bb0995e2ad73a474
+  newTag: v2.0.0@sha256:4a95d94e57ad82f6977cd8d4fdcfcfc0b83f02d990e4e7715b688c20970a906d
