@@ -52,4 +52,4 @@ images:
 - name: ghcr.io/kyverno/reports-controller
   newTag: v1.16.0@sha256:cca045c5155e53647a6608d290ef8f135a55a48a5d05c154e1d4c5dac69101f8
 - name: ghcr.io/kyverno/kyverno-cli
-  newTag: v1.16.0@sha256:80eb8d119621afcc174cdb79a220f0b982a792cd8df4aca5f1b0a5bafa7831f1
+  newTag: v1.16.1@sha256:4a34a24a85935fb4c9440f1831568a847ffb96296da2b5fd1ec3b76215a76621
