@@ -58,6 +58,17 @@ helmCharts:
             key: attribute.client_secret
     prometheusOperator:
       fullnameOverride: prometheus-operator
+      prometheusConfigReloader:
+        image:
+          registry: quay.io
+          repository: prometheus-operator/prometheus-config-reloader
+          # renovate: datasource=docker depName=quay.io/prometheus-operator/prometheus-config-reloader
+          tag: v0.87.0@sha256:11a5780509f73a0e1add35f0dfe689b20a158970512b3b4fa38ce707fd5d2693
+      thanosImage:
+        registry: quay.io
+        repository: thanos/thanos
+        # renovate: datasource=docker depName=quay.io/thanos/thanos
+        tag: v0.40.1@sha256:aae7b2b030ed00d88abd8c5a357d08b46f22151ca0d50d9c796223fa332389c8
     cleanPrometheusOperatorObjectNames: true
     prometheus-node-exporter:
       namespaceOverride: kube-system

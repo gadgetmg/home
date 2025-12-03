@@ -9,15 +9,6 @@
   "nix": {
     "enabled": true
   },
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "docker.io/envoyproxy/gateway-helm",
-        "docker.io/bitnamicharts/keycloak"
-      ],
-      "pinDigests": false
-    }
-  ],
   "customManagers": [
     {
       "customType": "regex",

@@ -17,6 +17,21 @@ patches:
       name: cloudflare-gateway
       labels:
         pod-security.kubernetes.io/enforce: baseline
+- patch: | # Pin cloudflared image
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: controller-manager
+      namespace: cloudflare-gateway
+    spec:
+      template:
+        spec:
+          containers:
+          - name: manager
+            env:
+            - name: GATEWAY_IMAGE
+              # renovate: datasource=docker depName=cloudflare/cloudflared
+              value: docker.io/cloudflare/cloudflared:2025.11.1@sha256:89ee50efb1e9cb2ae30281a8a404fed95eb8f02f0a972617526f8c5b417acae2
 
 images:
 - name: ghcr.io/pl4nty/cloudflare-kubernetes-gateway
