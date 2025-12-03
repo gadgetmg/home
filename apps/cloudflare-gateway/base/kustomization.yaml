@@ -17,3 +17,7 @@ patches:
       name: cloudflare-gateway
       labels:
         pod-security.kubernetes.io/enforce: baseline
+
+images:
+- name: ghcr.io/pl4nty/cloudflare-kubernetes-gateway
+  newTag: v0.8.1@sha256:cef110f9052c32f541fc652922f7befdc13dcaf947a243329ba0544e4d9b23fc

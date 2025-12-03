@@ -45,7 +45,7 @@ spec:
         env:
         - name: GATEWAY_IMAGE
           value: cloudflare/cloudflared:2025.1.0
-        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.8.1
+        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.8.1@sha256:cef110f9052c32f541fc652922f7befdc13dcaf947a243329ba0544e4d9b23fc
         livenessProbe:
           httpGet:
             path: /healthz

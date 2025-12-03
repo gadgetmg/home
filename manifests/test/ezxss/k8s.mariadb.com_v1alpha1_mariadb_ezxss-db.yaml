@@ -36,6 +36,7 @@ spec:
   metrics:
     enabled: true
     exporter:
+      image: docker.io/prom/mysqld-exporter:v0.18.0@sha256:2598c0571f383708e19016d119bb45c06128a9ebc962c9f49483278ac5a94c41
       podSecurityContext:
         runAsGroup: 65534
         runAsNonRoot: true

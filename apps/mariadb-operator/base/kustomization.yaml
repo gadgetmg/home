@@ -42,6 +42,8 @@ helmCharts:
         type: RuntimeDefault
     webhook:
       enabled: true
+      image:
+        repository: ghcr.io/mariadb-operator/mariadb-operator
       serviceMonitor:
         enabled: true
       securityContext:
@@ -52,6 +54,8 @@ helmCharts:
         seccompProfile:
           type: RuntimeDefault
     certController:
+      image:
+        repository: ghcr.io/mariadb-operator/mariadb-operator
       serviceMonitor:
         enabled: true
       securityContext:
@@ -61,3 +65,7 @@ helmCharts:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+
+images:
+- name: ghcr.io/mariadb-operator/mariadb-operator
+  newTag: 25.10.2@sha256:14eeefa4956770f973ac707b7969f2e99e0af2cf2c34ac63d4c7eb3f7c3cf3eb

@@ -5,3 +5,7 @@ kind: Kustomization
 resources:
 - https://github.com/kubernetes-csi/external-snapshotter/client/config/crd?ref=v8.4.0
 - https://github.com/kubernetes-csi/external-snapshotter/deploy/kubernetes/snapshot-controller?ref=v8.4.0
+
+images:
+- name: registry.k8s.io/sig-storage/snapshot-controller
+  newTag: v8.2.1@sha256:472fa35a89dadb5a715454fad576ec11aa6f2e8378fc09ae26473d139b77c437

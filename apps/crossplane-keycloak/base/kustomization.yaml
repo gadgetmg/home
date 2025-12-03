@@ -6,3 +6,10 @@ resources:
 - providers/keycloak/provider.yaml
 - providers/keycloak/deploymentruntimeconfig.yaml
 - mrap.yaml
+
+components:
+- ../../../shared/components/crd-configurations
+
+images:
+- name: ghcr.io/crossplane-contrib/provider-keycloak
+  newTag: v2.11.0@sha256:7f959e55a3be70f8dec0e005ec0ac1540d642f0bc6eb74e3b3e3e0516ec4ed74

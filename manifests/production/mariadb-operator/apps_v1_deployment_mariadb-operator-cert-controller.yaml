@@ -37,7 +37,7 @@ spec:
         env:
         - name: CLUSTER_NAME
           value: cluster.local
-        image: docker-registry3.mariadb.com/mariadb-operator/mariadb-operator:25.10.2
+        image: ghcr.io/mariadb-operator/mariadb-operator:25.10.2@sha256:14eeefa4956770f973ac707b7969f2e99e0af2cf2c34ac63d4c7eb3f7c3cf3eb
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:

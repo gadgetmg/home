@@ -6,3 +6,5 @@ configurations:
 - cnpg.yaml
 - mariadb.yaml
 - redisfailover.yaml
+- crossplane.yaml
+- prometheus-operator.yaml

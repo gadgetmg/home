@@ -14,7 +14,7 @@ spec:
     image: ghcr.io/valkey-io/valkey
     exporter:
       enabled: true
-      image: oliver006/redis_exporter
+      image: docker.io/oliver006/redis_exporter
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
@@ -49,7 +49,7 @@ spec:
     image: ghcr.io/valkey-io/valkey
     exporter:
       enabled: true
-      image: oliver006/redis_exporter
+      image: docker.io/oliver006/redis_exporter
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
