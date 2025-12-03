@@ -10,7 +10,7 @@ components:
 - ../../../shared/components/strip-helm-labels
 
 images:
-- name: renanqts/external-dns-openwrt-webhook
+- name: docker.io/renanqts/external-dns-openwrt-webhook
   newTag: v0.1.0@sha256:a356eb7ead234dc673108c30de761ed9f9542709fc0d8cc8332f81dd53a74d63
 
 helmCharts:
@@ -30,7 +30,7 @@ helmCharts:
       name: webhook
       webhook:
         image:
-          repository: renanqts/external-dns-openwrt-webhook
+          repository: docker.io/renanqts/external-dns-openwrt-webhook
           tag: latest
         securityContext:
           privileged: false
