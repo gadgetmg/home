@@ -26,7 +26,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.3-thick@sha256:e93af9e533cc16ca7847aeec3b516c9b1e8891c2b95c727991e94c9b59c4970e
         name: kube-multus
         resources:
           limits:
@@ -72,7 +72,7 @@ spec:
         - /host/opt/cni/bin
         - -t
         - thick
-        image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.2.3-thick@sha256:e93af9e533cc16ca7847aeec3b516c9b1e8891c2b95c727991e94c9b59c4970e
         name: install-multus-binary
         resources:
           requests:
@@ -81,16 +81,6 @@ spec:
         securityContext:
           privileged: true
         terminationMessagePolicy: FallbackToLogsOnError
-        volumeMounts:
-        - mountPath: /host/opt/cni/bin
-          mountPropagation: Bidirectional
-          name: cnibin
-      - command:
-        - /install-cni.sh
-        image: ghcr.io/siderolabs/install-cni:v1.9.0@sha256:53bdeb6c8d238dd593ee75f265baf4625925a034d8d18f10ffeae88d7fcf2c3e
-        name: install-cni
-        securityContext:
-          privileged: true
         volumeMounts:
         - mountPath: /host/opt/cni/bin
           mountPropagation: Bidirectional

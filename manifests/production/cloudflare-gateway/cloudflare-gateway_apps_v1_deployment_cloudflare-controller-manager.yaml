@@ -44,8 +44,8 @@ spec:
         - /ko-app/cmd
         env:
         - name: GATEWAY_IMAGE
-          value: cloudflare/cloudflared:2025.1.0
-        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.8.1
+          value: docker.io/cloudflare/cloudflared:2025.11.1@sha256:89ee50efb1e9cb2ae30281a8a404fed95eb8f02f0a972617526f8c5b417acae2
+        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.8.1@sha256:cef110f9052c32f541fc652922f7befdc13dcaf947a243329ba0544e4d9b23fc
         livenessProbe:
           httpGet:
             path: /healthz

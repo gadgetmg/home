@@ -89,7 +89,7 @@ images:
   newTag: v2.14.1@sha256:986c9ad18ff754269fac3c388cb5dacc2e886b816439c8e8bf11cd92e76b6cdb
 - name: ghcr.io/goharbor/trivy-adapter-photon
   newTag: v2.14.1@sha256:13dddb2adef7e28530e04e5659c49f550e5463e5f2536378ffd9207f7b23aac4
-- name: oliver006/redis_exporter
+- name: docker.io/oliver006/redis_exporter
   newTag: v1.80.1-alpine@sha256:9c6a2f80054875ab36ca7020edbe68a1d05dd6745d030cc6317812ad14333897
 - name: ghcr.io/valkey-io/valkey
   newTag: 9.0.0-alpine3.22@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394

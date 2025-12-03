@@ -55,7 +55,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/dashboards/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:1.30.10
+        image: quay.io/kiwigrid/k8s-sidecar:1.30.10@sha256:835d79d8fbae62e42d8a86929d4e3c5eec2e869255dd37756b5a3166c2f22309
         imagePullPolicy: IfNotPresent
         name: grafana-sc-dashboard
         securityContext:
@@ -93,7 +93,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/datasources/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:1.30.10
+        image: quay.io/kiwigrid/k8s-sidecar:1.30.10@sha256:835d79d8fbae62e42d8a86929d4e3c5eec2e869255dd37756b5a3166c2f22309
         imagePullPolicy: IfNotPresent
         name: grafana-sc-datasources
         securityContext:
@@ -134,7 +134,7 @@ spec:
             secretKeyRef:
               key: attribute.client_secret
               name: keycloak-client-grafana
-        image: docker.io/grafana/grafana:12.2.0
+        image: docker.io/grafana/grafana:12.2.0@sha256:74144189b38447facf737dfd0f3906e42e0776212bf575dc3334c3609183adf7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 10

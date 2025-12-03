@@ -71,7 +71,7 @@ spec:
               key: dexserver.disable.tls
               name: argocd-cmd-params-cm
               optional: true
-        image: ghcr.io/dexidp/dex:v2.44.0
+        image: ghcr.io/dexidp/dex:v2.44.0-distroless@sha256:f613f8a5db1abb0d632fe4bd14e58e117f447680304b1736277e4f5325f0e671
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -128,7 +128,7 @@ spec:
         - -n
         - /usr/local/bin/argocd
         - /shared/argocd-dex
-        image: quay.io/argoproj/argocd:v3.1.9
+        image: quay.io/argoproj/argocd:v3.2.1@sha256:a8532a23ed5f6e65afaf2a082b65fc74614549e54774f6b25fe3c993faa7bea3
         imagePullPolicy: IfNotPresent
         name: copyutil
         resources: {}

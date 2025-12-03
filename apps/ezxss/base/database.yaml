@@ -39,6 +39,7 @@ spec:
   metrics:
     enabled: true
     exporter:
+      image: docker.io/prom/mysqld-exporter
       securityContext:
         allowPrivilegeEscalation: false
         capabilities:

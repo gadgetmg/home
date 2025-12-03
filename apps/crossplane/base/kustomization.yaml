@@ -15,6 +15,8 @@ helmCharts:
   namespace: crossplane-system
   version: 2.1.3
   valuesInline:
+    image:
+      repository: ghcr.io/crossplane/crossplane
     metrics:
       enabled: true
     securityContextCrossplane:
@@ -33,3 +35,7 @@ helmCharts:
         type: RuntimeDefault
     provider:
       defaultActivations: []
+
+images:
+- name: ghcr.io/crossplane/crossplane
+  newTag: v2.1.1@sha256:b7db2fab736dbc2fd737b1cb898e1ada5711cefcfa3c62530d9350ca9e595ccb

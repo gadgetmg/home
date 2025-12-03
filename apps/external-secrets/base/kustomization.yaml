@@ -26,3 +26,7 @@ helmCharts:
           issuerRef:
             kind: ClusterIssuer
             name: cluster-ca
+
+images:
+- name: ghcr.io/external-secrets/external-secrets
+  newTag: v1.1.0@sha256:33b96dad056b0e2fd8de1156c95ed5d95bf4492831d186eeb2fcf3a6d40aba00
