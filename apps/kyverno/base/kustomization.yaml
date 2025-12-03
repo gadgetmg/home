@@ -42,7 +42,7 @@ helmCharts:
 
 images:
 - name: ghcr.io/kyverno/kyverno
-  newTag: v1.16.0@sha256:2fad29572e08010884f0f89792af2c734fdf401c850dbeb1b610822980d9afdf
+  newTag: v1.16.1@sha256:8d78ccacaf2f961e6be1fceec658f34b7f3410ac24822f0d12812bdb022b355f
 - name: ghcr.io/kyverno/kyvernopre
   newTag: v1.16.0@sha256:65265d5012b9630bd4387d5eef1d58fa30c0cfad7ace485969e8da8d465bc128
 - name: ghcr.io/kyverno/background-controller
