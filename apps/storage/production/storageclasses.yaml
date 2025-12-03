@@ -35,7 +35,6 @@ parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
-  DrbdOptions/Net/allow-two-primaries: "yes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -56,7 +55,6 @@ parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
-  DrbdOptions/Net/allow-two-primaries: "yes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -97,7 +95,6 @@ parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
-  DrbdOptions/Net/allow-two-primaries: "yes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -118,7 +115,6 @@ parameters:
   DrbdOptions/Disk/disk-flushes: "no"
   DrbdOptions/Disk/md-flushes: "no"
   DrbdOptions/Net/max-buffers: "10000"
-  DrbdOptions/Net/allow-two-primaries: "yes"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
