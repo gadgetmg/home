@@ -4,17 +4,17 @@ machine:
     mirrors:
       docker.io:
         endpoints:
-        - https://harbor.segira.net/v2/docker.io
+        - https://harbor.seigra.net/v2/docker.io
         overridePath: true
       ghcr.io:
         endpoints:
-        - https://harbor.segira.net/v2/ghcr.io
+        - https://harbor.seigra.net/v2/ghcr.io
         overridePath: true
       quay.io:
         endpoints:
-        - https://harbor.segira.net/v2/quay.io
+        - https://harbor.seigra.net/v2/quay.io
         overridePath: true
       registry.k8s.io:
         endpoints:
-        - https://harbor.segira.net/v2/registry.k8s.io
+        - https://harbor.seigra.net/v2/registry.k8s.io
         overridePath: true
