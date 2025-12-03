@@ -22,6 +22,6 @@ images:
 - name: registry.k8s.io/sig-storage/smbplugin
   newTag: v1.19.1@sha256:4e4a286490bb9d0f6de35a9486d117bb7ba8a352f1e7532420b7c9ac2c565087
 - name: registry.k8s.io/sig-storage/csi-provisioner
-  newTag: v5.3.0@sha256:bb057f866177d5f4139a1527e594499cbe0feeb67b63aaca8679dfdf0a6016f9
+  newTag: v6.1.0@sha256:e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4
 - name: registry.k8s.io/sig-storage/csi-resizer
   newTag: v1.14.0@sha256:5e7cbb63fd497fa913caa21fee1a69f727c220c6fa83c5f8bb0995e2ad73a474
