@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: cloudflare-gateway
 
 resources:
-- https://github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.4.0
+- https://github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.4.1
 - https://github.com/pl4nty/cloudflare-kubernetes-gateway/config/default?ref=v0.8.1
 - https://github.com/pl4nty/cloudflare-kubernetes-gateway/config/prometheus?ref=v0.8.1
 
