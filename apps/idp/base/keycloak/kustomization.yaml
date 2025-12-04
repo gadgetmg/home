@@ -14,7 +14,7 @@ components:
 helmCharts:
 - name: keycloak
   repo: oci://ghcr.io/cloudpirates-io/helm-charts
-  version: 0.11.2
+  version: 0.11.3
   releaseName: keycloak
   valuesFile: values.yaml
 
