@@ -398,4 +398,4 @@ images:
 - name: ghcr.io/dexidp/dex
   newTag: v2.44.0-distroless@sha256:f613f8a5db1abb0d632fe4bd14e58e117f447680304b1736277e4f5325f0e671
 - name: ghcr.io/valkey-io/valkey
-  newTag: 9.0.0-alpine3.22@sha256:b4ee67d73e00393e712accc72cfd7003b87d0fcd63f0eba798b23251bfc9c394
+  newTag: 9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
