@@ -13,7 +13,7 @@ helmCharts:
   repo: https://charts.external-secrets.io
   releaseName: external-secrets
   namespace: external-secrets
-  version: 1.1.0
+  version: 1.1.1
   apiVersions:
   - monitoring.coreos.com/v1
   valuesInline:
