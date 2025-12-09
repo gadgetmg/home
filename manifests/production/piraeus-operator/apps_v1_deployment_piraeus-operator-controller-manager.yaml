@@ -44,7 +44,7 @@ spec:
           value: 1m
         - name: CLUSTER_API_KUBECONFIG
           value: ""
-        image: quay.io/piraeusdatastore/piraeus-operator:v2.10.2
+        image: quay.io/piraeusdatastore/piraeus-operator:v2.10.3
         livenessProbe:
           httpGet:
             path: /healthz
