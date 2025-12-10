@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.2/poddisruptionbudget.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.3/poddisruptionbudget.json
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
