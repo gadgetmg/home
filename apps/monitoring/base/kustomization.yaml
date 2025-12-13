@@ -24,7 +24,7 @@ helmCharts:
   releaseName: kube-prometheus-stack
   namespace: monitoring
   skipTests: true
-  version: 78.5.0
+  version: 80.4.1
   apiVersions:
   - discovery.k8s.io/v1/EndpointSlice
   valuesInline:
