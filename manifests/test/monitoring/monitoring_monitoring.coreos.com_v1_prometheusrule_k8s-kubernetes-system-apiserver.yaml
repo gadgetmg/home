@@ -67,7 +67,7 @@ spec:
         description: KubeAPI has disappeared from Prometheus target discovery.
         runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeapidown
         summary: Target disappeared from Prometheus target discovery.
-      expr: absent(up{job="apiserver"} == 1)
+      expr: absent(up{job="apiserver"})
       for: 15m
       labels:
         severity: critical

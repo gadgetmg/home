@@ -55,6 +55,8 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/dashboards/reload
         - name: REQ_METHOD
           value: POST
+        - name: REQ_SKIP_INIT
+          value: "true"
         image: quay.io/kiwigrid/k8s-sidecar:2.1.4@sha256:0b56b3ef7efc0c47f87c2230c4dfdcfb5b4b7399132cd7daecede82f85d7e342
         imagePullPolicy: IfNotPresent
         name: grafana-sc-dashboard
@@ -93,6 +95,8 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/datasources/reload
         - name: REQ_METHOD
           value: POST
+        - name: REQ_SKIP_INIT
+          value: "true"
         image: quay.io/kiwigrid/k8s-sidecar:2.1.4@sha256:0b56b3ef7efc0c47f87c2230c4dfdcfb5b4b7399132cd7daecede82f85d7e342
         imagePullPolicy: IfNotPresent
         name: grafana-sc-datasources
