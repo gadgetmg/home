@@ -31,6 +31,7 @@ helmCharts:
     fullnameOverride: k8s
     grafana:
       fullnameOverride: grafana
+      adminPassword: prom-operator
       grafana.ini:
         auth.generic_oauth:
           enabled: true
