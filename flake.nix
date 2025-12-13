@@ -80,7 +80,6 @@
                   kubeseal
                   kubevirt
                   kustomize
-                  kyverno-chainsaw
                   pre-commit
                   qemu
                   renovate
