@@ -15,9 +15,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: e98968318a269d20e56c01f502359a3ec9eaf13353276f48ce10a7f426ccdd00
-        checksum/monitoring-config: dbf5358d9a0c43aa092c29fb15e6994f9185d90b78360bca67c881e87bb35442
-        checksum/rbac: b678e04ec9b9b1cc5fc34343565eafbf92bcf402fc3a7e444feafcc72e5762f9
+        checksum/config: b816778d3592e8b42274b5adf201bebe6364cec185ec7fa19c68105b483620ce
+        checksum/monitoring-config: 78ed617198025de5f7f8414cd5e217f0d46ec506d3e284b18a77081aa297455a
+        checksum/rbac: e3737a66be9c74a67263b9d7b4e8fc1232e36433605ae75d0e4fe340566025b1
       labels:
         app.kubernetes.io/instance: cnpg
         app.kubernetes.io/name: cloudnative-pg
@@ -33,7 +33,7 @@ spec:
         - /manager
         env:
         - name: OPERATOR_IMAGE_NAME
-          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.27.1
+          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.28.0
         - name: OPERATOR_NAMESPACE
           valueFrom:
             fieldRef:
