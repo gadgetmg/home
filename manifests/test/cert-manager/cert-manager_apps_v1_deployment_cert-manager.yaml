@@ -37,7 +37,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/jetstack/cert-manager-controller:v1.19.1@sha256:cd49e769e18ada1fd7b9a9bacc87c90db24c65cbfd4bf71694dda7ed40e91187
+        image: quay.io/jetstack/cert-manager-controller:v1.19.2@sha256:d4ffb81a6d89a0e690ee80d07fcdcb6cccb99118010e3eb0808442e506e18ab0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 8
