@@ -40,7 +40,7 @@ spec:
               fieldPath: metadata.namespace
         - name: MONITORING_QUERIES_CONFIGMAP
           value: cnpg-default-monitoring
-        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.27.1@sha256:cfa380de51377fa61122d43c1214d43d3268c3c17da57612ee8fea1d46b61856
+        image: ghcr.io/cloudnative-pg/cloudnative-pg:1.28.0@sha256:34198e85b6e6dd81471cb1c3ee222ca5231b685220e7ae38a634d35ed4826a40
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
