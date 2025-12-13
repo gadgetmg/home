@@ -20,7 +20,7 @@ spec:
       annotations:
         checksum/config: 2b6512d0c765c5d8f5ef7b30387c87a63bebb8b2168f73a66c88b30091af5632
         checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
-        checksum/secret: 032056e9c62bbe9d1daa41ee49cd3d9524c076f51ca4c65adadf4ef08ef28712
+        checksum/secret: af2bc228f25a3869f92c532029219a2421efb3bd5ee439eb8b634f42cecebe8c
         kubectl.kubernetes.io/default-container: grafana
       labels:
         app.kubernetes.io/instance: kube-prometheus-stack
@@ -55,6 +55,8 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/dashboards/reload
         - name: REQ_METHOD
           value: POST
+        - name: REQ_SKIP_INIT
+          value: "true"
         image: quay.io/kiwigrid/k8s-sidecar:2.1.4@sha256:0b56b3ef7efc0c47f87c2230c4dfdcfb5b4b7399132cd7daecede82f85d7e342
         imagePullPolicy: IfNotPresent
         name: grafana-sc-dashboard
@@ -93,6 +95,8 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/datasources/reload
         - name: REQ_METHOD
           value: POST
+        - name: REQ_SKIP_INIT
+          value: "true"
         image: quay.io/kiwigrid/k8s-sidecar:2.1.4@sha256:0b56b3ef7efc0c47f87c2230c4dfdcfb5b4b7399132cd7daecede82f85d7e342
         imagePullPolicy: IfNotPresent
         name: grafana-sc-datasources
