@@ -43,4 +43,4 @@ images:
 - name: quay.io/jetstack/cert-manager-controller
   newTag: v1.19.2@sha256:d4ffb81a6d89a0e690ee80d07fcdcb6cccb99118010e3eb0808442e506e18ab0
 - name: quay.io/jetstack/cert-manager-webhook
-  newTag: v1.19.1@sha256:f5bfe77541e38978aec53cc6eb924d190e1fe923c98b2582e6ccf5edf6c02cce
+  newTag: v1.19.2@sha256:2ba4918d1581ed29bd5d68a017244560b353bcaf9932c814a8713887589bda6c
