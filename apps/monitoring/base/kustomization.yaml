@@ -148,7 +148,7 @@ images:
 - name: quay.io/kiwigrid/k8s-sidecar
   newTag: 2.1.4@sha256:0b56b3ef7efc0c47f87c2230c4dfdcfb5b4b7399132cd7daecede82f85d7e342
 - name: quay.io/prometheus/alertmanager
-  newTag: v0.29.0@sha256:88743b63b3e09ea6e31e140ced5bf45f4a8e82c617c2a963f78841f4995ad1d7
+  newTag: v0.30.0@sha256:abb750ac7b63116761c16dd481ae92496fbe04721686c0920f0fa4d0728cd4a6
 - name: quay.io/prometheus-operator/prometheus-operator
   newTag: v0.87.1@sha256:6dbbbbeca6d7b94aa30723bfaa55262e41b9f8c15304c484611c696503840aac
 - name: quay.io/prometheus/prometheus
