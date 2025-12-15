@@ -11,6 +11,9 @@ metadata:
   namespace: actual
 spec:
   gatewayClassName: cloudflare
+  infrastructure:
+    annotations:
+      lbipam.cilium.io/ips: 10.5.0.59
   listeners:
   - name: http
     port: 80

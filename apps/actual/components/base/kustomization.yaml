@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+
+resources:
+- namespace.yaml
+- actual-server
+- oidc
+
+configMapGenerator:
+- name: config
+  behavior: merge
+  options:
+    annotations:
+      config.kubernetes.io/local-config: "true"
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: metadata.namespace
+  targets:
+  - select:
+      kind: Namespace
+    fieldPaths:
+    - metadata.name
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: data.hostname
+  targets:
+  - select:
+      kind: Gateway
+      name: actual
+    fieldPaths:
+    - spec.listeners.0.hostname
+  - select:
+      kind: HTTPRoute
+      name: actual
+    fieldPaths:
+    - spec.hostnames.0
+  - select:
+      kind: Client
+      name: actual
+    fieldPaths:
+    - spec.forProvider.rootUrl
+    - spec.forProvider.validRedirectUris.*
+    options:
+      delimiter: '/'
+      index: 2
+  - select:
+      kind: ConfigMap
+      name: actual-server-env
+    fieldPaths:
+    - data.ACTUAL_OPENID_SERVER_HOSTNAME
+    options:
+      delimiter: '/'
+      index: 2
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: data.clusterissuer
+  targets:
+  - select:
+      kind: Gateway
+      name: actual
+    fieldPaths:
+    - metadata.annotations.[cert-manager.io/cluster-issuer]
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: data.auth_url
+  targets:
+  - select:
+      kind: ConfigMap
+      name: actual-server-env
+    fieldPaths:
+    - data.ACTUAL_OPENID_DISCOVERY_URL

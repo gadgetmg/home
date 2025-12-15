@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  ACTUAL_ALLOWED_LOGIN_METHODS: openid
+  ACTUAL_LOGIN_METHOD: openid
+  ACTUAL_OPENID_AUTH_METHOD: oauth2
+  ACTUAL_OPENID_CLIENT_ID: actual
+  ACTUAL_OPENID_DISCOVERY_URL: https://auth.10.5.0.54.nip.io/realms/home
+  ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.10.5.0.59.nip.io
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual-server-env-hfgb8d26kk
+  namespace: actual

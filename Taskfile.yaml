@@ -2,6 +2,7 @@
 version: "3"
 
 run: when_changed
+output: group
 
 env:
   # renovate: datasource=github-releases depName=siderolabs/talos
@@ -11,23 +12,15 @@ env:
 
 vars:
   ENV: test
-  BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins
   KUBECTL_CTX: admin@{{.ENV}}
   KUBECTL: kubectl --context {{.KUBECTL_CTX}}
   ARGOCD_NAMESPACE: argocd
-  ARGOCD: argocd --kube-context {{.KUBECTL_CTX}} --port-forward-namespace {{.ARGOCD_NAMESPACE}} --loglevel error
 
 includes:
-  production:
-    taskfile: clusters/production/Taskfile.yaml
-    dir: clusters/production
-  test:
-    taskfile: clusters/test/Taskfile.yaml
-    dir: clusters/test
+  clusters:production: clusters/production
+  clusters:test: clusters/test
+  apps: apps
   tests: tests/tasks.yaml
-  apps:
-    taskfile: apps/tasks.yaml
-    internal: true
 
 tasks:
   kubeconform:
@@ -50,35 +43,15 @@ tasks:
     cmds:
     - renovate --platform=local
 
-  build:
-    desc: Build sources for app (APP) in environment (ENV)
-    label: build {{.APP}} {{.ENV}}
-    requires:
-      vars: [APP, ENV]
-    vars:
-      APP_MANIFEST_DIR: manifests/{{.ENV}}/{{.APP}}
-    cmds:
-    - rm -rf {{.APP_MANIFEST_DIR}}
-    - mkdir -p crds/{{.ENV}}
-    - mkdir -p {{.APP_MANIFEST_DIR}}
-    - kustomize build {{.BUILD_ARGS}} apps/{{.APP}}/{{.ENV}} -o {{.APP_MANIFEST_DIR}}
-    - find {{.APP_MANIFEST_DIR}} -name '*:*' -exec sh -c 'f="{}"; mv -- "$f" "${f//:/-}"' \;
-    - find {{.APP_MANIFEST_DIR}} -name 'apiextensions.k8s.io_v1_customresourcedefinition_*' -exec mv -f {} crds/{{.ENV}} \;
-    sources:
-    - apps/{{.APP}}/**/*
-    - shared/**/*
-    generates:
-    - '{{.APP_MANIFEST_DIR}}/**/*'
-
   hydrate:
     desc: Hydrate all apps and environments to /manifests
     vars:
-      TARGETS: {sh: 'find apps -name base -prune -o -type d -exec test -e {}/kustomization.yaml \; -print -prune'}
-    cmds:
-    - for: {var: TARGETS, as: DIR}
-      vars: {APP: '{{dir .DIR | base}}', ENV: '{{base .DIR}}'}
-      task: build
-    - git add --intent-to-add manifests
+      APPS:
+        sh: find apps -maxdepth 1 -mindepth 1 -type d -printf '%P\n'
+    deps:
+    - for: {var: APPS, as: APP}
+      task: apps:{{.APP}}:build
+    cmd: git add --intent-to-add manifests
 
   crds:
     desc: Apply CRDs to environment (ENV)
@@ -88,45 +61,10 @@ tasks:
     status:
     - '{{.KUBECTL}} diff -f crds/{{.ENV}}'
 
-  login:
-    desc: Login to Argo CD CLI in environment (ENV)
-    silent: true
-    vars:
-      USERNAME: admin
-      PASSWORD:
-        sh: '{{.KUBECTL}} --namespace {{.ARGOCD_NAMESPACE}} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
-    cmd: '{{.ARGOCD}} login --port-forward --plaintext --username {{.USERNAME}} --password {{.PASSWORD}}'
-
-  create:
-    internal: true
-    status:
-    - '{{.ARGOCD}} app get {{.APP}}'
-    requires:
-      vars: [APP]
-    cmd: '{{.ARGOCD}} app create {{.APP}} --dest-name in-cluster --repo /nonexistent --path / --validate=false'
-
-  deploy:
-    desc: Deploy local rendered manifests of app (APP) to environment (ENV)
-    label: deploy {{.APP}} {{.ENV}}
-    deps:
-    - {task: build, vars: {APP: '{{.APP}}', ENV: '{{.ENV}}'}}
-    requires:
-      vars: [APP, ENV]
-    vars:
-      APP_MANIFEST_DIR: manifests/{{.ENV}}/{{.APP}}
-    cmds:
-    - task: login
-    - {task: create, vars: {APP: '{{.APP}}'}}
-    - '{{.ARGOCD}} app set {{.APP}} --sync-policy manual --validate=false'
-    - defer: '{{.ARGOCD}} app terminate-op {{.APP}} 2> /dev/null'
-    - '{{.ARGOCD}} app sync {{.APP}} --local {{.APP_MANIFEST_DIR}} --server-side --apply-out-of-sync-only --prune --retry-limit 5 --output tree'
-
   bootstrap:
     desc: Bootstrap environment (ENV) with CRDs, Cilium, and Argo CD
     label: bootstrap {{.ENV}}
-    deps:
-    - {task: build, vars: {APP: 'cilium', ENV: '{{.ENV}}'}}
-    - {task: build, vars: {APP: 'argocd', ENV: '{{.ENV}}'}}
+    deps: [hydrate]
     status:
     - '{{.KUBECTL}} wait --namespace {{.ARGOCD_NAMESPACE}} --for=condition=available --timeout=1s deployment/argocd-server'
     sources:
@@ -169,30 +107,30 @@ tasks:
     cmd: 'grep -Rl "^kind: SealedSecret$" --exclude-dir "*charts*" apps/*/{{.ENV}} | xargs -I {} sh -c "kubeseal --context {{.KUBECTL_CTX}} --re-encrypt -o yaml -w {} < \"{}\""'
 
   init:
-    desc: Initialize a new app (APP) definition from templates/app
+    desc: Initialize a new app (APP) definition from templates/(TOOL)
     silent: true
     requires:
       vars: [APP]
+    vars:
+      TOOL: '{{.TOOL | default "kustomize"}}'
     cmds:
-    - cp -r templates/app apps/{{.APP}}
+    - cp -r templates/{{.TOOL}} apps/{{.APP}}
     - find apps/{{.APP}} -type f -exec sed -i "s/APP_NAME/{{.APP}}/g" {} \;
+    - yq -i '.includes.{{.APP}} = "{{.APP}}/tasks.yaml"' apps/Taskfile.yaml
 
   up:
-    desc: Bring up app (APP) with dependencies in environment (ENV)
-    requires:
-      vars: [APP, ENV]
-    cmds:
-    - task: '{{.ENV}}:up'
-    - task: bootstrap
-    - task: apps:{{.APP}}
-
-  all-up:
     aliases: [default]
     desc: Bring up all apps in environment (ENV)
+    cmds:
+    - task: clusters:{{.ENV}}:up
+    - task: bootstrap
+    - task: deploy-all
+
+  deploy-all:
+    internal: true
     vars:
-      APPS: {sh: "find apps/* -maxdepth 1 -name {{.ENV}} -type d | xargs -n1 dirname | xargs -n1 basename"}
+      APPS:
+        sh: find manifests/{{.ENV}} -maxdepth 1 -mindepth 1 -type d -printf '%P\n'
     deps:
-    - for: {var: APPS}
-      task: up
-      vars:
-        APP: '{{.ITEM}}'
+    - for: {var: APPS, as: APP}
+      task: apps:{{.APP}}

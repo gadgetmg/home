@@ -11,6 +11,7 @@ tasks:
   up:
     status:
     - talosctl config use-context test
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
     - task: down
     - sudo iptables -N talos-qemu
@@ -53,6 +54,7 @@ tasks:
 
   down:
     ignore_error: true
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
     - sudo -E talosctl cluster destroy --name test --provisioner qemu -f
     - docker compose down
@@ -70,6 +72,7 @@ tasks:
     sources:
     - home.yaml
     - ../../manifests/test/**/*
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
     - git add -A
     - git update-ref refs/heads/local $(git commit-tree -m "local snapshot" $(git write-tree))

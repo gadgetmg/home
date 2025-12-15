@@ -34,9 +34,17 @@ spec:
                 app.kubernetes.io/part-of: actual
             topologyKey: kubernetes.io/hostname
       containers:
-      - envFrom:
+      - env:
+        - name: ACTUAL_OPENID_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: attribute.client_secret
+              name: keycloak-client-actual
+        - name: NODE_EXTRA_CA_CERTS
+          value: /bundle.pem
+        envFrom:
         - configMapRef:
-            name: actual-server-env-9h4m7b42th
+            name: actual-server-env-hfgb8d26kk
         - secretRef:
             name: actual-server-env
         image: ghcr.io/actualbudget/actual-server:25.12.0@sha256:7f38b450cc3b7523dd5377792895e58b9cf333769e5a27f89e643b6f5fc60565
@@ -51,13 +59,10 @@ spec:
             - ALL
         volumeMounts:
         - mountPath: /bundle.pem
-          name: ca-bundle
+          name: extra-ca
           subPath: bundle.pem
         - mountPath: /data
           name: data
-        - mountPath: /data/config.json
-          name: config
-          subPath: config.json
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
@@ -67,11 +72,8 @@ spec:
           type: RuntimeDefault
       volumes:
       - configMap:
-          name: actual-server-cluster-ca
-        name: ca-bundle
+          name: actual-server-extra-ca
+        name: extra-ca
       - name: data
         persistentVolumeClaim:
           claimName: actual-server-data
-      - name: config
-        secret:
-          secretName: actual-server-config
