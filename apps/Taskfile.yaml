@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes:
+  actual: actual/tasks.yaml
+  argocd: argocd/tasks.yaml
+  backups: backups/tasks.yaml
+  cdi: cdi/tasks.yaml
+  cert-manager: cert-manager/tasks.yaml
+  cilium: cilium/tasks.yaml
+  cloudflare-gateway: cloudflare-gateway/tasks.yaml
+  clusterissuers: clusterissuers/tasks.yaml
+  cnpg: cnpg/tasks.yaml
+  crossplane: crossplane/tasks.yaml
+  crossplane-keycloak: crossplane-keycloak/tasks.yaml
+  csi-driver-smb: csi-driver-smb/tasks.yaml
+  csi-snapshotter: csi-snapshotter/tasks.yaml
+  external-dns: external-dns/tasks.yaml
+  external-secrets: external-secrets/tasks.yaml
+  ezxss: ezxss/tasks.yaml
+  harbor: harbor/tasks.yaml
+  headlamp: headlamp/tasks.yaml
+  idp: idp/tasks.yaml
+  ipam: ipam/tasks.yaml
+  kubevirt: kubevirt/tasks.yaml
+  kyverno: kyverno/tasks.yaml
+  mariadb-operator: mariadb-operator/tasks.yaml
+  monitoring: monitoring/tasks.yaml
+  multus: multus/tasks.yaml
+  oidc: oidc/tasks.yaml
+  paperless-ngx: paperless-ngx/tasks.yaml
+  piraeus-operator: piraeus-operator/tasks.yaml
+  redis-operator: redis-operator/tasks.yaml
+  sealed-secrets: sealed-secrets/tasks.yaml
+  storage: storage/tasks.yaml
+  trust-manager: trust-manager/tasks.yaml
+  velero: velero/tasks.yaml
+  virtualmachines: virtualmachines/tasks.yaml

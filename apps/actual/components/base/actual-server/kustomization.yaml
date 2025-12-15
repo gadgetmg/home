@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/component: application
+
+resources:
+- deployment.yaml
+- gateway.yaml
+- httproute.yaml
+- pvc.yaml
+- service.yaml
+- bundle.yaml
+
+images:
+- name: ghcr.io/actualbudget/actual-server
+  newTag: 25.12.0@sha256:7f38b450cc3b7523dd5377792895e58b9cf333769e5a27f89e643b6f5fc60565
+
+configMapGenerator:
+- name: actual-server-env
+  literals:
+  - ACTUAL_LOGIN_METHOD=openid
+  - ACTUAL_ALLOWED_LOGIN_METHODS=openid
+  - ACTUAL_OPENID_DISCOVERY_URL=
+  - ACTUAL_OPENID_CLIENT_ID=actual
+  - ACTUAL_OPENID_SERVER_HOSTNAME=https://
+  - ACTUAL_OPENID_AUTH_METHOD=oauth2

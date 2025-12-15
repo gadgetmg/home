@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes:
+  kustomize:
+    taskfile: ../../taskfiles/kustomize.yaml
+    dir: .
+    flatten: true
+    vars:
+      APP: oidc
+      ENVS_ROOT: .
+
+tasks:
+  prereqs:
+    deps:
+    - :idp

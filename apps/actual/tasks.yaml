@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+includes:
+  kustomize:
+    taskfile: ../../taskfiles/kustomize.yaml
+    dir: .
+    flatten: true
+    vars:
+      APP: actual
+
+tasks:
+  prereqs:
+    deps:
+    - :ipam
+    - :cloudflare-gateway
+    - :clusterissuers
+    - :trust-manager
+    - :idp
+    - :storage

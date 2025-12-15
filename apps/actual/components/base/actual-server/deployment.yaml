@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.3/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actual-server
+  labels:
+    app.kubernetes.io/name: actual-server
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: actual-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: actual-server
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: actual-server
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - image: ghcr.io/actualbudget/actual-server
+        name: actual-server
+        ports:
+        - containerPort: 5006
+          protocol: TCP
+        env:
+        - name: ACTUAL_OPENID_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-client-actual
+              key: attribute.client_secret
+        - name: NODE_EXTRA_CA_CERTS
+          value: /bundle.pem
+        envFrom:
+        - configMapRef:
+            name: actual-server-env
+        - secretRef:
+            name: actual-server-env
+        volumeMounts:
+        - name: extra-ca
+          mountPath: /bundle.pem
+          subPath: bundle.pem
+        - name: data
+          mountPath: /data
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+      volumes:
+      - name: extra-ca
+        configMap:
+          name: actual-server-extra-ca
+      - name: data
+        persistentVolumeClaim:
+          claimName: actual-server-data
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        seccompProfile:
+          type: RuntimeDefault

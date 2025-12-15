@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+labels:
+- includeSelectors: true
+  pairs:
+    app.kubernetes.io/instance: APP_NAME
+    app.kubernetes.io/part-of: APP_NAME
+
+resources:
+- namespace.yaml
+
+configMapGenerator:
+- name: config
+  behavior: merge
+  options:
+    annotations:
+      config.kubernetes.io/local-config: "true"
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: metadata.namespace
+  targets:
+  - select:
+      kind: Namespace
+    fieldPaths:
+    - metadata.name

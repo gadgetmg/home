@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  ENV: test
+  KUBECTL_CTX: admin@{{.ENV}}
+  KUBECTL: kubectl --context {{.KUBECTL_CTX}}
+  ARGOCD_NAMESPACE: argocd
+  ARGOCD: argocd --kube-context {{.KUBECTL_CTX}} --port-forward-namespace {{.ARGOCD_NAMESPACE}} --loglevel error
+  APP_MANIFEST_DIR: manifests/{{.ENV}}/{{.APP}}
+
+tasks:
+  default:
+    aliases:
+    - deploy
+    desc: Deploy local rendered manifests of {{.APP}} to environment (ENV)
+    deps:
+    - task: prereqs
+    - task: build
+    cmds:
+    - task: login
+    - task: create
+    - task: sync
+
+  login:
+    internal: true
+    silent: true
+    vars:
+      USERNAME: admin
+      PASSWORD:
+        sh: '{{.KUBECTL}} --namespace {{.ARGOCD_NAMESPACE}} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
+    cmd: '{{.ARGOCD}} login --port-forward --plaintext --username {{.USERNAME}} --password {{.PASSWORD}} > /dev/null'
+
+  create:
+    internal: true
+    status:
+    - '{{.ARGOCD}} app get {{.APP}}'
+    cmd: '{{.ARGOCD}} app create {{.APP}} --dest-name in-cluster --repo /nonexistent --path / --validate=false'
+
+  sync:
+    internal: true
+    cmds:
+    - '{{.ARGOCD}} app set {{.APP}} --sync-policy manual --validate=false'
+    - defer: '{{.ARGOCD}} app terminate-op {{.APP}} 2> /dev/null'
+      silent: true
+    - '{{.ARGOCD}} app sync {{.APP}} --local {{.APP_MANIFEST_DIR}} --server-side --apply-out-of-sync-only --prune --retry-limit 5 --output tree'
+    status:
+    - '{{.ARGOCD}} app diff {{.APP}} --local {{.APP_MANIFEST_DIR}}'

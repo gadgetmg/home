@@ -2,31 +2,37 @@
 version: "3"
 
 env:
-  TALOSCONFIG: ./clusterconfig/talosconfig
+  TALOSCONFIG: '{{.TASKFILE_DIR}}/clusterconfig/talosconfig'
 
 tasks:
   genconfig:
-  - talhelper genconfig
+    dir: '{{.TASKFILE_DIR}}'
+    cmd: talhelper genconfig
 
   apply:
     deps: [genconfig]
+    dir: '{{.TASKFILE_DIR}}'
     cmd: talhelper gencommand apply | sh
 
   apply-insecure:
     deps: [genconfig]
+    dir: '{{.TASKFILE_DIR}}'
     cmd: talhelper gencommand apply --extra-flags "--insecure" | sh
 
   bootstrap:
     deps: [genconfig]
+    dir: '{{.TASKFILE_DIR}}'
     cmds:
     - talhelper gencommand bootstrap | sh
-    - talosctl health -n 10.1.2.11 --talosconfig=./clusterconfig/talosconfig
+    - talosctl health -n 10.1.4.11
     - talhelper gencommand kubeconfig | sh
 
   upgrade:
     deps: [genconfig]
+    dir: '{{.TASKFILE_DIR}}'
     cmd: talhelper gencommand upgrade --extra-flags "--stage" | sh
 
   upgrade-k8s:
     deps: [genconfig]
+    dir: '{{.TASKFILE_DIR}}'
     cmd: talhelper gencommand upgrade-k8s | sh

@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+env:
+  # renovate: datasource=github-releases depName=kubernetes/kubernetes
+  KUBERNETES_VERSION: v1.34.3
+
+vars:
+  BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins --helm-kube-version {{.KUBERNETES_VERSION}}
+  PROJECT_ROOT: '{{.TASKFILE_DIR | dir}}'
+  MANIFESTS_DIR: '{{.PROJECT_ROOT}}/manifests'
+  CRDS_DIR: '{{.PROJECT_ROOT}}/crds'
+
+includes:
+  deploy:
+    taskfile: deploy.yaml
+    flatten: true
+    dir: '{{.PROJECT_ROOT}}'
+
+tasks:
+  build:
+    desc: Generate manifests for {{.APP}} (Kustomize)
+    vars:
+      APP_ROOT: '{{.PROJECT_ROOT}}/apps/{{.APP}}'
+      ENVS_ROOT: '{{.ENVS_ROOT | default "environments"}}'
+      ENVS:
+        sh: find {{.APP_ROOT}}/{{.ENVS_ROOT}} -maxdepth 1 -type d ! -name '.*' ! -name 'base' -printf '%P\n'
+    cmds:
+    - rm -rf {{.MANIFESTS_DIR}}/*/{{.APP}}
+    - mkdir -p {{.CRDS_DIR}}
+    - for: { var: ENVS, as: ENV }
+      task: build-env
+      vars:
+        BUILD_DIR: '{{.ENVS_ROOT}}/{{.ENV}}'
+        OUT_DIR: '{{.MANIFESTS_DIR}}/{{.ENV}}/{{.APP}}'
+    - find {{.MANIFESTS_DIR}}/*/{{.APP}} -name '*:*' -exec sh -c 'f="{}"; mv -- "$f" "${f//:/-}"' \;
+    - find {{.MANIFESTS_DIR}}/*/{{.APP}} -name 'apiextensions.k8s.io_v1_customresourcedefinition_*' -exec mv -f {} {{.CRDS_DIR}}/{{.ENV}} \;
+    sources:
+    - '{{.APP_ROOT}}/**/*'
+    - '{{.PROJECT_ROOT}}/shared/**/*'
+    - '{{.TASKFILE}}'
+    generates:
+    - '{{.MANIFESTS_DIR}}/*/{{.APP}}/*'
+
+  build-env:
+    internal: true
+    cmds:
+    - mkdir -p {{.OUT_DIR}}
+    - kustomize build {{.BUILD_ARGS}} {{.BUILD_DIR}} -o {{.OUT_DIR}}

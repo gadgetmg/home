@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../../../schemas/openidclient.keycloak.m.crossplane.io/client_v1alpha1.json
+apiVersion: openidclient.keycloak.m.crossplane.io/v1alpha1
+kind: Client
+metadata:
+  name: actual
+spec:
+  forProvider:
+    accessType: CONFIDENTIAL
+    clientId: actual
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    standardFlowEnabled: true
+    rootUrl: https://
+    validRedirectUris:
+    - https:///openid/callback
+  writeConnectionSecretToRef:
+    name: keycloak-client-actual
