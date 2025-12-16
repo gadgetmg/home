@@ -72,10 +72,8 @@
               "enum": [
                 "None",
                 "Secret",
-                "InjectedIdentity",
                 "Environment",
-                "Filesystem",
-                "Kubernetes"
+                "Filesystem"
               ],
               "type": "string"
             }

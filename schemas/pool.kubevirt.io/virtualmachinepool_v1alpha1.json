@@ -14,6 +14,46 @@
     },
     "spec": {
       "properties": {
+        "autohealing": {
+          "description": "Autohealing specifies when a VMpool should replace a failing VM with a reprovisioned instance",
+          "properties": {
+            "minFailingToStartDuration": {
+              "description": "MinFailingToStartDuration is the minimum time a VM must be in a failing status (applies to status conditions like CrashLoopBackOff, Unschedulable) before being replaced.\nIt measures the duration since the VM's Ready condition transitioned to False.\nDefaults to 5 minutes",
+              "type": "string"
+            },
+            "startUpFailureThreshold": {
+              "description": "StartUpFailureThreshold is the number of consecutive VMI start failures (it tracks the value of Status.StartFailure.ConsecutiveFailCount field) before replacing the VM.\nDefaults to 3",
+              "format": "int32",
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "maxUnavailable": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "(Defaults to 100%) Integer or string pointer, that when set represents either a percentage or number of VMs in a pool that can be unavailable (ready condition false) at a time during automated update.",
+          "x-kubernetes-int-or-string": true
+        },
+        "nameGeneration": {
+          "description": "Options for the name generation in a pool.",
+          "properties": {
+            "appendIndexToConfigMapRefs": {
+              "type": "boolean"
+            },
+            "appendIndexToSecretRefs": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
         "paused": {
           "description": "Indicates that the pool is paused.",
           "type": "boolean"
@@ -21,7 +61,146 @@
         "replicas": {
           "description": "Number of desired pods. This is a pointer to distinguish between explicit\nzero and not specified. Defaults to 1.",
           "format": "int32",
+          "minimum": 0,
           "type": "integer"
+        },
+        "scaleInStrategy": {
+          "description": "ScaleInStrategy specifies how the VMPool controller manages scaling in VMs within a VMPool",
+          "properties": {
+            "opportunistic": {
+              "description": "Opportunistic scale-in is a strategy when vms are deleted by some other means than the scale-in action.\nFor example, when the VM is deleted by the user or when the VM is deleted by the node that is hosting the VM.",
+              "properties": {
+                "statePreservation": {
+                  "description": "Specifies if and how to preserve the state of the VMs selected during scale-in.\nDisabled - (Default) all state for VMs selected for scale-in will be deleted.\nOffline - PVCs for VMs selected for scale-in will be preserved and reused on scale-out (decreases provisioning time during scale out).\nOnline - PVCs and memory for VMs selected for scale-in will be preserved and reused on scale-out (decreases provisioning and boot time during scale out).",
+                  "enum": [
+                    "Disabled",
+                    "Offline",
+                    "Online"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "proactive": {
+              "description": "Proactive scale-in by forcing VMs to shutdown during scale-in (Default)",
+              "properties": {
+                "selectionPolicy": {
+                  "description": "SelectionPolicy defines the priority in which VM instances are selected for proactive scale-in\nDefaults to \"Random\" base policy when no SelectionPolicy is configured",
+                  "properties": {
+                    "selectors": {
+                      "description": "Selectors is a list of selection policies.",
+                      "properties": {
+                        "labelSelector": {
+                          "description": "LabelSelector is a list of label selector for VMs.",
+                          "properties": {
+                            "matchExpressions": {
+                              "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                              "items": {
+                                "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                                "properties": {
+                                  "key": {
+                                    "description": "key is the label key that the selector applies to.",
+                                    "type": "string"
+                                  },
+                                  "operator": {
+                                    "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                                    "type": "string"
+                                  },
+                                  "values": {
+                                    "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-type": "atomic"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "operator"
+                                ],
+                                "type": "object"
+                              },
+                              "type": "array",
+                              "x-kubernetes-list-type": "atomic"
+                            },
+                            "matchLabels": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                              "type": "object"
+                            }
+                          },
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic"
+                        },
+                        "nodeSelectorRequirementMatcher": {
+                          "description": "NodeSelectorRequirementMatcher is a list of node selector requirement for VMs.",
+                          "items": {
+                            "description": "A node selector requirement is a selector that contains values, a key, and an operator\nthat relates the key and values.",
+                            "properties": {
+                              "key": {
+                                "description": "The label key that the selector applies to.",
+                                "type": "string"
+                              },
+                              "operator": {
+                                "description": "Represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.",
+                                "type": "string"
+                              },
+                              "values": {
+                                "description": "An array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. If the operator is Gt or Lt, the values\narray must have a single element, which will be interpreted as an integer.\nThis array is replaced during a strategic merge patch.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "atomic"
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "sortPolicy": {
+                      "description": "SortPolicy is a catch-all policy [AscendingOrder|DescendingOrder|Newest|Oldest|Random]",
+                      "enum": [
+                        "AscendingOrder",
+                        "DescendingOrder",
+                        "Newest",
+                        "Oldest",
+                        "Random"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "statePreservation": {
+                  "description": "Specifies if and how to preserve the state of the VMs selected during scale-in.\nDisabled - (Default) all state for VMs selected for scale-in will be deleted.\nOffline - PVCs for VMs selected for scale-in will be preserved and reused on scale-out (decreases provisioning time during scale out).\nOnline - PVCs and memory for VMs selected for scale-in will be preserved and reused on scale-out (decreases provisioning and boot time during scale out).",
+                  "enum": [
+                    "Disabled",
+                    "Offline",
+                    "Online"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "unmanaged": {
+              "description": "The VM is never touched after creation. Users are responsible for scaling in the pool manually.",
+              "type": "object"
+            }
+          },
+          "type": "object"
         },
         "selector": {
           "description": "Label selector for pods. Existing Poolss whose pods are\nselected by this will be the ones affected by this deployment.",
@@ -67,6 +246,124 @@
           },
           "type": "object",
           "x-kubernetes-map-type": "atomic"
+        },
+        "updateStrategy": {
+          "description": "UpdateStrategy specifies how the VMPool controller manages updating VMs within a VMPool",
+          "properties": {
+            "opportunistic": {
+              "description": "Opportunistic update only gets applied to the VM, VMI is updated naturally upon the restart. Whereas proactive it applies both the VM and VMI right away.",
+              "type": "object"
+            },
+            "proactive": {
+              "description": "Proactive update by forcing the VMs to restart during update",
+              "properties": {
+                "selectionPolicy": {
+                  "description": "SelectionPolicy defines the priority in which VM instances are selected for proactive update\nDefaults to \"Random\" base policy when no SelectionPolicy is configured",
+                  "properties": {
+                    "selectors": {
+                      "description": "Selectors is a list of selection policies.",
+                      "properties": {
+                        "labelSelector": {
+                          "description": "LabelSelector is a list of label selector for VMs.",
+                          "properties": {
+                            "matchExpressions": {
+                              "description": "matchExpressions is a list of label selector requirements. The requirements are ANDed.",
+                              "items": {
+                                "description": "A label selector requirement is a selector that contains values, a key, and an operator that\nrelates the key and values.",
+                                "properties": {
+                                  "key": {
+                                    "description": "key is the label key that the selector applies to.",
+                                    "type": "string"
+                                  },
+                                  "operator": {
+                                    "description": "operator represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists and DoesNotExist.",
+                                    "type": "string"
+                                  },
+                                  "values": {
+                                    "description": "values is an array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. This array is replaced during a strategic\nmerge patch.",
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array",
+                                    "x-kubernetes-list-type": "atomic"
+                                  }
+                                },
+                                "required": [
+                                  "key",
+                                  "operator"
+                                ],
+                                "type": "object"
+                              },
+                              "type": "array",
+                              "x-kubernetes-list-type": "atomic"
+                            },
+                            "matchLabels": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
+                              "description": "matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels\nmap is equivalent to an element of matchExpressions, whose key field is \"key\", the\noperator is \"In\", and the values array contains only \"value\". The requirements are ANDed.",
+                              "type": "object"
+                            }
+                          },
+                          "type": "object",
+                          "x-kubernetes-map-type": "atomic"
+                        },
+                        "nodeSelectorRequirementMatcher": {
+                          "description": "NodeSelectorRequirementMatcher is a list of node selector requirement for VMs.",
+                          "items": {
+                            "description": "A node selector requirement is a selector that contains values, a key, and an operator\nthat relates the key and values.",
+                            "properties": {
+                              "key": {
+                                "description": "The label key that the selector applies to.",
+                                "type": "string"
+                              },
+                              "operator": {
+                                "description": "Represents a key's relationship to a set of values.\nValid operators are In, NotIn, Exists, DoesNotExist. Gt, and Lt.",
+                                "type": "string"
+                              },
+                              "values": {
+                                "description": "An array of string values. If the operator is In or NotIn,\nthe values array must be non-empty. If the operator is Exists or DoesNotExist,\nthe values array must be empty. If the operator is Gt or Lt, the values\narray must have a single element, which will be interpreted as an integer.\nThis array is replaced during a strategic merge patch.",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array",
+                                "x-kubernetes-list-type": "atomic"
+                              }
+                            },
+                            "required": [
+                              "key",
+                              "operator"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "sortPolicy": {
+                      "description": "SortPolicy is a catch-all policy [AscendingOrder|DescendingOrder|Newest|Oldest|Random]",
+                      "enum": [
+                        "AscendingOrder",
+                        "DescendingOrder",
+                        "Newest",
+                        "Oldest",
+                        "Random"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "unmanaged": {
+              "description": "Unmanaged indicates that no automatic update of VMs within a VMPool is performed. When this is set, the VMPool controller will not update the VMs within the pool.",
+              "type": "object"
+            }
+          },
+          "type": "object"
         },
         "virtualMachineTemplate": {
           "description": "Template describes the VM that will be created.",
@@ -418,6 +715,16 @@
                                     "description": "ImageStream is the name of image stream for import",
                                     "type": "string"
                                   },
+                                  "platform": {
+                                    "description": "Platform describes the minimum runtime requirements of the image",
+                                    "properties": {
+                                      "architecture": {
+                                        "description": "Architecture specifies the image target CPU architecture",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
                                   "pullMethod": {
                                     "description": "PullMethod can be either \"pod\" (default import), or \"node\" (node docker cache based import)",
                                     "type": "string"
@@ -481,6 +788,10 @@
                                 "properties": {
                                   "backingFile": {
                                     "description": "BackingFile is the path to the virtual hard disk to migrate from vCenter/ESXi",
+                                    "type": "string"
+                                  },
+                                  "extraArgs": {
+                                    "description": "ExtraArgs is a reference to a ConfigMap containing extra arguments to pass directly to the VDDK library",
                                     "type": "string"
                                   },
                                   "initImageURL": {
@@ -593,31 +904,6 @@
                               "resources": {
                                 "description": "Resources represents the minimum resources the volume should have.\nMore info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources",
                                 "properties": {
-                                  "claims": {
-                                    "description": "Claims lists the names of resources, defined in spec.resourceClaims,\nthat are used by this container.\n\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate.\n\nThis field is immutable. It can only be set for containers.",
-                                    "items": {
-                                      "description": "ResourceClaim references one entry in PodSpec.ResourceClaims.",
-                                      "properties": {
-                                        "name": {
-                                          "description": "Name must match the name of one entry in pod.spec.resourceClaims of\nthe Pod where this field is used. It makes that resource available\ninside a container.",
-                                          "type": "string"
-                                        },
-                                        "request": {
-                                          "description": "Request is the name chosen for a request in the referenced claim.\nIf empty, everything from the claim is made available, otherwise\nonly the result of this request.",
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "name"
-                                      ],
-                                      "type": "object"
-                                    },
-                                    "type": "array",
-                                    "x-kubernetes-list-map-keys": [
-                                      "name"
-                                    ],
-                                    "x-kubernetes-list-type": "map"
-                                  },
                                   "limits": {
                                     "additionalProperties": {
                                       "anyOf": [
@@ -1150,7 +1436,7 @@
                                             "x-kubernetes-map-type": "atomic"
                                           },
                                           "matchLabelKeys": {
-                                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                                             "items": {
                                               "type": "string"
                                             },
@@ -1158,7 +1444,7 @@
                                             "x-kubernetes-list-type": "atomic"
                                           },
                                           "mismatchLabelKeys": {
-                                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                                             "items": {
                                               "type": "string"
                                             },
@@ -1294,7 +1580,7 @@
                                         "x-kubernetes-map-type": "atomic"
                                       },
                                       "matchLabelKeys": {
-                                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                                         "items": {
                                           "type": "string"
                                         },
@@ -1302,7 +1588,7 @@
                                         "x-kubernetes-list-type": "atomic"
                                       },
                                       "mismatchLabelKeys": {
-                                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                                         "items": {
                                           "type": "string"
                                         },
@@ -1435,7 +1721,7 @@
                                             "x-kubernetes-map-type": "atomic"
                                           },
                                           "matchLabelKeys": {
-                                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                                             "items": {
                                               "type": "string"
                                             },
@@ -1443,7 +1729,7 @@
                                             "x-kubernetes-list-type": "atomic"
                                           },
                                           "mismatchLabelKeys": {
-                                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                                             "items": {
                                               "type": "string"
                                             },
@@ -1579,7 +1865,7 @@
                                         "x-kubernetes-map-type": "atomic"
                                       },
                                       "matchLabelKeys": {
-                                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                                         "items": {
                                           "type": "string"
                                         },
@@ -1587,7 +1873,7 @@
                                         "x-kubernetes-list-type": "atomic"
                                       },
                                       "mismatchLabelKeys": {
-                                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                                         "items": {
                                           "type": "string"
                                         },
@@ -1687,10 +1973,11 @@
                                 "description": "PodDNSConfigOption defines DNS resolver options of a pod.",
                                 "properties": {
                                   "name": {
-                                    "description": "Required.",
+                                    "description": "Name is this DNS resolver option's name.\nRequired.",
                                     "type": "string"
                                   },
                                   "value": {
+                                    "description": "Value is this DNS resolver option's value.",
                                     "type": "string"
                                   }
                                 },
@@ -1959,6 +2246,9 @@
                                           "custom": {
                                             "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
                                             "properties": {
+                                              "discardGranularity": {
+                                                "type": "integer"
+                                              },
                                               "logical": {
                                                 "type": "integer"
                                               },
@@ -1966,10 +2256,6 @@
                                                 "type": "integer"
                                               }
                                             },
-                                            "required": [
-                                              "logical",
-                                              "physical"
-                                            ],
                                             "type": "object"
                                           },
                                           "matchVolume": {
@@ -1990,7 +2276,7 @@
                                         "type": "integer"
                                       },
                                       "cache": {
-                                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are: CacheNone, CacheWriteThrough.",
+                                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are:\nnone: Guest I/O not cached on the host, but may be kept in a disk cache.\nwritethrough: Guest I/O cached on the host but written through to the physical medium. Slowest but with most guarantees.\nwriteback: Guest I/O cached on the host.\nDefaults to none if the storage supports O_DIRECT, otherwise writethrough.",
                                         "type": "string"
                                       },
                                       "cdrom": {
@@ -2010,6 +2296,10 @@
                                           }
                                         },
                                         "type": "object"
+                                      },
+                                      "changedBlockTracking": {
+                                        "description": "ChangedBlockTracking indicates this disk should have CBT option\nDefaults to false.",
+                                        "type": "boolean"
                                       },
                                       "dedicatedIOThread": {
                                         "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread.\nEnabling this implies useIOThreads = true.\nDefaults to false.",
@@ -2114,11 +2404,20 @@
                                   "description": "Whether to attach a GPU device to the vmi.",
                                   "items": {
                                     "properties": {
+                                      "claimName": {
+                                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                                        "type": "string"
+                                      },
                                       "deviceName": {
+                                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                                         "type": "string"
                                       },
                                       "name": {
                                         "description": "Name of the GPU device as exposed by a device plugin",
+                                        "type": "string"
+                                      },
+                                      "requestName": {
+                                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                                         "type": "string"
                                       },
                                       "tag": {
@@ -2151,7 +2450,6 @@
                                       }
                                     },
                                     "required": [
-                                      "deviceName",
                                       "name"
                                     ],
                                     "type": "object"
@@ -2163,11 +2461,19 @@
                                   "description": "Whether to attach a host device to the vmi.",
                                   "items": {
                                     "properties": {
+                                      "claimName": {
+                                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                                        "type": "string"
+                                      },
                                       "deviceName": {
-                                        "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+                                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                                         "type": "string"
                                       },
                                       "name": {
+                                        "type": "string"
+                                      },
+                                      "requestName": {
+                                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                                         "type": "string"
                                       },
                                       "tag": {
@@ -2176,7 +2482,6 @@
                                       }
                                     },
                                     "required": [
-                                      "deviceName",
                                       "name"
                                     ],
                                     "type": "object"
@@ -2344,7 +2649,7 @@
                                         "type": "object"
                                       },
                                       "state": {
-                                        "description": "State represents the requested operational state of the interface.\nThe (only) value supported is 'absent', expressing a request to remove the interface.",
+                                        "description": "State represents the requested operational state of the interface.\nThe supported values are:\n'absent', expressing a request to remove the interface.\n'down', expressing a request to set the link down.\n'up', expressing a request to set the link up.\nEmpty value functions as 'up'.",
                                         "type": "string"
                                       },
                                       "tag": {
@@ -2367,6 +2672,19 @@
                                 "networkInterfaceMultiqueue": {
                                   "description": "If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.",
                                   "type": "boolean"
+                                },
+                                "panicDevices": {
+                                  "description": "PanicDevices provides additional crash information when a guest crashes.",
+                                  "items": {
+                                    "properties": {
+                                      "model": {
+                                        "description": "Model specifies what type of panic device is provided.\nThe panic model used when this attribute is missing depends on the hypervisor and guest arch.\nOne of: isa, hyperv, pvpanic.",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "type": "array"
                                 },
                                 "rng": {
                                   "description": "Whether to have random number generator from host",
@@ -2392,6 +2710,10 @@
                                 "tpm": {
                                   "description": "Whether to emulate a TPM device.",
                                   "properties": {
+                                    "enabled": {
+                                      "description": "Enabled allows a user to explicitly disable the vTPM even when one is enabled by a preference referenced by the VirtualMachine\nDefaults to True",
+                                      "type": "boolean"
+                                    },
                                     "persistent": {
                                       "description": "Persistent indicates the state of the TPM device should be kept accross reboots\nDefaults to false",
                                       "type": "boolean"
@@ -2403,9 +2725,29 @@
                                   "description": "Fall back to legacy virtio 0.9 support if virtio bus is selected on devices.\nThis is helpful for old machines like CentOS6 or RHEL6 which\ndo not understand virtio_non_transitional (virtio 1.0).",
                                   "type": "boolean"
                                 },
+                                "video": {
+                                  "description": "Video describes the video device configuration for the vmi.",
+                                  "properties": {
+                                    "type": {
+                                      "description": "Type specifies the video device type (e.g., virtio, vga, bochs, ramfb).\nIf not specified, the default is architecture-dependent (VGA for BIOS-based VMs, Bochs for EFI-based VMs on AMD64; virtio for Arm and s390x).",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
                                 "watchdog": {
                                   "description": "Watchdog describes a watchdog device which can be added to the vmi.",
                                   "properties": {
+                                    "diag288": {
+                                      "description": "diag288 watchdog device (specific to s390x architecture).",
+                                      "properties": {
+                                        "action": {
+                                          "description": "The action to take. Valid values are poweroff, reset, shutdown.\nDefaults to reset.",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    },
                                     "i6300esb": {
                                       "description": "i6300esb watchdog device.",
                                       "properties": {
@@ -2668,6 +3010,10 @@
                                 "acpi": {
                                   "description": "Information that can be set in the ACPI table",
                                   "properties": {
+                                    "msdmNameRef": {
+                                      "description": "Similar to SlicNameRef, another ACPI entry that is used in more recent Windows versions.\nThe above points to the spec of MSDM too.",
+                                      "type": "string"
+                                    },
                                     "slicNameRef": {
                                       "description": "SlicNameRef should match the volume name of a secret object. The data in the secret should\nbe a binary blob that follows the ACPI SLIC standard, see:\nhttps://learn.microsoft.com/en-us/previous-versions/windows/hardware/design/dn653305(v=vs.85)",
                                       "type": "string"
@@ -2755,8 +3101,19 @@
                               },
                               "type": "object"
                             },
+                            "ioThreads": {
+                              "description": "IOThreads specifies the IOThreads options.",
+                              "properties": {
+                                "supplementalPoolThreadCount": {
+                                  "description": "SupplementalPoolThreadCount specifies how many iothreads are allocated for the supplementalPool policy.",
+                                  "format": "int32",
+                                  "type": "integer"
+                                }
+                              },
+                              "type": "object"
+                            },
                             "ioThreadsPolicy": {
-                              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto",
+                              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto, supplementalPool",
                               "type": "string"
                             },
                             "launchSecurity": {
@@ -2788,6 +3145,14 @@
                                       "type": "string"
                                     }
                                   },
+                                  "type": "object"
+                                },
+                                "snp": {
+                                  "description": "AMD SEV-SNP flags defined by the SEV-SNP specifications.",
+                                  "type": "object"
+                                },
+                                "tdx": {
+                                  "description": "Intel Trust Domain Extensions (TDX).",
                                   "type": "object"
                                 }
                               },
@@ -2894,7 +3259,7 @@
                           "type": "object"
                         },
                         "evictionStrategy": {
-                          "description": "EvictionStrategy describes the strategy to follow when a node drain occurs.\nThe possible options are:\n- \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown.\n- \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown.\n- \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\".\n- \"External\": the VirtualMachineInstance will be protected by a PDB and 'vmi.Status.EvacuationNodeName' will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.",
+                          "description": "EvictionStrategy describes the strategy to follow when a node drain occurs.\nThe possible options are:\n- \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown.\n- \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown.\n- \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\".\n- \"External\": the VirtualMachineInstance will be protected and 'vmi.Status.EvacuationNodeName' will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.",
                           "type": "string"
                         },
                         "hostname": {
@@ -3221,6 +3586,35 @@
                           },
                           "type": "object"
                         },
+                        "resourceClaims": {
+                          "description": "ResourceClaims define which ResourceClaims must be allocated\nand reserved before the VMI, hence virt-launcher pod is allowed to start. The resources\nwill be made available to the domain which consumes them\nby name.\n\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate in kubernetes\n https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\nThis field should only be configured if one of the feature-gates GPUsWithDRA or HostDevicesWithDRA is enabled.\nThis feature is in alpha.",
+                          "items": {
+                            "description": "PodResourceClaim references exactly one ResourceClaim, either directly\nor by naming a ResourceClaimTemplate which is then turned into a ResourceClaim\nfor the pod.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the Pod.\nContainers that need access to the ResourceClaim reference it with this name.",
+                            "properties": {
+                              "name": {
+                                "description": "Name uniquely identifies this resource claim inside the pod.\nThis must be a DNS_LABEL.",
+                                "type": "string"
+                              },
+                              "resourceClaimName": {
+                                "description": "ResourceClaimName is the name of a ResourceClaim object in the same\nnamespace as this pod.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
+                                "type": "string"
+                              },
+                              "resourceClaimTemplateName": {
+                                "description": "ResourceClaimTemplateName is the name of a ResourceClaimTemplate\nobject in the same namespace as this pod.\n\nThe template will be used to create a new ResourceClaim, which will\nbe bound to this pod. When this pod is deleted, the ResourceClaim\nwill also be deleted. The pod name and resource name, along with a\ngenerated component, will be used to form a unique name for the\nResourceClaim, which will be recorded in pod.status.resourceClaimStatuses.\n\nThis field is immutable and no changes will be made to the\ncorresponding ResourceClaim by the control plane after creating the\nResourceClaim.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array",
+                          "x-kubernetes-list-map-keys": [
+                            "name"
+                          ],
+                          "x-kubernetes-list-type": "map"
+                        },
                         "schedulerName": {
                           "description": "If specified, the VMI will be dispatched by specified scheduler.\nIf not specified, the VMI will be dispatched by default scheduler.",
                           "type": "string"
@@ -3338,11 +3732,11 @@
                                 "type": "integer"
                               },
                               "nodeAffinityPolicy": {
-                                "description": "NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector\nwhen calculating pod topology spread skew. Options are:\n- Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.\n- Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.\n\nIf this value is nil, the behavior is equivalent to the Honor policy.\nThis is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.",
+                                "description": "NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector\nwhen calculating pod topology spread skew. Options are:\n- Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.\n- Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.\n\nIf this value is nil, the behavior is equivalent to the Honor policy.",
                                 "type": "string"
                               },
                               "nodeTaintsPolicy": {
-                                "description": "NodeTaintsPolicy indicates how we will treat node taints when calculating\npod topology spread skew. Options are:\n- Honor: nodes without taints, along with tainted nodes for which the incoming pod\nhas a toleration, are included.\n- Ignore: node taints are ignored. All nodes are included.\n\nIf this value is nil, the behavior is equivalent to the Ignore policy.\nThis is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.",
+                                "description": "NodeTaintsPolicy indicates how we will treat node taints when calculating\npod topology spread skew. Options are:\n- Honor: nodes without taints, along with tainted nodes for which the incoming pod\nhas a toleration, are included.\n- Ignore: node taints are ignored. All nodes are included.\n\nIf this value is nil, the behavior is equivalent to the Ignore policy.",
                                 "type": "string"
                               },
                               "topologyKey": {
@@ -3518,7 +3912,7 @@
                                     "type": "boolean"
                                   },
                                   "name": {
-                                    "description": "Name of both the DataVolume and the PVC in the same namespace.\nAfter PVC population the DataVolume is garbage collected by default.",
+                                    "description": "Name of both the DataVolume and the PVC in the same namespace.",
                                     "type": "string"
                                   }
                                 },

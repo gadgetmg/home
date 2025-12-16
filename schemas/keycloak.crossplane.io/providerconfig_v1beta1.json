@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "A ProviderConfigSpec defines the desired state of a ProviderConfig.",
+      "description": "A ProviderConfigSpec defines the desired state of a ProviderConfig.\nA ProviderConfigSpec defines the desired state of a ProviderConfig.",
       "properties": {
         "credentials": {
           "description": "Credentials required to authenticate to this provider.",
@@ -72,7 +72,6 @@
               "enum": [
                 "None",
                 "Secret",
-                "InjectedIdentity",
                 "Environment",
                 "Filesystem"
               ],

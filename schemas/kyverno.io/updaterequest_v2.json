@@ -16,7 +16,7 @@
       "description": "ResourceSpec is the information to identify the trigger resource.",
       "properties": {
         "context": {
-          "description": "Context ...",
+          "description": "Context represents admission request context.\nIt is used upon admission review only and is shared across rules within the same UR.",
           "properties": {
             "admissionRequestInfo": {
               "description": "AdmissionRequestInfoObject stores the admission request and operation details",
@@ -76,7 +76,7 @@
                       "x-kubernetes-preserve-unknown-fields": true
                     },
                     "requestKind": {
-                      "description": "RequestKind is the fully-qualified type of the original API request (for example, v1.Pod or autoscaling.v1.Scale).\nIf this is specified and differs from the value in \"kind\", an equivalent match and conversion was performed.\n\n\nFor example, if deployments can be modified via apps/v1 and apps/v1beta1, and a webhook registered a rule of\n`apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]` and `matchPolicy: Equivalent`,\nan API request to apps/v1beta1 deployments would be converted and sent to the webhook\nwith `kind: {group:\"apps\", version:\"v1\", kind:\"Deployment\"}` (matching the rule the webhook registered for),\nand `requestKind: {group:\"apps\", version:\"v1beta1\", kind:\"Deployment\"}` (indicating the kind of the original API request).\n\n\nSee documentation for the \"matchPolicy\" field in the webhook configuration type for more details.",
+                      "description": "RequestKind is the fully-qualified type of the original API request (for example, v1.Pod or autoscaling.v1.Scale).\nIf this is specified and differs from the value in \"kind\", an equivalent match and conversion was performed.\n\nFor example, if deployments can be modified via apps/v1 and apps/v1beta1, and a webhook registered a rule of\n`apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]` and `matchPolicy: Equivalent`,\nan API request to apps/v1beta1 deployments would be converted and sent to the webhook\nwith `kind: {group:\"apps\", version:\"v1\", kind:\"Deployment\"}` (matching the rule the webhook registered for),\nand `requestKind: {group:\"apps\", version:\"v1beta1\", kind:\"Deployment\"}` (indicating the kind of the original API request).\n\nSee documentation for the \"matchPolicy\" field in the webhook configuration type for more details.",
                       "properties": {
                         "group": {
                           "type": "string"
@@ -96,7 +96,7 @@
                       "type": "object"
                     },
                     "requestResource": {
-                      "description": "RequestResource is the fully-qualified resource of the original API request (for example, v1.pods).\nIf this is specified and differs from the value in \"resource\", an equivalent match and conversion was performed.\n\n\nFor example, if deployments can be modified via apps/v1 and apps/v1beta1, and a webhook registered a rule of\n`apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]` and `matchPolicy: Equivalent`,\nan API request to apps/v1beta1 deployments would be converted and sent to the webhook\nwith `resource: {group:\"apps\", version:\"v1\", resource:\"deployments\"}` (matching the resource the webhook registered for),\nand `requestResource: {group:\"apps\", version:\"v1beta1\", resource:\"deployments\"}` (indicating the resource of the original API request).\n\n\nSee documentation for the \"matchPolicy\" field in the webhook configuration type.",
+                      "description": "RequestResource is the fully-qualified resource of the original API request (for example, v1.pods).\nIf this is specified and differs from the value in \"resource\", an equivalent match and conversion was performed.\n\nFor example, if deployments can be modified via apps/v1 and apps/v1beta1, and a webhook registered a rule of\n`apiGroups:[\"apps\"], apiVersions:[\"v1\"], resources: [\"deployments\"]` and `matchPolicy: Equivalent`,\nan API request to apps/v1beta1 deployments would be converted and sent to the webhook\nwith `resource: {group:\"apps\", version:\"v1\", resource:\"deployments\"}` (matching the resource the webhook registered for),\nand `requestResource: {group:\"apps\", version:\"v1beta1\", resource:\"deployments\"}` (indicating the resource of the original API request).\n\nSee documentation for the \"matchPolicy\" field in the webhook configuration type.",
                       "properties": {
                         "group": {
                           "type": "string"
@@ -166,7 +166,8 @@
                           "items": {
                             "type": "string"
                           },
-                          "type": "array"
+                          "type": "array",
+                          "x-kubernetes-list-type": "atomic"
                         },
                         "uid": {
                           "description": "A unique value that identifies this user across time. If this user is\ndeleted and another user by the same name is added, they will have\ndifferent UIDs.",
@@ -215,6 +216,10 @@
                   "nullable": true,
                   "type": "array"
                 },
+                "synchronize": {
+                  "description": "DryRun indicates that modifications will definitely not be persisted for this request.\nDefaults to false.",
+                  "type": "boolean"
+                },
                 "userInfo": {
                   "description": "UserInfo is the userInfo carried in the admission request.",
                   "properties": {
@@ -234,7 +239,8 @@
                       "items": {
                         "type": "string"
                       },
-                      "type": "array"
+                      "type": "array",
+                      "x-kubernetes-list-type": "atomic"
                     },
                     "uid": {
                       "description": "A unique value that identifies this user across time. If this user is\ndeleted and another user by the same name is added, they will have\ndifferent UIDs.",
@@ -254,7 +260,7 @@
           "type": "object"
         },
         "deleteDownstream": {
-          "description": "DeleteDownstream represents whether the downstream needs to be deleted.",
+          "description": "DeleteDownstream represents whether the downstream needs to be deleted.\nDeprecated",
           "type": "boolean"
         },
         "policy": {
@@ -265,7 +271,9 @@
           "description": "Type represents request type for background processing",
           "enum": [
             "mutate",
-            "generate"
+            "generate",
+            "cel-generate",
+            "cel-mutate"
           ],
           "type": "string"
         },
@@ -299,8 +307,64 @@
           "description": "Rule is the associate rule name of the current UR.",
           "type": "string"
         },
+        "ruleContext": {
+          "description": "RuleContext is the associate context to apply rules.\noptional",
+          "items": {
+            "properties": {
+              "cacheRestore": {
+                "description": "CacheRestore indicates whether the cache should be restored.",
+                "type": "boolean"
+              },
+              "deleteDownstream": {
+                "description": "DeleteDownstream represents whether the downstream needs to be deleted.",
+                "type": "boolean"
+              },
+              "rule": {
+                "description": "Rule is the associate rule name of the current UR.",
+                "type": "string"
+              },
+              "synchronize": {
+                "description": "Synchronize represents the sync behavior of the corresponding rule\nOptional. Defaults to \"false\" if not specified.",
+                "type": "boolean"
+              },
+              "trigger": {
+                "description": "ResourceSpec is the information to identify the trigger resource.",
+                "properties": {
+                  "apiVersion": {
+                    "description": "APIVersion specifies resource apiVersion.",
+                    "type": "string"
+                  },
+                  "kind": {
+                    "description": "Kind specifies resource kind.",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name specifies the resource name.",
+                    "type": "string"
+                  },
+                  "namespace": {
+                    "description": "Namespace specifies resource namespace.",
+                    "type": "string"
+                  },
+                  "uid": {
+                    "description": "UID specifies the resource uid.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "required": [
+              "deleteDownstream",
+              "rule",
+              "trigger"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
         "synchronize": {
-          "description": "Synchronize represents the sync behavior of the corresponding rule\nOptional. Defaults to \"false\" if not specified.",
+          "description": "Synchronize represents the sync behavior of the corresponding rule\nOptional. Defaults to \"false\" if not specified.\nDeprecated, will be removed in 1.14.",
           "type": "boolean"
         }
       },

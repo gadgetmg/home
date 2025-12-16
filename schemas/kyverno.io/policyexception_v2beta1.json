@@ -134,6 +134,12 @@
         },
         "match": {
           "description": "Match defines match clause used to check if a resource applies to the exception",
+          "not": {
+            "required": [
+              "any",
+              "all"
+            ]
+          },
           "properties": {
             "all": {
               "description": "All allows specifying resources which will be ANDed",
@@ -149,6 +155,12 @@
                   },
                   "resources": {
                     "description": "ResourceDescription contains information about the resource being created or modified.",
+                    "not": {
+                      "required": [
+                        "name",
+                        "names"
+                      ]
+                    },
                     "properties": {
                       "annotations": {
                         "additionalProperties": {
@@ -196,7 +208,8 @@
                                   "items": {
                                     "type": "string"
                                   },
-                                  "type": "array"
+                                  "type": "array",
+                                  "x-kubernetes-list-type": "atomic"
                                 }
                               },
                               "required": [
@@ -205,7 +218,8 @@
                               ],
                               "type": "object"
                             },
-                            "type": "array"
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
                           },
                           "matchLabels": {
                             "additionalProperties": {
@@ -260,7 +274,8 @@
                                   "items": {
                                     "type": "string"
                                   },
-                                  "type": "array"
+                                  "type": "array",
+                                  "x-kubernetes-list-type": "atomic"
                                 }
                               },
                               "required": [
@@ -269,7 +284,8 @@
                               ],
                               "type": "object"
                             },
-                            "type": "array"
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
                           },
                           "matchLabels": {
                             "additionalProperties": {
@@ -342,6 +358,12 @@
                   },
                   "resources": {
                     "description": "ResourceDescription contains information about the resource being created or modified.",
+                    "not": {
+                      "required": [
+                        "name",
+                        "names"
+                      ]
+                    },
                     "properties": {
                       "annotations": {
                         "additionalProperties": {
@@ -389,7 +411,8 @@
                                   "items": {
                                     "type": "string"
                                   },
-                                  "type": "array"
+                                  "type": "array",
+                                  "x-kubernetes-list-type": "atomic"
                                 }
                               },
                               "required": [
@@ -398,7 +421,8 @@
                               ],
                               "type": "object"
                             },
-                            "type": "array"
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
                           },
                           "matchLabels": {
                             "additionalProperties": {
@@ -453,7 +477,8 @@
                                   "items": {
                                     "type": "string"
                                   },
-                                  "type": "array"
+                                  "type": "array",
+                                  "x-kubernetes-list-type": "atomic"
                                 }
                               },
                               "required": [
@@ -462,7 +487,8 @@
                               ],
                               "type": "object"
                             },
-                            "type": "array"
+                            "type": "array",
+                            "x-kubernetes-list-type": "atomic"
                           },
                           "matchLabels": {
                             "additionalProperties": {

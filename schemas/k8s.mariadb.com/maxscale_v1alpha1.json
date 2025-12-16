@@ -38,18 +38,18 @@
               "type": "boolean"
             },
             "nodeAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeaffinity-v1-core",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeaffinity-v1-core",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#preferredschedulingterm-v1-core",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#preferredschedulingterm-v1-core",
                     "properties": {
                       "preference": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -77,7 +77,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -121,15 +121,15 @@
                   "x-kubernetes-list-type": "atomic"
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
-                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core",
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselector-v1-core",
                   "properties": {
                     "nodeSelectorTerms": {
                       "items": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -157,7 +157,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -199,21 +199,21 @@
               "type": "object"
             },
             "podAntiAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podantiaffinity-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podantiaffinity-v1-core.",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#weightedpodaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#weightedpodaffinityterm-v1-core.",
                     "properties": {
                       "podAffinityTerm": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                         "properties": {
                           "labelSelector": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                             "properties": {
                               "matchExpressions": {
                                 "items": {
-                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                                   "properties": {
                                     "key": {
                                       "type": "string"
@@ -273,14 +273,14 @@
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                     "properties": {
                       "labelSelector": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -409,7 +409,7 @@
               "type": "boolean"
             },
             "metricsPasswordSecretKeyRef": {
-              "description": "MetricsPasswordSecretKeyRef is Secret key reference to the metrics password to call the admib REST API. It is defaulted if metrics are enabled.\nIf the referred Secret is labeled with \"k8s.mariadb.com/watch\", updates may be performed to the Secret in order to update the password.",
+              "description": "MetricsPasswordSecretKeyRef is Secret key reference to the metrics password to call the admib REST API. It is defaulted if metrics are enabled.",
               "properties": {
                 "generate": {
                   "default": false,
@@ -784,7 +784,7 @@
         "env": {
           "description": "Env represents the environment variables to be injected in a container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#envvarsource-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#envvarsource-v1-core.",
             "properties": {
               "name": {
                 "description": "Name of the environment variable. Must be a C_IDENTIFIER.",
@@ -794,10 +794,10 @@
                 "type": "string"
               },
               "valueFrom": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#envvarsource-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#envvarsource-v1-core.",
                 "properties": {
                   "configMapKeyRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#configmapkeyselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#configmapkeyselector-v1-core.",
                     "properties": {
                       "key": {
                         "type": "string"
@@ -814,7 +814,7 @@
                     "x-kubernetes-map-type": "atomic"
                   },
                   "fieldRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#objectfieldselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#objectfieldselector-v1-core.",
                     "properties": {
                       "apiVersion": {
                         "type": "string"
@@ -830,7 +830,7 @@
                     "x-kubernetes-map-type": "atomic"
                   },
                   "secretKeyRef": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#secretkeyselector-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#secretkeyselector-v1-core.",
                     "properties": {
                       "key": {
                         "type": "string"
@@ -860,10 +860,10 @@
         "envFrom": {
           "description": "EnvFrom represents the references (via ConfigMap and Secrets) to environment variables to be injected in the container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#envfromsource-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#envfromsource-v1-core.",
             "properties": {
               "configMapRef": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
                 "properties": {
                   "name": {
                     "default": "",
@@ -876,7 +876,7 @@
                 "type": "string"
               },
               "secretRef": {
-                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
                 "properties": {
                   "name": {
                     "default": "",
@@ -965,7 +965,7 @@
         "imagePullSecrets": {
           "description": "ImagePullSecrets is the list of pull Secrets to be used to pull the image.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
             "properties": {
               "name": {
                 "default": "",
@@ -1059,7 +1059,7 @@
           "description": "LivenessProbe to be used in the Container.",
           "properties": {
             "exec": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#execaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#execaction-v1-core.",
               "properties": {
                 "command": {
                   "items": {
@@ -1076,7 +1076,7 @@
               "type": "integer"
             },
             "httpGet": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#httpgetaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#httpgetaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -1117,6 +1117,29 @@
               "format": "int32",
               "type": "integer"
             },
+            "tcpSocket": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#tcpsocketaction-v1-core.",
+              "properties": {
+                "host": {
+                  "type": "string"
+                },
+                "port": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object"
+            },
             "timeoutSeconds": {
               "format": "int32",
               "type": "integer"
@@ -1127,6 +1150,10 @@
         "mariaDbRef": {
           "description": "MariaDBRef is a reference to the MariaDB that MaxScale points to. It is used to initialize the servers field.",
           "properties": {
+            "kind": {
+              "description": "Kind of the referent.",
+              "type": "string"
+            },
             "name": {
               "type": "string"
             },
@@ -1159,18 +1186,18 @@
                       "type": "boolean"
                     },
                     "nodeAffinity": {
-                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeaffinity-v1-core",
+                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeaffinity-v1-core",
                       "properties": {
                         "preferredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#preferredschedulingterm-v1-core",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#preferredschedulingterm-v1-core",
                             "properties": {
                               "preference": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1198,7 +1225,7 @@
                                   },
                                   "matchFields": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1242,15 +1269,15 @@
                           "x-kubernetes-list-type": "atomic"
                         },
                         "requiredDuringSchedulingIgnoredDuringExecution": {
-                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core",
+                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselector-v1-core",
                           "properties": {
                             "nodeSelectorTerms": {
                               "items": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1278,7 +1305,7 @@
                                   },
                                   "matchFields": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1320,21 +1347,21 @@
                       "type": "object"
                     },
                     "podAntiAffinity": {
-                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podantiaffinity-v1-core.",
+                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podantiaffinity-v1-core.",
                       "properties": {
                         "preferredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#weightedpodaffinityterm-v1-core.",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#weightedpodaffinityterm-v1-core.",
                             "properties": {
                               "podAffinityTerm": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                                 "properties": {
                                   "labelSelector": {
-                                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                                     "properties": {
                                       "matchExpressions": {
                                         "items": {
-                                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                                          "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                                           "properties": {
                                             "key": {
                                               "type": "string"
@@ -1394,14 +1421,14 @@
                         },
                         "requiredDuringSchedulingIgnoredDuringExecution": {
                           "items": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                             "properties": {
                               "labelSelector": {
-                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                                "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                                 "properties": {
                                   "matchExpressions": {
                                     "items": {
-                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                                      "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                                       "properties": {
                                         "key": {
                                           "type": "string"
@@ -1454,6 +1481,13 @@
                   },
                   "type": "object"
                 },
+                "args": {
+                  "description": "Args to be used in the Container.",
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
                 "image": {
                   "description": "Image name to be used as metrics exporter. The supported format is `<image>:<tag>`.\nOnly mysqld-exporter >= v0.15.0 is supported: https://github.com/prometheus/mysqld_exporter",
                   "type": "string"
@@ -1470,7 +1504,7 @@
                 "imagePullSecrets": {
                   "description": "ImagePullSecrets is the list of pull Secrets to be used to pull the image.",
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
                     "properties": {
                       "name": {
                         "default": "",
@@ -1607,7 +1641,7 @@
                   "type": "string"
                 },
                 "resources": {
-                  "description": "Resouces describes the compute resource requirements.",
+                  "description": "Resources describes the compute resource requirements.",
                   "properties": {
                     "limits": {
                       "additionalProperties": {
@@ -1780,7 +1814,7 @@
               "additionalProperties": {
                 "type": "string"
               },
-              "description": "Params defines extra parameters to pass to the monitor.\nAny parameter supported by MaxScale may be specified here. See reference:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-common-monitor-parameters/.\nMonitor specific parameter are also suported:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-galera-monitor/#galera-monitor-optional-parameters.\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-monitor/#configuration.",
+              "description": "Params defines extra parameters to pass to the monitor.\nAny parameter supported by MaxScale may be specified here. See reference:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-common-monitor-parameters/.\nMonitor specific parameter are also supported:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-galera-monitor/#galera-monitor-optional-parameters.\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-monitor/#configuration.",
               "type": "object"
             },
             "suspend": {
@@ -1937,6 +1971,10 @@
           },
           "type": "object"
         },
+        "primaryServer": {
+          "description": "PrimaryServer specifies the desired primary server. Setting this field triggers a switchover operation in MaxScale to the desired server.\nThis option is only valid when using monitors that support switchover, currently limited to the MariaDB monitor.",
+          "type": "string"
+        },
         "priorityClassName": {
           "description": "PriorityClassName to be used in the Pod.",
           "type": "string"
@@ -1945,7 +1983,7 @@
           "description": "ReadinessProbe to be used in the Container.",
           "properties": {
             "exec": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#execaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#execaction-v1-core.",
               "properties": {
                 "command": {
                   "items": {
@@ -1962,7 +2000,7 @@
               "type": "integer"
             },
             "httpGet": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#httpgetaction-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#httpgetaction-v1-core.",
               "properties": {
                 "host": {
                   "type": "string"
@@ -2003,6 +2041,29 @@
               "format": "int32",
               "type": "integer"
             },
+            "tcpSocket": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#tcpsocketaction-v1-core.",
+              "properties": {
+                "host": {
+                  "type": "string"
+                },
+                "port": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object"
+            },
             "timeoutSeconds": {
               "format": "int32",
               "type": "integer"
@@ -2021,7 +2082,7 @@
           "type": "string"
         },
         "resources": {
-          "description": "Resouces describes the compute resource requirements.",
+          "description": "Resources describes the compute resource requirements.",
           "properties": {
             "limits": {
               "additionalProperties": {
@@ -2201,7 +2262,7 @@
                 "additionalProperties": {
                   "type": "string"
                 },
-                "description": "Params defines extra parameters to pass to the service.\nAny parameter supported by MaxScale may be specified here. See reference:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-maxscale-configuration-guide/#service_1.\nRouter specific parameter are also suported:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-readwritesplit/#configuration.\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-readconnroute/#configuration.",
+                "description": "Params defines extra parameters to pass to the service.\nAny parameter supported by MaxScale may be specified here. See reference:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-maxscale-configuration-guide/#service_1.\nRouter specific parameter are also supported:\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-readwritesplit/#configuration.\nhttps://mariadb.com/kb/en/mariadb-maxscale-2308-readconnroute/#configuration.",
                 "type": "object"
               },
               "router": {
@@ -2227,10 +2288,226 @@
           },
           "type": "array"
         },
+        "startupProbe": {
+          "description": "StartupProbe to be used in the Container.",
+          "properties": {
+            "exec": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#execaction-v1-core.",
+              "properties": {
+                "command": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                }
+              },
+              "type": "object"
+            },
+            "failureThreshold": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "httpGet": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#httpgetaction-v1-core.",
+              "properties": {
+                "host": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "port": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-kubernetes-int-or-string": true
+                },
+                "scheme": {
+                  "description": "URIScheme identifies the scheme used for connection to a host for Get actions",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object"
+            },
+            "initialDelaySeconds": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "periodSeconds": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "successThreshold": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "tcpSocket": {
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#tcpsocketaction-v1-core.",
+              "properties": {
+                "host": {
+                  "type": "string"
+                },
+                "port": {
+                  "anyOf": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ],
+                  "x-kubernetes-int-or-string": true
+                }
+              },
+              "required": [
+                "port"
+              ],
+              "type": "object"
+            },
+            "timeoutSeconds": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
         "suspend": {
           "default": false,
           "description": "Suspend indicates whether the current resource should be suspended or not.\nThis can be useful for maintenance, as disabling the reconciliation prevents the operator from interfering with user operations during maintenance activities.",
           "type": "boolean"
+        },
+        "tls": {
+          "description": "TLS defines the PKI to be used with MaxScale.",
+          "properties": {
+            "adminCASecretRef": {
+              "description": "AdminCASecretRef is a reference to a Secret containing the admin certificate authority keypair. It is used to establish trust and issue certificates for the MaxScale's administrative REST API and GUI.\nOne of:\n- Secret containing both the 'ca.crt' and 'ca.key' keys. This allows you to bring your own CA to Kubernetes to issue certificates.\n- Secret containing only the 'ca.crt' in order to establish trust. In this case, either adminCertSecretRef or adminCertIssuerRef fields must be provided.\nIf not provided, a self-signed CA will be provisioned to issue the server certificate.",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "adminCertIssuerRef": {
+              "description": "AdminCertIssuerRef is a reference to a cert-manager issuer object used to issue the MaxScale's administrative REST API and GUI certificate. cert-manager must be installed previously in the cluster.\nIt is mutually exclusive with adminCertSecretRef.\nBy default, the Secret field 'ca.crt' provisioned by cert-manager will be added to the trust chain. A custom trust bundle may be specified via adminCASecretRef.",
+              "properties": {
+                "group": {
+                  "description": "Group of the resource being referred to.",
+                  "type": "string"
+                },
+                "kind": {
+                  "description": "Kind of the resource being referred to.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the resource being referred to.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "adminCertSecretRef": {
+              "description": "AdminCertSecretRef is a reference to a TLS Secret used by the MaxScale's administrative REST API and GUI.",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "enabled": {
+              "description": "Enabled indicates whether TLS is enabled, determining if certificates should be issued and mounted to the MaxScale instance.\nIt is enabled by default when the referred MariaDB instance (via mariaDbRef) has TLS enabled and enforced.",
+              "type": "boolean"
+            },
+            "listenerCASecretRef": {
+              "description": "ListenerCASecretRef is a reference to a Secret containing the listener certificate authority keypair. It is used to establish trust and issue certificates for the MaxScale's listeners.\nOne of:\n- Secret containing both the 'ca.crt' and 'ca.key' keys. This allows you to bring your own CA to Kubernetes to issue certificates.\n- Secret containing only the 'ca.crt' in order to establish trust. In this case, either listenerCertSecretRef or listenerCertIssuerRef fields must be provided.\nIf not provided, a self-signed CA will be provisioned to issue the listener certificate.",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "listenerCertIssuerRef": {
+              "description": "ListenerCertIssuerRef is a reference to a cert-manager issuer object used to issue the MaxScale's listeners certificate. cert-manager must be installed previously in the cluster.\nIt is mutually exclusive with listenerCertSecretRef.\nBy default, the Secret field 'ca.crt' provisioned by cert-manager will be added to the trust chain. A custom trust bundle may be specified via listenerCASecretRef.",
+              "properties": {
+                "group": {
+                  "description": "Group of the resource being referred to.",
+                  "type": "string"
+                },
+                "kind": {
+                  "description": "Kind of the resource being referred to.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name of the resource being referred to.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "listenerCertSecretRef": {
+              "description": "ListenerCertSecretRef is a reference to a TLS Secret used by the MaxScale's listeners.",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "replicationSSLEnabled": {
+              "description": "ReplicationSSLEnabled specifies whether the replication SSL is enabled. If enabled, the SSL options will be added to the server configuration.\nIt is enabled by default when the referred MariaDB instance (via mariaDbRef) has replication enabled.\nIf the MariaDB servers are manually provided by the user via the 'servers' field, this must be set by the user as well.",
+              "type": "boolean"
+            },
+            "serverCASecretRef": {
+              "description": "ServerCASecretRef is a reference to a Secret containing the MariaDB server CA certificates. It is used to establish trust with MariaDB servers.\nThe Secret should contain a 'ca.crt' key in order to establish trust.\nIf not provided, and the reference to a MariaDB resource is set (mariaDbRef), it will be defaulted to the referred MariaDB CA bundle.",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "serverCertSecretRef": {
+              "description": "ServerCertSecretRef is a reference to a TLS Secret used by MaxScale to connect to the MariaDB servers.\nIf not provided, and the reference to a MariaDB resource is set (mariaDbRef), it will be defaulted to the referred MariaDB client certificate (clientCertSecretRef).",
+              "properties": {
+                "name": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "verifyPeerCertificate": {
+              "description": "VerifyPeerCertificate specifies whether the peer certificate's signature should be validated against the CA.\nIt is disabled by default.",
+              "type": "boolean"
+            },
+            "verifyPeerHost": {
+              "description": "VerifyPeerHost specifies whether the peer certificate's SANs should match the peer host.\nIt is disabled by default.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
         },
         "tolerations": {
           "description": "Tolerations to be used in the Pod.",
@@ -2266,7 +2543,7 @@
         "topologySpreadConstraints": {
           "description": "TopologySpreadConstraints to be used in the Pod.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#topologyspreadconstraint-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#topologyspreadconstraint-v1-core.",
             "properties": {
               "labelSelector": {
                 "description": "A label selector is a label query over a set of resources. The result of matchLabels and\nmatchExpressions are ANDed. An empty label selector matches all objects. A null\nlabel selector matches no objects.",
@@ -2387,7 +2664,7 @@
         "volumeMounts": {
           "description": "VolumeMounts to be used in the Container.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#volumemount-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#volumemount-v1-core.",
             "properties": {
               "mountPath": {
                 "type": "string"
@@ -2524,6 +2801,10 @@
           ],
           "type": "object"
         },
+        "monitorSpec": {
+          "description": "MonitorSpec is a hashed version of spec.monitor to be able to track changes during reconciliation.",
+          "type": "string"
+        },
         "primaryServer": {
           "description": "PrimaryServer is the primary server in the MaxScale API.",
           "type": "string"
@@ -2553,6 +2834,10 @@
           },
           "type": "array"
         },
+        "serversSpec": {
+          "description": "ServersSpec is a hashed version of spec.servers to be able to track changes during reconciliation.",
+          "type": "string"
+        },
         "services": {
           "description": "Services is the state of the services in the MaxScale API.",
           "items": {
@@ -2572,6 +2857,132 @@
             "type": "object"
           },
           "type": "array"
+        },
+        "servicesSpec": {
+          "description": "ServicesSpec is a hashed version of spec.services to be able to track changes during reconciliation.",
+          "type": "string"
+        },
+        "tls": {
+          "description": "TLS aggregates the status of the certificates used by the MaxScale instance.",
+          "properties": {
+            "adminCert": {
+              "description": "AdminCert is the status of the admin certificate.",
+              "properties": {
+                "issuer": {
+                  "description": "Issuer is the issuer of the current certificate.",
+                  "type": "string"
+                },
+                "notAfter": {
+                  "description": "NotAfter indicates that the certificate is not valid after the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "notBefore": {
+                  "description": "NotBefore indicates that the certificate is not valid before the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "subject": {
+                  "description": "Subject is the subject of the current certificate.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "issuer",
+                "subject"
+              ],
+              "type": "object"
+            },
+            "caBundle": {
+              "description": "CABundle is the status of the Certificate Authority bundle.",
+              "items": {
+                "description": "CertificateStatus represents the current status of a TLS certificate.",
+                "properties": {
+                  "issuer": {
+                    "description": "Issuer is the issuer of the current certificate.",
+                    "type": "string"
+                  },
+                  "notAfter": {
+                    "description": "NotAfter indicates that the certificate is not valid after the given date.",
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "notBefore": {
+                    "description": "NotBefore indicates that the certificate is not valid before the given date.",
+                    "format": "date-time",
+                    "type": "string"
+                  },
+                  "subject": {
+                    "description": "Subject is the subject of the current certificate.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "issuer",
+                  "subject"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "listenerCert": {
+              "description": "ListenerCert is the status of the listener certificate.",
+              "properties": {
+                "issuer": {
+                  "description": "Issuer is the issuer of the current certificate.",
+                  "type": "string"
+                },
+                "notAfter": {
+                  "description": "NotAfter indicates that the certificate is not valid after the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "notBefore": {
+                  "description": "NotBefore indicates that the certificate is not valid before the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "subject": {
+                  "description": "Subject is the subject of the current certificate.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "issuer",
+                "subject"
+              ],
+              "type": "object"
+            },
+            "serverCert": {
+              "description": "ServerCert is the status of the MariaDB server certificate.",
+              "properties": {
+                "issuer": {
+                  "description": "Issuer is the issuer of the current certificate.",
+                  "type": "string"
+                },
+                "notAfter": {
+                  "description": "NotAfter indicates that the certificate is not valid after the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "notBefore": {
+                  "description": "NotBefore indicates that the certificate is not valid before the given date.",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "subject": {
+                  "description": "Subject is the subject of the current certificate.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "issuer",
+                "subject"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"

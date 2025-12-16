@@ -60,11 +60,19 @@
             {
               "message": "Value is immutable",
               "rule": "self == oldSelf"
+            },
+            {
+              "message": "Plural name must be lowercase",
+              "rule": "self.plural == self.plural.lowerAscii()"
+            },
+            {
+              "message": "Singular name must be lowercase",
+              "rule": "!has(self.singular) || self.singular == self.singular.lowerAscii()"
             }
           ]
         },
         "connectionSecretKeys": {
-          "description": "ConnectionSecretKeys is the list of keys that will be exposed to the end\nuser of the defined kind.\nIf the list is empty, all keys will be published.",
+          "description": "ConnectionSecretKeys is the list of connection secret keys the\ndefined XR can publish. If the list is empty, all keys will be\npublished. If the list isn't empty, any connection secret keys that\ndon't appear in the list will be filtered out. Only LegacyCluster XRs\nsupport connection secrets.",
           "items": {
             "type": "string"
           },
@@ -140,7 +148,13 @@
           "required": [
             "strategy"
           ],
-          "type": "object"
+          "type": "object",
+          "x-kubernetes-validations": [
+            {
+              "message": "Webhook configuration is required when conversion strategy is Webhook",
+              "rule": "self.strategy == 'Webhook' && has(self.webhook)"
+            }
+          ]
         },
         "defaultCompositeDeletePolicy": {
           "default": "Background",
@@ -267,6 +281,30 @@
             {
               "message": "Value is immutable",
               "rule": "self == oldSelf"
+            },
+            {
+              "message": "Plural name must be lowercase",
+              "rule": "self.plural == self.plural.lowerAscii()"
+            },
+            {
+              "message": "Singular name must be lowercase",
+              "rule": "!has(self.singular) || self.singular == self.singular.lowerAscii()"
+            }
+          ]
+        },
+        "scope": {
+          "default": "LegacyCluster",
+          "description": "Scope of the defined composite resource. Namespaced composite resources\nare scoped to a single namespace. Cluster scoped composite resource exist\noutside the scope of any namespace. Neither can be claimed. Legacy\ncluster scoped composite resources are cluster scoped resources that can\nbe claimed.",
+          "enum": [
+            "LegacyCluster",
+            "Namespaced",
+            "Cluster"
+          ],
+          "type": "string",
+          "x-kubernetes-validations": [
+            {
+              "message": "Value is immutable",
+              "rule": "self == oldSelf"
             }
           ]
         },
@@ -363,7 +401,17 @@
         "names",
         "versions"
       ],
-      "type": "object"
+      "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "Only LegacyCluster composite resources can offer claims",
+          "rule": "self.scope == 'LegacyCluster' || !has(self.claimNames)"
+        },
+        {
+          "message": "Only LegacyCluster composite resources support connection secrets",
+          "rule": "self.scope == 'LegacyCluster' || !has(self.connectionSecretKeys)"
+        }
+      ]
     },
     "status": {
       "description": "CompositeResourceDefinitionStatus shows the observed state of the definition.",
