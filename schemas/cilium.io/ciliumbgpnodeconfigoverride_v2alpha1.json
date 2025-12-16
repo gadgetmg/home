@@ -1,12 +1,12 @@
 {
-  "description": "CiliumBGPNodeConfigOverride specifies configuration overrides for a CiliumBGPNodeConfig. It allows fine-tuning of BGP behavior on a per-node basis. For the override to be effective, the names in CiliumBGPNodeConfigOverride and CiliumBGPNodeConfig must match exactly. This matching ensures that specific node configurations are applied correctly and only where intended.",
+  "description": "CiliumBGPNodeConfigOverride specifies configuration overrides for a CiliumBGPNodeConfig.\nIt allows fine-tuning of BGP behavior on a per-node basis. For the override to be effective,\nthe names in CiliumBGPNodeConfigOverride and CiliumBGPNodeConfig must match exactly. This\nmatching ensures that specific node configurations are applied correctly and only where intended.",
   "properties": {
     "apiVersion": {
-      "description": "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+      "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
       "type": "string"
     },
     "kind": {
-      "description": "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+      "description": "Kind is a string value representing the REST resource this object represents.\nServers may infer this from the endpoint the client submits requests to.\nCannot be updated.\nIn CamelCase.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
       "type": "string"
     },
     "metadata": {
@@ -20,6 +20,13 @@
           "items": {
             "description": "CiliumBGPNodeConfigInstanceOverride defines configuration options which can be overridden for a specific BGP instance.",
             "properties": {
+              "localASN": {
+                "description": "LocalASN is the ASN to use for this BGP instance.",
+                "format": "int64",
+                "maximum": 4294967295,
+                "minimum": 1,
+                "type": "integer"
+              },
               "localPort": {
                 "description": "LocalPort is port to use for this BGP instance.",
                 "format": "int32",

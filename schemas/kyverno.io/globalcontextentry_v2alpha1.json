@@ -14,6 +14,18 @@
     },
     "spec": {
       "description": "Spec declares policy exception behaviors.",
+      "oneOf": [
+        {
+          "required": [
+            "kubernetesResource"
+          ]
+        },
+        {
+          "required": [
+            "apiCall"
+          ]
+        }
+      ],
       "properties": {
         "apiCall": {
           "description": "Stores results from an API call which will be cached.\nMutually exclusive with KubernetesResource.\nThis can be used to make calls to external (non-Kubernetes API server) services.\nIt can also be used to make calls to the Kubernetes API server in such cases:\n1. A POST is needed to create a resource.\n2. Finer-grained control is needed. Example: To restrict the number of resources cached.",
@@ -42,7 +54,7 @@
             },
             "method": {
               "default": "GET",
-              "description": "Method is the HTTP request type (GET or POST).",
+              "description": "Method is the HTTP request type (GET or POST). Defaults to GET.",
               "enum": [
                 "GET",
                 "POST"
@@ -55,12 +67,39 @@
               "format": "duration",
               "type": "string"
             },
+            "retryLimit": {
+              "default": 3,
+              "description": "RetryLimit defines the number of times the APICall should be retried in case of failure.",
+              "minimum": 1,
+              "type": "integer"
+            },
             "service": {
               "description": "Service is an API call to a JSON web service.\nThis is used for non-Kubernetes API server calls.\nIt's mutually exclusive with the URLPath field.",
               "properties": {
                 "caBundle": {
                   "description": "CABundle is a PEM encoded CA bundle which will be used to validate\nthe server certificate.",
                   "type": "string"
+                },
+                "headers": {
+                  "description": "Headers is a list of optional HTTP headers to be included in the request.",
+                  "items": {
+                    "properties": {
+                      "key": {
+                        "description": "Key is the header key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "description": "Value is the header value",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "value"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
                 },
                 "url": {
                   "description": "URL is the JSON web service URL. A typical form is\n`https://{service}.{namespace}:{port}/{path}`.",
@@ -99,7 +138,32 @@
               "type": "string"
             }
           },
+          "required": [
+            "resource",
+            "version"
+          ],
           "type": "object"
+        },
+        "projections": {
+          "description": "Projections defines the list of JMESPath expressions to extract values from the cached resource.",
+          "items": {
+            "properties": {
+              "jmesPath": {
+                "description": "JMESPath is the JMESPath expression to extract the value from the cached resource.",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name is the name to use for the extracted value in the context.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "jmesPath",
+              "name"
+            ],
+            "type": "object"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -109,7 +173,7 @@
       "properties": {
         "conditions": {
           "items": {
-            "description": "Condition contains details for one aspect of the current state of this API Resource.\n---\nThis struct is intended for direct use as an array at the field path .status.conditions.  For example,\n\n\n\ttype FooStatus struct{\n\t    // Represents the observations of a foo's current state.\n\t    // Known .status.conditions.type are: \"Available\", \"Progressing\", and \"Degraded\"\n\t    // +patchMergeKey=type\n\t    // +patchStrategy=merge\n\t    // +listType=map\n\t    // +listMapKey=type\n\t    Conditions []metav1.Condition `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`\n\n\n\t    // other fields\n\t}",
+            "description": "Condition contains details for one aspect of the current state of this API Resource.",
             "properties": {
               "lastTransitionTime": {
                 "description": "lastTransitionTime is the last time the condition transitioned from one status to another.\nThis should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.",
@@ -144,7 +208,7 @@
                 "type": "string"
               },
               "type": {
-                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.\n---\nMany .condition.type values are consistent across resources like Available, but because arbitrary conditions can be\nuseful (see .node.status.conditions), the ability to deconflict is important.\nThe regex it matches is (dns1123SubdomainFmt/)?(qualifiedNameFmt)",
+                "description": "type of condition in CamelCase or in foo.example.com/CamelCase.",
                 "maxLength": 316,
                 "pattern": "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$",
                 "type": "string"
@@ -171,9 +235,6 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "ready"
-      ],
       "type": "object"
     }
   },

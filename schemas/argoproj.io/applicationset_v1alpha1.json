@@ -309,6 +309,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -363,6 +369,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -371,6 +380,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -462,6 +474,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -529,6 +544,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -662,6 +731,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -716,6 +791,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -724,6 +802,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -815,6 +896,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -892,6 +976,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -981,6 +1068,9 @@
               },
               "clusters": {
                 "properties": {
+                  "flatList": {
+                    "type": "boolean"
+                  },
                   "selector": {
                     "properties": {
                       "matchExpressions": {
@@ -1261,6 +1351,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -1315,6 +1411,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -1323,6 +1422,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -1414,6 +1516,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -1481,6 +1586,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -1614,6 +1773,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -1668,6 +1833,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -1676,6 +1844,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -1767,6 +1938,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -1844,6 +2018,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -1950,6 +2127,9 @@
                   "files": {
                     "items": {
                       "properties": {
+                        "exclude": {
+                          "type": "boolean"
+                        },
                         "path": {
                           "type": "string"
                         }
@@ -2216,6 +2396,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -2270,6 +2456,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -2278,6 +2467,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -2369,6 +2561,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -2436,6 +2631,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -2569,6 +2818,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -2623,6 +2878,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -2631,6 +2889,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -2722,6 +2983,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -2799,6 +3063,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -3140,6 +3407,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -3194,6 +3467,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -3202,6 +3478,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -3293,6 +3572,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -3360,6 +3642,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -3493,6 +3829,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -3547,6 +3889,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -3555,6 +3900,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -3646,6 +3994,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -3723,6 +4074,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -4098,6 +4452,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -4152,6 +4512,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -4160,6 +4523,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -4251,6 +4617,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -4318,6 +4687,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -4451,6 +4874,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -4505,6 +4934,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -4513,6 +4945,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -4604,6 +5039,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -4681,6 +5119,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -4770,6 +5211,9 @@
                         },
                         "clusters": {
                           "properties": {
+                            "flatList": {
+                              "type": "boolean"
+                            },
                             "selector": {
                               "properties": {
                                 "matchExpressions": {
@@ -5050,6 +5494,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -5104,6 +5554,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -5112,6 +5565,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -5203,6 +5659,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -5270,6 +5729,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -5403,6 +5916,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -5457,6 +5976,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -5465,6 +5987,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -5556,6 +6081,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -5633,6 +6161,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -5739,6 +6270,9 @@
                             "files": {
                               "items": {
                                 "properties": {
+                                  "exclude": {
+                                    "type": "boolean"
+                                  },
                                   "path": {
                                     "type": "string"
                                   }
@@ -6005,6 +6539,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -6059,6 +6599,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -6067,6 +6610,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -6158,6 +6704,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -6225,6 +6774,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -6358,6 +6961,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -6412,6 +7021,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -6420,6 +7032,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -6511,6 +7126,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -6588,6 +7206,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -6929,6 +7550,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -6983,6 +7610,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -6991,6 +7621,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -7082,6 +7715,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -7149,6 +7785,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -7282,6 +7972,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -7336,6 +8032,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -7344,6 +8043,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -7435,6 +8137,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -7512,6 +8217,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -7866,6 +8574,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -7920,6 +8634,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -7928,6 +8645,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -8019,6 +8739,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -8086,6 +8809,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -8219,6 +8996,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -8273,6 +9056,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -8281,6 +9067,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -8372,6 +9161,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -8449,6 +9241,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -8757,6 +9552,12 @@
                                 },
                                 "insecure": {
                                   "type": "boolean"
+                                },
+                                "labels": {
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "type": "array"
                                 },
                                 "owner": {
                                   "type": "string"
@@ -9131,6 +9932,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -9185,6 +9992,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -9193,6 +10003,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -9284,6 +10097,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -9351,6 +10167,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -9484,6 +10354,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -9538,6 +10414,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -9546,6 +10425,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -9637,6 +10519,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -9716,6 +10601,9 @@
                                             "allowEmpty": {
                                               "type": "boolean"
                                             },
+                                            "enabled": {
+                                              "type": "boolean"
+                                            },
                                             "prune": {
                                               "type": "boolean"
                                             },
@@ -9787,6 +10675,12 @@
                                 "metadata",
                                 "spec"
                               ],
+                              "type": "object"
+                            },
+                            "values": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
                               "type": "object"
                             }
                           },
@@ -10390,6 +11284,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -10444,6 +11344,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -10452,6 +11355,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -10543,6 +11449,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -10610,6 +11519,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -10743,6 +11706,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -10797,6 +11766,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -10805,6 +11777,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -10896,6 +11871,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -10973,6 +11951,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -11342,6 +12323,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -11396,6 +12383,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -11404,6 +12394,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -11495,6 +12488,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -11562,6 +12558,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -11695,6 +12745,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -11749,6 +12805,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -11757,6 +12816,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -11848,6 +12910,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -11925,6 +12990,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -12303,6 +13371,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -12357,6 +13431,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -12365,6 +13442,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -12456,6 +13536,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -12523,6 +13606,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -12656,6 +13793,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -12710,6 +13853,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -12718,6 +13864,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -12809,6 +13958,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -12886,6 +14038,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -12975,6 +14130,9 @@
                         },
                         "clusters": {
                           "properties": {
+                            "flatList": {
+                              "type": "boolean"
+                            },
                             "selector": {
                               "properties": {
                                 "matchExpressions": {
@@ -13255,6 +14413,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -13309,6 +14473,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -13317,6 +14484,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -13408,6 +14578,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -13475,6 +14648,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -13608,6 +14835,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -13662,6 +14895,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -13670,6 +14906,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -13761,6 +15000,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -13838,6 +15080,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -13944,6 +15189,9 @@
                             "files": {
                               "items": {
                                 "properties": {
+                                  "exclude": {
+                                    "type": "boolean"
+                                  },
                                   "path": {
                                     "type": "string"
                                   }
@@ -14210,6 +15458,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -14264,6 +15518,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -14272,6 +15529,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -14363,6 +15623,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -14430,6 +15693,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -14563,6 +15880,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -14617,6 +15940,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -14625,6 +15951,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -14716,6 +16045,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -14793,6 +16125,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -15134,6 +16469,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -15188,6 +16529,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -15196,6 +16540,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -15287,6 +16634,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -15354,6 +16704,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -15487,6 +16891,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -15541,6 +16951,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -15549,6 +16962,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -15640,6 +17056,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -15717,6 +17136,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -16071,6 +17493,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -16125,6 +17553,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -16133,6 +17564,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -16224,6 +17658,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -16291,6 +17728,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -16424,6 +17915,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -16478,6 +17975,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -16486,6 +17986,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -16577,6 +18080,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -16654,6 +18160,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -16962,6 +18471,12 @@
                                 },
                                 "insecure": {
                                   "type": "boolean"
+                                },
+                                "labels": {
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "type": "array"
                                 },
                                 "owner": {
                                   "type": "string"
@@ -17336,6 +18851,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -17390,6 +18911,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -17398,6 +18922,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -17489,6 +19016,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -17556,6 +19086,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -17689,6 +19273,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -17743,6 +19333,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -17751,6 +19344,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -17842,6 +19438,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -17921,6 +19520,9 @@
                                             "allowEmpty": {
                                               "type": "boolean"
                                             },
+                                            "enabled": {
+                                              "type": "boolean"
+                                            },
                                             "prune": {
                                               "type": "boolean"
                                             },
@@ -17992,6 +19594,12 @@
                                 "metadata",
                                 "spec"
                               ],
+                              "type": "object"
+                            },
+                            "values": {
+                              "additionalProperties": {
+                                "type": "string"
+                              },
                               "type": "object"
                             }
                           },
@@ -18595,6 +20203,12 @@
                                             "skipCrds": {
                                               "type": "boolean"
                                             },
+                                            "skipSchemaValidation": {
+                                              "type": "boolean"
+                                            },
+                                            "skipTests": {
+                                              "type": "boolean"
+                                            },
                                             "valueFiles": {
                                               "items": {
                                                 "type": "string"
@@ -18649,6 +20263,9 @@
                                             "forceCommonLabels": {
                                               "type": "boolean"
                                             },
+                                            "ignoreMissingComponents": {
+                                              "type": "boolean"
+                                            },
                                             "images": {
                                               "items": {
                                                 "type": "string"
@@ -18657,6 +20274,9 @@
                                             },
                                             "kubeVersion": {
                                               "type": "string"
+                                            },
+                                            "labelIncludeTemplates": {
+                                              "type": "boolean"
                                             },
                                             "labelWithoutSelector": {
                                               "type": "boolean"
@@ -18748,6 +20368,9 @@
                                           },
                                           "type": "object"
                                         },
+                                        "name": {
+                                          "type": "string"
+                                        },
                                         "path": {
                                           "type": "string"
                                         },
@@ -18815,6 +20438,60 @@
                                       },
                                       "required": [
                                         "repoURL"
+                                      ],
+                                      "type": "object"
+                                    },
+                                    "sourceHydrator": {
+                                      "properties": {
+                                        "drySource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "repoURL": {
+                                              "type": "string"
+                                            },
+                                            "targetRevision": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "repoURL",
+                                            "targetRevision"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "hydrateTo": {
+                                          "properties": {
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        },
+                                        "syncSource": {
+                                          "properties": {
+                                            "path": {
+                                              "type": "string"
+                                            },
+                                            "targetBranch": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "path",
+                                            "targetBranch"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      },
+                                      "required": [
+                                        "drySource",
+                                        "syncSource"
                                       ],
                                       "type": "object"
                                     },
@@ -18948,6 +20625,12 @@
                                               "skipCrds": {
                                                 "type": "boolean"
                                               },
+                                              "skipSchemaValidation": {
+                                                "type": "boolean"
+                                              },
+                                              "skipTests": {
+                                                "type": "boolean"
+                                              },
                                               "valueFiles": {
                                                 "items": {
                                                   "type": "string"
@@ -19002,6 +20685,9 @@
                                               "forceCommonLabels": {
                                                 "type": "boolean"
                                               },
+                                              "ignoreMissingComponents": {
+                                                "type": "boolean"
+                                              },
                                               "images": {
                                                 "items": {
                                                   "type": "string"
@@ -19010,6 +20696,9 @@
                                               },
                                               "kubeVersion": {
                                                 "type": "string"
+                                              },
+                                              "labelIncludeTemplates": {
+                                                "type": "boolean"
                                               },
                                               "labelWithoutSelector": {
                                                 "type": "boolean"
@@ -19101,6 +20790,9 @@
                                             },
                                             "type": "object"
                                           },
+                                          "name": {
+                                            "type": "string"
+                                          },
                                           "path": {
                                             "type": "string"
                                           },
@@ -19178,6 +20870,9 @@
                                         "automated": {
                                           "properties": {
                                             "allowEmpty": {
+                                              "type": "boolean"
+                                            },
+                                            "enabled": {
                                               "type": "boolean"
                                             },
                                             "prune": {
@@ -19553,6 +21248,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -19607,6 +21308,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -19615,6 +21319,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -19706,6 +21413,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -19773,6 +21483,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -19906,6 +21670,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -19960,6 +21730,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -19968,6 +21741,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -20059,6 +21835,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -20136,6 +21915,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -20488,6 +22270,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -20542,6 +22330,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -20550,6 +22341,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -20641,6 +22435,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -20708,6 +22505,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -20841,6 +22692,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -20895,6 +22752,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -20903,6 +22763,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -20994,6 +22857,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -21071,6 +22937,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -21379,6 +23248,12 @@
                       },
                       "insecure": {
                         "type": "boolean"
+                      },
+                      "labels": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
                       },
                       "owner": {
                         "type": "string"
@@ -21753,6 +23628,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -21807,6 +23688,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -21815,6 +23699,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -21906,6 +23793,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -21973,6 +23863,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -22106,6 +24050,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -22160,6 +24110,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -22168,6 +24121,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -22259,6 +24215,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -22338,6 +24297,9 @@
                                   "allowEmpty": {
                                     "type": "boolean"
                                   },
+                                  "enabled": {
+                                    "type": "boolean"
+                                  },
                                   "prune": {
                                     "type": "boolean"
                                   },
@@ -22409,6 +24371,12 @@
                       "metadata",
                       "spec"
                     ],
+                    "type": "object"
+                  },
+                  "values": {
+                    "additionalProperties": {
+                      "type": "string"
+                    },
                     "type": "object"
                   }
                 },
@@ -23012,6 +24980,12 @@
                                   "skipCrds": {
                                     "type": "boolean"
                                   },
+                                  "skipSchemaValidation": {
+                                    "type": "boolean"
+                                  },
+                                  "skipTests": {
+                                    "type": "boolean"
+                                  },
                                   "valueFiles": {
                                     "items": {
                                       "type": "string"
@@ -23066,6 +25040,9 @@
                                   "forceCommonLabels": {
                                     "type": "boolean"
                                   },
+                                  "ignoreMissingComponents": {
+                                    "type": "boolean"
+                                  },
                                   "images": {
                                     "items": {
                                       "type": "string"
@@ -23074,6 +25051,9 @@
                                   },
                                   "kubeVersion": {
                                     "type": "string"
+                                  },
+                                  "labelIncludeTemplates": {
+                                    "type": "boolean"
                                   },
                                   "labelWithoutSelector": {
                                     "type": "boolean"
@@ -23165,6 +25145,9 @@
                                 },
                                 "type": "object"
                               },
+                              "name": {
+                                "type": "string"
+                              },
                               "path": {
                                 "type": "string"
                               },
@@ -23232,6 +25215,60 @@
                             },
                             "required": [
                               "repoURL"
+                            ],
+                            "type": "object"
+                          },
+                          "sourceHydrator": {
+                            "properties": {
+                              "drySource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "repoURL": {
+                                    "type": "string"
+                                  },
+                                  "targetRevision": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "repoURL",
+                                  "targetRevision"
+                                ],
+                                "type": "object"
+                              },
+                              "hydrateTo": {
+                                "properties": {
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              },
+                              "syncSource": {
+                                "properties": {
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "targetBranch": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "targetBranch"
+                                ],
+                                "type": "object"
+                              }
+                            },
+                            "required": [
+                              "drySource",
+                              "syncSource"
                             ],
                             "type": "object"
                           },
@@ -23365,6 +25402,12 @@
                                     "skipCrds": {
                                       "type": "boolean"
                                     },
+                                    "skipSchemaValidation": {
+                                      "type": "boolean"
+                                    },
+                                    "skipTests": {
+                                      "type": "boolean"
+                                    },
                                     "valueFiles": {
                                       "items": {
                                         "type": "string"
@@ -23419,6 +25462,9 @@
                                     "forceCommonLabels": {
                                       "type": "boolean"
                                     },
+                                    "ignoreMissingComponents": {
+                                      "type": "boolean"
+                                    },
                                     "images": {
                                       "items": {
                                         "type": "string"
@@ -23427,6 +25473,9 @@
                                     },
                                     "kubeVersion": {
                                       "type": "string"
+                                    },
+                                    "labelIncludeTemplates": {
+                                      "type": "boolean"
                                     },
                                     "labelWithoutSelector": {
                                       "type": "boolean"
@@ -23518,6 +25567,9 @@
                                   },
                                   "type": "object"
                                 },
+                                "name": {
+                                  "type": "string"
+                                },
                                 "path": {
                                   "type": "string"
                                 },
@@ -23595,6 +25647,9 @@
                               "automated": {
                                 "properties": {
                                   "allowEmpty": {
+                                    "type": "boolean"
+                                  },
+                                  "enabled": {
                                     "type": "boolean"
                                   },
                                   "prune": {
@@ -24082,6 +26137,12 @@
                         "skipCrds": {
                           "type": "boolean"
                         },
+                        "skipSchemaValidation": {
+                          "type": "boolean"
+                        },
+                        "skipTests": {
+                          "type": "boolean"
+                        },
                         "valueFiles": {
                           "items": {
                             "type": "string"
@@ -24136,6 +26197,9 @@
                         "forceCommonLabels": {
                           "type": "boolean"
                         },
+                        "ignoreMissingComponents": {
+                          "type": "boolean"
+                        },
                         "images": {
                           "items": {
                             "type": "string"
@@ -24144,6 +26208,9 @@
                         },
                         "kubeVersion": {
                           "type": "string"
+                        },
+                        "labelIncludeTemplates": {
+                          "type": "boolean"
                         },
                         "labelWithoutSelector": {
                           "type": "boolean"
@@ -24235,6 +26302,9 @@
                       },
                       "type": "object"
                     },
+                    "name": {
+                      "type": "string"
+                    },
                     "path": {
                       "type": "string"
                     },
@@ -24302,6 +26372,60 @@
                   },
                   "required": [
                     "repoURL"
+                  ],
+                  "type": "object"
+                },
+                "sourceHydrator": {
+                  "properties": {
+                    "drySource": {
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "repoURL": {
+                          "type": "string"
+                        },
+                        "targetRevision": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "repoURL",
+                        "targetRevision"
+                      ],
+                      "type": "object"
+                    },
+                    "hydrateTo": {
+                      "properties": {
+                        "targetBranch": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "targetBranch"
+                      ],
+                      "type": "object"
+                    },
+                    "syncSource": {
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "targetBranch": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "path",
+                        "targetBranch"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "drySource",
+                    "syncSource"
                   ],
                   "type": "object"
                 },
@@ -24435,6 +26559,12 @@
                           "skipCrds": {
                             "type": "boolean"
                           },
+                          "skipSchemaValidation": {
+                            "type": "boolean"
+                          },
+                          "skipTests": {
+                            "type": "boolean"
+                          },
                           "valueFiles": {
                             "items": {
                               "type": "string"
@@ -24489,6 +26619,9 @@
                           "forceCommonLabels": {
                             "type": "boolean"
                           },
+                          "ignoreMissingComponents": {
+                            "type": "boolean"
+                          },
                           "images": {
                             "items": {
                               "type": "string"
@@ -24497,6 +26630,9 @@
                           },
                           "kubeVersion": {
                             "type": "string"
+                          },
+                          "labelIncludeTemplates": {
+                            "type": "boolean"
                           },
                           "labelWithoutSelector": {
                             "type": "boolean"
@@ -24588,6 +26724,9 @@
                         },
                         "type": "object"
                       },
+                      "name": {
+                        "type": "string"
+                      },
                       "path": {
                         "type": "string"
                       },
@@ -24665,6 +26804,9 @@
                     "automated": {
                       "properties": {
                         "allowEmpty": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
                           "type": "boolean"
                         },
                         "prune": {
@@ -24827,6 +26969,10 @@
               },
               "health": {
                 "properties": {
+                  "lastTransitionTime": {
+                    "format": "date-time",
+                    "type": "string"
+                  },
                   "message": {
                     "type": "string"
                   },
@@ -24847,6 +26993,9 @@
               },
               "namespace": {
                 "type": "string"
+              },
+              "requiresDeletionConfirmation": {
+                "type": "boolean"
               },
               "requiresPruning": {
                 "type": "boolean"

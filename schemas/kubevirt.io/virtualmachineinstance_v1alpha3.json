@@ -365,7 +365,7 @@
                             "x-kubernetes-map-type": "atomic"
                           },
                           "matchLabelKeys": {
-                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                             "items": {
                               "type": "string"
                             },
@@ -373,7 +373,7 @@
                             "x-kubernetes-list-type": "atomic"
                           },
                           "mismatchLabelKeys": {
-                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                             "items": {
                               "type": "string"
                             },
@@ -509,7 +509,7 @@
                         "x-kubernetes-map-type": "atomic"
                       },
                       "matchLabelKeys": {
-                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                         "items": {
                           "type": "string"
                         },
@@ -517,7 +517,7 @@
                         "x-kubernetes-list-type": "atomic"
                       },
                       "mismatchLabelKeys": {
-                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                         "items": {
                           "type": "string"
                         },
@@ -650,7 +650,7 @@
                             "x-kubernetes-map-type": "atomic"
                           },
                           "matchLabelKeys": {
-                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                            "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                             "items": {
                               "type": "string"
                             },
@@ -658,7 +658,7 @@
                             "x-kubernetes-list-type": "atomic"
                           },
                           "mismatchLabelKeys": {
-                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                            "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                             "items": {
                               "type": "string"
                             },
@@ -794,7 +794,7 @@
                         "x-kubernetes-map-type": "atomic"
                       },
                       "matchLabelKeys": {
-                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                        "description": "MatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key in (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both matchLabelKeys and labelSelector.\nAlso, matchLabelKeys cannot be set when labelSelector isn't set.",
                         "items": {
                           "type": "string"
                         },
@@ -802,7 +802,7 @@
                         "x-kubernetes-list-type": "atomic"
                       },
                       "mismatchLabelKeys": {
-                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.\nThis is a beta field and requires enabling MatchLabelKeysInPodAffinity feature gate (enabled by default).",
+                        "description": "MismatchLabelKeys is a set of pod label keys to select which pods will\nbe taken into consideration. The keys are used to lookup values from the\nincoming pod labels, those key-value labels are merged with 'labelSelector' as 'key notin (value)'\nto select the group of existing pods which pods will be taken into consideration\nfor the incoming pod's pod (anti) affinity. Keys that don't exist in the incoming\npod labels will be ignored. The default value is empty.\nThe same key is forbidden to exist in both mismatchLabelKeys and labelSelector.\nAlso, mismatchLabelKeys cannot be set when labelSelector isn't set.",
                         "items": {
                           "type": "string"
                         },
@@ -902,10 +902,11 @@
                 "description": "PodDNSConfigOption defines DNS resolver options of a pod.",
                 "properties": {
                   "name": {
-                    "description": "Required.",
+                    "description": "Name is this DNS resolver option's name.\nRequired.",
                     "type": "string"
                   },
                   "value": {
+                    "description": "Value is this DNS resolver option's value.",
                     "type": "string"
                   }
                 },
@@ -1174,6 +1175,9 @@
                           "custom": {
                             "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
                             "properties": {
+                              "discardGranularity": {
+                                "type": "integer"
+                              },
                               "logical": {
                                 "type": "integer"
                               },
@@ -1181,10 +1185,6 @@
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "logical",
-                              "physical"
-                            ],
                             "type": "object"
                           },
                           "matchVolume": {
@@ -1205,7 +1205,7 @@
                         "type": "integer"
                       },
                       "cache": {
-                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are: CacheNone, CacheWriteThrough.",
+                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are:\nnone: Guest I/O not cached on the host, but may be kept in a disk cache.\nwritethrough: Guest I/O cached on the host but written through to the physical medium. Slowest but with most guarantees.\nwriteback: Guest I/O cached on the host.\nDefaults to none if the storage supports O_DIRECT, otherwise writethrough.",
                         "type": "string"
                       },
                       "cdrom": {
@@ -1225,6 +1225,10 @@
                           }
                         },
                         "type": "object"
+                      },
+                      "changedBlockTracking": {
+                        "description": "ChangedBlockTracking indicates this disk should have CBT option\nDefaults to false.",
+                        "type": "boolean"
                       },
                       "dedicatedIOThread": {
                         "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread.\nEnabling this implies useIOThreads = true.\nDefaults to false.",
@@ -1329,11 +1333,20 @@
                   "description": "Whether to attach a GPU device to the vmi.",
                   "items": {
                     "properties": {
+                      "claimName": {
+                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                        "type": "string"
+                      },
                       "deviceName": {
+                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                         "type": "string"
                       },
                       "name": {
                         "description": "Name of the GPU device as exposed by a device plugin",
+                        "type": "string"
+                      },
+                      "requestName": {
+                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                         "type": "string"
                       },
                       "tag": {
@@ -1366,7 +1379,6 @@
                       }
                     },
                     "required": [
-                      "deviceName",
                       "name"
                     ],
                     "type": "object"
@@ -1378,11 +1390,19 @@
                   "description": "Whether to attach a host device to the vmi.",
                   "items": {
                     "properties": {
+                      "claimName": {
+                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                        "type": "string"
+                      },
                       "deviceName": {
-                        "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                         "type": "string"
                       },
                       "name": {
+                        "type": "string"
+                      },
+                      "requestName": {
+                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                         "type": "string"
                       },
                       "tag": {
@@ -1391,7 +1411,6 @@
                       }
                     },
                     "required": [
-                      "deviceName",
                       "name"
                     ],
                     "type": "object"
@@ -1559,7 +1578,7 @@
                         "type": "object"
                       },
                       "state": {
-                        "description": "State represents the requested operational state of the interface.\nThe (only) value supported is 'absent', expressing a request to remove the interface.",
+                        "description": "State represents the requested operational state of the interface.\nThe supported values are:\n'absent', expressing a request to remove the interface.\n'down', expressing a request to set the link down.\n'up', expressing a request to set the link up.\nEmpty value functions as 'up'.",
                         "type": "string"
                       },
                       "tag": {
@@ -1582,6 +1601,19 @@
                 "networkInterfaceMultiqueue": {
                   "description": "If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.",
                   "type": "boolean"
+                },
+                "panicDevices": {
+                  "description": "PanicDevices provides additional crash information when a guest crashes.",
+                  "items": {
+                    "properties": {
+                      "model": {
+                        "description": "Model specifies what type of panic device is provided.\nThe panic model used when this attribute is missing depends on the hypervisor and guest arch.\nOne of: isa, hyperv, pvpanic.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
                 },
                 "rng": {
                   "description": "Whether to have random number generator from host",
@@ -1607,6 +1639,10 @@
                 "tpm": {
                   "description": "Whether to emulate a TPM device.",
                   "properties": {
+                    "enabled": {
+                      "description": "Enabled allows a user to explicitly disable the vTPM even when one is enabled by a preference referenced by the VirtualMachine\nDefaults to True",
+                      "type": "boolean"
+                    },
                     "persistent": {
                       "description": "Persistent indicates the state of the TPM device should be kept accross reboots\nDefaults to false",
                       "type": "boolean"
@@ -1618,9 +1654,29 @@
                   "description": "Fall back to legacy virtio 0.9 support if virtio bus is selected on devices.\nThis is helpful for old machines like CentOS6 or RHEL6 which\ndo not understand virtio_non_transitional (virtio 1.0).",
                   "type": "boolean"
                 },
+                "video": {
+                  "description": "Video describes the video device configuration for the vmi.",
+                  "properties": {
+                    "type": {
+                      "description": "Type specifies the video device type (e.g., virtio, vga, bochs, ramfb).\nIf not specified, the default is architecture-dependent (VGA for BIOS-based VMs, Bochs for EFI-based VMs on AMD64; virtio for Arm and s390x).",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
                 "watchdog": {
                   "description": "Watchdog describes a watchdog device which can be added to the vmi.",
                   "properties": {
+                    "diag288": {
+                      "description": "diag288 watchdog device (specific to s390x architecture).",
+                      "properties": {
+                        "action": {
+                          "description": "The action to take. Valid values are poweroff, reset, shutdown.\nDefaults to reset.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
                     "i6300esb": {
                       "description": "i6300esb watchdog device.",
                       "properties": {
@@ -1883,6 +1939,10 @@
                 "acpi": {
                   "description": "Information that can be set in the ACPI table",
                   "properties": {
+                    "msdmNameRef": {
+                      "description": "Similar to SlicNameRef, another ACPI entry that is used in more recent Windows versions.\nThe above points to the spec of MSDM too.",
+                      "type": "string"
+                    },
                     "slicNameRef": {
                       "description": "SlicNameRef should match the volume name of a secret object. The data in the secret should\nbe a binary blob that follows the ACPI SLIC standard, see:\nhttps://learn.microsoft.com/en-us/previous-versions/windows/hardware/design/dn653305(v=vs.85)",
                       "type": "string"
@@ -1970,8 +2030,19 @@
               },
               "type": "object"
             },
+            "ioThreads": {
+              "description": "IOThreads specifies the IOThreads options.",
+              "properties": {
+                "supplementalPoolThreadCount": {
+                  "description": "SupplementalPoolThreadCount specifies how many iothreads are allocated for the supplementalPool policy.",
+                  "format": "int32",
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
             "ioThreadsPolicy": {
-              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto",
+              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto, supplementalPool",
               "type": "string"
             },
             "launchSecurity": {
@@ -2003,6 +2074,14 @@
                       "type": "string"
                     }
                   },
+                  "type": "object"
+                },
+                "snp": {
+                  "description": "AMD SEV-SNP flags defined by the SEV-SNP specifications.",
+                  "type": "object"
+                },
+                "tdx": {
+                  "description": "Intel Trust Domain Extensions (TDX).",
                   "type": "object"
                 }
               },
@@ -2109,7 +2188,7 @@
           "type": "object"
         },
         "evictionStrategy": {
-          "description": "EvictionStrategy describes the strategy to follow when a node drain occurs.\nThe possible options are:\n- \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown.\n- \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown.\n- \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\".\n- \"External\": the VirtualMachineInstance will be protected by a PDB and 'vmi.Status.EvacuationNodeName' will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.",
+          "description": "EvictionStrategy describes the strategy to follow when a node drain occurs.\nThe possible options are:\n- \"None\": No action will be taken, according to the specified 'RunStrategy' the VirtualMachine will be restarted or shutdown.\n- \"LiveMigrate\": the VirtualMachineInstance will be migrated instead of being shutdown.\n- \"LiveMigrateIfPossible\": the same as \"LiveMigrate\" but only if the VirtualMachine is Live-Migratable, otherwise it will behave as \"None\".\n- \"External\": the VirtualMachineInstance will be protected and 'vmi.Status.EvacuationNodeName' will be set on eviction. This is mainly useful for cluster-api-provider-kubevirt (capk) which needs a way for VMI's to be blocked from eviction, yet signal capk that eviction has been called on the VMI so the capk controller can handle tearing the VMI down. Details can be found in the commit description https://github.com/kubevirt/kubevirt/commit/c1d77face705c8b126696bac9a3ee3825f27f1fa.",
           "type": "string"
         },
         "hostname": {
@@ -2436,6 +2515,35 @@
           },
           "type": "object"
         },
+        "resourceClaims": {
+          "description": "ResourceClaims define which ResourceClaims must be allocated\nand reserved before the VMI, hence virt-launcher pod is allowed to start. The resources\nwill be made available to the domain which consumes them\nby name.\n\nThis is an alpha field and requires enabling the\nDynamicResourceAllocation feature gate in kubernetes\n https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/\nThis field should only be configured if one of the feature-gates GPUsWithDRA or HostDevicesWithDRA is enabled.\nThis feature is in alpha.",
+          "items": {
+            "description": "PodResourceClaim references exactly one ResourceClaim, either directly\nor by naming a ResourceClaimTemplate which is then turned into a ResourceClaim\nfor the pod.\n\nIt adds a name to it that uniquely identifies the ResourceClaim inside the Pod.\nContainers that need access to the ResourceClaim reference it with this name.",
+            "properties": {
+              "name": {
+                "description": "Name uniquely identifies this resource claim inside the pod.\nThis must be a DNS_LABEL.",
+                "type": "string"
+              },
+              "resourceClaimName": {
+                "description": "ResourceClaimName is the name of a ResourceClaim object in the same\nnamespace as this pod.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
+                "type": "string"
+              },
+              "resourceClaimTemplateName": {
+                "description": "ResourceClaimTemplateName is the name of a ResourceClaimTemplate\nobject in the same namespace as this pod.\n\nThe template will be used to create a new ResourceClaim, which will\nbe bound to this pod. When this pod is deleted, the ResourceClaim\nwill also be deleted. The pod name and resource name, along with a\ngenerated component, will be used to form a unique name for the\nResourceClaim, which will be recorded in pod.status.resourceClaimStatuses.\n\nThis field is immutable and no changes will be made to the\ncorresponding ResourceClaim by the control plane after creating the\nResourceClaim.\n\nExactly one of ResourceClaimName and ResourceClaimTemplateName must\nbe set.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "type": "object"
+          },
+          "type": "array",
+          "x-kubernetes-list-map-keys": [
+            "name"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
         "schedulerName": {
           "description": "If specified, the VMI will be dispatched by specified scheduler.\nIf not specified, the VMI will be dispatched by default scheduler.",
           "type": "string"
@@ -2553,11 +2661,11 @@
                 "type": "integer"
               },
               "nodeAffinityPolicy": {
-                "description": "NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector\nwhen calculating pod topology spread skew. Options are:\n- Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.\n- Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.\n\nIf this value is nil, the behavior is equivalent to the Honor policy.\nThis is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.",
+                "description": "NodeAffinityPolicy indicates how we will treat Pod's nodeAffinity/nodeSelector\nwhen calculating pod topology spread skew. Options are:\n- Honor: only nodes matching nodeAffinity/nodeSelector are included in the calculations.\n- Ignore: nodeAffinity/nodeSelector are ignored. All nodes are included in the calculations.\n\nIf this value is nil, the behavior is equivalent to the Honor policy.",
                 "type": "string"
               },
               "nodeTaintsPolicy": {
-                "description": "NodeTaintsPolicy indicates how we will treat node taints when calculating\npod topology spread skew. Options are:\n- Honor: nodes without taints, along with tainted nodes for which the incoming pod\nhas a toleration, are included.\n- Ignore: node taints are ignored. All nodes are included.\n\nIf this value is nil, the behavior is equivalent to the Ignore policy.\nThis is a beta-level feature default enabled by the NodeInclusionPolicyInPodTopologySpread feature flag.",
+                "description": "NodeTaintsPolicy indicates how we will treat node taints when calculating\npod topology spread skew. Options are:\n- Honor: nodes without taints, along with tainted nodes for which the incoming pod\nhas a toleration, are included.\n- Ignore: node taints are ignored. All nodes are included.\n\nIf this value is nil, the behavior is equivalent to the Ignore policy.",
                 "type": "string"
               },
               "topologyKey": {
@@ -2733,7 +2841,7 @@
                     "type": "boolean"
                   },
                   "name": {
-                    "description": "Name of both the DataVolume and the PVC in the same namespace.\nAfter PVC population the DataVolume is garbage collected by default.",
+                    "description": "Name of both the DataVolume and the PVC in the same namespace.",
                     "type": "string"
                   }
                 },
@@ -3041,6 +3149,20 @@
           "description": "ActivePods is a mapping of pod UID to node name.\nIt is possible for multiple pods to be running for a single VMI during migration.",
           "type": "object"
         },
+        "changedBlockTracking": {
+          "description": "ChangedBlockTracking represents the status of the changedBlockTracking",
+          "nullable": true,
+          "properties": {
+            "state": {
+              "description": "State represents the current CBT state",
+              "type": "string"
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "type": "object"
+        },
         "conditions": {
           "description": "Conditions are specific points in VirtualMachineInstance's pod runtime.",
           "items": {
@@ -3097,12 +3219,108 @@
           },
           "type": "object"
         },
+        "deviceStatus": {
+          "description": "DeviceStatus reflects the state of devices requested in spec.domain.devices. This is an optional field available\nonly when DRA feature gate is enabled\nThis field will only be populated if one of the feature-gates GPUsWithDRA or HostDevicesWithDRA is enabled.\nThis feature is in alpha.",
+          "properties": {
+            "gpuStatuses": {
+              "description": "GPUStatuses reflects the state of GPUs requested in spec.domain.devices.gpus",
+              "items": {
+                "properties": {
+                  "deviceResourceClaimStatus": {
+                    "description": "DeviceResourceClaimStatus reflects the DRA related information for the device",
+                    "properties": {
+                      "attributes": {
+                        "description": "Attributes are properties of the device that could be used by kubevirt and other copmonents to learn more\nabout the device, like pciAddress or mdevUUID",
+                        "properties": {
+                          "mDevUUID": {
+                            "description": "MDevUUID is the mediated device uuid of the allocated device",
+                            "type": "string"
+                          },
+                          "pciAddress": {
+                            "description": "PCIAddress is the PCIe bus address of the allocated device",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "name": {
+                        "description": "Name is the name of actual device on the host provisioned by the driver as reflected in resourceclaim.status",
+                        "type": "string"
+                      },
+                      "resourceClaimName": {
+                        "description": "ResourceClaimName is the name of the resource claims object used to provision this resource",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "name": {
+                    "description": "Name of the device as specified in spec.domain.devices.gpus.name or spec.domain.devices.hostDevices.name",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            },
+            "hostDeviceStatuses": {
+              "description": "HostDeviceStatuses reflects the state of GPUs requested in spec.domain.devices.hostDevices\nDRA",
+              "items": {
+                "properties": {
+                  "deviceResourceClaimStatus": {
+                    "description": "DeviceResourceClaimStatus reflects the DRA related information for the device",
+                    "properties": {
+                      "attributes": {
+                        "description": "Attributes are properties of the device that could be used by kubevirt and other copmonents to learn more\nabout the device, like pciAddress or mdevUUID",
+                        "properties": {
+                          "mDevUUID": {
+                            "description": "MDevUUID is the mediated device uuid of the allocated device",
+                            "type": "string"
+                          },
+                          "pciAddress": {
+                            "description": "PCIAddress is the PCIe bus address of the allocated device",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "name": {
+                        "description": "Name is the name of actual device on the host provisioned by the driver as reflected in resourceclaim.status",
+                        "type": "string"
+                      },
+                      "resourceClaimName": {
+                        "description": "ResourceClaimName is the name of the resource claims object used to provision this resource",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "name": {
+                    "description": "Name of the device as specified in spec.domain.devices.gpus.name or spec.domain.devices.hostDevices.name",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "type": "object"
+              },
+              "type": "array",
+              "x-kubernetes-list-type": "atomic"
+            }
+          },
+          "type": "object"
+        },
         "evacuationNodeName": {
           "description": "EvacuationNodeName is used to track the eviction process of a VMI. It stores the name of the node that we want\nto evacuate. It is meant to be used by KubeVirt core components only and can't be set or modified by users.",
           "type": "string"
         },
         "fsFreezeStatus": {
-          "description": "FSFreezeStatus is the state of the fs of the guest\nit can be either frozen or thawed",
+          "description": "FSFreezeStatus indicates whether a freeze operation was requested for the guest filesystem.\nIt will be set to \"frozen\" if the request was made, or unset otherwise.\nThis does not reflect the actual state of the guest filesystem.",
           "type": "string"
         },
         "guestOSInfo": {
@@ -3165,6 +3383,10 @@
                   "type": "string"
                 },
                 "type": "array"
+              },
+              "linkState": {
+                "description": "LinkState Reports the current operational link state'. values: up, down.",
+                "type": "string"
               },
               "mac": {
                 "description": "Hardware address of a Virtual Machine interface",
@@ -3463,6 +3685,10 @@
                   "description": "AllowPostCopy enables post-copy live migrations. Such migrations allow even the busiest VMIs\nto successfully live-migrate. However, events like a network failure can cause a VMI crash.\nIf set to true, migrations will still start in pre-copy, but switch to post-copy when\nCompletionTimeoutPerGiB triggers. Defaults to false",
                   "type": "boolean"
                 },
+                "allowWorkloadDisruption": {
+                  "description": "AllowWorkloadDisruption indicates that the migration shouldn't be\ncanceled after acceptableCompletionTime is exceeded. Instead, if\npermitted, migration will be switched to post-copy or the VMI will be\npaused to allow the migration to complete",
+                  "type": "boolean"
+                },
                 "bandwidthPerMigration": {
                   "anyOf": [
                     {
@@ -3477,7 +3703,7 @@
                   "x-kubernetes-int-or-string": true
                 },
                 "completionTimeoutPerGiB": {
-                  "description": "CompletionTimeoutPerGiB is the maximum number of seconds per GiB a migration is allowed to take.\nIf a live-migration takes longer to migrate than this value multiplied by the size of the VMI,\nthe migration will be cancelled, unless AllowPostCopy is true. Defaults to 150",
+                  "description": "CompletionTimeoutPerGiB is the maximum number of seconds per GiB a migration is allowed to take.\nIf the timeout is reached, the migration will be either paused, switched\nto post-copy or cancelled depending on other settings. Defaults to 150",
                   "format": "int64",
                   "type": "integer"
                 },
@@ -3519,6 +3745,10 @@
               },
               "type": "object"
             },
+            "migrationNetworkType": {
+              "description": "The type of migration network, either 'pod' or 'migration'",
+              "type": "string"
+            },
             "migrationPolicyName": {
               "description": "Name of the migration policy. If string is empty, no policy is matched",
               "type": "string"
@@ -3541,6 +3771,55 @@
             },
             "sourcePod": {
               "type": "string"
+            },
+            "sourceState": {
+              "description": "SourceState contains migration state managed by the source virt handler",
+              "properties": {
+                "domainName": {
+                  "description": "The name of the domain on the source libvirt domain",
+                  "type": "string"
+                },
+                "domainNamespace": {
+                  "description": "Namespace used in the name of the source libvirt domain. Can be used to find and modify paths in the domain",
+                  "type": "string"
+                },
+                "migrationUID": {
+                  "description": "The Source VirtualMachineInstanceMigration object associated with this migration",
+                  "type": "string"
+                },
+                "node": {
+                  "description": "The source node that the VMI originated on",
+                  "type": "string"
+                },
+                "nodeSelectors": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Node selectors needed by the target to start the receiving pod.",
+                  "type": "object"
+                },
+                "persistentStatePVCName": {
+                  "description": "If the VMI being migrated uses persistent features (backend-storage), its source PVC name is saved here",
+                  "type": "string"
+                },
+                "pod": {
+                  "description": "The source pod that the VMI is originated on",
+                  "type": "string"
+                },
+                "selinuxContext": {
+                  "description": "SELinuxContext is the actual SELinux context of the pod",
+                  "type": "string"
+                },
+                "syncAddress": {
+                  "description": "The ip address/fqdn:port combination to use to synchronize the VMI with the target.",
+                  "type": "string"
+                },
+                "virtualMachineInstanceUID": {
+                  "description": "VirtualMachineInstanceUID is the UID of the target virtual machine instance",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             },
             "startTimestamp": {
               "description": "The time the migration action began",
@@ -3595,6 +3874,84 @@
             "targetPod": {
               "description": "The target pod that the VMI is moving to",
               "type": "string"
+            },
+            "targetState": {
+              "description": "TargetState contains migration state managed by the target virt handler",
+              "properties": {
+                "attachmentPodUID": {
+                  "description": "The UID of the target attachment pod for hotplug volumes",
+                  "type": "string"
+                },
+                "cpuSet": {
+                  "description": "If the VMI requires dedicated CPUs, this field will\nhold the dedicated CPU set on the target node",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "type": "array",
+                  "x-kubernetes-list-type": "atomic"
+                },
+                "directMigrationNodePorts": {
+                  "additionalProperties": {
+                    "type": "integer"
+                  },
+                  "description": "The list of ports opened for live migration on the destination node",
+                  "type": "object"
+                },
+                "domainDetected": {
+                  "description": "The Target Node has seen the Domain Start Event",
+                  "type": "boolean"
+                },
+                "domainName": {
+                  "description": "The name of the domain on the source libvirt domain",
+                  "type": "string"
+                },
+                "domainNamespace": {
+                  "description": "Namespace used in the name of the source libvirt domain. Can be used to find and modify paths in the domain",
+                  "type": "string"
+                },
+                "domainReadyTimestamp": {
+                  "description": "The timestamp at which the target node detects the domain is active",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "migrationUID": {
+                  "description": "The Source VirtualMachineInstanceMigration object associated with this migration",
+                  "type": "string"
+                },
+                "node": {
+                  "description": "The source node that the VMI originated on",
+                  "type": "string"
+                },
+                "nodeAddress": {
+                  "description": "The address of the target node to use for the migration",
+                  "type": "string"
+                },
+                "nodeTopology": {
+                  "description": "If the VMI requires dedicated CPUs, this field will\nhold the numa topology on the target node",
+                  "type": "string"
+                },
+                "persistentStatePVCName": {
+                  "description": "If the VMI being migrated uses persistent features (backend-storage), its source PVC name is saved here",
+                  "type": "string"
+                },
+                "pod": {
+                  "description": "The source pod that the VMI is originated on",
+                  "type": "string"
+                },
+                "selinuxContext": {
+                  "description": "SELinuxContext is the actual SELinux context of the pod",
+                  "type": "string"
+                },
+                "syncAddress": {
+                  "description": "The ip address/fqdn:port combination to use to synchronize the VMI with the target.",
+                  "type": "string"
+                },
+                "virtualMachineInstanceUID": {
+                  "description": "VirtualMachineInstanceUID is the UID of the target virtual machine instance",
+                  "type": "string"
+                }
+              },
+              "type": "object"
             }
           },
           "type": "object"

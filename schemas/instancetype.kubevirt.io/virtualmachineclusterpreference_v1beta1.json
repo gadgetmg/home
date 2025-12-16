@@ -206,6 +206,9 @@
                 "custom": {
                   "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
                   "properties": {
+                    "discardGranularity": {
+                      "type": "integer"
+                    },
                     "logical": {
                       "type": "integer"
                     },
@@ -213,10 +216,6 @@
                       "type": "integer"
                     }
                   },
-                  "required": [
-                    "logical",
-                    "physical"
-                  ],
                   "type": "object"
                 },
                 "matchVolume": {
@@ -272,6 +271,10 @@
               "description": "PreferredNetworkInterfaceMultiQueue optionally enables the vhost multiqueue feature for virtio interfaces.",
               "type": "boolean"
             },
+            "preferredPanicDeviceModel": {
+              "description": "PreferredPanicDeviceModel optionally defines the preferred panic device model to use with panic devices.",
+              "type": "string"
+            },
             "preferredRng": {
               "description": "PreferredRng optionally defines the preferred rng device to be used.",
               "type": "object"
@@ -283,6 +286,10 @@
             "preferredTPM": {
               "description": "PreferredTPM optionally defines the preferred TPM device to be used.",
               "properties": {
+                "enabled": {
+                  "description": "Enabled allows a user to explicitly disable the vTPM even when one is enabled by a preference referenced by the VirtualMachine\nDefaults to True",
+                  "type": "boolean"
+                },
                 "persistent": {
                   "description": "Persistent indicates the state of the TPM device should be kept accross reboots\nDefaults to false",
                   "type": "boolean"
@@ -572,11 +579,11 @@
               "type": "boolean"
             },
             "preferredUseEfi": {
-              "description": "PreferredUseEfi optionally enables EFI",
+              "description": "PreferredUseEfi optionally enables EFI\n\nDeprecated: Will be removed with v1beta2 or v1",
               "type": "boolean"
             },
             "preferredUseSecureBoot": {
-              "description": "PreferredUseSecureBoot optionally enables SecureBoot and the OVMF roms will be swapped for SecureBoot-enabled ones.\n\nRequires PreferredUseEfi and PreferredSmm to be enabled.",
+              "description": "PreferredUseSecureBoot optionally enables SecureBoot and the OVMF roms will be swapped for SecureBoot-enabled ones.\n\nRequires PreferredUseEfi and PreferredSmm to be enabled.\n\nDeprecated: Will be removed with v1beta2 or v1",
               "type": "boolean"
             }
           },
@@ -597,6 +604,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "preferredArchitecture": {
+          "description": "PreferredArchitecture defines a prefeerred architecture for the VirtualMachine",
+          "type": "string"
+        },
         "preferredSubdomain": {
           "description": "Subdomain of the VirtualMachineInstance",
           "type": "string"
@@ -609,6 +620,10 @@
         "requirements": {
           "description": "Requirements defines the minium amount of instance type defined resources required by a set of preferences",
           "properties": {
+            "architecture": {
+              "description": "Required Architecture of the VM referencing this preference",
+              "type": "string"
+            },
             "cpu": {
               "description": "Required CPU related attributes of the instancetype.",
               "properties": {

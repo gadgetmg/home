@@ -1,5 +1,5 @@
 {
-  "description": "Backup is the Schema for the backups API",
+  "description": "A Backup resource is a request for a PostgreSQL backup by the user.",
   "properties": {
     "apiVersion": {
       "description": "APIVersion defines the versioned schema of this representation of an object.\nServers should convert recognized schemas to the latest internal value, and\nmay reject unrecognized values.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
@@ -89,7 +89,13 @@
       "required": [
         "cluster"
       ],
-      "type": "object"
+      "type": "object",
+      "x-kubernetes-validations": [
+        {
+          "message": "BackupSpec is immutable once set",
+          "rule": "oldSelf == self"
+        }
+      ]
     },
     "status": {
       "description": "Most recently observed status of the backup. This data may not be up to\ndate. Populated by the system. Read-only.\nMore info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status",
@@ -288,6 +294,10 @@
             }
           },
           "type": "object"
+        },
+        "majorVersion": {
+          "description": "The PostgreSQL major version that was running when the\nbackup was taken.",
+          "type": "integer"
         },
         "method": {
           "description": "The backup method being used",

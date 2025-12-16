@@ -13,7 +13,7 @@
       "type": "object"
     },
     "spec": {
-      "description": "VirtualMachineRestoreSpec is the spec for a VirtualMachineRestoreresource",
+      "description": "VirtualMachineRestoreSpec is the spec for a VirtualMachineRestore resource",
       "properties": {
         "patches": {
           "description": "If the target for the restore does not exist, it will be created. Patches holds JSON patches that would be\napplied to the target manifest before it's created. Patches should fit the target's Kind.\n\nExample for a patch: {\"op\": \"replace\", \"path\": \"/metadata/name\", \"value\": \"new-vm-name\"}",
@@ -46,7 +46,48 @@
           "type": "object",
           "x-kubernetes-map-type": "atomic"
         },
+        "targetReadinessPolicy": {
+          "description": "TargetReadinessPolicy defines how to handle the restore in case\nthe target is not ready",
+          "type": "string"
+        },
         "virtualMachineSnapshotName": {
+          "type": "string"
+        },
+        "volumeOwnershipPolicy": {
+          "description": "VolumeOwnershipPolicy defines what owns volumes once they're restored",
+          "type": "string"
+        },
+        "volumeRestoreOverrides": {
+          "description": "VolumeRestoreOverrides gives the option to change properties of each restored volume\nFor example, specifying the name of the restored volume, or adding labels/annotations to it",
+          "items": {
+            "description": "VolumeRestoreOverride specifies how a volume should be restored from a VirtualMachineSnapshot",
+            "properties": {
+              "annotations": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "labels": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "restoreName": {
+                "type": "string"
+              },
+              "volumeName": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
+        },
+        "volumeRestorePolicy": {
+          "description": "VolumeRestorePolicy defines how to handle the restore of snapshotted volumes",
           "type": "string"
         }
       },
@@ -57,7 +98,7 @@
       "type": "object"
     },
     "status": {
-      "description": "VirtualMachineRestoreStatus is the spec for a VirtualMachineRestoreresource",
+      "description": "VirtualMachineRestoreStatus is the status for a VirtualMachineRestore resource",
       "properties": {
         "complete": {
           "type": "boolean"
@@ -112,7 +153,7 @@
         },
         "restores": {
           "items": {
-            "description": "VolumeRestore contains the data neeed to restore a PVC",
+            "description": "VolumeRestore contains the data needed to restore a PVC",
             "properties": {
               "dataVolumeName": {
                 "type": "string"

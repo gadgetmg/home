@@ -23,18 +23,18 @@
               "type": "boolean"
             },
             "nodeAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeaffinity-v1-core",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeaffinity-v1-core",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#preferredschedulingterm-v1-core",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#preferredschedulingterm-v1-core",
                     "properties": {
                       "preference": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -62,7 +62,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -106,15 +106,15 @@
                   "x-kubernetes-list-type": "atomic"
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
-                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselector-v1-core",
+                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselector-v1-core",
                   "properties": {
                     "nodeSelectorTerms": {
                       "items": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorterm-v1-core",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorterm-v1-core",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -142,7 +142,7 @@
                           },
                           "matchFields": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#nodeselectorrequirement-v1-core",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#nodeselectorrequirement-v1-core",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -184,21 +184,21 @@
               "type": "object"
             },
             "podAntiAffinity": {
-              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podantiaffinity-v1-core.",
+              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podantiaffinity-v1-core.",
               "properties": {
                 "preferredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#weightedpodaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#weightedpodaffinityterm-v1-core.",
                     "properties": {
                       "podAffinityTerm": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                         "properties": {
                           "labelSelector": {
-                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                             "properties": {
                               "matchExpressions": {
                                 "items": {
-                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                                  "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                                   "properties": {
                                     "key": {
                                       "type": "string"
@@ -258,14 +258,14 @@
                 },
                 "requiredDuringSchedulingIgnoredDuringExecution": {
                   "items": {
-                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#podaffinityterm-v1-core.",
+                    "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#podaffinityterm-v1-core.",
                     "properties": {
                       "labelSelector": {
-                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselector-v1-meta",
+                        "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselector-v1-meta",
                         "properties": {
                           "matchExpressions": {
                             "items": {
-                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#labelselectorrequirement-v1-meta",
+                              "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#labelselectorrequirement-v1-meta",
                               "properties": {
                                 "key": {
                                   "type": "string"
@@ -338,7 +338,7 @@
         "dependsOn": {
           "description": "DependsOn defines dependencies with other SqlJob objectecs.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
             "properties": {
               "name": {
                 "default": "",
@@ -358,7 +358,7 @@
         "imagePullSecrets": {
           "description": "ImagePullSecrets is the list of pull Secrets to be used to pull the image.",
           "items": {
-            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#localobjectreference-v1-core.",
+            "description": "Refer to the Kubernetes docs: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/#localobjectreference-v1-core.",
             "properties": {
               "name": {
                 "default": "",
@@ -392,6 +392,10 @@
         "mariaDbRef": {
           "description": "MariaDBRef is a reference to a MariaDB object.",
           "properties": {
+            "kind": {
+              "description": "Kind of the referent.",
+              "type": "string"
+            },
             "name": {
               "type": "string"
             },
@@ -544,7 +548,7 @@
           "type": "string"
         },
         "resources": {
-          "description": "Resouces describes the compute resource requirements.",
+          "description": "Resources describes the compute resource requirements.",
           "properties": {
             "limits": {
               "additionalProperties": {
@@ -693,6 +697,26 @@
         "timeZone": {
           "description": "TimeZone defines the timezone associated with the cron expression.",
           "type": "string"
+        },
+        "tlsCASecretRef": {
+          "description": "TLSCACertSecretRef is a reference toa CA Secret used to establish trust when executing the SqlJob.\nIf not provided, the CA bundle provided by the referred MariaDB is used.",
+          "properties": {
+            "name": {
+              "default": "",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "tlsClientCertSecretRef": {
+          "description": "TLSClientCertSecretRef is a reference to a Kubernetes TLS Secret used as authentication when executing the SqlJob.\nIf not provided, the client certificate provided by the referred MariaDB is used.",
+          "properties": {
+            "name": {
+              "default": "",
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
         "tolerations": {
           "description": "Tolerations to be used in the Pod.",

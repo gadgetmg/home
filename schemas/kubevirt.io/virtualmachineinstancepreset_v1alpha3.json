@@ -260,6 +260,9 @@
                           "custom": {
                             "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
                             "properties": {
+                              "discardGranularity": {
+                                "type": "integer"
+                              },
                               "logical": {
                                 "type": "integer"
                               },
@@ -267,10 +270,6 @@
                                 "type": "integer"
                               }
                             },
-                            "required": [
-                              "logical",
-                              "physical"
-                            ],
                             "type": "object"
                           },
                           "matchVolume": {
@@ -291,7 +290,7 @@
                         "type": "integer"
                       },
                       "cache": {
-                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are: CacheNone, CacheWriteThrough.",
+                        "description": "Cache specifies which kvm disk cache mode should be used.\nSupported values are:\nnone: Guest I/O not cached on the host, but may be kept in a disk cache.\nwritethrough: Guest I/O cached on the host but written through to the physical medium. Slowest but with most guarantees.\nwriteback: Guest I/O cached on the host.\nDefaults to none if the storage supports O_DIRECT, otherwise writethrough.",
                         "type": "string"
                       },
                       "cdrom": {
@@ -311,6 +310,10 @@
                           }
                         },
                         "type": "object"
+                      },
+                      "changedBlockTracking": {
+                        "description": "ChangedBlockTracking indicates this disk should have CBT option\nDefaults to false.",
+                        "type": "boolean"
                       },
                       "dedicatedIOThread": {
                         "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread.\nEnabling this implies useIOThreads = true.\nDefaults to false.",
@@ -415,11 +418,20 @@
                   "description": "Whether to attach a GPU device to the vmi.",
                   "items": {
                     "properties": {
+                      "claimName": {
+                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                        "type": "string"
+                      },
                       "deviceName": {
+                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                         "type": "string"
                       },
                       "name": {
                         "description": "Name of the GPU device as exposed by a device plugin",
+                        "type": "string"
+                      },
+                      "requestName": {
+                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                         "type": "string"
                       },
                       "tag": {
@@ -452,7 +464,6 @@
                       }
                     },
                     "required": [
-                      "deviceName",
                       "name"
                     ],
                     "type": "object"
@@ -464,11 +475,19 @@
                   "description": "Whether to attach a host device to the vmi.",
                   "items": {
                     "properties": {
+                      "claimName": {
+                        "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                        "type": "string"
+                      },
                       "deviceName": {
-                        "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+                        "description": "DeviceName is the name of the device provisioned by device-plugins",
                         "type": "string"
                       },
                       "name": {
+                        "type": "string"
+                      },
+                      "requestName": {
+                        "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                         "type": "string"
                       },
                       "tag": {
@@ -477,7 +496,6 @@
                       }
                     },
                     "required": [
-                      "deviceName",
                       "name"
                     ],
                     "type": "object"
@@ -645,7 +663,7 @@
                         "type": "object"
                       },
                       "state": {
-                        "description": "State represents the requested operational state of the interface.\nThe (only) value supported is 'absent', expressing a request to remove the interface.",
+                        "description": "State represents the requested operational state of the interface.\nThe supported values are:\n'absent', expressing a request to remove the interface.\n'down', expressing a request to set the link down.\n'up', expressing a request to set the link up.\nEmpty value functions as 'up'.",
                         "type": "string"
                       },
                       "tag": {
@@ -668,6 +686,19 @@
                 "networkInterfaceMultiqueue": {
                   "description": "If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.",
                   "type": "boolean"
+                },
+                "panicDevices": {
+                  "description": "PanicDevices provides additional crash information when a guest crashes.",
+                  "items": {
+                    "properties": {
+                      "model": {
+                        "description": "Model specifies what type of panic device is provided.\nThe panic model used when this attribute is missing depends on the hypervisor and guest arch.\nOne of: isa, hyperv, pvpanic.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
                 },
                 "rng": {
                   "description": "Whether to have random number generator from host",
@@ -693,6 +724,10 @@
                 "tpm": {
                   "description": "Whether to emulate a TPM device.",
                   "properties": {
+                    "enabled": {
+                      "description": "Enabled allows a user to explicitly disable the vTPM even when one is enabled by a preference referenced by the VirtualMachine\nDefaults to True",
+                      "type": "boolean"
+                    },
                     "persistent": {
                       "description": "Persistent indicates the state of the TPM device should be kept accross reboots\nDefaults to false",
                       "type": "boolean"
@@ -704,9 +739,29 @@
                   "description": "Fall back to legacy virtio 0.9 support if virtio bus is selected on devices.\nThis is helpful for old machines like CentOS6 or RHEL6 which\ndo not understand virtio_non_transitional (virtio 1.0).",
                   "type": "boolean"
                 },
+                "video": {
+                  "description": "Video describes the video device configuration for the vmi.",
+                  "properties": {
+                    "type": {
+                      "description": "Type specifies the video device type (e.g., virtio, vga, bochs, ramfb).\nIf not specified, the default is architecture-dependent (VGA for BIOS-based VMs, Bochs for EFI-based VMs on AMD64; virtio for Arm and s390x).",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
                 "watchdog": {
                   "description": "Watchdog describes a watchdog device which can be added to the vmi.",
                   "properties": {
+                    "diag288": {
+                      "description": "diag288 watchdog device (specific to s390x architecture).",
+                      "properties": {
+                        "action": {
+                          "description": "The action to take. Valid values are poweroff, reset, shutdown.\nDefaults to reset.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
                     "i6300esb": {
                       "description": "i6300esb watchdog device.",
                       "properties": {
@@ -969,6 +1024,10 @@
                 "acpi": {
                   "description": "Information that can be set in the ACPI table",
                   "properties": {
+                    "msdmNameRef": {
+                      "description": "Similar to SlicNameRef, another ACPI entry that is used in more recent Windows versions.\nThe above points to the spec of MSDM too.",
+                      "type": "string"
+                    },
                     "slicNameRef": {
                       "description": "SlicNameRef should match the volume name of a secret object. The data in the secret should\nbe a binary blob that follows the ACPI SLIC standard, see:\nhttps://learn.microsoft.com/en-us/previous-versions/windows/hardware/design/dn653305(v=vs.85)",
                       "type": "string"
@@ -1056,8 +1115,19 @@
               },
               "type": "object"
             },
+            "ioThreads": {
+              "description": "IOThreads specifies the IOThreads options.",
+              "properties": {
+                "supplementalPoolThreadCount": {
+                  "description": "SupplementalPoolThreadCount specifies how many iothreads are allocated for the supplementalPool policy.",
+                  "format": "int32",
+                  "type": "integer"
+                }
+              },
+              "type": "object"
+            },
             "ioThreadsPolicy": {
-              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto",
+              "description": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto, supplementalPool",
               "type": "string"
             },
             "launchSecurity": {
@@ -1089,6 +1159,14 @@
                       "type": "string"
                     }
                   },
+                  "type": "object"
+                },
+                "snp": {
+                  "description": "AMD SEV-SNP flags defined by the SEV-SNP specifications.",
+                  "type": "object"
+                },
+                "tdx": {
+                  "description": "Intel Trust Domain Extensions (TDX).",
                   "type": "object"
                 }
               },

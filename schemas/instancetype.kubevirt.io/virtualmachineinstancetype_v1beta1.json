@@ -77,11 +77,20 @@
           "description": "Optionally defines any GPU devices associated with the instancetype.",
           "items": {
             "properties": {
+              "claimName": {
+                "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                "type": "string"
+              },
               "deviceName": {
+                "description": "DeviceName is the name of the device provisioned by device-plugins",
                 "type": "string"
               },
               "name": {
                 "description": "Name of the GPU device as exposed by a device plugin",
+                "type": "string"
+              },
+              "requestName": {
+                "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                 "type": "string"
               },
               "tag": {
@@ -114,7 +123,6 @@
               }
             },
             "required": [
-              "deviceName",
               "name"
             ],
             "type": "object"
@@ -126,11 +134,19 @@
           "description": "Optionally defines any HostDevices associated with the instancetype.",
           "items": {
             "properties": {
+              "claimName": {
+                "description": "ClaimName needs to be provided from the list vmi.spec.resourceClaims[].name where this\ndevice is allocated",
+                "type": "string"
+              },
               "deviceName": {
-                "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+                "description": "DeviceName is the name of the device provisioned by device-plugins",
                 "type": "string"
               },
               "name": {
+                "type": "string"
+              },
+              "requestName": {
+                "description": "RequestName needs to be provided from resourceClaim.spec.devices.requests[].name where this\ndevice is requested",
                 "type": "string"
               },
               "tag": {
@@ -139,13 +155,23 @@
               }
             },
             "required": [
-              "deviceName",
               "name"
             ],
             "type": "object"
           },
           "type": "array",
           "x-kubernetes-list-type": "atomic"
+        },
+        "ioThreads": {
+          "description": "Optionally specifies the IOThreads options to be used by the instancetype.",
+          "properties": {
+            "supplementalPoolThreadCount": {
+              "description": "SupplementalPoolThreadCount specifies how many iothreads are allocated for the supplementalPool policy.",
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "type": "object"
         },
         "ioThreadsPolicy": {
           "description": "Optionally defines the IOThreadsPolicy to be used by the instancetype.",
@@ -180,6 +206,14 @@
                   "type": "string"
                 }
               },
+              "type": "object"
+            },
+            "snp": {
+              "description": "AMD SEV-SNP flags defined by the SEV-SNP specifications.",
+              "type": "object"
+            },
+            "tdx": {
+              "description": "Intel Trust Domain Extensions (TDX).",
               "type": "object"
             }
           },

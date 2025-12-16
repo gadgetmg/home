@@ -15,10 +15,37 @@
     "spec": {
       "description": "LinstorClusterSpec defines the desired state of LinstorCluster",
       "properties": {
+        "affinityController": {
+          "description": "AffinityController controls the deployment of the Affinity Controller Deployment.",
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enable the component.",
+              "type": "boolean"
+            },
+            "podTemplate": {
+              "description": "Template to apply to Pods of the component.\n\nThe template is applied as a patch to the default deployment, so it can be \"sparse\", not listing any\ncontainers or volumes that should remain unchanged.\nSee https://kubernetes.io/docs/concepts/workloads/pods/#pod-templates",
+              "type": "object",
+              "x-kubernetes-map-type": "atomic",
+              "x-kubernetes-preserve-unknown-fields": true
+            },
+            "replicas": {
+              "description": "Number of desired pods. Defaults to 1.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
         "apiTLS": {
           "description": "ApiTLS secures the LINSTOR API.\n\nThis configures the TLS key and certificate used to secure the LINSTOR API.",
           "nullable": true,
           "properties": {
+            "affinityControllerSecretName": {
+              "description": "AffinityControllerSecretName references a secret holding the TLS key and certificate used by the Affinity\nController to monitor volume state. Defaults to \"linstor-affinity-controller-tls\".",
+              "type": "string"
+            },
             "apiSecretName": {
               "description": "ApiSecretName references a secret holding the TLS key and certificate used to protect the API.\nDefaults to \"linstor-api-tls\".",
               "type": "string"
@@ -86,6 +113,10 @@
             "csiNodeSecretName": {
               "description": "CsiNodeSecretName references a secret holding the TLS key and certificate used by the CSI Nodes to query\nthe volume state. Defaults to \"linstor-csi-node-tls\".",
               "type": "string"
+            },
+            "nfsServerSecretName": {
+              "description": "NFSServerSecretName references a secret holding the TLS key and certificate used by the NFS Server to query\nthe cluster state. Defaults to \"linstor-csi-nfs-server-tls\".",
+              "type": "string"
             }
           },
           "type": "object"
@@ -120,6 +151,12 @@
               "type": "object",
               "x-kubernetes-map-type": "atomic",
               "x-kubernetes-preserve-unknown-fields": true
+            },
+            "replicas": {
+              "description": "Number of desired pods. Defaults to 1.",
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
             }
           },
           "type": "object"
@@ -239,8 +276,25 @@
           "description": "LinstorPassphraseSecret used to configure the LINSTOR master passphrase.\n\nThe referenced secret must contain a single key \"MASTER_PASSPHRASE\". The master passphrase is used to\n* Derive encryption keys for volumes using the LUKS layer.\n* Store credentials for accessing remotes for backups.\nSee https://linbit.com/drbd-user-guide/linstor-guide-1_0-en/#s-encrypt_commands for more information.",
           "type": "string"
         },
+        "nfsServer": {
+          "description": "NFSServer controls the deployment of the LINSTOR CSI NFS Server DaemonSet.",
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enable the component.",
+              "type": "boolean"
+            },
+            "podTemplate": {
+              "description": "Template to apply to Pods of the component.\n\nThe template is applied as a patch to the default deployment, so it can be \"sparse\", not listing any\ncontainers or volumes that should remain unchanged.\nSee https://kubernetes.io/docs/concepts/workloads/pods/#pod-templates",
+              "type": "object",
+              "x-kubernetes-map-type": "atomic",
+              "x-kubernetes-preserve-unknown-fields": true
+            }
+          },
+          "type": "object"
+        },
         "nodeAffinity": {
-          "description": "NodeAffinity selects the nodes on which LINSTOR Satellite will be deployed.\nSee https://kubernetes.io/docs/concepts/configuration/assign-pod-node/",
+          "description": "NodeAffinity selects the nodes on which LINSTOR Satellites will be deployed.\nSee https://kubernetes.io/docs/concepts/configuration/assign-pod-node/",
           "properties": {
             "nodeSelectorTerms": {
               "description": "Required. A list of node selector terms. The terms are ORed.",
@@ -336,10 +390,17 @@
             "description": "Patch represent either a Strategic Merge Patch or a JSON patch and its targets.",
             "properties": {
               "options": {
-                "additionalProperties": {
-                  "type": "boolean"
-                },
                 "description": "Options is a list of options for the patch",
+                "properties": {
+                  "allowKindChange": {
+                    "description": "AllowKindChange allows kind changes to the resource.",
+                    "type": "boolean"
+                  },
+                  "allowNameChange": {
+                    "description": "AllowNameChange allows name changes to the resource.",
+                    "type": "boolean"
+                  }
+                },
                 "type": "object"
               },
               "patch": {
@@ -414,6 +475,38 @@
         "repository": {
           "description": "Repository used to pull workload images.",
           "type": "string"
+        },
+        "tolerations": {
+          "description": "Tolerations selects the nodes on which LINSTOR Satellites will be deployed.\n\nThe default tolerations for DaemonSets are automatically added.",
+          "items": {
+            "description": "The pod this Toleration is attached to tolerates any taint that matches\nthe triple <key,value,effect> using the matching operator <operator>.",
+            "properties": {
+              "effect": {
+                "description": "Effect indicates the taint effect to match. Empty means match all taint effects.\nWhen specified, allowed values are NoSchedule, PreferNoSchedule and NoExecute.",
+                "type": "string"
+              },
+              "key": {
+                "description": "Key is the taint key that the toleration applies to. Empty means match all taint keys.\nIf the key is empty, operator must be Exists; this combination means to match all values and all keys.",
+                "type": "string"
+              },
+              "operator": {
+                "description": "Operator represents a key's relationship to the value.\nValid operators are Exists and Equal. Defaults to Equal.\nExists is equivalent to wildcard for value, so that a pod can\ntolerate all taints of a particular category.",
+                "type": "string"
+              },
+              "tolerationSeconds": {
+                "description": "TolerationSeconds represents the period of time the toleration (which must be\nof effect NoExecute, otherwise this field is ignored) tolerates the taint. By default,\nit is not set, which means tolerate the taint forever (do not evict). Zero and\nnegative values will be treated as 0 (evict immediately) by the system.",
+                "format": "int64",
+                "type": "integer"
+              },
+              "value": {
+                "description": "Value is the taint value the toleration matches to.\nIf the operator is Exists, the value should be empty, otherwise just a regular string.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array",
+          "x-kubernetes-list-type": "atomic"
         }
       },
       "type": "object"
@@ -421,6 +514,15 @@
     "status": {
       "description": "LinstorClusterStatus defines the observed state of LinstorCluster",
       "properties": {
+        "availableCapacityBytes": {
+          "description": "The number of bytes in total in all storage pools in the LINSTOR Cluster.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "capacity": {
+          "description": "Capacity mirrors the information from TotalCapacityBytes and FreeCapacityBytes in a human-readable string",
+          "type": "string"
+        },
         "conditions": {
           "description": "Current LINSTOR Cluster state",
           "items": {
@@ -479,6 +581,39 @@
             "type"
           ],
           "x-kubernetes-list-type": "map"
+        },
+        "freeCapacityBytes": {
+          "description": "The number of bytes free in all storage pools in the LINSTOR Cluster.",
+          "format": "int64",
+          "type": "integer"
+        },
+        "numberOfSnapshots": {
+          "description": "The number of snapshots in the LINSTOR Cluster.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "numberOfVolumes": {
+          "description": "The number of volumes in the LINSTOR Cluster.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "runningSatellites": {
+          "description": "The number of LINSTOR Satellites currently running.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "satellites": {
+          "description": "Satellites mirrors the information from ScheduledSatellites and RunningSatellites in a human-readable string",
+          "type": "string"
+        },
+        "scheduledSatellites": {
+          "description": "The number of LINSTOR Satellites that are expected to run.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "version": {
+          "description": "The Version of the LINSTOR Cluster.",
+          "type": "string"
         }
       },
       "type": "object"
