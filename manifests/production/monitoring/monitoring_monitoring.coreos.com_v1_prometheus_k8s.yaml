@@ -78,5 +78,5 @@ spec:
   shards: 1
   tsdb:
     outOfOrderTimeWindow: 0s
-  version: v3.8.0
+  version: v3.8.1
   walCompression: true
