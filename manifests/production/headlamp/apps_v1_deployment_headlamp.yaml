@@ -37,7 +37,7 @@ spec:
           value: email,profile
         - name: OIDC_CALLBACK_URL
           value: https://headlamp.seigra.net/oidc-callback
-        image: ghcr.io/headlamp-k8s/headlamp:v0.38.0@sha256:62df24952ed956ec36a2d5859a1dcede5fad00b8d0043b9ce19cda914706325a
+        image: ghcr.io/headlamp-k8s/headlamp:v0.39.0@sha256:c8c564ffbf088955efa4d08523df1b76e3bc4594efaf85efe9996ab99ebe48b2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
