@@ -8,7 +8,7 @@ env:
   # renovate: datasource=github-releases depName=siderolabs/talos
   TALOS_VERSION: v1.11.6
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  KUBERNETES_VERSION: v1.34.3
+  KUBERNETES_VERSION: v1.35.0
 
 vars:
   ENV: test
