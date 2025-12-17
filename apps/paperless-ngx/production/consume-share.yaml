@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.3/persistentvolumeclaim.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.35.0/persistentvolumeclaim.json
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -13,7 +13,7 @@ spec:
     requests:
       storage: 10Gi
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.34.3/persistentvolume.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.35.0/persistentvolume.json
 apiVersion: v1
 kind: PersistentVolume
 metadata:
