@@ -47,4 +47,4 @@ spec:
     seccompProfile:
       type: RuntimeDefault
   serviceAccountName: k8s-alertmanager
-  version: v0.29.0
+  version: v0.30.0

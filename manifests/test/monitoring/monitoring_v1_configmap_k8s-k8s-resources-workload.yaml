@@ -5,42 +5,42 @@ data:
     by (cluster, namespace, pod, container)(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m{cluster=\"$cluster\",
     namespace=\"$namespace\"})\n  * on(cluster, namespace, pod)\n    group_left(workload,
     workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","legendFormat":"__auto"}],"title":"CPU Usage","type":"timeseries"},{"datasource":{"type":"datasource","uid":"--
     Mixed --"},"fieldConfig":{"overrides":[{"matcher":{"id":"byRegexp","options":"/%/"},"properties":[{"id":"unit","value":"percentunit"}]},{"matcher":{"id":"byName","options":"Pod"},"properties":[{"id":"links","value":[{"title":"Drill
     down to pods","url":"/d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?${datasource:queryparam}&var-cluster=$cluster&var-namespace=$namespace&var-pod=${__data.fields.Pod}"}]}]}]},"gridPos":{"h":7,"w":24,"x":0,"y":7},"id":2,"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m{cluster=\"$cluster\",
     namespace=\"$namespace\"})\n  * on(cluster, namespace, pod)\n    group_left(workload,
     workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(kube_pod_container_resource_requests{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m{cluster=\"$cluster\",
     namespace=\"$namespace\"})\n  * on(cluster, namespace, pod)\n    group_left(workload,
     workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n/sum(\n    max by (cluster, namespace, pod, container)(kube_pod_container_resource_requests{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(kube_pod_container_resource_limits{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate5m{cluster=\"$cluster\",
     namespace=\"$namespace\"})\n  * on(cluster, namespace, pod)\n    group_left(workload,
     workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n/sum(\n    max by (cluster, namespace, pod, container)(kube_pod_container_resource_limits{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true}],"title":"CPU Quota","transformations":[{"id":"joinByField","options":{"byField":"pod","mode":"outer"}},{"id":"organize","options":{"excludeByName":{"Time":true,"Time
     1":true,"Time 2":true,"Time 3":true,"Time 4":true,"Time 5":true},"indexByName":{"Time
     1":0,"Time 2":1,"Time 3":2,"Time 4":3,"Time 5":4,"Value #A":6,"Value #B":7,"Value
@@ -51,42 +51,42 @@ data:
     by (cluster, namespace, pod, container)(container_memory_working_set_bytes{cluster=\"$cluster\",
     namespace=\"$namespace\", container!=\"\", image!=\"\"})\n  * on(cluster, namespace,
     pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","legendFormat":"__auto"}],"title":"Memory Usage","type":"timeseries"},{"datasource":{"type":"datasource","uid":"--
     Mixed --"},"fieldConfig":{"defaults":{"unit":"bytes"},"overrides":[{"matcher":{"id":"byRegexp","options":"/%/"},"properties":[{"id":"unit","value":"percentunit"}]},{"matcher":{"id":"byName","options":"Pod"},"properties":[{"id":"links","value":[{"title":"Drill
     down to pods","url":"/d/6581e46e4e5c7ba40a07646395ef7b23/k8s-resources-pod?${datasource:queryparam}&var-cluster=$cluster&var-namespace=$namespace&var-pod=${__data.fields.Pod}"}]}]}]},"gridPos":{"h":7,"w":24,"x":0,"y":21},"id":4,"pluginVersion":"v11.4.0","targets":[{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(container_memory_working_set_bytes{cluster=\"$cluster\",
     namespace=\"$namespace\", container!=\"\", image!=\"\"})\n  * on(cluster, namespace,
     pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(kube_pod_container_resource_requests{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(container_memory_working_set_bytes{cluster=\"$cluster\",
     namespace=\"$namespace\", container!=\"\", image!=\"\"})\n  * on(cluster, namespace,
     pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n/sum(\n    max by (cluster, namespace, pod, container)(kube_pod_container_resource_requests{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(kube_pod_container_resource_limits{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true},{"datasource":{"type":"prometheus","uid":"${datasource}"},"expr":"sum(\n    max
     by (cluster, namespace, pod, container)(container_memory_working_set_bytes{cluster=\"$cluster\",
     namespace=\"$namespace\", container!=\"\", image!=\"\"})\n  * on(cluster, namespace,
     pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n/sum(\n    max by (cluster, namespace, pod, container)(kube_pod_container_resource_limits{job=\"kube-state-metrics\",
     cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"})\n  * on(cluster,
     namespace, pod)\n    group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\", workload=\"$workload\", workload_type=~\"$type\"}\n)
+    namespace=\"$namespace\", workload=~\"$workload\", workload_type=~\"$type\"}\n)
     by (pod)\n","format":"table","instant":true}],"title":"Memory Quota","transformations":[{"id":"joinByField","options":{"byField":"pod","mode":"outer"}},{"id":"organize","options":{"excludeByName":{"Time":true,"Time
     1":true,"Time 2":true,"Time 3":true,"Time 4":true,"Time 5":true},"indexByName":{"Time
     1":0,"Time 2":1,"Time 3":2,"Time 4":3,"Time 5":4,"Value #A":9,"Value #B":10,"Value
@@ -171,7 +171,7 @@ data:
     source","name":"datasource","query":"prometheus","regex":"","type":"datasource"},{"datasource":{"type":"prometheus","uid":"${datasource}"},"hide":2,"label":"cluster","name":"cluster","query":"label_values(up{job=\"kube-state-metrics\"},
     cluster)","refresh":2,"sort":1,"type":"query","allValue":".*"},{"datasource":{"type":"prometheus","uid":"${datasource}"},"hide":0,"label":"namespace","name":"namespace","query":"label_values(kube_namespace_status_phase{job=\"kube-state-metrics\",
     cluster=\"$cluster\"}, namespace)","refresh":2,"sort":1,"type":"query"},{"datasource":{"type":"prometheus","uid":"${datasource}"},"hide":0,"includeAll":true,"label":"workload_type","name":"type","query":"label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
-    namespace=\"$namespace\"}, workload_type)","refresh":2,"sort":1,"type":"query"},{"datasource":{"type":"prometheus","uid":"${datasource}"},"hide":0,"label":"workload","name":"workload","query":"label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
+    namespace=\"$namespace\"}, workload_type)","refresh":2,"sort":1,"type":"query"},{"datasource":{"type":"prometheus","uid":"${datasource}"},"hide":0,"includeAll":true,"label":"workload","name":"workload","query":"label_values(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\",
     namespace=\"$namespace\", workload_type=~\"$type\"}, workload)","refresh":2,"sort":1,"type":"query"}]},"time":{"from":"now-1h","to":"now"},"timezone":
     "utc","title":"Kubernetes / Compute Resources / Workload","uid":"a164a7f0339f99e89cea5cb47e9be617"}'
 kind: ConfigMap
