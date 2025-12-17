@@ -21,7 +21,7 @@ images:
 - name: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
   newTag: v0.1.0@sha256:d7d0321a90c0347e2e4f9f7e362ecaa10a36592cc5ac8fd1514df11c476b43fe
 - name: ghcr.io/headlamp-k8s/headlamp
-  newTag: v0.38.0@sha256:62df24952ed956ec36a2d5859a1dcede5fad00b8d0043b9ce19cda914706325a
+  newTag: v0.39.0@sha256:c8c564ffbf088955efa4d08523df1b76e3bc4594efaf85efe9996ab99ebe48b2
 
 helmCharts:
 - name: headlamp
