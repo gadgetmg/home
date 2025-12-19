@@ -29,4 +29,4 @@ helmCharts:
 
 images:
 - name: ghcr.io/external-secrets/external-secrets
-  newTag: v1.1.1@sha256:134c59e0ba1f608df49c0468ad1288de2136dae7a21e20384960660fa01fe442
+  newTag: v1.2.0@sha256:9d9ef89a7e3832345039fbf49782f89e86f36f90b2aefaad1d7e84b364f1a019
