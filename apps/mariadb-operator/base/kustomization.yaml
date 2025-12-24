@@ -68,4 +68,4 @@ helmCharts:
 
 images:
 - name: ghcr.io/mariadb-operator/mariadb-operator
-  newTag: 25.10.2@sha256:14eeefa4956770f973ac707b7969f2e99e0af2cf2c34ac63d4c7eb3f7c3cf3eb
+  newTag: 25.10.3@sha256:9bf539653c5ddc94dbfb96eb4c4c224b276eb5a31491015def11ec67b2287562
