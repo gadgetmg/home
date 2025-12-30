@@ -144,7 +144,7 @@ spec:
           failureThreshold: 10
           httpGet:
             path: /api/health
-            port: 3000
+            port: grafana
           initialDelaySeconds: 60
           timeoutSeconds: 30
         name: grafana
@@ -164,7 +164,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /api/health
-            port: 3000
+            port: grafana
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
