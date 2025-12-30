@@ -31,7 +31,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: SIDECAR_IMAGE
-              name: plugin-barman-cloud-dgkb8f78tm
+              name: plugin-barman-cloud-t5844mh4gf
         image: ghcr.io/cloudnative-pg/plugin-barman-cloud:v0.9.0@sha256:9081f3a4f9227cd3a87eb160300997c3dc1ec7aed56cd77b0cd78a508bfcbc68
         name: barman-cloud
         ports:
