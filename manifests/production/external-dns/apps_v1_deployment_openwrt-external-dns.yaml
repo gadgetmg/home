@@ -34,7 +34,7 @@ spec:
         - --policy=upsert-only
         - --registry=txt
         - --provider=webhook
-        image: registry.k8s.io/external-dns/external-dns:v0.19.0
+        image: registry.k8s.io/external-dns/external-dns:v0.20.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
