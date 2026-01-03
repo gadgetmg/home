@@ -4,4 +4,13 @@ metadata:
   name: linstorcluster
   namespace: piraeus-datastore
 spec:
+  highAvailabilityController:
+    podTemplate:
+      spec:
+        containers:
+        - args:
+          - /agent
+          - --v=1
+          - --disable-node-taints=true
+          name: ha-controller
   linstorPassphraseSecret: linstorcluster-passphrase
