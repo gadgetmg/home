@@ -5,3 +5,12 @@ metadata:
   name: linstorcluster
 spec:
   linstorPassphraseSecret: linstorcluster-passphrase
+  highAvailabilityController:
+    podTemplate:
+      spec:
+        containers:
+        - name: ha-controller
+          args:
+          - /agent
+          - --v=1
+          - --disable-node-taints=true
