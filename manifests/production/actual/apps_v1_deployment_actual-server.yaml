@@ -47,7 +47,7 @@ spec:
             name: actual-server-env-fkmtk95ctt
         - secretRef:
             name: actual-server-env
-        image: ghcr.io/actualbudget/actual-server:25.12.0@sha256:7f38b450cc3b7523dd5377792895e58b9cf333769e5a27f89e643b6f5fc60565
+        image: ghcr.io/actualbudget/actual-server:26.1.0@sha256:a1219ba2a3dac6d28e7c844a5eb2fd4269fa0573bda8dcb24a2280d98fe361cb
         name: actual-server
         ports:
         - containerPort: 5006
