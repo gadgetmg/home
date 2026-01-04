@@ -17,7 +17,7 @@ resources:
 
 images:
 - name: ghcr.io/actualbudget/actual-server
-  newTag: 26.1.0@sha256:a1219ba2a3dac6d28e7c844a5eb2fd4269fa0573bda8dcb24a2280d98fe361cb
+  newTag: 26.1.0@sha256:e82b7302b0db7f8fa063159e8bddc07443bb83761798dc9ba84fe1b3df62d74f
 
 configMapGenerator:
 - name: actual-server-env
