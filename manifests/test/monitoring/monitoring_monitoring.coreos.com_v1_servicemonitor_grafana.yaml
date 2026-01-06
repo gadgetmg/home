@@ -4,6 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: kube-prometheus-stack
     app.kubernetes.io/name: grafana
+    release: kube-prometheus-stack
   name: grafana
   namespace: monitoring
 spec:
