@@ -178,6 +178,8 @@ spec:
           subPath: grafana.ini
         - mountPath: /var/lib/grafana
           name: storage
+        - mountPath: /var/lib/grafana-search
+          name: search
         - mountPath: /tmp/dashboards
           name: sc-dashboard-volume
         - mountPath: /etc/grafana/provisioning/dashboards/sc-dashboardproviders.yaml
@@ -199,6 +201,8 @@ spec:
         name: config
       - emptyDir: {}
         name: storage
+      - emptyDir: {}
+        name: search
       - emptyDir: {}
         name: sc-dashboard-volume
       - configMap:
