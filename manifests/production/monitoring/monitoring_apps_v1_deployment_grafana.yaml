@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 2b6512d0c765c5d8f5ef7b30387c87a63bebb8b2168f73a66c88b30091af5632
+        checksum/config: b06cc65af643ee5ef1841a06889881bd229229f8934a8090ca20ded376f7154a
         checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
         checksum/secret: 032056e9c62bbe9d1daa41ee49cd3d9524c076f51ca4c65adadf4ef08ef28712
         kubectl.kubernetes.io/default-container: grafana
@@ -133,6 +133,8 @@ spec:
           value: /var/lib/grafana/plugins
         - name: GF_PATHS_PROVISIONING
           value: /etc/grafana/provisioning
+        - name: GF_UNIFIED_STORAGE_INDEX_PATH
+          value: /var/lib/grafana-search/bleve
         - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
