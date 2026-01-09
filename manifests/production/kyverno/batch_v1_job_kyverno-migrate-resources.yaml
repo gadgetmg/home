@@ -52,7 +52,7 @@ spec:
         - policyexceptions.policies.kyverno.io
         - --resource
         - validatingpolicies.policies.kyverno.io
-        image: ghcr.io/kyverno/kyverno-cli:v1.16.1@sha256:4a34a24a85935fb4c9440f1831568a847ffb96296da2b5fd1ec3b76215a76621
+        image: ghcr.io/kyverno/kyverno-cli:v1.16.2@sha256:f1a4dd586f118ca24d1fb768b8791a506231748d41cb490dfff04b66b2738079
         imagePullPolicy: IfNotPresent
         name: kubectl
         resources:
