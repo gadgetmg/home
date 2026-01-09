@@ -31,6 +31,8 @@ data:
     [server]
     domain = grafana.seigra.net
     root_url = https://grafana.seigra.net
+    [unified_storage]
+    index_path = /var/lib/grafana-search/bleve
 kind: ConfigMap
 metadata:
   labels:
