@@ -64,7 +64,7 @@ helmCharts:
           registry: quay.io
           repository: prometheus-operator/prometheus-config-reloader
           # renovate: datasource=docker depName=quay.io/prometheus-operator/prometheus-config-reloader
-          tag: v0.87.1@sha256:257ce3543e8f45c059dab488bcf897d8cc598cabd78afba12f41d6dbe36e22d2
+          tag: v0.88.0@sha256:501a47205f61acf8ad11b1caeb0bd117b135932728b17eb5cd5914a33f0ce704
       thanosImage:
         registry: quay.io
         repository: thanos/thanos
