@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 7943ecc85b5cc86a06dd645b9278b5dcc8c03021bdd80d1a87916390e28b319f
-        checksum/cmd-params: 073ca39768a733c0f2d93bdc960087da20ecdf034fd6f79d33661a5f0073acf7
+        checksum/cm: ed60d4cb48cea69dbfac747f7b8e96deda75ac8438aef47f67109620b556ec2d
+        checksum/cmd-params: c1ce506f688ba129d132eef850dc213a1034f8974aba308363f4913d206d27c1
       labels:
         app.kubernetes.io/component: repo-server
         app.kubernetes.io/instance: argocd
@@ -278,6 +278,18 @@ spec:
               key: reposerver.revision.cache.lock.timeout
               name: argocd-cmd-params-cm
               optional: true
+        - name: ARGOCD_REPO_SERVER_ENABLE_BUILTIN_GIT_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.enable.builtin.git.config
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_GRPC_MAX_SIZE_MB
+          valueFrom:
+            configMapKeyRef:
+              key: reposerver.grpc.max.size
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_REPO_SERVER_INCLUDE_HIDDEN_DIRECTORIES
           valueFrom:
             configMapKeyRef:
@@ -349,7 +361,7 @@ spec:
       initContainers:
       - command:
         - /bin/cp
-        - -n
+        - --update=none
         - /usr/local/bin/argocd
         - /var/run/argocd/argocd-cmp-server
         image: quay.io/argoproj/argocd:v3.2.3@sha256:9ab6baab65a6b283044a7d7b7dbe50f589564de9c8898d67c77d84b2b5df46bc
