@@ -76,7 +76,7 @@ replicas:
 
 images:
 - name: ghcr.io/cloudnative-pg/postgresql
-  newTag: 18.1-minimal-trixie@sha256:238b88d7fc09dfa74c972730799ac5dc0e8dc64eb8d7636ed1475dca1158ab1e
+  newTag: 18.1-minimal-trixie@sha256:f88715a4dc82c50aa1b4449f4ea0e51fa0a7e2a85d3118ffc1e0708a05f9bc69
 - name: ghcr.io/goharbor/harbor-core
   newTag: v2.14.1@sha256:9c16d47ff207e7c83ba4b411eb02f6d919948118d8824b0d359711edeca55823
 - name: ghcr.io/goharbor/harbor-jobservice
