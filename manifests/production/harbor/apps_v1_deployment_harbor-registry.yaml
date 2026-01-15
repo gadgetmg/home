@@ -93,7 +93,7 @@ spec:
         envFrom:
         - secretRef:
             name: harbor-registry
-        image: ghcr.io/goharbor/harbor-registryctl:v2.14.1@sha256:b9645ccc017dd694a3c8f34c39556e74e7cfe371e3abd9f1a7bc0f32401e354f
+        image: ghcr.io/goharbor/harbor-registryctl:v2.14.2@sha256:e148259c1f76d4a0d47aea8bc747ec4cf407ccbd6a7c9ce2f180dd64a5c26ddf
         livenessProbe:
           httpGet:
             path: /api/health
