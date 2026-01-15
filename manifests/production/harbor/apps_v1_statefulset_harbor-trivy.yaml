@@ -40,7 +40,7 @@ spec:
       - envFrom:
         - configMapRef:
             name: harbor-trivy-6gd2797t2c
-        image: ghcr.io/goharbor/trivy-adapter-photon:v2.14.1@sha256:13dddb2adef7e28530e04e5659c49f550e5463e5f2536378ffd9207f7b23aac4
+        image: ghcr.io/goharbor/trivy-adapter-photon:v2.14.2@sha256:b1231a05e64823283204294a88157b14ef8931f80f88454287b2061eed041fa8
         livenessProbe:
           failureThreshold: 10
           httpGet:
