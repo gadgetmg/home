@@ -84,7 +84,7 @@ images:
 - name: ghcr.io/goharbor/harbor-portal
   newTag: v2.14.1@sha256:deebd48edd53f349a568da577949997d7c6b01749a493ad61d8beeeb148d6dd2
 - name: ghcr.io/goharbor/harbor-registryctl
-  newTag: v2.14.1@sha256:b9645ccc017dd694a3c8f34c39556e74e7cfe371e3abd9f1a7bc0f32401e354f
+  newTag: v2.14.2@sha256:e148259c1f76d4a0d47aea8bc747ec4cf407ccbd6a7c9ce2f180dd64a5c26ddf
 - name: ghcr.io/goharbor/registry-photon
   newTag: v2.14.1@sha256:986c9ad18ff754269fac3c388cb5dacc2e886b816439c8e8bf11cd92e76b6cdb
 - name: ghcr.io/goharbor/trivy-adapter-photon
