@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: docker.io/velero/velero
-  newTag: v1.17.1@sha256:58f551f0d89a9ef1919771bdc7475c08bc1795a50a51a57b5f14316d68fc3baa
+  newTag: v1.17.2@sha256:9eb627afb0462e67e5462f521699d5542d05588f067cadec01d2f7e5505be991
 - name: docker.io/velero/velero-plugin-for-aws
   newTag: v1.13.1@sha256:472d0e486d5d5c23c782b1b123530c7df8645784523ec36ca661a326d47885ff
 
