@@ -55,7 +55,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/dashboards/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:2.3.0@sha256:e57a47722113abcda1e5a1bf8a29807aa19ffa0ba7dfb295a758c929e1acb7e4
+        image: quay.io/kiwigrid/k8s-sidecar:2.4.0@sha256:b655c047478f80cfd91823508a3d01790ad8c166e0007f32e5fd6f89589e6aee
         imagePullPolicy: IfNotPresent
         name: grafana-sc-dashboard
         securityContext:
@@ -93,7 +93,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/datasources/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:2.3.0@sha256:e57a47722113abcda1e5a1bf8a29807aa19ffa0ba7dfb295a758c929e1acb7e4
+        image: quay.io/kiwigrid/k8s-sidecar:2.4.0@sha256:b655c047478f80cfd91823508a3d01790ad8c166e0007f32e5fd6f89589e6aee
         imagePullPolicy: IfNotPresent
         name: grafana-sc-datasources
         securityContext:
