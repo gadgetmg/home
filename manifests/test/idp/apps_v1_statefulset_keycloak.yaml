@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app.kubernetes.io/component: keycloak
@@ -9,6 +9,7 @@ metadata:
   name: keycloak
   namespace: keycloak
 spec:
+  podManagementPolicy: OrderedReady
   replicas: 2
   selector:
     matchLabels:
@@ -16,6 +17,7 @@ spec:
       app.kubernetes.io/instance: keycloak
       app.kubernetes.io/name: keycloak
       app.kubernetes.io/part-of: keycloak
+  serviceName: keycloak-headless
   template:
     metadata:
       labels:
@@ -66,8 +68,8 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /realms/master
-            port: http
-            scheme: HTTP
+            port: https
+            scheme: HTTPS
           initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
@@ -77,6 +79,9 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
         - containerPort: 9000
           name: http-metrics
           protocol: TCP
@@ -84,8 +89,8 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /realms/master
-            port: http
-            scheme: HTTP
+            port: https
+            scheme: HTTPS
           initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1
@@ -107,8 +112,8 @@ spec:
           failureThreshold: 60
           httpGet:
             path: /realms/master
-            port: http
-            scheme: HTTP
+            port: https
+            scheme: HTTPS
           initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1
