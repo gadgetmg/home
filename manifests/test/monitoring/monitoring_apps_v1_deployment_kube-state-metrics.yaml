@@ -39,7 +39,7 @@ spec:
           httpGet:
             httpHeaders: null
             path: /livez
-            port: 8080
+            port: http
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -49,12 +49,14 @@ spec:
         ports:
         - containerPort: 8080
           name: http
+        - containerPort: 8081
+          name: metrics
         readinessProbe:
           failureThreshold: 3
           httpGet:
             httpHeaders: null
             path: /readyz
-            port: 8081
+            port: metrics
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 10
