@@ -21,7 +21,7 @@ images:
 - name: docker.io/gotenberg/gotenberg
   newTag: 8.25.1@sha256:f9104080d9a7ecab253fb5ebe75100329cf5699c33ec0448f2ea02d885dfde4b
 - name: ghcr.io/paperless-ngx/paperless-ngx
-  newTag: 2.20.5@sha256:59521628c3b4aa4e37c976924f74c30e507acd89eea2dbc74f13f0354159f536
+  newTag: 2.20.5@sha256:665f2f5cc5482ea2e44f90a7fa170908aaeb95d8d3c70e17f746de8fcb81f644
 - name: ghcr.io/cloudnative-pg/postgresql
   newTag: 18.1-standard-trixie@sha256:7a72106d396a9c6d06ca25be191700c86031e0a06ccdeaf1a31da14f198cbbc4
 
