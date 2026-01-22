@@ -9,7 +9,7 @@ spec:
   affinity:
     podAntiAffinityType: required
   storage:
-    size: 10Gi
+    size: 100Gi
     storageClass: ssd-r1
   bootstrap:
     initdb:
