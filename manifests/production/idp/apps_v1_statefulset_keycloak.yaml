@@ -68,8 +68,8 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /realms/master
-            port: https
-            scheme: HTTPS
+            port: http
+            scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 30
           successThreshold: 1
@@ -79,9 +79,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        - containerPort: 8443
-          name: https
-          protocol: TCP
         - containerPort: 9000
           name: http-metrics
           protocol: TCP
@@ -89,8 +86,8 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /realms/master
-            port: https
-            scheme: HTTPS
+            port: http
+            scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1
@@ -112,8 +109,8 @@ spec:
           failureThreshold: 60
           httpGet:
             path: /realms/master
-            port: https
-            scheme: HTTPS
+            port: http
+            scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
           successThreshold: 1

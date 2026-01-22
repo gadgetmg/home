@@ -12,6 +12,7 @@ keycloak:
   secretKeys:
     adminPasswordKey: admin-password
   production: true
+  httpsEnabled: false
   proxyHeaders: xforwarded
 service:
   httpPort: 80
