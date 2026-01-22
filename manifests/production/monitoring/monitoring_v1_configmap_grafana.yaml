@@ -19,8 +19,6 @@ data:
     scopes = openid email profile offline_access
     tls_skip_verify_insecure = true
     token_url = https://auth.seigra.net/realms/home/protocol/openid-connect/token
-    [grafana_net]
-    url = https://grafana.net
     [log]
     mode = console
     [paths]
