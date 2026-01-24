@@ -18,7 +18,7 @@ tasks:
     - sudo iptables -A talos-qemu -i talos+ -j ACCEPT
     - sudo iptables -I INPUT 1 -j talos-qemu
     - |
-      sudo -E talosctl cluster create \
+      sudo -E talosctl cluster create dev \
         --name test \
         --provisioner qemu \
         --talos-version {{.TALOS_VERSION}} \
@@ -56,7 +56,7 @@ tasks:
     ignore_error: true
     dir: '{{.TASKFILE_DIR}}'
     cmds:
-    - sudo -E talosctl cluster destroy --name test --provisioner qemu -f
+    - sudo -E talosctl cluster destroy --name test -f
     - docker compose down
     - yq -i 'del(.contexts.test)' ~/.talos/config
     - kubectl config delete-context admin@test
