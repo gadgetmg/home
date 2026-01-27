@@ -46,7 +46,7 @@ images:
 - name: ghcr.io/kyverno/kyvernopre
   newTag: v1.16.2@sha256:ba3a31b25a9e1c6f993d7555158396d87790445ddc785426c249e8320b94b02a
 - name: ghcr.io/kyverno/background-controller
-  newTag: v1.16.2@sha256:736c5da855863a3b15ee0e272f5b9e72c3c1b2f221f8345664354f57a5dc0f25
+  newTag: v1.16.3@sha256:0a8f9369e889117a605ecb527bdc07f3bd25a9183e588a92442246824b2262b5
 - name: ghcr.io/kyverno/cleanup-controller
   newTag: v1.16.2@sha256:1bf6d0501d7f16aa5d36821f907287d8653564c642866c4b597f2e6abc527390
 - name: ghcr.io/kyverno/reports-controller
