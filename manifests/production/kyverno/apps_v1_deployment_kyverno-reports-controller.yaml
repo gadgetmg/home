@@ -85,7 +85,7 @@ spec:
               fieldPath: metadata.namespace
         - name: TUF_ROOT
           value: /.sigstore
-        image: ghcr.io/kyverno/reports-controller:v1.16.2@sha256:88d0dfc245a689e9bf3e258159b539f3a1b1a5a89f82b6a07c12762527bb7793
+        image: ghcr.io/kyverno/reports-controller:v1.16.3@sha256:1fd725cb7b0f80f800340ec52cc8bb5af267520a63cda9ec39543131c0a3971f
         imagePullPolicy: IfNotPresent
         name: controller
         ports:
