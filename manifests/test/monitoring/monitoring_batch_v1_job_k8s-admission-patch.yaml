@@ -31,7 +31,7 @@ spec:
         - --webhook-name=k8s-admission
         - --namespace=monitoring
         - --secret-name=k8s-admission
-        - --patch-failure-policy=
+        - --patch-failure-policy=Fail
         image: ghcr.io/jkroepke/kube-webhook-certgen:1.7.4
         imagePullPolicy: IfNotPresent
         name: patch
