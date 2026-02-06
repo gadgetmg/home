@@ -17,7 +17,7 @@ images:
 - name: ghcr.io/gadgetmg/ezxss
   newTag: master@sha256:a0bea899b39bc35925e4fb7d1cc0e22332451756a2c35c721589e779f1a1bc79
 - name: ghcr.io/mariadb/mariadb
-  newTag: 12.1.2-noble@sha256:a076a9a67576b2015ceffb5c583885696977f8acefe2b48d239c0329f0b1c61e
+  newTag: 12.1.2-noble@sha256:5ab686eaece3d4d829c153e794bd5796dd3df7c91d62d4da2095e91fd1f570e0
 - name: ghcr.io/mariadb-operator/mariadb-operator
   newTag: 25.10.4@sha256:f718727d22285a9b19b8340ec10a1e3a531133bfeb2af71df3a7faffffb4ea58
 - name: docker.io/prom/mysqld-exporter
