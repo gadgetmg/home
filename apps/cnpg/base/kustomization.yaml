@@ -22,4 +22,4 @@ images:
 - name: ghcr.io/cloudnative-pg/plugin-barman-cloud
   newTag: v0.11.0@sha256:c2788d1560118926302a21159b4b0452fc133df1a3f957c1b2ed6b41834ee571
 - name: ghcr.io/cloudnative-pg/cloudnative-pg
-  newTag: 1.28.0@sha256:34198e85b6e6dd81471cb1c3ee222ca5231b685220e7ae38a634d35ed4826a40
+  newTag: 1.28.1@sha256:0edcdaefaa83d68822158cf4370d83d185c54db2b6beb7e0848aca16eafa6344
