@@ -71,7 +71,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/kyverno/background-controller:v1.16.3@sha256:0a8f9369e889117a605ecb527bdc07f3bd25a9183e588a92442246824b2262b5
+        image: ghcr.io/kyverno/background-controller:v1.17.1@sha256:6d694a404b54368f5ad429f9341e2a9e4e17b8d83bd2ec74643cdaed845d6ea8
         imagePullPolicy: IfNotPresent
         name: controller
         ports:
