@@ -16,7 +16,7 @@ spec:
     path: /metrics
     scrapeTimeout: 30s
     targetPort: http-metrics
-  jobLabel: cert-manager
+  jobLabel: app.kubernetes.io/name
   selector:
     matchExpressions:
     - key: app.kubernetes.io/name
