@@ -285,10 +285,9 @@ data:
       clusters:
         - "*"
   resource.ignoreResourceUpdatesEnabled: "true"
-  server.rbac.log.enforce.enable: "false"
   statusbadge.enabled: "false"
   timeout.hard.reconciliation: 0s
-  timeout.reconciliation: 180s
+  timeout.reconciliation: 120s
   timeout.reconciliation.jitter: 1m
   url: https://argocd.10.5.0.53.nip.io
 kind: ConfigMap
