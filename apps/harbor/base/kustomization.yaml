@@ -86,7 +86,7 @@ images:
 - name: ghcr.io/goharbor/harbor-registryctl
   newTag: v2.14.2@sha256:e148259c1f76d4a0d47aea8bc747ec4cf407ccbd6a7c9ce2f180dd64a5c26ddf
 - name: ghcr.io/goharbor/registry-photon
-  newTag: v2.14.2@sha256:d4d062d50456a269b0ba9b907c90b8d8c8176c98fe7aa5d778abd3c5b5166048
+  newTag: v2.15.0@sha256:beb49fd16cf0906c04a2bf51a22f7210289e7cc2ae43a733e2a0364380aceae6
 - name: ghcr.io/goharbor/trivy-adapter-photon
   newTag: v2.14.2@sha256:b1231a05e64823283204294a88157b14ef8931f80f88454287b2061eed041fa8
 - name: docker.io/oliver006/redis_exporter
