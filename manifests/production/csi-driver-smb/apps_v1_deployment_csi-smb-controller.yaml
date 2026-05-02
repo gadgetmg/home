@@ -79,7 +79,7 @@ spec:
         - --probe-timeout=3s
         - --http-endpoint=localhost:29642
         - --v=2
-        image: registry.k8s.io/sig-storage/livenessprobe:v2.17.0@sha256:9b75b9ade162136291d5e8f13a1dfc3dec71ee61419b1bfc112e0796ff8a6aa9
+        image: registry.k8s.io/sig-storage/livenessprobe:v2.18.0@sha256:c4cc074199c045dd73ab85f28897e2a32f4d6f38ffdba4f3b13b8007ccbd3570
         imagePullPolicy: IfNotPresent
         name: liveness-probe
         resources:
