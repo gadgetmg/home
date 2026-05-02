@@ -1,0 +1,9 @@
+apiVersion: realm.keycloak.m.crossplane.io/v1alpha1
+kind: Realm
+metadata:
+  name: home
+  namespace: keycloak
+spec:
+  forProvider:
+    displayName: seigra.net
+    realm: home

@@ -1,0 +1,16 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: actual-daily
+  namespace: velero
+spec:
+  schedule: 0 5 * * *
+  template:
+    includedNamespaces:
+    - actual
+    includedResources:
+    - pvc
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/component: application
+  useOwnerReferencesInBackup: true
