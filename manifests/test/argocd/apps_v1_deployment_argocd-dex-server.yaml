@@ -71,7 +71,7 @@ spec:
               key: dexserver.disable.tls
               name: argocd-cmd-params-cm
               optional: true
-        image: ghcr.io/dexidp/dex:v2.44.0-distroless@sha256:f613f8a5db1abb0d632fe4bd14e58e117f447680304b1736277e4f5325f0e671
+        image: ghcr.io/dexidp/dex:v2.45.1-distroless@sha256:8bfd667b384c2a2555c355c58c167e11127d2ea1a3711f1c246e4d7c5528eb2a
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
