@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/component: core
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: core
+    app.kubernetes.io/part-of: harbor
+  name: harbor-core-token
+  namespace: harbor
+spec:
+  commonName: harbor-token-ca
+  duration: 8760h0m0s
+  isCA: true
+  issuerRef:
+    kind: ClusterIssuer
+    name: selfsigned
+  secretName: harbor-core-token-tls
+  usages:
+  - signing
+  - key encipherment
+  - cert sign
