@@ -20,4 +20,4 @@ helmCharts:
 
 images:
 - name: ghcr.io/bitnami-labs/sealed-secrets-controller
-  newTag: 0.34.0@sha256:fc98be1ebd2c290d29a04ccefb81a6acb307057085aa1232ff63dca5adb8b9bb
+  newTag: 0.36.6@sha256:3cf5db7d1722710de8b9216c821cad2ff52e0d284843b205a86ce99af21b05a3
