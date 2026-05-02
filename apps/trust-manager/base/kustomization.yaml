@@ -23,6 +23,6 @@ helmCharts:
 
 images:
 - name: quay.io/jetstack/trust-manager
-  newTag: v0.20.3@sha256:7047bcd17f31fd381d6a6866ed991d1a21b7a4d8832cb4b11b2cdb342ffc02dd
+  newTag: v0.22.1@sha256:23e2ab0711d77c3d25a7297d480883e8d037659db88dcdc0dab788a08a1b2097
 - name: quay.io/jetstack/trust-pkg-debian-bookworm
   newTag: 20230311-deb12u1.2@sha256:f9a6f14926da740c2831a738393f061b22594ec5d47ff55f68b1f59cfb9bf543
