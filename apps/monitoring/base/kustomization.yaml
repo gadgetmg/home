@@ -152,7 +152,7 @@ images:
 - name: quay.io/prometheus-operator/prometheus-operator
   newTag: v0.90.1@sha256:52a6a92d915ea2fa94314748d99db7a94922e3fe63274f6182fc033b9126b573
 - name: quay.io/prometheus/prometheus
-  newTag: v3.9.1@sha256:1f0f50f06acaceb0f5670d2c8a658a599affe7b0d8e78b898c1035653849a702
+  newTag: v3.11.3@sha256:c0b857aead0d5793aa566adb8f49a9983d6f6031652098759d521a330cfa050f
 - name: registry.k8s.io/kube-state-metrics/kube-state-metrics
   newTag: v2.18.0@sha256:1545919b72e3ae035454fc054131e8d0f14b42ef6fc5b2ad5c751cafa6b2130e
 - name: registry.k8s.io/prometheus-adapter/prometheus-adapter
