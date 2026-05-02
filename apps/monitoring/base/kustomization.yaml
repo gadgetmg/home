@@ -146,7 +146,7 @@ images:
 - name: docker.io/grafana/grafana
   newTag: 12.4.3@sha256:2e986801428cd689c2358605289c90ab37d2b39e24808874971f54c99bcdc412
 - name: quay.io/kiwigrid/k8s-sidecar
-  newTag: 2.5.0@sha256:a6b3f707f883108376514489a94d6629109a327b2978e1d826cd104c4ca436df
+  newTag: 2.7.1@sha256:2670f251f80d990635460c0116497a9cc3202069e8826f1a279af300ecd9f75e
 - name: quay.io/prometheus/alertmanager
   newTag: v0.32.1@sha256:51a825c2a40acc3e338fdd00d622e01ec090f72be2b3ea46be0839cd47a4d286
 - name: quay.io/prometheus-operator/prometheus-operator
