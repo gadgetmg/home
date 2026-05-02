@@ -15,9 +15,9 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: b816778d3592e8b42274b5adf201bebe6364cec185ec7fa19c68105b483620ce
-        checksum/monitoring-config: 78ed617198025de5f7f8414cd5e217f0d46ec506d3e284b18a77081aa297455a
-        checksum/rbac: e3737a66be9c74a67263b9d7b4e8fc1232e36433605ae75d0e4fe340566025b1
+        checksum/config: 0b84310a9b67b370b35d8358c17775dd28944c2e7990d461e55a116dc2c8ba6c
+        checksum/monitoring-config: abe87b2b96fa91351ae6517fb7fb1b291b3c2a07b20ad09ef524a3def8e2facf
+        checksum/rbac: f9ab1d3a43e8253c4414d3a1232d1725aeedf63996cac8c26e02ebfd76378b78
       labels:
         app.kubernetes.io/instance: cnpg
         app.kubernetes.io/name: cloudnative-pg
@@ -33,7 +33,7 @@ spec:
         - /manager
         env:
         - name: OPERATOR_IMAGE_NAME
-          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.28.0
+          value: ghcr.io/cloudnative-pg/cloudnative-pg:1.29.0
         - name: OPERATOR_NAMESPACE
           valueFrom:
             fieldRef:
@@ -45,7 +45,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /readyz
-            port: 9443
+            port: webhook-server
             scheme: HTTPS
           initialDelaySeconds: 3
         name: manager
@@ -59,7 +59,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /readyz
-            port: 9443
+            port: webhook-server
             scheme: HTTPS
           initialDelaySeconds: 3
         resources: {}
@@ -77,7 +77,7 @@ spec:
           failureThreshold: 6
           httpGet:
             path: /readyz
-            port: 9443
+            port: webhook-server
             scheme: HTTPS
           periodSeconds: 5
         volumeMounts:
