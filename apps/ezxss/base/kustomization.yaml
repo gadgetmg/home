@@ -21,7 +21,7 @@ images:
 - name: ghcr.io/mariadb-operator/mariadb-operator
   newTag: 25.10.4@sha256:f718727d22285a9b19b8340ec10a1e3a531133bfeb2af71df3a7faffffb4ea58
 - name: docker.io/prom/mysqld-exporter
-  newTag: v0.18.0@sha256:2598c0571f383708e19016d119bb45c06128a9ebc962c9f49483278ac5a94c41
+  newTag: v0.19.0@sha256:eacb4b18e2ec1e0abdf2d64851b68526c964f6d9cb3e9458fb5d5f5062ea94c1
 
 components:
 - ../../../shared/components/crd-configurations
