@@ -78,7 +78,7 @@ spec:
               fieldPath: metadata.namespace
         - name: KYVERNO_SVC
           value: kyverno-cleanup-controller
-        image: ghcr.io/kyverno/cleanup-controller:v1.16.3@sha256:3aa20d8cbc87a8feb920bf23f66f987431843bb04994a6f16277e73bc6fd9b30
+        image: ghcr.io/kyverno/cleanup-controller:v1.18.0@sha256:a2a060b731f1ea54de2295b886c600d65af032fec18096a816424acfe8dec7d2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
