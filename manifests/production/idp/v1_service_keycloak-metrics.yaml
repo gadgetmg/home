@@ -13,7 +13,7 @@ spec:
   - name: http-metrics
     port: 9000
     protocol: TCP
-    targetPort: http-metrics
+    targetPort: management
   selector:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: keycloak

@@ -38,6 +38,7 @@ spec:
         - --db=postgres
         - --db-url=jdbc:postgresql://keycloak-db-rw:5432/keycloak
         - --metrics-enabled=true
+        - --health-enabled=true
         command:
         - /opt/keycloak/bin/kc.sh
         env:
@@ -67,8 +68,8 @@ spec:
         livenessProbe:
           failureThreshold: 3
           httpGet:
-            path: /realms/master
-            port: http
+            path: /health/live
+            port: management
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 30
@@ -80,13 +81,13 @@ spec:
           name: http
           protocol: TCP
         - containerPort: 9000
-          name: http-metrics
+          name: management
           protocol: TCP
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /realms/master
-            port: http
+            path: /health/ready
+            port: management
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
@@ -108,8 +109,8 @@ spec:
         startupProbe:
           failureThreshold: 60
           httpGet:
-            path: /realms/master
-            port: http
+            path: /health/live
+            port: management
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 10
@@ -136,10 +137,7 @@ spec:
         image: quay.io/keycloak/keycloak:26.5.2-0@sha256:fb31a59deb46f746f2aaa25adc5da39ceccac4fd22d36a519562b0bf02e8df20
         imagePullPolicy: Always
         name: copy-quarkus-lib
-        resources:
-          requests:
-            cpu: 50m
-            memory: 1Gi
+        resources: {}
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
