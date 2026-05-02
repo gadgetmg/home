@@ -21,7 +21,7 @@ spec:
         - ALL
     exporter:
       enabled: true
-      image: docker.io/oliver006/redis_exporter:v1.80.2-alpine@sha256:5c1692551217e4519a04b89aa87a8c3360173f020e8cef280c798e9f5dbc819a
+      image: docker.io/oliver006/redis_exporter:v1.83.0-alpine@sha256:7643b705adca0ef5c700cae28cfd8798c3d3b653ef17096084359d17b70ea5ca
     image: ghcr.io/valkey-io/valkey:9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
     replicas: 3
     securityContext:
@@ -56,7 +56,7 @@ spec:
         - ALL
     exporter:
       enabled: true
-      image: docker.io/oliver006/redis_exporter:v1.80.2-alpine@sha256:5c1692551217e4519a04b89aa87a8c3360173f020e8cef280c798e9f5dbc819a
+      image: docker.io/oliver006/redis_exporter:v1.83.0-alpine@sha256:7643b705adca0ef5c700cae28cfd8798c3d3b653ef17096084359d17b70ea5ca
     image: ghcr.io/valkey-io/valkey:9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
     replicas: 3
     securityContext:
