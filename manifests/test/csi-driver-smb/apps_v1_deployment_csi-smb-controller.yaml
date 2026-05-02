@@ -32,7 +32,7 @@ spec:
         env:
         - name: ADDRESS
           value: /csi/csi.sock
-        image: registry.k8s.io/sig-storage/csi-provisioner:v6.1.0@sha256:e5900dc98b0d02f317ea9572f3824983c47a2fb5d5fe2b160aedf1b99c14c9e4
+        image: registry.k8s.io/sig-storage/csi-provisioner:v6.2.0@sha256:6be9f63ca4caa6c46aae55aa372500949d8a21473d72f819da1f746076b32d4e
         imagePullPolicy: IfNotPresent
         name: csi-provisioner
         resources:
