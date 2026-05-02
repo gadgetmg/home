@@ -142,7 +142,7 @@ helmCharts:
 
 images:
 - name: quay.io/prometheus/node-exporter
-  newTag: v1.10.2@sha256:337ff1d356b68d39cef853e8c6345de11ce7556bb34cda8bd205bcf2ed30b565
+  newTag: v1.11.1@sha256:0f422f62c15f154af8d8572b23d623aebfb10cec73a5c654d18f911f3f9df241
 - name: docker.io/grafana/grafana
   newTag: 12.4.3@sha256:2e986801428cd689c2358605289c90ab37d2b39e24808874971f54c99bcdc412
 - name: quay.io/kiwigrid/k8s-sidecar
