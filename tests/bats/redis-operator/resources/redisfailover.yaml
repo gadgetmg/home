@@ -3,6 +3,8 @@ apiVersion: databases.spotahome.com/v1
 kind: RedisFailover
 metadata:
   name: test-redis
+  labels:
+    redis-failover.freshworks.com/operator-group: redis-operator
 spec:
   auth:
     secretPath: redis-auth

@@ -5,6 +5,7 @@ metadata:
   name: harbor
   labels:
     app.kubernetes.io/name: redis
+    redis-failover.freshworks.com/operator-group: redis-operator
 spec:
   redis:
     replicas: 3

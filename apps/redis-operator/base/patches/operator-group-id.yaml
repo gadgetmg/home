@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.35.0/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-operator
+  namespace: redis-operator
+spec:
+  template:
+    spec:
+      containers:
+      - name: redis-operator
+        env:
+        - name: OPERATOR_GROUP_ID
+          value: redis-operator

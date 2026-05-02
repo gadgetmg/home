@@ -5,7 +5,7 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: gcr.io/kpt-fn/starlark:v0.5.0
+        image: ghcr.io/kptdev/krm-functions-catalog/starlark:v0.5.5
     config.kubernetes.io/local-config: "true"
 data:
   source: |
