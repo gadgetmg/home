@@ -14,5 +14,7 @@ spec:
     group: cert-manager.io
     kind: Issuer
     name: trust-manager
+  privateKey:
+    rotationPolicy: Always
   revisionHistoryLimit: 1
   secretName: trust-manager-tls
