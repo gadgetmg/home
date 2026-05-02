@@ -12,7 +12,7 @@ helmCharts:
   repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
   releaseName: csi-driver-smb
   namespace: kube-system
-  version: 1.19.1
+  version: 1.20.1
 
 images:
 - name: registry.k8s.io/sig-storage/livenessprobe
