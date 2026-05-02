@@ -1,0 +1,15 @@
+apiVersion: piraeus.io/v1
+kind: LinstorSatelliteConfiguration
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  name: production-controlplane-3-pools
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: production-controlplane-3
+  storagePools:
+  - lvmThinPool: {}
+    name: ssd
+    source:
+      hostDevices:
+      - /dev/sda
