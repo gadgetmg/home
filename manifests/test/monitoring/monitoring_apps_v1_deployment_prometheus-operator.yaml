@@ -34,7 +34,7 @@ spec:
         - --kubelet-endpoints=true
         - --kubelet-endpointslice=false
         - --localhost=127.0.0.1
-        - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.88.1@sha256:27da7b23b862e83581872d464a39a9477de705e86e46e3da18cf55d560caaa79
+        - --prometheus-config-reloader=quay.io/prometheus-operator/prometheus-config-reloader:v0.90.1@sha256:693faa0b87243cddca2cffb13586e4e2778b0cdf319cb2e601ba7af3fd19ef7d
         - --config-reloader-cpu-request=0
         - --config-reloader-cpu-limit=0
         - --config-reloader-memory-request=0
