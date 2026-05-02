@@ -35,4 +35,4 @@ patches:
 
 images:
 - name: ghcr.io/pl4nty/cloudflare-kubernetes-gateway
-  newTag: v0.8.1@sha256:cef110f9052c32f541fc652922f7befdc13dcaf947a243329ba0544e4d9b23fc
+  newTag: v0.8.2@sha256:ccaad4b868952b2a4872bdc90eb8b3bc75b79b472954b953e776460d2206f198
