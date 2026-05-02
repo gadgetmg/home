@@ -31,7 +31,7 @@ spec:
         - --host=prometheus-operator,prometheus-operator.monitoring.svc
         - --namespace=monitoring
         - --secret-name=k8s-admission
-        image: ghcr.io/jkroepke/kube-webhook-certgen:1.7.7
+        image: ghcr.io/jkroepke/kube-webhook-certgen:1.8.2
         imagePullPolicy: IfNotPresent
         name: create
         resources: {}
