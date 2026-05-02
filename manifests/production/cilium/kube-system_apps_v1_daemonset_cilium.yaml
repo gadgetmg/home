@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/cilium-configmap-checksum: 9265149f149ddf88048309b119f95345e5c8fc44329a742197a835c4ade7365e
+        cilium.io/cilium-configmap-checksum: 2cb47d3bcf1e94b6ed4001bba6e4e77eb54a7da2363a79c39074bea90fbcb9b9
         kubectl.kubernetes.io/default-container: cilium-agent
       labels:
         app.kubernetes.io/name: cilium-agent
@@ -60,7 +60,7 @@ spec:
           value: "1"
         - name: KUBE_CLIENT_BACKOFF_DURATION
           value: "120"
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         lifecycle:
           postStart:
@@ -102,13 +102,17 @@ spec:
             - name: require-k8s-connectivity
               value: "false"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
           timeoutSeconds: 5
         name: cilium-agent
         ports:
+        - containerPort: 9879
+          hostPort: 9879
+          name: health
+          protocol: TCP
         - containerPort: 4244
           hostPort: 4244
           name: peer-service
@@ -129,7 +133,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           periodSeconds: 30
           successThreshold: 1
@@ -161,7 +165,7 @@ spec:
             - name: brief
               value: "true"
             path: /healthz
-            port: 9879
+            port: health
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 2
@@ -220,15 +224,21 @@ spec:
           value: localhost
         - name: KUBERNETES_SERVICE_PORT
           value: "7445"
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         name: config
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            drop:
+            - ALL
         terminationMessagePolicy: FallbackToLogsOnError
         volumeMounts:
         - mountPath: /tmp
           name: tmp
       - command:
-        - sh
+        - bash
         - -ec
         - |
           cp /usr/bin/cilium-sysctlfix /hostbin/cilium-sysctlfix;
@@ -237,7 +247,7 @@ spec:
         env:
         - name: BIN_PATH
           value: /opt/cni/bin
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         name: apply-sysctl-overwrites
         securityContext:
@@ -263,7 +273,7 @@ spec:
         - /bin/bash
         - -c
         - --
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         name: mount-bpf-fs
         securityContext:
@@ -298,7 +308,7 @@ spec:
           value: localhost
         - name: KUBERNETES_SERVICE_PORT
           value: "7445"
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         name: clean-cilium-state
         securityContext:
@@ -323,10 +333,13 @@ spec:
           name: cilium-run
       - command:
         - /install-plugin.sh
-        image: quay.io/cilium/cilium:v1.18.6@sha256:42ec562a5ff6c8a860c0639f5a7611685e253fd9eb2d2fcdade693724c9166a4
+        image: quay.io/cilium/cilium:v1.19.3@sha256:2e61680593cddca8b6c055f6d4c849d87a26a1c91c7e3b8b56c7fb76ab7b7b10
         imagePullPolicy: IfNotPresent
         name: install-cni-binaries
         resources:
+          limits:
+            cpu: 1
+            memory: 1Gi
           requests:
             cpu: 100m
             memory: 10Mi
