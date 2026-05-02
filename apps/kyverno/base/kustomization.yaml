@@ -50,6 +50,6 @@ images:
 - name: ghcr.io/kyverno/cleanup-controller
   newTag: v1.18.0@sha256:a2a060b731f1ea54de2295b886c600d65af032fec18096a816424acfe8dec7d2
 - name: ghcr.io/kyverno/reports-controller
-  newTag: v1.16.3@sha256:1fd725cb7b0f80f800340ec52cc8bb5af267520a63cda9ec39543131c0a3971f
+  newTag: v1.18.0@sha256:0090bf10eabae091ceb48c38fb894580b63c4e76e40137b7972f5895f0402110
 - name: ghcr.io/kyverno/kyverno-cli
   newTag: v1.18.0@sha256:1e99a199adb36cedddf5c3e2fc24a150e26cf2e18b9e8dfe505a3c862647a4eb
