@@ -1,0 +1,13 @@
+apiVersion: v1
+data:
+  JOBSERVICE_WEBHOOK_JOB_HTTP_CLIENT_TIMEOUT: "3"
+  JOBSERVICE_WEBHOOK_JOB_MAX_RETRY: "3"
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: jobservice
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: jobservice
+    app.kubernetes.io/part-of: harbor
+  name: harbor-jobservice-tghkfh8h8c
+  namespace: harbor

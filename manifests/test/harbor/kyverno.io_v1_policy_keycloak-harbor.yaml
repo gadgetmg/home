@@ -1,0 +1,76 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: harbor
+  name: keycloak-harbor
+  namespace: harbor
+spec:
+  generateExisting: true
+  rules:
+  - context:
+    - name: secret_name
+      variable:
+        jmesPath: request.object.spec.writeConnectionSecretToRef.name
+    - name: namespace
+      variable:
+        jmesPath: request.object.metadata.namespace
+    - apiCall:
+        jmesPath: data."attribute.client_secret" | base64_decode(@)
+        method: GET
+        urlPath: /api/v1/namespaces/{{ namespace }}/secrets/{{ secret_name }}
+      name: client_secret
+    - configMap:
+        name: harbor-config-override-template
+        namespace: '{{ namespace }}'
+      name: client
+    - name: configOverrideJson
+      variable:
+        value: |
+          {
+            "auth_mode": "{{ client.data.auth_mode }}",
+            "primary_auth_mode": {{ client.data.primary_auth_mode }},
+            "project_creation_restriction": "{{ client.data.project_creation_restriction }}",
+            "read_only": {{ client.data.read_only }},
+            "token_expiration": {{ client.data.token_expiration }},
+            "oidc_name": "{{ client.data.oidc_name }}",
+            "oidc_endpoint": "{{ client.data.oidc_endpoint }}",
+            "oidc_extra_redirect_parms": "{{ client.data.oidc_extra_redirect_parms }}",
+            "oidc_client_id": "{{ client.data.oidc_client_id }}",
+            "oidc_client_secret": "{{ client_secret }}",
+            "oidc_groups_claim": "{{ client.data.oidc_groups_claim }}",
+            "oidc_admin_group": "{{ client.data.oidc_admin_group }}",
+            "oidc_scope": "{{ client.data.oidc_scope }}",
+            "oidc_verify_cert": {{ client.data.oidc_verify_cert }},
+            "oidc_auto_onboard": {{ client.data.oidc_auto_onboard }},
+            "oidc_user_claim": "{{ client.data.oidc_user_claim }}",
+            "robot_token_duration": {{ client.data.robot_token_duration }},
+            "robot_name_prefix": "{{ client.data.robot_name_prefix }}",
+            "audit_log_forward_endpoint": "{{ client.data.audit_log_forward_endpoint }}",
+            "skip_audit_log_database": {{ client.data.skip_audit_log_database }},
+            "scanner_skip_update_pulltime": {{ client.data.scanner_skip_update_pulltime }},
+            "banner_message": "{{ client.data.banner_message }}"
+          }
+    generate:
+      apiVersion: v1
+      data:
+        data:
+          CONFIG_OVERWRITE_JSON: '{{ configOverrideJson | base64_encode(@) }}'
+        type: Opaque
+      kind: Secret
+      name: harbor-config-override
+      namespace: harbor
+      synchronize: true
+    match:
+      resources:
+        kinds:
+        - openidclient.keycloak.m.crossplane.io/v1alpha1/Client
+        names:
+        - harbor
+    name: keycloak-client-harbor
+    skipBackgroundRequests: true

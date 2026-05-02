@@ -1,0 +1,10 @@
+apiVersion: group.keycloak.m.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: home-admins
+  namespace: keycloak
+spec:
+  forProvider:
+    name: Admins
+    realmIdRef:
+      name: home

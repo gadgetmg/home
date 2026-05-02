@@ -1,0 +1,12 @@
+apiVersion: keycloak.m.crossplane.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: default
+  namespace: keycloak
+spec:
+  credentials:
+    secretRef:
+      key: credentials
+      name: keycloak-keycloak-credentials
+      namespace: keycloak
+    source: Secret

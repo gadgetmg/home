@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  client_id: paperless-ngx
+  name: seigra.net
+  provider_id: keycloak
+  server_url: https://auth.10.5.0.54.nip.io/realms/home/.well-known/openid-configuration
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/component: paperless-ngx
+    app.kubernetes.io/instance: paperless-ngx
+    app.kubernetes.io/name: paperless-ngx
+    app.kubernetes.io/part-of: paperless-ngx
+  name: paperless-ngx-socialaccount-config
+  namespace: paperless-ngx

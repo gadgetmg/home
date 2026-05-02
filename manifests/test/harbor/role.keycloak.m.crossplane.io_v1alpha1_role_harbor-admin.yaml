@@ -1,0 +1,20 @@
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: harbor
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: harbor
+    seigra.net/roles: admin
+  name: harbor-admin
+  namespace: harbor
+spec:
+  forProvider:
+    clientIdRef:
+      name: harbor
+    description: admin permissions
+    name: admin
+    realmIdRef:
+      name: home
+      namespace: keycloak

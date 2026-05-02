@@ -1,0 +1,20 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  labels:
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: actual
+    app.kubernetes.io/part-of: actual
+  name: actual-server-extra-ca
+  namespace: actual
+spec:
+  sources:
+  - secret:
+      key: ca.crt
+      name: cluster-ca
+  target:
+    configMap:
+      key: bundle.pem
+    namespaceSelector:
+      matchLabels:
+        kubernetes.io/metadata.name: actual
