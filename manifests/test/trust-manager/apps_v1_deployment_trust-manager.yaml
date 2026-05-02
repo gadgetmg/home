@@ -35,7 +35,7 @@ spec:
         - --webhook-port=6443
         - --webhook-certificate-dir=/tls
         - --default-package-location=/packages/cert-manager-package-debian.json
-        image: quay.io/jetstack/trust-manager:v0.20.3@sha256:7047bcd17f31fd381d6a6866ed991d1a21b7a4d8832cb4b11b2cdb342ffc02dd
+        image: quay.io/jetstack/trust-manager:v0.22.1@sha256:23e2ab0711d77c3d25a7297d480883e8d037659db88dcdc0dab788a08a1b2097
         imagePullPolicy: IfNotPresent
         name: trust-manager
         ports:
