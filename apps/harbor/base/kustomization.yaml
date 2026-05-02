@@ -80,7 +80,7 @@ images:
 - name: ghcr.io/goharbor/harbor-core
   newTag: v2.14.2@sha256:3966507a3a63e2eae2c03145f52120f86f7e72645b41e5a5783672d9a32db428
 - name: ghcr.io/goharbor/harbor-jobservice
-  newTag: v2.14.2@sha256:62584790a748273a299d436650955a37d90aa060bdf2ed08fa541e2272d1aa23
+  newTag: v2.15.0@sha256:a22c7cccba4673b26ffb96f5c37971d85d879dd837bc82448e01c0170b68cf28
 - name: ghcr.io/goharbor/harbor-portal
   newTag: v2.14.2@sha256:a13c6aa7a8ffa2cdc06f8eec638a1059230c5c3cbd7bb333ee93ef69a675a7d1
 - name: ghcr.io/goharbor/harbor-registryctl
