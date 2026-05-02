@@ -3,7 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.19.0
-    operator.prometheus.io/version: 0.87.1
+    operator.prometheus.io/version: 0.90.1
   name: alertmanagers.monitoring.coreos.com
 spec:
   group: monitoring.coreos.com
@@ -2071,6 +2071,14 @@ spec:
                               LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate
                               to the SMTP server.
                             type: string
+                          forceImplicitTLS:
+                            description: |-
+                              forceImplicitTLS defines whether to force use of implicit TLS (direct TLS connection) for better security.
+                              true: force use of implicit TLS (direct TLS connection on any port)
+                              false: force disable implicit TLS (use explicit TLS/STARTTLS if required)
+                              nil (default): auto-detect based on port (465=implicit, other=explicit) for backward compatibility
+                              It requires Alertmanager >= v0.31.0.
+                            type: boolean
                           from:
                             description: from defines the default SMTP From header
                               field.
@@ -2318,7 +2326,7 @@ spec:
                             type: string
                         type: object
                       webex:
-                        description: webex defines the default configuration for Jira.
+                        description: webex defines the default configuration for Webex.
                         properties:
                           apiURL:
                             description: |-
@@ -2888,14 +2896,20 @@ spec:
                 type: string
               containers:
                 description: |-
-                  containers allows injecting additional containers. This is meant to
-                  allow adding an authentication proxy to an Alertmanager pod.
-                  Containers described here modify an operator generated container if they
-                  share the same name and modifications are done via a strategic merge
-                  patch. The current container names are: `alertmanager` and
-                  `config-reloader`. Overriding containers is entirely outside the scope
-                  of what the maintainers will support and by doing so, you accept that
-                  this behaviour may break at any time without notice.
+                  containers allows injecting additional containers or modifying operator
+                  generated containers. This can be used to allow adding an authentication
+                  proxy to the Pods or to change the behavior of an operator generated
+                  container. Containers described here modify an operator generated
+                  container if they share the same name and modifications are done via a
+                  strategic merge patch.
+
+                  The names of containers managed by the operator are:
+                  * `alertmanager`
+                  * `config-reloader`
+                  * `thanos-sidecar`
+
+                  Overriding containers which are managed by the operator require careful
+                  testing, especially when upgrading to a new version of the operator.
                 items:
                   description: A single application container that you want to run
                     within a pod.
@@ -3763,7 +3777,9 @@ spec:
                           type: integer
                       type: object
                     resizePolicy:
-                      description: Resources resize policy for the container.
+                      description: |-
+                        Resources resize policy for the container.
+                        This field cannot be set on ephemeral containers.
                       items:
                         description: ContainerResizePolicy represents resource resize
                           policy for the container.
@@ -4518,6 +4534,17 @@ spec:
                 x-kubernetes-list-map-keys:
                 - ip
                 x-kubernetes-list-type: map
+              hostNetwork:
+                description: |-
+                  hostNetwork controls whether the pod may use the node network namespace.
+
+                  Make sure to understand the security implications if you want to enable
+                  it (https://kubernetes.io/docs/concepts/configuration/overview/).
+
+                  When hostNetwork is enabled, this will set the DNS policy to
+                  `ClusterFirstWithHostNet` automatically (unless `.spec.dnsPolicy` is set
+                  to a different value).
+                type: boolean
               hostUsers:
                 description: |-
                   hostUsers supports the user space in Kubernetes.
@@ -4568,15 +4595,21 @@ spec:
                 type: array
               initContainers:
                 description: |-
-                  initContainers allows adding initContainers to the pod definition. Those can be used to e.g.
-                  fetch secrets for injection into the Alertmanager configuration from external sources. Any
-                  errors during the execution of an initContainer will lead to a restart of the Pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-                  InitContainers described here modify an operator
-                  generated init containers if they share the same name and modifications are
-                  done via a strategic merge patch. The current init container name is:
-                  `init-config-reloader`. Overriding init containers is entirely outside the
-                  scope of what the maintainers will support and by doing so, you accept that
-                  this behaviour may break at any time without notice.
+                  initContainers allows injecting initContainers to the Pod definition. Those
+                  can be used to e.g.  fetch secrets for injection into the Prometheus
+                  configuration from external sources. Any errors during the execution of
+                  an initContainer will lead to a restart of the Pod. More info:
+                  https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+                  InitContainers described here modify an operator generated init
+                  containers if they share the same name and modifications are done via a
+                  strategic merge patch.
+
+                  The names of init container name managed by the operator are:
+                  * `init-config-reloader`.
+
+                  Overriding init containers which are managed by the operator require
+                  careful testing, especially when upgrading to a new version of the
+                  operator.
                 items:
                   description: A single application container that you want to run
                     within a pod.
@@ -5444,7 +5477,9 @@ spec:
                           type: integer
                       type: object
                     resizePolicy:
-                      description: Resources resize policy for the container.
+                      description: |-
+                        Resources resize policy for the container.
+                        This field cannot be set on ephemeral containers.
                       items:
                         description: ContainerResizePolicy represents resource resize
                           policy for the container.
@@ -6140,10 +6175,18 @@ spec:
                 type: string
               minReadySeconds:
                 description: |-
-                  minReadySeconds defines the minimum number of seconds for which a newly created pod should be ready
-                  without any of its container crashing for it to be considered available.
+                  minReadySeconds defines the minimum number of seconds for which a newly
+                  created pod should be ready without any of its container crashing for it
+                  to be considered available.
 
                   If unset, pods will be considered available as soon as they are ready.
+
+                  When the Alertmanager version is greater than or equal to v0.30.0, the
+                  duration is also used to delay the first flush of the aggregation
+                  groups. This delay helps ensuring that all alerts have been resent by
+                  the Prometheus instances to Alertmanager after a roll-out. It is
+                  possible to override this behavior passing a custom value via
+                  `.spec.additionalArgs`.
                 format: int32
                 minimum: 0
                 type: integer
@@ -6181,6 +6224,21 @@ spec:
                       the replica count to be deleted.
                     type: string
                 type: object
+              podManagementPolicy:
+                description: |-
+                  podManagementPolicy defines the policy for creating/deleting pods when
+                  scaling up and down.
+
+                  Unlike the default StatefulSet behavior, the default policy is
+                  `Parallel` to avoid manual intervention in case a pod gets stuck during
+                  a rollout.
+
+                  Note that updating this value implies the recreation of the StatefulSet
+                  which incurs a service outage.
+                enum:
+                - OrderedReady
+                - Parallel
+                type: string
               podMetadata:
                 description: |-
                   podMetadata defines labels and annotations which are propagated to the Alertmanager pods.
@@ -6310,6 +6368,11 @@ spec:
                   if using ExternalURL and a proxy is rewriting HTTP routes of a request,
                   and the actual ExternalURL is still true, but the server serves requests
                   under a different route prefix. For example for use with `kubectl proxy`.
+                type: string
+              schedulerName:
+                description: schedulerName defines the scheduler to use for Pod scheduling.
+                  If not specified, the default scheduler is used.
+                minLength: 1
                 type: string
               secrets:
                 description: |-
@@ -6746,7 +6809,7 @@ spec:
                               resources:
                                 description: |-
                                   resources represents the minimum resources the volume should have.
-                                  If RecoverVolumeExpansionFailure feature is enabled users are allowed to specify resource requirements
+                                  Users are allowed to specify resource requirements
                                   that are lower than previous value but must still be higher than capacity recorded in the
                                   status field of the claim.
                                   More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
@@ -7001,7 +7064,7 @@ spec:
                           resources:
                             description: |-
                               resources represents the minimum resources the volume should have.
-                              If RecoverVolumeExpansionFailure feature is enabled users are allowed to specify resource requirements
+                              Users are allowed to specify resource requirements
                               that are lower than previous value but must still be higher than capacity recorded in the
                               status field of the claim.
                               More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
@@ -7157,9 +7220,7 @@ spec:
                               ignore the update for the purpose it was designed. For
                               example - a controller that\nonly is responsible for
                               resizing capacity of the volume, should ignore PVC updates
-                              that change other valid\nresources associated with PVC.\n\nThis
-                              is an alpha field and requires enabling RecoverVolumeExpansionFailure
-                              feature."
+                              that change other valid\nresources associated with PVC."
                             type: object
                             x-kubernetes-map-type: granular
                           allocatedResources:
@@ -7191,9 +7252,7 @@ spec:
                               ignore the update for the purpose it was designed. For
                               example - a controller that\nonly is responsible for
                               resizing capacity of the volume, should ignore PVC updates
-                              that change other valid\nresources associated with PVC.\n\nThis
-                              is an alpha field and requires enabling RecoverVolumeExpansionFailure
-                              feature."
+                              that change other valid\nresources associated with PVC."
                             type: object
                           capacity:
                             additionalProperties:
@@ -7326,9 +7385,10 @@ spec:
                     operator:
                       description: |-
                         Operator represents a key's relationship to the value.
-                        Valid operators are Exists and Equal. Defaults to Equal.
+                        Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
                         Exists is equivalent to wildcard for value, so that a pod can
                         tolerate all taints of a particular category.
+                        Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
                       type: string
                     tolerationSeconds:
                       description: |-
@@ -7520,6 +7580,48 @@ spec:
                   - whenUnsatisfiable
                   type: object
                 type: array
+              updateStrategy:
+                description: |-
+                  updateStrategy indicates the strategy that will be employed to update
+                  Pods in the StatefulSet when a revision is made to statefulset's Pod
+                  Template.
+
+                  The default strategy is RollingUpdate.
+                properties:
+                  rollingUpdate:
+                    description: rollingUpdate is used to communicate parameters when
+                      type is RollingUpdate.
+                    properties:
+                      maxUnavailable:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: |-
+                          maxUnavailable is the maximum number of pods that can be unavailable
+                          during the update. The value can be an absolute number (ex: 5) or a
+                          percentage of desired pods (ex: 10%). Absolute number is calculated from
+                          percentage by rounding up. This can not be 0.  Defaults to 1. This field
+                          is alpha-level and is only honored by servers that enable the
+                          MaxUnavailableStatefulSet feature. The field applies to all pods in the
+                          range 0 to Replicas-1.  That means if there is any unavailable pod in
+                          the range 0 to Replicas-1, it will be counted towards MaxUnavailable.
+                        x-kubernetes-int-or-string: true
+                    type: object
+                  type:
+                    description: |-
+                      type indicates the type of the StatefulSetUpdateStrategy.
+
+                      Default is RollingUpdate.
+                    enum:
+                    - OnDelete
+                    - RollingUpdate
+                    type: string
+                required:
+                - type
+                type: object
+                x-kubernetes-validations:
+                - message: rollingUpdate requires type to be RollingUpdate
+                  rule: '!(self.type != ''RollingUpdate'' && has(self.rollingUpdate))'
               version:
                 description: version the cluster should be on.
                 type: string
@@ -8178,7 +8280,7 @@ spec:
                                 resources:
                                   description: |-
                                     resources represents the minimum resources the volume should have.
-                                    If RecoverVolumeExpansionFailure feature is enabled users are allowed to specify resource requirements
+                                    Users are allowed to specify resource requirements
                                     that are lower than previous value but must still be higher than capacity recorded in the
                                     status field of the claim.
                                     More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
@@ -9057,6 +9159,24 @@ spec:
                                     description: Kubelet's generated CSRs will be
                                       addressed to this signer.
                                     type: string
+                                  userAnnotations:
+                                    additionalProperties:
+                                      type: string
+                                    description: |-
+                                      userAnnotations allow pod authors to pass additional information to
+                                      the signer implementation.  Kubernetes does not restrict or validate this
+                                      metadata in any way.
+
+                                      These values are copied verbatim into the `spec.unverifiedUserAnnotations` field of
+                                      the PodCertificateRequest objects that Kubelet creates.
+
+                                      Entries are subject to the same validation as object metadata annotations,
+                                      with the addition that all keys must be domain-prefixed. No restrictions
+                                      are placed on values, except an overall size limitation on the entire field.
+
+                                      Signers should document the keys and values they support. Signers should
+                                      deny requests that contain keys they do not recognize.
+                                    type: object
                                 required:
                                 - keyType
                                 - signerName
