@@ -6,7 +6,7 @@ namespace: redis-operator
 
 resources:
 - namespace.yaml
-- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.2
+- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.3
 
 components:
 - ../../../shared/components/restricted-pod-security
