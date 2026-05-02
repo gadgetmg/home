@@ -144,7 +144,7 @@ images:
 - name: quay.io/prometheus/node-exporter
   newTag: v1.11.1@sha256:0f422f62c15f154af8d8572b23d623aebfb10cec73a5c654d18f911f3f9df241
 - name: docker.io/grafana/grafana
-  newTag: 12.4.3@sha256:2e986801428cd689c2358605289c90ab37d2b39e24808874971f54c99bcdc412
+  newTag: 13.0.1@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
 - name: quay.io/kiwigrid/k8s-sidecar
   newTag: 2.7.1@sha256:2670f251f80d990635460c0116497a9cc3202069e8826f1a279af300ecd9f75e
 - name: quay.io/prometheus/alertmanager
