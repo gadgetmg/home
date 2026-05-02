@@ -6,12 +6,20 @@ namespace: redis-operator
 
 resources:
 - namespace.yaml
-- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.2
+- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.3
 
 components:
 - ../../../shared/components/restricted-pod-security
 
 images:
-- name: quay.io/spotahome/redis-operator
-  newName: ghcr.io/freshworks/redis-operator
-  newTag: v3.3.2@sha256:1ea859add694dc9da5800e8fbcb05e300ebdf3d49ced6815d53d019380d20973
+- name: ghcr.io/freshworks/redis-operator
+  newName: ghcr.io/gadgetmg/redis-operator
+  newTag: 3.3.3@sha256:e59a02576e4752e5779baec85188d53ac77c6f55391fb9e0bfd227cea54878b6
+
+labels:
+- includeSelectors: false
+  pairs:
+    app.kubernetes.io/version: 3.3.3
+
+patches:
+- path: patches/operator-group-id.yaml
