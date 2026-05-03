@@ -1,24 +1,56 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cilium.io/ciliumbgppeeringpolicy_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
-kind: CiliumBGPPeeringPolicy
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cilium.io/ciliumbgpclusterconfig_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
 metadata:
-  name: 01-bgp-peering-policy
+  name: cilium-bgp-cluster-config
 spec:
-  virtualRouters:
-  - exportPodCIDR: false
+  bgpInstances:
+  - name: instance-64512
     localASN: 64512
-    neighbors:
-    - connectRetryTimeSeconds: 120
-      eBGPMultihopTTL: 10
-      gracefulRestart:
-        enabled: true
-        restartTimeSeconds: 120
-      holdTimeSeconds: 90
-      keepAliveTimeSeconds: 30
+    peers:
+    - name: peer-10-1-2-1
       peerASN: 64512
-      peerAddress: 10.1.2.1/32
-      peerPort: 179
-    serviceSelector:
+      peerAddress: 10.1.2.1
+      peerConfigRef:
+        name: cilium-bgp-peer-config
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cilium.io/ciliumbgppeerconfig_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-bgp-peer-config
+spec:
+  timers:
+    connectRetryTimeSeconds: 120
+    holdTimeSeconds: 90
+    keepAliveTimeSeconds: 30
+  ebgpMultihop: 10
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 120
+  transport:
+    peerPort: 179
+  families:
+  - afi: ipv4
+    safi: unicast
+    advertisements:
+      matchLabels:
+        advertise: bgp
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cilium.io/ciliumbgpadvertisement_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumBGPAdvertisement
+metadata:
+  name: cilium-bgp-service-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+  - advertisementType: Service
+    service:
+      addresses:
+      - LoadBalancerIP
+    selector:
       matchExpressions:
       - key: somekey
         operator: NotIn
