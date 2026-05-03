@@ -7,6 +7,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: external-secrets
@@ -26,7 +27,3 @@ helmCharts:
           issuerRef:
             kind: ClusterIssuer
             name: cluster-ca
-
-images:
-- name: ghcr.io/external-secrets/external-secrets
-  newTag: v2.4.1@sha256:9440a40b394791a5e93f3f7e1b33399ecbdc0e38273de1d69ed83fe12936fc09

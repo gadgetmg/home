@@ -13,16 +13,6 @@ components:
 - ../../../shared/components/strip-helm-labels
 - ../../../shared/components/restricted-pod-security
 
-images:
-- name: ghcr.io/magohl/external-secrets-operator-headlamp-plugin
-  newTag: 0.1.0-beta7@sha256:7a48e51b90337ff3b5bf74e326047fc5886257b316be7c5a17e707dcce4cbd64
-- name: ghcr.io/buttahtoast/headlamp-plugins/kubevirt
-  newTag: v0.0.1-beta6@sha256:e2c9c498517b18d2d1ae47949be6a7e74453b049b6173095e3e350e301ba1222
-- name: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
-  newTag: v0.1.0@sha256:d7d0321a90c0347e2e4f9f7e362ecaa10a36592cc5ac8fd1514df11c476b43fe
-- name: ghcr.io/headlamp-k8s/headlamp
-  newTag: v0.42.0@sha256:c9754bae1d799220da0547e51ceee234f6e66ebadc138518ca73e33ecd331e59
-
 helmCharts:
 - name: headlamp
   repo: https://kubernetes-sigs.github.io/headlamp
@@ -46,7 +36,8 @@ helmCharts:
       mountPath: /headlamp/plugins
     initContainers:
     - name: install-cert-manager-plugin
-      image: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
+      # renovate: datasource=docker depName=ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager
+      image: ghcr.io/headlamp-k8s/headlamp-plugin-cert-manager:v0.1.0@sha256:d7d0321a90c0347e2e4f9f7e362ecaa10a36592cc5ac8fd1514df11c476b43fe
       command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
       volumeMounts:
       - name: plugins-dir
@@ -55,7 +46,8 @@ helmCharts:
         runAsUser: 100
         runAsGroup: 101
     - name: install-kubevirt-plugin
-      image: ghcr.io/buttahtoast/headlamp-plugins/kubevirt
+      # renovate: datasource=docker depName=ghcr.io/buttahtoast/headlamp-plugins/kubevirt
+      image: ghcr.io/buttahtoast/headlamp-plugins/kubevirt:v0.0.1-beta6@sha256:e2c9c498517b18d2d1ae47949be6a7e74453b049b6173095e3e350e301ba1222
       command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
       volumeMounts:
       - name: plugins-dir
@@ -65,7 +57,8 @@ helmCharts:
         runAsGroup: 101
     - name: install-external-secrets-operator-plugin
       command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
-      image: ghcr.io/magohl/external-secrets-operator-headlamp-plugin
+      # renovate: datasource=docker depName=ghcr.io/magohl/external-secrets-operator-headlamp-plugin
+      image: ghcr.io/magohl/external-secrets-operator-headlamp-plugin:0.1.0-beta7@sha256:7a48e51b90337ff3b5bf74e326047fc5886257b316be7c5a17e707dcce4cbd64
       volumeMounts:
       - name: plugins-dir
         mountPath: /headlamp/plugins

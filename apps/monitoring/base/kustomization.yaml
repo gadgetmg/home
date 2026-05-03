@@ -12,6 +12,7 @@ resources:
 components:
 - ../../../shared/components/strip-helm-labels
 - ../../../shared/components/crd-configurations
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: prometheus-operator-crds
@@ -141,19 +142,7 @@ helmCharts:
         window: 3m
 
 images:
-- name: quay.io/prometheus/node-exporter
-  newTag: v1.11.1@sha256:0f422f62c15f154af8d8572b23d623aebfb10cec73a5c654d18f911f3f9df241
-- name: docker.io/grafana/grafana
-  newTag: 13.0.1@sha256:0f86bada30d65ef9d0183b90c1e2682ac92d53d95da8bed322b984ea78a4a73a
-- name: quay.io/kiwigrid/k8s-sidecar
-  newTag: 2.7.1@sha256:2670f251f80d990635460c0116497a9cc3202069e8826f1a279af300ecd9f75e
-- name: quay.io/prometheus/alertmanager
-  newTag: v0.32.1@sha256:51a825c2a40acc3e338fdd00d622e01ec090f72be2b3ea46be0839cd47a4d286
-- name: quay.io/prometheus-operator/prometheus-operator
-  newTag: v0.91.0@sha256:9e53e13139218aca79ee000172de73355e9174ef2904585bfad9497fc71aae2d
 - name: quay.io/prometheus/prometheus
   newTag: v3.11.3@sha256:c0b857aead0d5793aa566adb8f49a9983d6f6031652098759d521a330cfa050f
-- name: registry.k8s.io/kube-state-metrics/kube-state-metrics
-  newTag: v2.18.0@sha256:1545919b72e3ae035454fc054131e8d0f14b42ef6fc5b2ad5c751cafa6b2130e
-- name: registry.k8s.io/prometheus-adapter/prometheus-adapter
-  newTag: v0.12.0@sha256:932eae60e2bcf9c4660d6442da066ef1a79b4ea7cc232c61c7303069216ca006
+- name: quay.io/prometheus/alertmanager
+  newTag: v0.32.1@sha256:51a825c2a40acc3e338fdd00d622e01ec090f72be2b3ea46be0839cd47a4d286

@@ -14,6 +14,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: argo-cd
@@ -40,6 +41,8 @@ helmCharts:
     redis:
       image:
         repository: ghcr.io/valkey-io/valkey
+        # renovate: datasource=docker depName=ghcr.io/valkey-io/valkey
+        tag: 9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b
     server:
       httproute:
         enabled: true
@@ -391,11 +394,3 @@ helmCharts:
             send:
             - app-sync-status-unknown
             when: app.status.sync.status == 'Unknown'
-
-images:
-- name: quay.io/argoproj/argocd
-  newTag: v3.4.1@sha256:097c922fb910e6bb0278b0e26382f88de4fa5c966564111bddd334051b0e63d7
-- name: ghcr.io/dexidp/dex
-  newTag: v2.45.1-distroless@sha256:8bfd667b384c2a2555c355c58c167e11127d2ea1a3711f1c246e4d7c5528eb2a
-- name: ghcr.io/valkey-io/valkey
-  newTag: 9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b

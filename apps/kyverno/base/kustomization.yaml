@@ -10,6 +10,7 @@ resources:
 components:
 - ../../../shared/components/strip-helm-labels
 - ../../../shared/components/kapp-noop-helm-hooks
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: kyverno
@@ -39,17 +40,3 @@ helmCharts:
       replicas: 1
       serviceMonitor:
         enabled: true
-
-images:
-- name: ghcr.io/kyverno/kyverno
-  newTag: v1.16.3@sha256:c2d71785b67357617aaddb308e7115f88261b9f36c4774bb8194a2464ec3d601
-- name: ghcr.io/kyverno/kyvernopre
-  newTag: v1.18.0@sha256:60b53ebf646f788e6e5d312f9cbf267d7537ec14afec68bde2e1dad55c552cc7
-- name: ghcr.io/kyverno/background-controller
-  newTag: v1.16.3@sha256:0a8f9369e889117a605ecb527bdc07f3bd25a9183e588a92442246824b2262b5
-- name: ghcr.io/kyverno/cleanup-controller
-  newTag: v1.18.0@sha256:a2a060b731f1ea54de2295b886c600d65af032fec18096a816424acfe8dec7d2
-- name: ghcr.io/kyverno/reports-controller
-  newTag: v1.18.0@sha256:0090bf10eabae091ceb48c38fb894580b63c4e76e40137b7972f5895f0402110
-- name: ghcr.io/kyverno/kyverno-cli
-  newTag: v1.18.0@sha256:1e99a199adb36cedddf5c3e2fc24a150e26cf2e18b9e8dfe505a3c862647a4eb

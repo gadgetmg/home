@@ -8,10 +8,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
-
-images:
-- name: docker.io/renanqts/external-dns-openwrt-webhook
-  newTag: v0.1.0@sha256:a356eb7ead234dc673108c30de761ed9f9542709fc0d8cc8332f81dd53a74d63
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: external-dns
@@ -31,7 +28,8 @@ helmCharts:
       webhook:
         image:
           repository: docker.io/renanqts/external-dns-openwrt-webhook
-          tag: latest
+          # renovate: datasource=docker depName=renanqts/external-dns-openwrt-webhook
+          tag: v0.1.0@sha256:a356eb7ead234dc673108c30de761ed9f9542709fc0d8cc8332f81dd53a74d63
         securityContext:
           privileged: false
           allowPrivilegeEscalation: false

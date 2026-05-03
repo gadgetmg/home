@@ -71,7 +71,7 @@ spec:
         - /copyandmaybepause
         - /debian-package
         - /packages
-        image: quay.io/jetstack/trust-pkg-debian-bookworm:20230311-deb12u1.2@sha256:f9a6f14926da740c2831a738393f061b22594ec5d47ff55f68b1f59cfb9bf543
+        image: quay.io/jetstack/trust-pkg-debian-bookworm:20230311-deb12u1.6@sha256:06fe54a72d1ddb268d64a022d0d9f031aa93204136a8e9a131913fc968a3889d
         imagePullPolicy: IfNotPresent
         name: cert-manager-package-debian
         securityContext:

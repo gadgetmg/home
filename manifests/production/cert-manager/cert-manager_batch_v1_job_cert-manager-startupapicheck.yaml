@@ -33,7 +33,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: quay.io/jetstack/cert-manager-startupapicheck:v1.20.2
+        image: quay.io/jetstack/cert-manager-startupapicheck:v1.20.2@sha256:4e2a69b4a0cc9627905bbeecf720f95d5153ca39cacdab923d2748e73556792b
         imagePullPolicy: IfNotPresent
         name: cert-manager-startupapicheck
         securityContext:
