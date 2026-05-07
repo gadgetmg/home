@@ -394,7 +394,7 @@ helmCharts:
 
 images:
 - name: quay.io/argoproj/argocd
-  newTag: v3.4.0@sha256:5be87aa21b327b2acb388a22a73cafd26622632cab2f6c8f21d1eec1bdff2bbb
+  newTag: v3.4.1@sha256:097c922fb910e6bb0278b0e26382f88de4fa5c966564111bddd334051b0e63d7
 - name: ghcr.io/dexidp/dex
   newTag: v2.45.1-distroless@sha256:8bfd667b384c2a2555c355c58c167e11127d2ea1a3711f1c246e4d7c5528eb2a
 - name: ghcr.io/valkey-io/valkey
