@@ -11,6 +11,7 @@ setup_file() {
     -f manifests/test/cert-manager \
     -f manifests/test/external-secrets \
     -f manifests/test/clusterissuers
+  sleep 5
 }
 
 teardown_file() {

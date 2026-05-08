@@ -9,6 +9,7 @@ setup_file() {
   kapp deploy -y -a setup \
     -f crds/test \
     -f manifests/test/redis-operator
+  sleep 5
 }
 
 teardown_file() {
