@@ -30,7 +30,7 @@ jobs:
     - name: Commit automatic fixes
       if: failure() && github.event_name == 'pull_request'
       id: pre-commit-fixes
-      uses: ryancyq/github-signed-commit@e9f3b28c80da7be66d24b8f501a5abe82a6b855f # v1.2.0
+      uses: ryancyq/github-signed-commit@d7cf0c334c26c08195ba1e0b40b8eb359349399e # v1.3.0
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
       with:
