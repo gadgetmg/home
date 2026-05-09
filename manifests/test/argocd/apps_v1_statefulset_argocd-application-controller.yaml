@@ -19,8 +19,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 1dc2bee4c107d99335e101e9189374f8133d66eb9bfce348992637af8783bd31
-        checksum/cmd-params: 84c4cb878ee5e7b783e0251cb56fbf0d018ce5bdd2cf75d0c5567995b64d49f6
+        checksum/cm: f449900b6d05052492b1e5b494fdf284b667eef256c29bd3af8a5a7718667be0
+        checksum/cmd-params: 6c5b8de5f9d4b7a19ae0fb5d528fe5a3ccf749eee6508eb8fac039308dfa702e
       labels:
         app.kubernetes.io/component: application-controller
         app.kubernetes.io/instance: argocd
