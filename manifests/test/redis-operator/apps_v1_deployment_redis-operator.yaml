@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: redis-operator
     app.kubernetes.io/name: redis-operator
-    app.kubernetes.io/version: 3.3.3
+    app.kubernetes.io/part-of: redis-operator
   name: redis-operator
   namespace: redis-operator
 spec:
@@ -25,13 +25,27 @@ spec:
       - env:
         - name: OPERATOR_GROUP_ID
           value: redis-operator
-        image: ghcr.io/gadgetmg/redis-operator:3.3.3@sha256:e59a02576e4752e5779baec85188d53ac77c6f55391fb9e0bfd227cea54878b6
+        image: ghcr.io/freshworks-oss/redis-operator:v3.3.5@sha256:8620992f8a5863ad1bd8b64129319208f11cc6e051e65e500aff67f6b8062cb4
         imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          successThreshold: 1
+          tcpSocket:
+            port: 9710
+          timeoutSeconds: 5
         name: redis-operator
         ports:
         - containerPort: 9710
           name: metrics
           protocol: TCP
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 3
+          tcpSocket:
+            port: 9710
+          timeoutSeconds: 3
         resources:
           limits:
             memory: 50Mi
@@ -46,7 +60,6 @@ spec:
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
-      restartPolicy: Always
       securityContext:
         runAsNonRoot: true
         seccompProfile:

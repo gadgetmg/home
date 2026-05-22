@@ -2,15 +2,27 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-- https://github.com/freshworks/redis-operator/manifests/kustomize/overlays/full?ref=v3.3.3
+components:
+- ../../../../shared/components/strip-helm-labels
+- ../../../../shared/components/k8s-digester
 
-images:
-- name: ghcr.io/freshworks/redis-operator
-  newName: ghcr.io/gadgetmg/redis-operator
-  newTag: 3.3.3@sha256:e59a02576e4752e5779baec85188d53ac77c6f55391fb9e0bfd227cea54878b6
-
-labels:
-- includeSelectors: false
-  pairs:
-    app.kubernetes.io/version: 3.3.3
+helmCharts:
+- name: redis-operator
+  repo: oci://ghcr.io/freshworks-oss/charts
+  releaseName: redis-operator
+  namespace: redis-operator
+  version: 3.3.4
+  valuesInline:
+    image:
+      repository: ghcr.io/freshworks-oss/redis-operator
+      # renovate: datasource=docker depName=ghcr.io/freshworks-oss/redis-operator
+      tag: v3.3.5@sha256:8620992f8a5863ad1bd8b64129319208f11cc6e051e65e500aff67f6b8062cb4
+    resources:
+      requests:
+        cpu: 10m
+        memory: 50Mi
+      limits:
+        memory: 50Mi
+    monitoring:
+      enabled: true
+      serviceMonitor: true
