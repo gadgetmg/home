@@ -7,6 +7,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: crossplane
@@ -35,7 +36,3 @@ helmCharts:
         type: RuntimeDefault
     provider:
       defaultActivations: []
-
-images:
-- name: ghcr.io/crossplane/crossplane
-  newTag: v2.2.1@sha256:3a680497a08851ed75b60d48bdefa63a1bd1eed69dee81eaded50959904775ad

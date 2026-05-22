@@ -67,7 +67,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.1@sha256:e5b148629c4b22554b60bc428195c15c992ee3fc24a45aff9873edd0a401a9e8
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.1-windows-hp@sha256:d66147764fd5936aad08581ca8f7c0e7054cf550971cc956f39d61b11c79f0ca
         imagePullPolicy: IfNotPresent
         name: smb
         resources:
@@ -87,7 +87,7 @@ spec:
         - -c
         - New-Item -ItemType Directory -Path C:\var\lib\kubelet\plugins\smb.csi.k8s.io\
           -Force
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.1@sha256:e5b148629c4b22554b60bc428195c15c992ee3fc24a45aff9873edd0a401a9e8
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.1-windows-hp@sha256:d66147764fd5936aad08581ca8f7c0e7054cf550971cc956f39d61b11c79f0ca
         imagePullPolicy: IfNotPresent
         name: init
         securityContext:

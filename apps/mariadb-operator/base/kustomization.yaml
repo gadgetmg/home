@@ -9,6 +9,7 @@ resources:
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/k8s-digester
 
 patches:
 - patch: |
@@ -65,7 +66,3 @@ helmCharts:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
-
-images:
-- name: ghcr.io/mariadb-operator/mariadb-operator
-  newTag: 26.3.0@sha256:5ef5a5d35173b9be603970e7a1625100a0538004ddca984508df2c08c4fd5c72

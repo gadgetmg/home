@@ -4,6 +4,7 @@ kind: Kustomization
 
 components:
 - ../../../shared/components/strip-helm-labels
+- ../../../shared/components/k8s-digester
 
 helmCharts:
 - name: trust-manager
@@ -20,9 +21,3 @@ helmCharts:
             enabled: true
     podDisruptionBudget:
       enabled: true
-
-images:
-- name: quay.io/jetstack/trust-manager
-  newTag: v0.22.1@sha256:23e2ab0711d77c3d25a7297d480883e8d037659db88dcdc0dab788a08a1b2097
-- name: quay.io/jetstack/trust-pkg-debian-bookworm
-  newTag: 20230311-deb12u1.2@sha256:f9a6f14926da740c2831a738393f061b22594ec5d47ff55f68b1f59cfb9bf543

@@ -10,6 +10,7 @@ resources:
 
 components:
 - ../../../../shared/components/strip-helm-labels
+- ../../../../shared/components/k8s-digester
 
 helmCharts:
 - name: keycloak

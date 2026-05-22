@@ -29,7 +29,7 @@ spec:
         - -l
         - app.kubernetes.io/part-of=kyverno
         - --replicas=0
-        image: registry.k8s.io/kubectl:v1.32.7
+        image: registry.k8s.io/kubectl:v1.32.7@sha256:3c526815897478b22becbb5d2eadf0e0c021b41248400b8bcc8c6f32132442d2
         imagePullPolicy: null
         name: kubectl
         resources:

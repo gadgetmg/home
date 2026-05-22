@@ -10,6 +10,7 @@ setup_file() {
     -f crds/test \
     -f manifests/test/cert-manager \
     -f manifests/test/cnpg
+  sleep 5
 }
 
 teardown_file() {
