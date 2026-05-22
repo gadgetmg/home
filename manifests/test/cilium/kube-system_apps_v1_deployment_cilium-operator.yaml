@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/cilium-configmap-checksum: 2cb47d3bcf1e94b6ed4001bba6e4e77eb54a7da2363a79c39074bea90fbcb9b9
+        cilium.io/cilium-configmap-checksum: 0c8cda3058f7e1905ab3c8bc1a13823e2f25b74a6fa6f9bc945f99559afe390b
       labels:
         app.kubernetes.io/name: cilium-operator
         app.kubernetes.io/part-of: cilium
