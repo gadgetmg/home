@@ -5,14 +5,15 @@ metadata:
     app.kubernetes.io/instance: redis-operator
     app.kubernetes.io/name: redis-operator
     app.kubernetes.io/part-of: redis-operator
-  name: redis-operator
+    prometheus: unknown
+  name: redis-operator-prometheus
   namespace: redis-operator
 spec:
   ports:
   - name: metrics
     port: 9710
     protocol: TCP
+    targetPort: metrics
   selector:
     app.kubernetes.io/instance: redis-operator
     app.kubernetes.io/name: redis-operator
-  type: ClusterIP

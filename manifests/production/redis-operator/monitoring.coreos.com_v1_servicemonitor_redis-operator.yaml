@@ -4,14 +4,19 @@ metadata:
   labels:
     app.kubernetes.io/instance: redis-operator
     app.kubernetes.io/name: redis-operator
-    app.kubernetes.io/version: 3.3.3
+    app.kubernetes.io/part-of: redis-operator
+    prometheus: unknown
   name: redis-operator
   namespace: redis-operator
 spec:
   endpoints:
   - interval: 15s
     port: metrics
+  namespaceSelector:
+    matchNames:
+    - redis-operator
   selector:
     matchLabels:
       app.kubernetes.io/instance: redis-operator
       app.kubernetes.io/name: redis-operator
+      prometheus: unknown
