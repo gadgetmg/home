@@ -74,6 +74,13 @@ spec:
                   port:
                     type: string
                 type: object
+              engine:
+                description: Engine selects Redis or Valkey. Omitted or empty means
+                  Redis (historical behavior).
+                enum:
+                - Redis
+                - Valkey
+                type: string
               labelWhitelist:
                 items:
                   type: string
