@@ -4,6 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/component: cleanup-controller
     app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/name: kyverno-cleanup-controller
     app.kubernetes.io/part-of: kyverno
   name: kyverno:cleanup-controller
   namespace: kyverno
@@ -19,6 +20,8 @@ rules:
   resourceNames:
   - kyverno-cleanup-controller.kyverno.svc.kyverno-tls-ca
   - kyverno-cleanup-controller.kyverno.svc.kyverno-tls-pair
+  - kyverno-cleanup-controller.kyverno.metering.kyverno-tls-ca
+  - kyverno-cleanup-controller.kyverno.metering.kyverno-tls-pair
   resources:
   - secrets
   verbs:
@@ -55,6 +58,12 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - list
 - apiGroups:
   - apps
   resources:
