@@ -13,11 +13,13 @@ metadata:
 spec:
   automountServiceAccountToken: true
   containers:
-  - command:
-    - /bin/sh
-    - -c
-    - sleep 20 ; wget -O- -S --no-check-certificate http://kyverno-svc-metrics.kyverno:8000/metrics
-    image: curlimages/curl:8.10.1@sha256:d9b4541e214bcd85196d6e92e2753ac6d0ea699f0af5741f8c6cccbfcf00ef4b
+  - args:
+    - check-http
+    - --service-name=kyverno-svc-metrics
+    - --namespace=kyverno
+    - --port=8000
+    - --path=metrics
+    image: ghcr.io/kyverno/readiness-checker:latest@sha256:f6b71ec78ce69172ae9b0161f72c978909355e94bed8e260cdc4de282a5ec41b
     imagePullPolicy: IfNotPresent
     name: test
     resources:

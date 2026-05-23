@@ -76,11 +76,11 @@ replicas:
 
 images:
 - name: ghcr.io/cloudnative-pg/postgresql
-  newTag: 18.3-minimal-trixie@sha256:8d3183ef537b17efbb2e6e6665852a7c0d8dc4a3f3b91c11f0e8a2d056799880
+  newTag: 18.4-minimal-trixie@sha256:7a91b8daee8589f4825b50da23ed545b57c43a126016af573cbdf5e424d6c2f6
 - name: ghcr.io/goharbor/harbor-core
   newTag: v2.15.1@sha256:887a85b8ea98b76bfc9f715f1a0785bb99f9a1034241513902dd6e95be922a83
 - name: ghcr.io/goharbor/harbor-jobservice
-  newTag: v2.15.0@sha256:a22c7cccba4673b26ffb96f5c37971d85d879dd837bc82448e01c0170b68cf28
+  newTag: v2.15.1@sha256:0de4fd2ce3a02d3e6591b439e4674ea085885ddf43652b44004cc67eb19dba12
 - name: ghcr.io/goharbor/harbor-portal
   newTag: v2.15.1@sha256:ac55161c57a8351807adf8f8def264bdd52667c371d0436beefebdac4341c9e2
 - name: ghcr.io/goharbor/harbor-registryctl
@@ -90,6 +90,6 @@ images:
 - name: ghcr.io/goharbor/trivy-adapter-photon
   newTag: v2.15.1@sha256:f0c52bed36c083ec4fded26cefab01e4cd58c9354c261cb3156c69f57bb50131
 - name: docker.io/oliver006/redis_exporter
-  newTag: v1.83.0-alpine@sha256:7643b705adca0ef5c700cae28cfd8798c3d3b653ef17096084359d17b70ea5ca
+  newTag: v1.84.0-alpine@sha256:9f382eef9bff285d41d03c15c1dc9c889ab75687bea248d5fa0318efa08069d9
 - name: ghcr.io/valkey-io/valkey
   newTag: 9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b

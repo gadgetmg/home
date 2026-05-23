@@ -34,6 +34,7 @@ data:
   custom-cni-conf: "false"
   datapath-mode: veth
   debug: "false"
+  debug-verbose: ""
   default-lb-service-ipam: lbipam
   direct-routing-skip-unreachable: "false"
   dnsproxy-enable-transparent-mode: "true"
@@ -146,6 +147,7 @@ data:
   nat-map-stats-entries: "32"
   nat-map-stats-interval: 30s
   node-port-bind-protection: "true"
+  nodeport-addresses: ""
   nodes-gc-interval: 5m0s
   operator-api-serve-addr: 127.0.0.1:9234
   operator-prometheus-serve-addr: :9963
