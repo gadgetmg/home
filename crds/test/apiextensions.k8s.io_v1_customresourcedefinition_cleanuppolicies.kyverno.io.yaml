@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.18.0
+    controller-gen.kubebuilder.io/version: v0.20.0
   labels:
     app.kubernetes.io/component: crds
     app.kubernetes.io/instance: kyverno
@@ -316,7 +316,8 @@ spec:
                             secrets:
                               description: |-
                                 Secrets specifies a list of secrets that are provided for credentials.
-                                Secrets must live in the Kyverno namespace.
+                                Secrets can be specified as a name (Kyverno namespace) or namespace/name.
+                                imagePullSecrets from the resource namespace are also used.
                               items:
                                 type: string
                               type: array
@@ -1609,7 +1610,8 @@ spec:
                             secrets:
                               description: |-
                                 Secrets specifies a list of secrets that are provided for credentials.
-                                Secrets must live in the Kyverno namespace.
+                                Secrets can be specified as a name (Kyverno namespace) or namespace/name.
+                                imagePullSecrets from the resource namespace are also used.
                               items:
                                 type: string
                               type: array
