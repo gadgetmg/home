@@ -24,15 +24,6 @@ replacements:
 - source:
     kind: ConfigMap
     name: config
-    fieldPath: metadata.namespace
-  targets:
-  - select:
-      kind: Namespace
-    fieldPaths:
-    - metadata.name
-- source:
-    kind: ConfigMap
-    name: config
     fieldPath: data.hostname
   targets:
   - select:

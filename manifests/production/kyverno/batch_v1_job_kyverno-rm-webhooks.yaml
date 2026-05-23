@@ -9,8 +9,9 @@ metadata:
   labels:
     app.kubernetes.io/component: hooks
     app.kubernetes.io/instance: kyverno
+    app.kubernetes.io/name: kyverno-hooks
     app.kubernetes.io/part-of: kyverno
-  name: kyverno-rm-mutatingwhconfig
+  name: kyverno-rm-webhooks
   namespace: kyverno
 spec:
   backoffLimit: 2
@@ -20,13 +21,9 @@ spec:
     spec:
       automountServiceAccountToken: true
       containers:
-      - command:
-        - kubectl
-        - delete
-        - mutatingwebhookconfiguration
-        - -l
-        - webhook.kyverno.io/managed-by=kyverno
-        image: registry.k8s.io/kubectl:v1.32.7@sha256:3c526815897478b22becbb5d2eadf0e0c021b41248400b8bcc8c6f32132442d2
+      - args:
+        - delete-webhooks
+        image: ghcr.io/kyverno/readiness-checker:v1.18.1@sha256:455400758235cf448dd9be3374ecb9e8bf543ee0c39adc880d25ed28cc7eb69d
         imagePullPolicy: null
         name: kubectl
         resources:
