@@ -22,3 +22,13 @@ spec:
       for: 15m
       labels:
         severity: critical
+    - alert: KubeControllerManagerInstanceUnreachable
+      annotations:
+        description: A KubeControllerManager instance has been unreachable for more
+          than 15 minutes.
+        runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubecontrollermanagerinstanceunreachable
+        summary: KubeControllerManager instance is unreachable.
+      expr: up{job="kube-controller-manager"} == 0
+      for: 15m
+      labels:
+        severity: warning
