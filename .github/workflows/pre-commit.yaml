@@ -22,7 +22,7 @@ jobs:
 
     - name: Create app token for commit
       if: failure() && github.event_name == 'pull_request'
-      uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+      uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
       id: app-token
       with:
         app-id: ${{ vars.APP_ID }}
@@ -30,7 +30,7 @@ jobs:
     - name: Commit automatic fixes
       if: failure() && github.event_name == 'pull_request'
       id: pre-commit-fixes
-      uses: ryancyq/github-signed-commit@d7cf0c334c26c08195ba1e0b40b8eb359349399e # v1.3.0
+      uses: ryancyq/github-signed-commit@6afa32d8aa9819faddc248e6258e9c11ec05ecc8 # v1.4.0
       env:
         GH_TOKEN: ${{ steps.app-token.outputs.token }}
       with:

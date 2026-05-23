@@ -21,3 +21,12 @@ spec:
       for: 15m
       labels:
         severity: critical
+    - alert: KubeProxyInstanceUnreachable
+      annotations:
+        description: A KubeProxy instance has been unreachable for more than 15 minutes.
+        runbook_url: https://runbooks.prometheus-operator.dev/runbooks/kubernetes/kubeproxyinstanceunreachable
+        summary: KubeProxy instance is unreachable.
+      expr: up{job="kube-proxy"} == 0
+      for: 15m
+      labels:
+        severity: warning

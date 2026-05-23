@@ -18,14 +18,14 @@ helmCharts:
 - name: prometheus-operator-crds
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: prometheus-operator-crds
-  version: 28.0.1
+  version: 29.0.0
   includeCRDs: true
 - name: kube-prometheus-stack
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: kube-prometheus-stack
   namespace: monitoring
   skipTests: true
-  version: 85.0.1
+  version: 85.3.0
   apiVersions:
   - discovery.k8s.io/v1/EndpointSlice
   valuesInline:
@@ -65,7 +65,7 @@ helmCharts:
           registry: quay.io
           repository: prometheus-operator/prometheus-config-reloader
           # renovate: datasource=docker depName=quay.io/prometheus-operator/prometheus-config-reloader
-          tag: v0.90.1@sha256:693faa0b87243cddca2cffb13586e4e2778b0cdf319cb2e601ba7af3fd19ef7d
+          tag: v0.91.0@sha256:7d9e4eea5f1139e602508871f422b0116c60e87c662f3dcd234d5ab60cd0d8c1
       thanosImage:
         registry: quay.io
         repository: thanos/thanos
