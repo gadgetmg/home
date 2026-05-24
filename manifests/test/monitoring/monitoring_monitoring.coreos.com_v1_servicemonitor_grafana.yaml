@@ -13,7 +13,6 @@ spec:
     path: /metrics
     port: http-web
     scheme: http
-    scrapeTimeout: 30s
   jobLabel: kube-prometheus-stack
   namespaceSelector:
     matchNames:
