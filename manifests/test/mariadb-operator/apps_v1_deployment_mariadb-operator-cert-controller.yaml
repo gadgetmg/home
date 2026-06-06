@@ -7,6 +7,7 @@ metadata:
   name: mariadb-operator-cert-controller
   namespace: mariadb-system
 spec:
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/instance: mariadb-operator
@@ -37,7 +38,7 @@ spec:
         env:
         - name: CLUSTER_NAME
           value: cluster.local
-        image: ghcr.io/mariadb-operator/mariadb-operator:26.3.0@sha256:5ef5a5d35173b9be603970e7a1625100a0538004ddca984508df2c08c4fd5c72
+        image: ghcr.io/mariadb-operator/mariadb-operator:26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
         imagePullPolicy: IfNotPresent
         name: cert-controller
         ports:
