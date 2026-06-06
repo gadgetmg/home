@@ -7,12 +7,15 @@ metadata:
   name: mariadb-operator
   namespace: mariadb-system
 spec:
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/instance: mariadb-operator
       app.kubernetes.io/name: mariadb-operator
   template:
     metadata:
+      annotations:
+        checksum/config: 10be48c9c0a7dafd4b6445c4ee336a172205816900e1266de69fe2dc031bc17f
       labels:
         app.kubernetes.io/instance: mariadb-operator
         app.kubernetes.io/name: mariadb-operator
@@ -38,7 +41,7 @@ spec:
         envFrom:
         - configMapRef:
             name: mariadb-operator-env
-        image: ghcr.io/mariadb-operator/mariadb-operator:26.3.0@sha256:5ef5a5d35173b9be603970e7a1625100a0538004ddca984508df2c08c4fd5c72
+        image: ghcr.io/mariadb-operator/mariadb-operator:26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
         imagePullPolicy: IfNotPresent
         name: controller
         ports:
