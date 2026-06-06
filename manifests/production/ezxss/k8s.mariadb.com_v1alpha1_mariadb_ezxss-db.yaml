@@ -32,7 +32,7 @@ spec:
         capabilities:
           drop:
           - ALL
-  image: ghcr.io/mariadb/mariadb:12.2.2-noble@sha256:71954573ee2d5d0a3658cf8d0bc4f34e87b90ffcd109752344ec6f29a49583ef
+  image: ghcr.io/mariadb/mariadb:12.3.2-noble@sha256:ddfcc5cff7d788dc7c35a2093a3ac3d3950ebe05dcfd7960213b10213842b8b4
   metrics:
     enabled: true
     exporter:
