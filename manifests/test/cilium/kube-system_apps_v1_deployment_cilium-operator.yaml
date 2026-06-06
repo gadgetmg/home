@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/cilium-configmap-checksum: 0c8cda3058f7e1905ab3c8bc1a13823e2f25b74a6fa6f9bc945f99559afe390b
+        cilium.io/cilium-configmap-checksum: 58245a3179fb8a390e678da514d848b472befed506a527a2243c1dfe36bbba36
       labels:
         app.kubernetes.io/name: cilium-operator
         app.kubernetes.io/part-of: cilium
@@ -64,22 +64,19 @@ spec:
           value: localhost
         - name: KUBERNETES_SERVICE_PORT
           value: "7445"
-        image: quay.io/cilium/operator-generic:v1.19.4@sha256:1aa2b62735e7d8ab49ee840ae59c346932024c88901579121395c1271b435f71
+        image: quay.io/cilium/operator-generic:v1.18.10@sha256:ab08d58fd12e98d9a9601d4b52beee839ff2537fba73d262aabad222454a16b3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: health
+            port: 9234
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 10
           timeoutSeconds: 3
         name: cilium-operator
         ports:
-        - containerPort: 9234
-          hostPort: 9234
-          name: health
         - containerPort: 9963
           hostPort: 9963
           name: prometheus
@@ -89,7 +86,7 @@ spec:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: health
+            port: 9234
             scheme: HTTP
           initialDelaySeconds: 0
           periodSeconds: 5
