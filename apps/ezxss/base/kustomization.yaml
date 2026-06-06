@@ -19,7 +19,7 @@ images:
 - name: ghcr.io/mariadb/mariadb
   newTag: 12.2.2-noble@sha256:71954573ee2d5d0a3658cf8d0bc4f34e87b90ffcd109752344ec6f29a49583ef
 - name: ghcr.io/mariadb-operator/mariadb-operator
-  newTag: 26.3.0@sha256:5ef5a5d35173b9be603970e7a1625100a0538004ddca984508df2c08c4fd5c72
+  newTag: 26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
 - name: docker.io/prom/mysqld-exporter
   newTag: v0.19.0@sha256:eacb4b18e2ec1e0abdf2d64851b68526c964f6d9cb3e9458fb5d5f5062ea94c1
 
