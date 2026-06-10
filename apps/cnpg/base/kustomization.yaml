@@ -15,6 +15,6 @@ helmCharts:
   repo: https://cloudnative-pg.io/charts
   releaseName: cnpg
   namespace: cnpg-system
-  version: 0.28.2
+  version: 0.28.3
   valuesInline:
     replicaCount: 1
