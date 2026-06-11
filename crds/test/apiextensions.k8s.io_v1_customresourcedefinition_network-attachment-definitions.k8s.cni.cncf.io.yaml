@@ -8,6 +8,7 @@ spec:
     kind: NetworkAttachmentDefinition
     plural: network-attachment-definitions
     shortNames:
+    - nad
     - net-attach-def
     singular: network-attachment-definition
   scope: Namespaced
