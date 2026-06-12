@@ -20,7 +20,7 @@ spec:
     - --port=443
     - --path=health/readiness
     - --https
-    image: ghcr.io/kyverno/readiness-checker:latest@sha256:f6b71ec78ce69172ae9b0161f72c978909355e94bed8e260cdc4de282a5ec41b
+    image: ghcr.io/kyverno/readiness-checker:latest@sha256:cf8fb2cec2b048c6d8ef0566bf3d0eb54ff908ba86f11176fc001ed1af7656bb
     imagePullPolicy: IfNotPresent
     name: test
     resources:
