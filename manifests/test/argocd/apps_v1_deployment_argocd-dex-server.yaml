@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 8781b1ab1ca2a00fe165530f7d733e46f4ccc4f2c95a88d4e7252ac2eeacbce6
-        checksum/cmd-params: 2381dde000f4e282f532a08751d39a0cfdcd5e950af3e182abedcf932c444737
+        checksum/cm: 9b56f6b7a9b6e2785a9ca98f561ea2b95faf42903a0fa96c0cd8a25e733a634c
+        checksum/cmd-params: c22c133c8895c948d17e36e61da5a7232cbefd7da9c6f765d09f4e818cc5ef2b
       labels:
         app.kubernetes.io/component: dex-server
         app.kubernetes.io/instance: argocd
