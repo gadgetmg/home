@@ -49,7 +49,7 @@ spec:
         env:
         - name: GOGC
           value: "30"
-        image: quay.io/prometheus-operator/prometheus-operator:v0.92.0@sha256:3db296f8aca7b3abbcbb79afac165abfe08212ad54f4301c88f68f079ec9d9b7
+        image: quay.io/prometheus-operator/prometheus-operator:v0.92.1@sha256:7d9247d2351480fc74587e24681578f815f387bafb2ee7b86a852a94c4cd3774
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
