@@ -21,3 +21,4 @@ spec:
   selector:
     matchLabels:
       app: trust-manager
+      app.kubernetes.io/component: metrics
