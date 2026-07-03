@@ -7,3 +7,4 @@ namespace: piraeus-datastore
 resources:
 - cluster.yaml
 - talos-loader-overrides.yaml
+- defaults.yaml
