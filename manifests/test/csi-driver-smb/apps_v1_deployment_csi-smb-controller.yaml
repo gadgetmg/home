@@ -27,12 +27,11 @@ spec:
         - --leader-election
         - --leader-election-namespace=kube-system
         - --extra-create-metadata=true
-        - --feature-gates=HonorPVReclaimPolicy=true
         - --retry-interval-max=30m
         env:
         - name: ADDRESS
           value: /csi/csi.sock
-        image: registry.k8s.io/sig-storage/csi-provisioner:v6.1.1@sha256:d992c36d4ddd6dfa37c81b487e5a673920e1360e2977eb779051df8da1c5787d
+        image: registry.k8s.io/sig-storage/csi-provisioner:v6.3.0@sha256:a4b0b1a37605b7b04a293e136edf7006ec1786a8eb3f4e5a945f81d667dcc371
         imagePullPolicy: IfNotPresent
         name: csi-provisioner
         resources:
@@ -58,7 +57,7 @@ spec:
         env:
         - name: ADDRESS
           value: /csi/csi.sock
-        image: registry.k8s.io/sig-storage/csi-resizer:v2.1.0@sha256:589e525cddef6d768e68da1f0bc9ffd0a24bf3add3dd010648eb7189976fde79
+        image: registry.k8s.io/sig-storage/csi-resizer:v2.2.0@sha256:a2d40c1c3ccb0c48b467125a6652c4dd5dcbf0d295641c9989581cfc690f6cf3
         imagePullPolicy: IfNotPresent
         name: csi-resizer
         resources:
@@ -79,7 +78,7 @@ spec:
         - --probe-timeout=3s
         - --http-endpoint=localhost:29642
         - --v=2
-        image: registry.k8s.io/sig-storage/livenessprobe:v2.18.0@sha256:c4cc074199c045dd73ab85f28897e2a32f4d6f38ffdba4f3b13b8007ccbd3570
+        image: registry.k8s.io/sig-storage/livenessprobe:v2.19.0@sha256:06da0d5b8908072f2e4522692aee8dc119fba7247a9658497e1153992cd777e9
         imagePullPolicy: IfNotPresent
         name: liveness-probe
         resources:
@@ -105,7 +104,7 @@ spec:
         env:
         - name: CSI_ENDPOINT
           value: unix:///csi/csi.sock
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.1@sha256:e5b148629c4b22554b60bc428195c15c992ee3fc24a45aff9873edd0a401a9e8
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.3@sha256:dc7746bb081eb7ba9a0b6858e1fbd0083ece9ecae181e2b2db670f838e748b82
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
