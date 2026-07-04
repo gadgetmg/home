@@ -6,6 +6,11 @@ metadata:
 spec:
   nodeSelector:
     seigra.net/storage: "true"
+  nodeAffinity:
+    nodeSelectorTerms:
+    - matchExpressions:
+      - key: linstor.seigra.net/evacuate
+        operator: DoesNotExist
   linstorPassphraseSecret: linstorcluster-passphrase
   highAvailabilityController:
     podTemplate:

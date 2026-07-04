@@ -14,5 +14,10 @@ spec:
           - --disable-node-taints=true
           name: ha-controller
   linstorPassphraseSecret: linstorcluster-passphrase
+  nodeAffinity:
+    nodeSelectorTerms:
+    - matchExpressions:
+      - key: linstor.seigra.net/evacuate
+        operator: DoesNotExist
   nodeSelector:
     seigra.net/storage: "true"
