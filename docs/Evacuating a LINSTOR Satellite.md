@@ -6,10 +6,17 @@ be removed from the cluster. Therefore, custom logic is configured on the
 without the label `linstor.seigra.net/evacuate`. This allows an administrator to
 manually label a node when the node needs evacuated.
 
-## Labeling a node for evacuation
+## Prepring a node for evacuation
 
-Label the node with `linstor.seigra.net/evacuate`:
+1. Cordon and drain the node:
 
-```bash
-kubectl label node/production-controlplane-1 linstor.seigra.net/evacuate=true
-```
+   ```bash
+   kubectl cordon production-controlplane-1
+   kubectl drain --delete-emptydir-data=true --ignore-daemonsets=true production-controlplane-1
+   ```
+
+1. Label the node with `linstor.seigra.net/evacuate`:
+
+   ```bash
+   kubectl label node/production-controlplane-1 linstor.seigra.net/evacuate=true
+   ```

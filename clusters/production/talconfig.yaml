@@ -12,31 +12,79 @@ nodes:
   controlPlane: true
   nodeLabels:
     seigra.net/storage: "true"
+  networkInterfaces:
+  - interface: enp2s0
+    dhcp: true
+    vip:
+      ip: 10.1.4.10
+  volumes:
+  - name: STATE
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
+  - name: EPHEMERAL
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
 - hostname: production-controlplane-2
   ipAddress: 10.1.4.12
   installDisk: /dev/nvme0n1
   controlPlane: true
   nodeLabels:
     seigra.net/storage: "true"
+  networkInterfaces:
+  - interface: enp2s0
+    dhcp: true
+    vip:
+      ip: 10.1.4.10
+  volumes:
+  - name: STATE
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
+  - name: EPHEMERAL
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
 - hostname: production-controlplane-3
   ipAddress: 10.1.4.13
   installDisk: /dev/nvme0n1
   controlPlane: true
   nodeLabels:
     seigra.net/storage: "true"
-allowSchedulingOnControlPlanes: true
-controlPlane:
   networkInterfaces:
-  - interface: eno1
+  - interface: enp2s0
     dhcp: true
     vip:
       ip: 10.1.4.10
+  volumes:
+  - name: STATE
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
+  - name: EPHEMERAL
+    encryption:
+      provider: luks2
+      keys:
+      - tpm: {}
+        slot: 0
+allowSchedulingOnControlPlanes: true
+controlPlane:
   talosImageURL: factory.talos.dev/installer-secureboot/9c4964a2abdf6ef1fd114d60d37dd8288a37731d839860169e456ec7b9ff590e
   patches:
   - '@clusterconfig/patches/containerd-config.yaml'
   - '@clusterconfig/patches/disable-hostdns.yaml'
   - '@clusterconfig/patches/disable-proxy.yaml'
-  - '@clusterconfig/patches/disk-encryption.yaml'
   - '@clusterconfig/patches/kernel-modules.yaml'
   - '@clusterconfig/patches/metrics-scraping.yaml'
   - '@clusterconfig/patches/no-cni.yaml'
