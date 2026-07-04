@@ -4,6 +4,8 @@ kind: LinstorCluster
 metadata:
   name: linstorcluster
 spec:
+  nodeSelector:
+    seigra.net/storage: "true"
   linstorPassphraseSecret: linstorcluster-passphrase
   highAvailabilityController:
     podTemplate:

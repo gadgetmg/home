@@ -12,7 +12,7 @@ tasks:
   apply:
     deps: [genconfig]
     dir: '{{.TASKFILE_DIR}}'
-    cmd: talhelper gencommand apply | sh
+    cmd: talhelper gencommand apply --extra-flags "--mode no-reboot" | sh
 
   apply-insecure:
     deps: [genconfig]
