@@ -10,14 +10,20 @@ nodes:
   ipAddress: 10.1.4.11
   installDisk: /dev/nvme0n1
   controlPlane: true
+  nodeLabels:
+    seigra.net/storage: "true"
 - hostname: production-controlplane-2
   ipAddress: 10.1.4.12
   installDisk: /dev/nvme0n1
   controlPlane: true
+  nodeLabels:
+    seigra.net/storage: "true"
 - hostname: production-controlplane-3
   ipAddress: 10.1.4.13
   installDisk: /dev/nvme0n1
   controlPlane: true
+  nodeLabels:
+    seigra.net/storage: "true"
 allowSchedulingOnControlPlanes: true
 controlPlane:
   networkInterfaces:

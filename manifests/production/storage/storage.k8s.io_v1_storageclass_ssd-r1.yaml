@@ -13,6 +13,7 @@ parameters:
   linstor.csi.linbit.com/autoPlace: "1"
   linstor.csi.linbit.com/layerList: drbd luks storage
   linstor.csi.linbit.com/storagePool: ssd
+  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
