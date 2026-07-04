@@ -13,8 +13,3 @@ spec:
     source:
       hostDevices:
       - /dev/sdb
-  - lvmThinPool: {}
-    name: hdd
-    source:
-      hostDevices:
-      - /dev/sda

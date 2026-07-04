@@ -14,11 +14,6 @@ spec:
     source:
       hostDevices:
       - /dev/sdb
-  - name: hdd
-    lvmThinPool: {}
-    source:
-      hostDevices:
-      - /dev/sda
 ---
 # yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
@@ -36,11 +31,6 @@ spec:
     source:
       hostDevices:
       - /dev/sdb
-  - name: hdd
-    lvmThinPool: {}
-    source:
-      hostDevices:
-      - /dev/sda
 ---
 # yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
