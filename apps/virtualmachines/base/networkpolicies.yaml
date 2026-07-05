@@ -36,6 +36,34 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
+  name: cdi-importer
+spec:
+  podSelector:
+    matchLabels:
+      cdi.kubevirt.io: importer
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cdi
+      podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-deployment
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.244.0.0/16
+        - 10.96.0.0/12
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.1/networkpolicy.json
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
   name: cdi-upload-server
 spec:
   podSelector:

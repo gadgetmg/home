@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cdi-importer
+  namespace: virtualmachines
+spec:
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.244.0.0/16
+        - 10.96.0.0/12
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: cdi
+      podSelector:
+        matchLabels:
+          cdi.kubevirt.io: cdi-deployment
+  podSelector:
+    matchLabels:
+      cdi.kubevirt.io: importer
+  policyTypes:
+  - Ingress
+  - Egress

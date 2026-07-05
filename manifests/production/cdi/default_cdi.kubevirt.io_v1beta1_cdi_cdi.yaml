@@ -7,7 +7,6 @@ spec:
     featureGates:
     - HonorWaitForFirstConsumer
     - WebhookPvcRendering
-    uploadProxyURLOverride: https://cdi-uploadproxy.seigra.net
   imagePullPolicy: IfNotPresent
   infra:
     nodeSelector:
