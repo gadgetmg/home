@@ -1,6 +1,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/json-patch
 - op: replace
-  path: /spec/listeners/0/hostname
+  path: /spec/tls/0/hosts/0
+  value: cdi-uploadproxy.10.5.0.56.nip.io
+- op: replace
+  path: /spec/rules/0/host
   value: cdi-uploadproxy.10.5.0.56.nip.io
 - op: add
   path: /spec/infrastructure

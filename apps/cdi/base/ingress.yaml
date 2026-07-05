@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.1/ingress.json
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cdi-uploadproxy
+  namespace: cdi
+  annotations:
+    ingress.cilium.io/tls-passthrough: enabled
+spec:
+  ingressClassName: cilium
+  tls:
+  - hosts:
+    - cdi-uploadproxy.seigra.net
+  rules:
+  - host: cdi-uploadproxy.seigra.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cdi-uploadproxy
+            port:
+              number: 443
