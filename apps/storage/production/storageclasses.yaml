@@ -4,7 +4,7 @@ kind: StorageClass
 metadata:
   name: ssd-r1
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 provisioner: linstor.csi.linbit.com
 parameters:
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
@@ -25,10 +25,11 @@ kind: StorageClass
 metadata:
   name: ssd-r2
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: linstor.csi.linbit.com
 parameters:
+  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/storagePool: ssd
@@ -46,9 +47,10 @@ kind: StorageClass
 metadata:
   name: ssd-r2-remote
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 provisioner: linstor.csi.linbit.com
 parameters:
+  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/storagePool: ssd

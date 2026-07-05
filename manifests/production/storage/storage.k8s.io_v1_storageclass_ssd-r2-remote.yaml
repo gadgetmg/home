@@ -3,7 +3,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
   name: ssd-r2-remote
 parameters:
   DrbdOptions/Disk/disk-flushes: "no"
@@ -13,6 +13,7 @@ parameters:
   linstor.csi.linbit.com/autoPlace: "2"
   linstor.csi.linbit.com/layerList: drbd luks storage
   linstor.csi.linbit.com/storagePool: ssd
+  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
