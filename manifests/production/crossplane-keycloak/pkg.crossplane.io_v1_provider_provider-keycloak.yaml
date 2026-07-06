@@ -3,6 +3,6 @@ kind: Provider
 metadata:
   name: provider-keycloak
 spec:
-  package: ghcr.io/crossplane-contrib/provider-keycloak:v2.22.0@sha256:ab114efe9f72d6c2f0e212d4fe8646d6b736fa1d43a065783ff33ae821096e50
+  package: ghcr.io/crossplane-contrib/provider-keycloak:v2.22.1@sha256:6e065ac6f7475b39e17559fa23554be4d4cdb80a18adca6f9bb4390e555af5c8
   runtimeConfigRef:
     name: provider-keycloak
