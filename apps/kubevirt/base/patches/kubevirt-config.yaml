@@ -6,6 +6,9 @@ metadata:
   namespace: kubevirt
 spec:
   configuration:
+    network:
+      defaultNetworkInterface: bridge
+      permitBridgeInterfaceOnPodNetwork: true
     developerConfiguration:
       featureGates:
       - ExpandDisks

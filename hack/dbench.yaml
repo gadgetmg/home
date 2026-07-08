@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.1/persistentvolumeclaim.json
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dbench
+  namespace: default
+spec:
+  storageClassName: ssd-r2
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.1/job.json
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dbench
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: dbench
+        image: docker.io/mmansell83/dbench:latest
+        imagePullPolicy: Always
+        env:
+        - name: DBENCH_QUICK
+          value: "no"
+        - name: DBENCH_MOUNTPOINT
+          value: /data
+        - name: FIO_SIZE
+          value: 2G
+        - name: FIO_OFFSET_INCREMENT
+          value: 500M
+        - name: FIO_DIRECT
+          value: "1"
+        volumeMounts:
+        - name: dbench
+          mountPath: /data
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: [ALL]
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+      - name: dbench
+        persistentVolumeClaim:
+          claimName: dbench
+  ttlSecondsAfterFinished: 5

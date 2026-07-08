@@ -13,6 +13,10 @@ spec:
           - --v=1
           - --disable-node-taints=true
           name: ha-controller
+  internalTLS:
+    certManager:
+      kind: Issuer
+      name: linstor-internal-ca
   linstorPassphraseSecret: linstorcluster-passphrase
   nodeAffinity:
     nodeSelectorTerms:
@@ -21,3 +25,24 @@ spec:
         operator: DoesNotExist
   nodeSelector:
     seigra.net/storage: "true"
+  properties:
+  - name: Luks/AllowDiscards
+    value: "true"
+  - name: DrbdOptions/Net/max-buffers
+    value: "36864"
+  - name: DrbdOptions/Net/rcvbuf-size
+    value: "10485760"
+  - name: DrbdOptions/Net/sndbuf-size
+    value: "10485760"
+  - name: DrbdOptions/PeerDevice/c-fill-target
+    value: "2048"
+  - name: DrbdOptions/PeerDevice/c-max-rate
+    value: "737280"
+  - name: DrbdOptions/PeerDevice/c-min-rate
+    value: "245760"
+  - name: DrbdOptions/PeerDevice/resync-rate
+    value: "245760"
+  - name: DrbdOptions/PeerDevice/c-plan-ahead
+    value: "10"
+  - name: DrbdOptions/auto-diskful
+    value: "10"

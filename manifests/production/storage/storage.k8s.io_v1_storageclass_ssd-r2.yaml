@@ -7,14 +7,13 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
   name: ssd-r2
 parameters:
-  DrbdOptions/Disk/disk-flushes: "no"
-  DrbdOptions/Disk/md-flushes: "no"
-  DrbdOptions/Net/max-buffers: "10000"
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/autoPlace: "2"
+  linstor.csi.linbit.com/encryption: "true"
   linstor.csi.linbit.com/layerList: drbd luks storage
+  linstor.csi.linbit.com/resourceGroup: ssd-r2
   linstor.csi.linbit.com/storagePool: ssd
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
+  property.linstor.csi.linbit.com/DrbdOptions/Disk/read-balancing: round-robin
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer

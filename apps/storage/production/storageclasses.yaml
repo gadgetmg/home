@@ -7,14 +7,12 @@ metadata:
     argocd.argoproj.io/sync-options: Force=true,Replace=true
 provisioner: linstor.csi.linbit.com
 parameters:
-  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
-  linstor.csi.linbit.com/autoPlace: "1"
+  linstor.csi.linbit.com/resourceGroup: ssd-r1
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/layerList: drbd luks storage
-  DrbdOptions/Disk/disk-flushes: "no"
-  DrbdOptions/Disk/md-flushes: "no"
-  DrbdOptions/Net/max-buffers: "10000"
+  linstor.csi.linbit.com/encryption: "true"
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
+  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -29,35 +27,13 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: linstor.csi.linbit.com
 parameters:
-  property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
   linstor.csi.linbit.com/autoPlace: "2"
+  linstor.csi.linbit.com/resourceGroup: ssd-r2
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/layerList: drbd luks storage
-  DrbdOptions/Disk/disk-flushes: "no"
-  DrbdOptions/Disk/md-flushes: "no"
-  DrbdOptions/Net/max-buffers: "10000"
-reclaimPolicy: Delete
-allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.1/storageclass.json
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-  name: ssd-r2-remote
-  annotations:
-    argocd.argoproj.io/sync-options: Force=true,Replace=true
-provisioner: linstor.csi.linbit.com
-parameters:
+  linstor.csi.linbit.com/encryption: "true"
+  property.linstor.csi.linbit.com/DrbdOptions/Disk/read-balancing: round-robin
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
-  linstor.csi.linbit.com/autoPlace: "2"
-  linstor.csi.linbit.com/storagePool: ssd
-  linstor.csi.linbit.com/layerList: drbd luks storage
-  DrbdOptions/Disk/disk-flushes: "no"
-  DrbdOptions/Disk/md-flushes: "no"
-  DrbdOptions/Net/max-buffers: "10000"
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer

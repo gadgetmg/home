@@ -5,3 +5,10 @@ metadata:
   name: defaults
 spec:
   deletionPolicy: Evacuate
+  internalTLS:
+    certManager:
+      name: linstor-internal-ca
+      kind: Issuer
+  podTemplate:
+    spec:
+      hostNetwork: true

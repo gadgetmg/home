@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: linstor-satellite
+  name: linstor-satellite
+  namespace: piraeus-datastore
+spec:
+  podMetricsEndpoints:
+  - port: prometheus
+    relabelings:
+    - action: replace
+      sourceLabels:
+      - __meta_kubernetes_pod_node_name
+      targetLabel: node
+    scheme: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: linstor-satellite

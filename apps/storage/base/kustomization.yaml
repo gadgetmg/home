@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: piraeus-datastore
 
 resources:
+- linstor-internal-ca.yaml
 - cluster.yaml
 - talos-loader-overrides.yaml
 - defaults.yaml

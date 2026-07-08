@@ -5,3 +5,10 @@ metadata:
   namespace: piraeus-datastore
 spec:
   deletionPolicy: Evacuate
+  internalTLS:
+    certManager:
+      kind: Issuer
+      name: linstor-internal-ca
+  podTemplate:
+    spec:
+      hostNetwork: true
