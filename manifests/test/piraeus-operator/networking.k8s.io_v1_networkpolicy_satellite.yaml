@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  labels:
+    app.kubernetes.io/component: linstor-satellite
+  name: satellite
+  namespace: piraeus-datastore
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: linstor-controller
+    ports:
+    - endPort: 3367
+      port: 3366
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: linstor-satellite
+    ports:
+    - endPort: 9000
+      port: 7000
+      protocol: TCP
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: monitoring
+    ports:
+    - port: prometheus
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: linstor-satellite
+  policyTypes:
+  - Ingress

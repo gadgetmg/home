@@ -11,6 +11,9 @@ spec:
       - ExpandDisks
       - Snapshot
     imagePullPolicy: IfNotPresent
+    network:
+      defaultNetworkInterface: bridge
+      permitBridgeInterfaceOnPodNetwork: true
   customizeComponents: {}
   imagePullPolicy: IfNotPresent
   workloadUpdateStrategy: {}

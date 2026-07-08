@@ -1,11 +1,11 @@
 apiVersion: v1
 data:
   agent-not-ready-taint-key: node.cilium.io/agent-not-ready
-  auto-direct-node-routes: "false"
+  auto-direct-node-routes: "true"
   bgp-router-id-allocation-ip-pool: ""
   bgp-router-id-allocation-mode: default
   bgp-secrets-namespace: kube-system
-  bpf-distributed-lru: "false"
+  bpf-distributed-lru: "true"
   bpf-events-drop-enabled: "true"
   bpf-events-policy-verdict-enabled: "true"
   bpf-events-trace-enabled: "true"
@@ -16,7 +16,7 @@ data:
   bpf-lb-mode-annotation: "false"
   bpf-lb-sock: "false"
   bpf-lb-source-range-all-types: "false"
-  bpf-map-dynamic-size-ratio: "0.0025"
+  bpf-map-dynamic-size-ratio: "0.08"
   bpf-policy-map-max: "16384"
   bpf-policy-stats-map-max: "65536"
   bpf-root: /sys/fs/bpf
@@ -30,7 +30,7 @@ data:
   cni-log-file: /var/run/cilium/cilium-cni.log
   controller-group-metrics: write-cni-file sync-host-ips sync-lb-maps-with-k8s-services
   custom-cni-conf: "false"
-  datapath-mode: veth
+  datapath-mode: netkit-l2
   debug: "false"
   debug-verbose: ""
   default-lb-service-ipam: lbipam
@@ -64,7 +64,7 @@ data:
   enable-ingress-secrets-sync: "true"
   enable-internal-traffic-policy: "true"
   enable-ipv4: "true"
-  enable-ipv4-big-tcp: "false"
+  enable-ipv4-big-tcp: "true"
   enable-ipv4-masquerade: "true"
   enable-ipv6: "false"
   enable-ipv6-big-tcp: "false"
@@ -86,9 +86,7 @@ data:
   enable-tcx: "true"
   enable-vtep: "false"
   enable-well-known-identities: "false"
-  enable-wireguard: "true"
   enable-xt-socket-fallback: "true"
-  encrypt-node: "true"
   enforce-ingress-https: "true"
   envoy-access-log-buffer-size: "4096"
   envoy-base-id: "0"
@@ -129,6 +127,7 @@ data:
   ipam: kubernetes
   ipam-cilium-node-update-rate: 15s
   iptables-random-fully: "false"
+  ipv4-native-routing-cidr: 0.0.0.0/0
   k8s-require-ipv4-pod-cidr: "false"
   k8s-require-ipv6-pod-cidr: "false"
   kube-proxy-replacement: "true"
@@ -164,7 +163,7 @@ data:
   proxy-xff-num-trusted-hops-egress: "0"
   proxy-xff-num-trusted-hops-ingress: "0"
   remove-cilium-node-taints: "true"
-  routing-mode: tunnel
+  routing-mode: native
   service-no-backend-response: reject
   set-cilium-is-up-condition: "true"
   set-cilium-node-taints: "true"
@@ -183,7 +182,6 @@ data:
   vtep-endpoint: ""
   vtep-mac: ""
   vtep-mask: ""
-  wireguard-persistent-keepalive: 0s
   write-cni-conf-when-ready: /host/etc/cni/net.d/05-cilium.conflist
 kind: ConfigMap
 metadata:

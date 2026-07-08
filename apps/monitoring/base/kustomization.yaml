@@ -88,6 +88,10 @@ helmCharts:
             replacement: ${1}
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+    prometheus:
+      prometheusSpec:
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
 - name: prometheus-adapter
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: prometheus-adapter

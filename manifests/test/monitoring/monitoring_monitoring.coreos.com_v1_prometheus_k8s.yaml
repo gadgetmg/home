@@ -44,9 +44,7 @@ spec:
   logLevel: info
   paused: false
   podMonitorNamespaceSelector: {}
-  podMonitorSelector:
-    matchLabels:
-      release: kube-prometheus-stack
+  podMonitorSelector: {}
   portName: http-web
   probeNamespaceSelector: {}
   probeSelector:
@@ -72,9 +70,7 @@ spec:
       type: RuntimeDefault
   serviceAccountName: k8s-prometheus
   serviceMonitorNamespaceSelector: {}
-  serviceMonitorSelector:
-    matchLabels:
-      release: kube-prometheus-stack
+  serviceMonitorSelector: {}
   shards: 1
   tsdb:
     outOfOrderTimeWindow: 0s

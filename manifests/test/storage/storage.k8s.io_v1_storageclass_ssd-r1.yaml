@@ -3,15 +3,13 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
   name: ssd-r1
 parameters:
-  DrbdOptions/Disk/disk-flushes: "no"
-  DrbdOptions/Disk/md-flushes: "no"
-  DrbdOptions/Net/max-buffers: "10000"
-  linstor.csi.linbit.com/allowRemoteVolumeAccess: "false"
-  linstor.csi.linbit.com/autoPlace: "1"
+  linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
+  linstor.csi.linbit.com/encryption: "true"
   linstor.csi.linbit.com/layerList: drbd luks storage
+  linstor.csi.linbit.com/resourceGroup: ssd-r1
   linstor.csi.linbit.com/storagePool: ssd
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
 provisioner: linstor.csi.linbit.com

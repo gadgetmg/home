@@ -6,3 +6,5 @@ namespace: piraeus-datastore
 
 resources:
 - https://github.com/piraeusdatastore/piraeus-operator/config/default?ref=v2.10.7
+- https://github.com/piraeusdatastore/piraeus-operator/config/extras/monitoring?ref=v2.10.7
+- https://github.com/piraeusdatastore/piraeus-operator/config/extras/network-policy?ref=v2.10.7
