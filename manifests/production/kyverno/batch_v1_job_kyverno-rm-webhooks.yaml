@@ -23,7 +23,7 @@ spec:
       containers:
       - args:
         - delete-webhooks
-        image: ghcr.io/kyverno/readiness-checker:v1.18.1@sha256:455400758235cf448dd9be3374ecb9e8bf543ee0c39adc880d25ed28cc7eb69d
+        image: ghcr.io/kyverno/readiness-checker:v1.18.2@sha256:4fb1870b1a4adfed0fa7a32b7c3bcaf736fb889c7e1947ee8b20710bc2f5a5ce
         imagePullPolicy: null
         name: kubectl
         resources:
