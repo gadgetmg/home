@@ -47,7 +47,7 @@ helmCharts:
         runAsGroup: 101
     - name: install-kubevirt-plugin
       # renovate: datasource=docker depName=ghcr.io/naval-group/headlamp-kubevirt
-      image: ghcr.io/naval-group/headlamp-kubevirt:0.2.2@sha256:7cdff58fdda4f3ad7b7a208b83744ec82648795056cf726f0ce5df2501ee3d14
+      image: ghcr.io/naval-group/headlamp-kubevirt:sha-bd4b26f@sha256:f31259becc8b36178622c77319513acb9eaf5c583217a2244a328e7615701f97
       command: ["/bin/sh", "-c", "cp -r /plugins/* /headlamp/plugins/"]
       volumeMounts:
       - name: plugins-dir
