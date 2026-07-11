@@ -7,6 +7,11 @@ spec:
     featureGates:
     - HonorWaitForFirstConsumer
     - WebhookPvcRendering
+    podResourceRequirements:
+      limits:
+        memory: 1G
+      requests:
+        memory: 500M
   imagePullPolicy: IfNotPresent
   infra:
     nodeSelector:

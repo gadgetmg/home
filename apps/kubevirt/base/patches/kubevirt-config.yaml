@@ -13,3 +13,4 @@ spec:
       featureGates:
       - ExpandDisks
       - Snapshot
+      - Template
