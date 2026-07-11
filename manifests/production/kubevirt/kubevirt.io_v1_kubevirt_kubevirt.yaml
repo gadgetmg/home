@@ -10,6 +10,7 @@ spec:
       featureGates:
       - ExpandDisks
       - Snapshot
+      - Template
     imagePullPolicy: IfNotPresent
     network:
       defaultNetworkInterface: bridge
