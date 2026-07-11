@@ -13,10 +13,13 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: enp2s0
+  - interface: br0
     dhcp: true
     vip:
       ip: 10.1.4.10
+    bridge:
+      interfaces:
+      - enp2s0
   volumes:
   - name: STATE
     encryption:
@@ -37,10 +40,13 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: enp2s0
+  - interface: br0
     dhcp: true
     vip:
       ip: 10.1.4.10
+    bridge:
+      interfaces:
+      - enp2s0
   volumes:
   - name: STATE
     encryption:
@@ -61,10 +67,13 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: enp2s0
+  - interface: br0
     dhcp: true
     vip:
       ip: 10.1.4.10
+    bridge:
+      interfaces:
+      - enp2s0
   volumes:
   - name: STATE
     encryption:
