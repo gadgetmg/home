@@ -11,6 +11,8 @@ spec:
       - ExpandDisks
       - Snapshot
       - Template
+      - VMExport
+      - DataVolumes
     imagePullPolicy: IfNotPresent
     network:
       defaultNetworkInterface: bridge
