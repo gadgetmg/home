@@ -13,13 +13,26 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: br0
+  - interface: enp2s0
+    vlans:
+    - vlanId: 2
+    - vlanId: 4
+    - vlanId: 10
+  - interface: br-cluster
     dhcp: true
     vip:
       ip: 10.1.4.10
     bridge:
       interfaces:
-      - enp2s0
+      - enp2s0.4
+  - interface: br-server
+    bridge:
+      interfaces:
+      - enp2s0.2
+  - interface: br-lan
+    bridge:
+      interfaces:
+      - enp2s0.10
   volumes:
   - name: STATE
     encryption:
@@ -40,13 +53,26 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: br0
+  - interface: enp2s0
+    vlans:
+    - vlanId: 2
+    - vlanId: 4
+    - vlanId: 10
+  - interface: br-cluster
     dhcp: true
     vip:
       ip: 10.1.4.10
     bridge:
       interfaces:
-      - enp2s0
+      - enp2s0.4
+  - interface: br-server
+    bridge:
+      interfaces:
+      - enp2s0.2
+  - interface: br-lan
+    bridge:
+      interfaces:
+      - enp2s0.10
   volumes:
   - name: STATE
     encryption:
@@ -67,13 +93,26 @@ nodes:
   nodeLabels:
     seigra.net/storage: "true"
   networkInterfaces:
-  - interface: br0
+  - interface: enp2s0
+    vlans:
+    - vlanId: 2
+    - vlanId: 4
+    - vlanId: 10
+  - interface: br-cluster
     dhcp: true
     vip:
       ip: 10.1.4.10
     bridge:
       interfaces:
-      - enp2s0
+      - enp2s0.4
+  - interface: br-server
+    bridge:
+      interfaces:
+      - enp2s0.2
+  - interface: br-lan
+    bridge:
+      interfaces:
+      - enp2s0.10
   volumes:
   - name: STATE
     encryption:
