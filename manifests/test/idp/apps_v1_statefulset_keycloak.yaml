@@ -63,7 +63,7 @@ spec:
             secretKeyRef:
               key: password
               name: keycloak-db-app
-        image: quay.io/keycloak/keycloak:26.6.3@sha256:5fdbf2dbb5897cc34e82de49d13e23db011f9925089dbc555fc095f2c8bc1dac
+        image: quay.io/keycloak/keycloak:26.7.0@sha256:2eb3cd316835c990e69e26ade292ffa78f6fb0db7d5fc6377463c162e1979ac0
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -134,7 +134,7 @@ spec:
         - sh
         - -c
         - cp -r /opt/keycloak/lib/quarkus/* /shared-quarkus/
-        image: quay.io/keycloak/keycloak:26.6.3@sha256:5fdbf2dbb5897cc34e82de49d13e23db011f9925089dbc555fc095f2c8bc1dac
+        image: quay.io/keycloak/keycloak:26.7.0@sha256:2eb3cd316835c990e69e26ade292ffa78f6fb0db7d5fc6377463c162e1979ac0
         imagePullPolicy: Always
         name: copy-quarkus-lib
         resources: {}
