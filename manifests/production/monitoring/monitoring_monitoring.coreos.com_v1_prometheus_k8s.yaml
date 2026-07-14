@@ -72,6 +72,15 @@ spec:
   serviceMonitorNamespaceSelector: {}
   serviceMonitorSelector: {}
   shards: 1
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+        storageClassName: ssd-r2
   tsdb:
     outOfOrderTimeWindow: 0s
   version: v3.13.0-distroless

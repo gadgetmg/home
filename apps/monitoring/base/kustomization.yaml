@@ -92,6 +92,15 @@ helmCharts:
       prometheusSpec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ssd-r2
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 100Gi
 - name: prometheus-adapter
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: prometheus-adapter
