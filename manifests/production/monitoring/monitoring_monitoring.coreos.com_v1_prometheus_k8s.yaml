@@ -83,5 +83,5 @@ spec:
         storageClassName: ssd-r2
   tsdb:
     outOfOrderTimeWindow: 0s
-  version: v3.13.0-distroless
+  version: v3.13.1-distroless
   walCompression: true
