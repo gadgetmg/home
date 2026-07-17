@@ -7,14 +7,5 @@ includes:
     dir: .
     flatten: true
     vars:
-      APP: virtualmachines
+      APP: default-namespace
       ENVS_ROOT: .
-
-tasks:
-  prereqs:
-    deps:
-    - :ipam
-    - :clusterissuers
-    - :storage
-    - :kubevirt
-    - :cdi
