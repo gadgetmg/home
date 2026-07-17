@@ -70,7 +70,7 @@ helmCharts:
         registry: quay.io
         repository: thanos/thanos
         # renovate: datasource=docker depName=quay.io/thanos/thanos
-        tag: v0.42.0@sha256:cc1975aaeb64a744dc11319892345f4822f72860f0efcff030111fe08328bfa4
+        tag: v0.42.2@sha256:6249f7aaadd3695df637fb2eb4cb9a9955611eee691c3970892fe9c0dc3f2db6
     cleanPrometheusOperatorObjectNames: true
     prometheus-node-exporter:
       namespaceOverride: kube-system
