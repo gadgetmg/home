@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: virtualmachine-port-forward-ingress
-  namespace: virtualmachines
+  name: kubevirt-port-forward-ingress
+  namespace: default
 spec:
   ingress:
   - from:

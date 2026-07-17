@@ -15,6 +15,7 @@ includes:
   crossplane-keycloak: crossplane-keycloak/tasks.yaml
   csi-driver-smb: csi-driver-smb/tasks.yaml
   csi-snapshotter: csi-snapshotter/tasks.yaml
+  default-namespace: default-namespace/tasks.yaml
   external-dns: external-dns/tasks.yaml
   external-secrets: external-secrets/tasks.yaml
   ezxss: ezxss/tasks.yaml
@@ -35,4 +36,3 @@ includes:
   storage: storage/tasks.yaml
   trust-manager: trust-manager/tasks.yaml
   velero: velero/tasks.yaml
-  virtualmachines: virtualmachines/tasks.yaml

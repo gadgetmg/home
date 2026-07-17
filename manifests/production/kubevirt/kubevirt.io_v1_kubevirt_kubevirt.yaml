@@ -14,9 +14,10 @@ spec:
       - VMExport
       - DataVolumes
     imagePullPolicy: IfNotPresent
-    network:
-      defaultNetworkInterface: bridge
-      permitBridgeInterfaceOnPodNetwork: true
+    seccompConfiguration:
+      virtualMachineInstanceProfile:
+        customProfile:
+          runtimeDefaultProfile: true
   customizeComponents: {}
   imagePullPolicy: IfNotPresent
   workloadUpdateStrategy: {}
