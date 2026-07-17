@@ -11,6 +11,7 @@ metadata:
 spec:
   podManagementPolicy: OrderedReady
   replicas: 2
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app.kubernetes.io/component: keycloak
