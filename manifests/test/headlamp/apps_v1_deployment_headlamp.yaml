@@ -102,7 +102,7 @@ spec:
         - /bin/sh
         - -c
         - cp -r /plugins/* /headlamp/plugins/
-        image: ghcr.io/naval-group/headlamp-kubevirt:sha-bd4b26f@sha256:f31259becc8b36178622c77319513acb9eaf5c583217a2244a328e7615701f97
+        image: ghcr.io/naval-group/headlamp-kubevirt:main@sha256:0854b1479cdced9d09ddf5f75335de91573d7de346d05115ff883bc3839c4bf8
         name: install-kubevirt-plugin
         securityContext:
           allowPrivilegeEscalation: false
