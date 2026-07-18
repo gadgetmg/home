@@ -13,7 +13,6 @@ parameters:
   linstor.csi.linbit.com/resourceGroup: ssd-r2
   linstor.csi.linbit.com/storagePool: ssd
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
-  property.linstor.csi.linbit.com/DrbdOptions/Disk/read-balancing: round-robin
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer

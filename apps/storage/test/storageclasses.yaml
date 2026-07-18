@@ -32,7 +32,6 @@ parameters:
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/layerList: drbd luks storage
   linstor.csi.linbit.com/encryption: "true"
-  property.linstor.csi.linbit.com/DrbdOptions/Disk/read-balancing: round-robin
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
 reclaimPolicy: Delete
 allowVolumeExpansion: true

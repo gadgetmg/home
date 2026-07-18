@@ -12,6 +12,10 @@ parameters:
   linstor.csi.linbit.com/resourceGroup: ssd-r1
   linstor.csi.linbit.com/storagePool: ssd
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-max-rate: "532480"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-min-rate: "177493"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/resync-rate: "177493"
+  property.linstor.csi.linbit.com/StorDriver/ZfscreateOptions: -o volblocksize=16k
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer

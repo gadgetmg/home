@@ -13,6 +13,10 @@ parameters:
   linstor.csi.linbit.com/encryption: "true"
   linstor.csi.linbit.com/allowRemoteVolumeAccess: "true"
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: Delete
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-max-rate: "532480"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-min-rate: "177493"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/resync-rate: "177493"
+  property.linstor.csi.linbit.com/StorDriver/ZfscreateOptions: -o volblocksize=16k
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
@@ -32,8 +36,11 @@ parameters:
   linstor.csi.linbit.com/storagePool: ssd
   linstor.csi.linbit.com/layerList: drbd luks storage
   linstor.csi.linbit.com/encryption: "true"
-  property.linstor.csi.linbit.com/DrbdOptions/Disk/read-balancing: round-robin
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-max-rate: "532480"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-min-rate: "177493"
+  property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/resync-rate: "177493"
+  property.linstor.csi.linbit.com/StorDriver/ZfscreateOptions: -o volblocksize=16k
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: WaitForFirstConsumer
