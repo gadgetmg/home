@@ -7,3 +7,4 @@ machine:
       - usermode_helper=disabled
     - name: drbd_transport_tcp
     - name: dm-thin-pool
+    - name: zfs

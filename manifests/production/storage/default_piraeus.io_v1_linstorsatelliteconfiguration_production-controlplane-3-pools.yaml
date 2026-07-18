@@ -8,8 +8,8 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-3
   storagePools:
-  - lvmThinPool: {}
-    name: ssd
+  - name: ssd
     source:
       hostDevices:
       - /dev/sda
+    zfsThinPool: {}
