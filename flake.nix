@@ -9,8 +9,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-    krewfile = {
-      url = "github:brumhard/krewfile";
+    krew2nix = {
+      url = "github:a1994sc/krew2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -28,8 +28,8 @@
         system,
         ...
       }: let
-        krewfile = inputs.krewfile.packages.${system}.default;
         talhelper = inputs.talhelper.packages.${system}.default;
+        kubectl = inputs.krew2nix.packages.${system}.kubectl;
       in {
         devShells = let
           kapp = pkgs.kapp.overrideAttrs {
@@ -72,10 +72,22 @@
                 kapp
                 kfilt
                 kind
-                krew
-                krewfile
                 kubeconform
-                kubectl
+                (kubectl.withKrewPlugins (p: [
+                  p.cilium
+                  p.cnpg
+                  p.ctx
+                  p.images
+                  p.linstor
+                  p.ns
+                  p.oidc-login
+                  p.pv-migrate
+                  p.resource-capacity
+                  p.sniff
+                  p.tree
+                  p.view-secret
+                  p.kor
+                ]))
                 kubernetes-helm
                 kubeseal
                 kubevirt
@@ -91,18 +103,11 @@
                 velero
                 yamlfmt
                 yq-go
-                (python3.withPackages (
-                  python-pkgs:
-                    with python-pkgs; [
-                      pyaml
-                      deepdiff
-                    ]
-                ))
+                (python3.withPackages (p: [
+                  p.pyaml
+                  p.deepdiff
+                ]))
               ];
-              shellHook = ''
-                export PATH="$HOME/.krew/bin:$PATH"
-                krewfile
-              '';
             };
         };
       };

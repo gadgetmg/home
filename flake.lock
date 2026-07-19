@@ -36,24 +36,26 @@
         "type": "github"
       }
     },
-    "krewfile": {
+    "krew2nix": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "systems": "systems_2",
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1767002854,
-        "narHash": "sha256-4PE60B0aZQyT1MCf6fCLwI6uAk3vYpjuR6I/3XZsy6o=",
-        "owner": "brumhard",
-        "repo": "krewfile",
-        "rev": "dc1e6ebe5c5d4b81cfd6239f8451d5e8090bc6f9",
+        "lastModified": 1784420396,
+        "narHash": "sha256-7MrB7kx9yNQelr+3P98ZYqhYOQTKKxQLneNhzpS/zFA=",
+        "owner": "a1994sc",
+        "repo": "krew2nix",
+        "rev": "c2f48fc39be1b5878b2f08a99cac40088dfd5f23",
         "type": "github"
       },
       "original": {
-        "owner": "brumhard",
-        "repo": "krewfile",
+        "owner": "a1994sc",
+        "repo": "krew2nix",
         "type": "github"
       }
     },
@@ -91,12 +93,27 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "krewfile": "krewfile",
+        "krew2nix": "krew2nix",
         "nixpkgs": "nixpkgs",
         "talhelper": "talhelper"
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -131,6 +148,27 @@
       "original": {
         "owner": "budimanjojo",
         "repo": "talhelper",
+        "type": "github"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "krew2nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
         "type": "github"
       }
     }
