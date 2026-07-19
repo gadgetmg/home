@@ -4,7 +4,7 @@ kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-1-pools
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-1
@@ -21,7 +21,7 @@ kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-2-pools
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-2
@@ -38,7 +38,7 @@ kind: LinstorSatelliteConfiguration
 metadata:
   name: production-controlplane-3-pools
   annotations:
-    argocd.argoproj.io/sync-options: Replace=true
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
 spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-3
