@@ -12,4 +12,4 @@ components:
 
 images:
 - name: ghcr.io/crossplane-contrib/provider-keycloak
-  newTag: v2.24.0@sha256:31847a0a0f10d6f3fa578f35e7bae9c8133b0f30dd035cbc57fb00434c2272a4
+  newTag: v2.24.0@sha256:d8ac64a848745724dc200b749949c750472fcccf1a65b07348f60285a498e19e
