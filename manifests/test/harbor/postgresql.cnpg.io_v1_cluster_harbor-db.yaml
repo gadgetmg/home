@@ -14,7 +14,7 @@ spec:
   bootstrap:
     initdb:
       database: registry
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-minimal-trixie@sha256:4c993b05333eedf197565deda1234334a4e1ff63fd8a5e6e3371cf261d2bb73e
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-minimal-trixie@sha256:24d229d801663f95b584416f8ebdfad4849b1a3fa4cfcf95a7f026df7aa6e22d
   instances: 3
   storage:
     size: 10Gi
