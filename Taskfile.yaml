@@ -6,7 +6,7 @@ output: group
 
 env:
   # renovate: datasource=github-releases depName=siderolabs/talos
-  TALOS_VERSION: v1.13.6
+  TALOS_VERSION: v1.13.7
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
   KUBERNETES_VERSION: v1.36.1
 
