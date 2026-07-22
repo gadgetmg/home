@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/part-of: ezxss
 spec:
   replicas: 3
+  affinity:
+    antiAffinityEnabled: true
   galera:
     enabled: true
     config:

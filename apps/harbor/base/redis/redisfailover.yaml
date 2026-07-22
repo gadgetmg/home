@@ -10,8 +10,14 @@ spec:
   redis:
     replicas: 3
     affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution: []
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: redis
+            app.kubernetes.io/instance: harbor
+            app.kubernetes.io/name: harbor
+            app.kubernetes.io/part-of: redis-failover
+        topologyKey: kubernetes.io/hostname
     image: ghcr.io/valkey-io/valkey
     exporter:
       enabled: true
@@ -46,7 +52,14 @@ spec:
     replicas: 3
     affinity:
       podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution: []
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: sentinel
+              app.kubernetes.io/instance: harbor
+              app.kubernetes.io/name: harbor
+              app.kubernetes.io/part-of: redis-failover
+          topologyKey: kubernetes.io/hostname
     image: ghcr.io/valkey-io/valkey
     exporter:
       enabled: true

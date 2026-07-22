@@ -12,8 +12,14 @@ metadata:
 spec:
   redis:
     affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution: []
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            app.kubernetes.io/component: redis
+            app.kubernetes.io/instance: harbor
+            app.kubernetes.io/name: harbor
+            app.kubernetes.io/part-of: redis-failover
+        topologyKey: kubernetes.io/hostname
     containerSecurityContext:
       allowPrivilegeEscalation: false
       capabilities:
@@ -48,7 +54,14 @@ spec:
   sentinel:
     affinity:
       podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution: []
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: sentinel
+              app.kubernetes.io/instance: harbor
+              app.kubernetes.io/name: harbor
+              app.kubernetes.io/part-of: redis-failover
+          topologyKey: kubernetes.io/hostname
     containerSecurityContext:
       allowPrivilegeEscalation: false
       capabilities:

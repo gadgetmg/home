@@ -1,0 +1,17 @@
+apiVersion: v1alpha1
+kind: KubeEtcdEncryptionConfig
+$$patch: delete
+---
+apiVersion: v1alpha1
+kind: KubeEtcdEncryptionConfig
+config:
+  resources:
+  - providers:
+    - secretbox:
+        keys:
+        - name: key2
+          secret: 4lue4/sMue5Hb3upBVVLUXKiZa2rupW3UZZs/GeFQkY=
+        - name: key1
+          secret: 4lue4/sMue5Hb3upBVVLUXKiZa2rupW3UZZs/GeFQkY=
+    resources:
+    - secrets
