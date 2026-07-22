@@ -1,0 +1,18 @@
+apiVersion: v1alpha1
+kind: RawVolumeConfig
+name: linstor-ssd-sata-vol1
+provisioning:
+  diskSelector:
+    match: "!system_disk && !disk.rotational && disk.transport == 'sata'"
+  minSize: 1.9TB
+  grow: true
+encryption:
+  provider: luks2
+  keys:
+  - slot: 0
+    tpm: {}
+  allowDiscards: true
+  blockSize: 4096
+  options:
+  - no_read_workqueue
+  - no_write_workqueue
