@@ -17,7 +17,7 @@ helmCharts:
   namespace: cert-manager
   version: v1.20.3
   valuesInline:
-    replicaCount: 1
+    replicaCount: 2
     podDisruptionBudget:
       enabled: true
     config:
@@ -29,10 +29,10 @@ helmCharts:
       servicemonitor:
         enabled: true
     webhook:
-      replicaCount: 1
+      replicaCount: 2
       podDisruptionBudget:
         enabled: true
     cainjector:
-      replicaCount: 1
+      replicaCount: 2
       podDisruptionBudget:
         enabled: true

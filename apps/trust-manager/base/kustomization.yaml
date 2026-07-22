@@ -13,7 +13,7 @@ helmCharts:
   namespace: cert-manager
   version: v0.24.0
   valuesInline:
-    replicaCount: 1
+    replicaCount: 2
     app:
       metrics:
         service:
