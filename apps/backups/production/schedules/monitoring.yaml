@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/velero.io/schedule_v1.json
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: prometheus-daily
+  namespace: velero
+spec:
+  schedule: 0 5 * * *
+  template:
+    includedNamespaces:
+    - monitoring
+    includedResources:
+    - pvc
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: prometheus
+  useOwnerReferencesInBackup: true

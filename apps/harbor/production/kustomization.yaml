@@ -7,3 +7,6 @@ namespace: harbor
 resources:
 - ../base
 - secrets.yaml
+
+patches:
+- path: patches/production-backups.yaml

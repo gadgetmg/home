@@ -6,4 +6,6 @@ resources:
 - backupstoragelocation.yaml
 - volumesnapshotclass.yaml
 - schedules/actual.yaml
+- schedules/harbor.yaml
+- schedules/monitoring.yaml
 - schedules/paperless-ngx.yaml
