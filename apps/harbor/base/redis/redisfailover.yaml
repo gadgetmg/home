@@ -75,3 +75,25 @@ spec:
       capabilities:
         drop:
         - ALL
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kyverno.io/policy_v1.json
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: harbor-redis-sentinel
+spec:
+  rules:
+  - name: set-sentinel-rolling-strategy
+    match:
+      resources:
+        kinds:
+        - Deployment
+        selector:
+          matchLabels:
+            app.kubernetes.io/component: sentinel
+    mutate:
+      patchStrategicMerge:
+        spec:
+          strategy:
+            rollingUpdate:
+              maxUnavailable: 50%
