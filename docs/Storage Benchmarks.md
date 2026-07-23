@@ -18,6 +18,15 @@
   Mixed Random Read/Write IOPS: 54.8k/18.3k
   ```
 
+- ssd-r1 (LVM thin, on Talos LUKS-backed `RawVolume`)
+
+  ```
+  Random Read/Write IOPS: 77.7k/63.1k. BW: 504MiB/s / 497MiB/s
+  Average Latency (usec) Read/Write: 128.44/72.17
+  Sequential Read/Write: 510MiB/s / 503MiB/s
+  Mixed Random Read/Write IOPS: 54.3k/18.1k
+  ```
+
 - ssd-r2 (LVM thin, read-balancing)
 
   ```
@@ -34,4 +43,13 @@
   Average Latency (usec) Read/Write: 62.00/883.05
   Sequential Read/Write: 1818MiB/s / 222MiB/s
   Mixed Random Read/Write IOPS: 35.7k/11.9k
+  ```
+
+- ssd-r2 (LVM thin, no read-balancing, on Talos LUKS-backed `RawVolume`)
+
+  ```
+  Random Read/Write IOPS: 80.6k/22.8k. BW: 508MiB/s / 368MiB/s
+  Average Latency (usec) Read/Write: 127.08/369.11
+  Sequential Read/Write: 517MiB/s / 430MiB/s
+  Mixed Random Read/Write IOPS: 54.3k/18.0k
   ```

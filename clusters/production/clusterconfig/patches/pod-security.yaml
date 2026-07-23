@@ -1,10 +1,13 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
-cluster:
-  apiServer:
-    admissionControl:
-    - name: PodSecurity
-      configuration:
-        defaults:
-          enforce: restricted
-          audit: restricted
-          warn: restricted
+apiVersion: v1alpha1
+kind: KubeAdmissionControlConfig
+name: PodSecurity
+configuration:
+  apiVersion: pod-security.admission.config.k8s.io/v1alpha1
+  kind: PodSecurityConfiguration
+  defaults:
+    enforce: restricted
+    enforce-version: latest
+    audit: restricted
+    audit-version: latest
+    warn: restricted
+    warn-version: latest

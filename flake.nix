@@ -28,6 +28,16 @@
         system,
         ...
       }: let
+        talosctl = pkgs.talosctl.overrideAttrs (finalAttrs: prevAttrs: {
+          version = "1.14.0-alpha.2";
+          src = pkgs.fetchFromGitHub {
+            owner = "siderolabs";
+            repo = "talos";
+            tag = "v${finalAttrs.version}";
+            hash = "sha256-if9XR9d003mr+TIw8s4wPuNMovfzP+4aPh1kXvTBpyQ=";
+          };
+          vendorHash = "sha256-gi/pr9HaGwdwBeGB9XcetovPdp4FZvJZ5p/C4nnNY+8=";
+        });
         talhelper = inputs.talhelper.packages.${system}.default;
         kubectl = inputs.krew2nix.packages.${system}.kubectl;
       in {

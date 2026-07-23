@@ -1,8 +1,21 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
-cluster:
-  apiServer:
-    extraArgs:
-      oidc-issuer-url: https://auth.seigra.net/realms/home
-      oidc-client-id: kubernetes
-      oidc-username-claim: email
-      oidc-groups-claim: groups
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+    - path: /livez
+    - path: /readyz
+    - path: /healthz
+    enabled: true
+  jwt:
+  - issuer:
+      url: https://auth.seigra.net/realms/home
+      audiences:
+      - kubernetes
+    claimMappings:
+      username:
+        claim: email
+        prefix: ""
+      groups:
+        claim: groups
+        prefix: ""

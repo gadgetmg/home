@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/v3.1.14/pkg/config/schemas/talconfig.json
 clusterName: production
 # renovate: datasource=github-releases depName=siderolabs/talos
-talosVersion: v1.13.7
+talosVersion: v1.14.0-alpha.2
 # renovate: datasource=github-releases depName=kubernetes/kubernetes
 kubernetesVersion: v1.36.1
 endpoint: https://10.1.4.10:6443
@@ -46,6 +46,8 @@ nodes:
       keys:
       - tpm: {}
         slot: 0
+  patches:
+  - '@clusterconfig/patches/linstor-ssd-sata-vol1.yaml'
 - hostname: production-controlplane-2
   ipAddress: 10.1.4.12
   installDisk: /dev/nvme0n1
@@ -86,6 +88,8 @@ nodes:
       keys:
       - tpm: {}
         slot: 0
+  patches:
+  - '@clusterconfig/patches/linstor-ssd-sata-vol1.yaml'
 - hostname: production-controlplane-3
   ipAddress: 10.1.4.13
   installDisk: /dev/nvme0n1
@@ -126,6 +130,8 @@ nodes:
       keys:
       - tpm: {}
         slot: 0
+  patches:
+  - '@clusterconfig/patches/linstor-ssd-sata-vol1.yaml'
 allowSchedulingOnControlPlanes: true
 controlPlane:
   talosImageURL: factory.talos.dev/installer-secureboot/3e3e89f3a168df62f7b68e56926830e477106f1015a9ce74a95a5f13c3ca52d0
