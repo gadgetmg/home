@@ -5,6 +5,7 @@ metadata:
   name: cdi
 spec:
   config:
+    scratchSpaceStorageClass: ssd-r1
     podResourceRequirements:
       requests:
         memory: 500M
