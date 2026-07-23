@@ -6,7 +6,9 @@ namespace: harbor
 
 resources:
 - ../base
-- secrets.yaml
+- objectstore.yaml
+- secrets/harbor.yaml
+- secrets/s3-credentials.yaml
 
 patches:
 - path: patches/production-backups.yaml
