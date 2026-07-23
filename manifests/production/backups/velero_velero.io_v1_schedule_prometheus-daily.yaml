@@ -1,0 +1,16 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: prometheus-daily
+  namespace: velero
+spec:
+  schedule: 0 5 * * *
+  template:
+    includedNamespaces:
+    - monitoring
+    includedResources:
+    - pvc
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: prometheus
+  useOwnerReferencesInBackup: true

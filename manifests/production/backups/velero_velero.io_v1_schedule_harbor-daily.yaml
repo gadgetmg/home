@@ -1,0 +1,20 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: harbor-daily
+  namespace: velero
+spec:
+  schedule: 0 5 * * *
+  template:
+    includedNamespaces:
+    - harbor
+    includedResources:
+    - pvc
+    labelSelector:
+      matchExpressions:
+      - key: app.kubernetes.io/component
+        operator: In
+        values:
+        - jobservice
+        - registry
+  useOwnerReferencesInBackup: true
