@@ -82,6 +82,7 @@
                 kapp
                 kfilt
                 kind
+                kopia
                 kubeconform
                 (kubectl.withKrewPlugins (p: [
                   p.cilium
