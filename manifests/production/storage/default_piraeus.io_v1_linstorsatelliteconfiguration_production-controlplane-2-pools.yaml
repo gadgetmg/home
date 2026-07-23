@@ -8,8 +8,8 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: production-controlplane-2
   storagePools:
-  - name: ssd
+  - lvmThinPool: {}
+    name: ssd
     source:
       hostDevices:
-      - /dev/sda
-    zfsThinPool: {}
+      - /dev/disk/by-id/dm-name-luks2-r-linstor-ssd-sata-vol1

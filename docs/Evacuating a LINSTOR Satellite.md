@@ -11,7 +11,6 @@ manually label a node when the node needs evacuated.
 1. Cordon and drain the node:
 
    ```bash
-   kubectl cordon production-controlplane-1
    kubectl drain --delete-emptydir-data=true --ignore-daemonsets=true production-controlplane-1
    ```
 

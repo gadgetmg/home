@@ -8,15 +8,13 @@ metadata:
   name: ssd-r2
 parameters:
   linstor.csi.linbit.com/autoPlace: "2"
-  linstor.csi.linbit.com/encryption: "true"
-  linstor.csi.linbit.com/layerList: drbd luks storage
+  linstor.csi.linbit.com/layerList: drbd storage
   linstor.csi.linbit.com/resourceGroup: ssd-r2
   linstor.csi.linbit.com/storagePool: ssd
   property.linstor.csi.linbit.com/Aux/linstor.csi.linbit.com/evacuation-action: None
   property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-max-rate: "532480"
   property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/c-min-rate: "177493"
   property.linstor.csi.linbit.com/DrbdOptions/PeerDevice/resync-rate: "177493"
-  property.linstor.csi.linbit.com/StorDriver/ZfscreateOptions: -o volblocksize=16k
 provisioner: linstor.csi.linbit.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer

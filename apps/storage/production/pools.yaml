@@ -10,10 +10,10 @@ spec:
     kubernetes.io/hostname: production-controlplane-1
   storagePools:
   - name: ssd
-    zfsThinPool: {}
+    lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/sda
+      - /dev/disk/by-id/dm-name-luks2-r-linstor-ssd-sata-vol1
 ---
 # yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
@@ -27,10 +27,10 @@ spec:
     kubernetes.io/hostname: production-controlplane-2
   storagePools:
   - name: ssd
-    zfsThinPool: {}
+    lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/sda
+      - /dev/disk/by-id/dm-name-luks2-r-linstor-ssd-sata-vol1
 ---
 # yaml-language-server: $schema=../../../schemas/piraeus.io/linstorsatelliteconfiguration_v1.json
 apiVersion: piraeus.io/v1
@@ -44,7 +44,7 @@ spec:
     kubernetes.io/hostname: production-controlplane-3
   storagePools:
   - name: ssd
-    zfsThinPool: {}
+    lvmThinPool: {}
     source:
       hostDevices:
-      - /dev/sda
+      - /dev/disk/by-id/dm-name-luks2-r-linstor-ssd-sata-vol1
