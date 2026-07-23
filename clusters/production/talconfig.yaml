@@ -137,7 +137,6 @@ controlPlane:
   talosImageURL: factory.talos.dev/installer-secureboot/3e3e89f3a168df62f7b68e56926830e477106f1015a9ce74a95a5f13c3ca52d0
   patches:
   - '@clusterconfig/patches/containerd-config.yaml'
-  - '@clusterconfig/patches/disable-hostdns.yaml'
   - '@clusterconfig/patches/disable-proxy.yaml'
   - '@clusterconfig/patches/kernel-modules.yaml'
   - '@clusterconfig/patches/metrics-scraping.yaml'
