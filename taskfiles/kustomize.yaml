@@ -3,7 +3,7 @@ version: "3"
 
 env:
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  KUBERNETES_VERSION: v1.36.1
+  KUBERNETES_VERSION: v1.36.3
 
 vars:
   BUILD_ARGS: --load-restrictor LoadRestrictionsNone --enable-helm --enable-alpha-plugins --network --helm-kube-version {{.KUBERNETES_VERSION}}
