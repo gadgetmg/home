@@ -67,7 +67,7 @@ spec:
           value: crossplane-tls-client
         - name: TLS_CLIENT_CERTS_DIR
           value: /tls/client
-        image: ghcr.io/crossplane/crossplane:v2.3.3@sha256:f1c88a98f113a5cb78d75c7e94e2a7fefdf86ffb3353c63f01697dc5ad855b19
+        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -146,7 +146,7 @@ spec:
           value: crossplane-tls-server
         - name: TLS_CLIENT_SECRET_NAME
           value: crossplane-tls-client
-        image: ghcr.io/crossplane/crossplane:v2.3.3@sha256:f1c88a98f113a5cb78d75c7e94e2a7fefdf86ffb3353c63f01697dc5ad855b19
+        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:

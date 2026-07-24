@@ -52,7 +52,7 @@ spec:
               resource: limits.memory
         - name: LEADER_ELECTION
           value: "true"
-        image: ghcr.io/crossplane/crossplane:v2.3.3@sha256:f1c88a98f113a5cb78d75c7e94e2a7fefdf86ffb3353c63f01697dc5ad855b19
+        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -90,7 +90,7 @@ spec:
               containerName: crossplane-init
               divisor: "1"
               resource: limits.memory
-        image: ghcr.io/crossplane/crossplane:v2.3.3@sha256:f1c88a98f113a5cb78d75c7e94e2a7fefdf86ffb3353c63f01697dc5ad855b19
+        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:
