@@ -7,6 +7,7 @@ spec:
   backupOwnerReference: self
   cluster:
     name: paperless-ngx-db
+  immediate: true
   method: plugin
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io

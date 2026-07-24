@@ -1,12 +1,12 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: keycloak-db-daily
-  namespace: keycloak
+  name: harbor-db-daily
+  namespace: harbor
 spec:
   backupOwnerReference: self
   cluster:
-    name: keycloak-db
+    name: harbor-db
   immediate: true
   method: plugin
   pluginConfiguration:
