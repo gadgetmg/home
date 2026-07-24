@@ -9,6 +9,7 @@ metadata:
   namespace: kube-system
 spec:
   concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -16,7 +17,6 @@ spec:
           labels:
             k8s-app: hubble-generate-certs
         spec:
-          affinity: null
           automountServiceAccountToken: true
           containers:
           - args:
@@ -52,7 +52,7 @@ spec:
                   - key encipherment
                   - client auth
                   validity: 8760h
-            image: quay.io/cilium/certgen:v0.4.3@sha256:d63d1cb3ee6db2167cb1ca9e7e31f30b6197846fcf42505d8f59e2f090a42c86
+            image: quay.io/cilium/certgen:v0.4.6@sha256:511cedee817713fdf72db7e32fffb4b90da7747661b95180064f18198877626c
             imagePullPolicy: IfNotPresent
             name: certgen
             securityContext:
@@ -65,7 +65,6 @@ spec:
           securityContext:
             seccompProfile:
               type: RuntimeDefault
-          serviceAccount: hubble-generate-certs
           serviceAccountName: hubble-generate-certs
-      ttlSecondsAfterFinished: 1800
   schedule: 0 0 1 */4 *
+  successfulJobsHistoryLimit: 3
