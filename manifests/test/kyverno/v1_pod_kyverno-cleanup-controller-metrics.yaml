@@ -19,7 +19,7 @@ spec:
     - --namespace=kyverno
     - --port=8000
     - --path=metrics
-    image: ghcr.io/kyverno/readiness-checker:latest@sha256:8a53435fca663edfc5b362224bf52e288d9d2d632457679721d08ef381d81158
+    image: ghcr.io/kyverno/readiness-checker:latest@sha256:0406fa8bd0877e46061d744d4924148a43c4fd06a70ea92716ec4a090697fed2
     imagePullPolicy: IfNotPresent
     name: test
     resources:
