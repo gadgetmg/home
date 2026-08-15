@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cdi
+  namespace: argocd
+spec:
+  destination:
+    namespace: cdi
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./manifests/production/cdi
+    repoURL: https://github.com/gadgetmg/home.git
+    targetRevision: main
+  syncPolicy: {}

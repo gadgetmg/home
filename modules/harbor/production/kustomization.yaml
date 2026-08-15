@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: harbor
+
+resources:
+- ../base
+- objectstore.yaml
+- scheduledbackup.yaml
+- secrets/harbor.yaml
+- secrets/s3-credentials.yaml
+
+patches:
+- path: patches/production-backups.yaml

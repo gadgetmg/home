@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- data-pvc.yaml
+
+configMapGenerator:
+- name: harbor-registry-conf
+  files:
+  - conf/config.yml
+  - conf/ctl-config.yml
+
+labels:
+- pairs:
+    app.kubernetes.io/name: registry
+    app.kubernetes.io/component: registry
+  includeSelectors: true
+  includeTemplates: true

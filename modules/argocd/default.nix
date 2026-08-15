@@ -1,0 +1,443 @@
+{charts, ...}: {
+  applications.argocd = {
+    namespace = "argocd";
+    createNamespace = true;
+    helm.releases.argocd = {
+      chart = charts.argo-cd;
+      values = {
+        global = {domain = "argocd.seigra.net";};
+        dex = {
+          readinessProbe = {enabled = true;};
+          livenessProbe = {enabled = true;};
+          env = [
+            {
+              name = "KEYCLOAK_CLIENT_SECRET";
+              valueFrom = {
+                secretKeyRef = {
+                  name = "keycloak-client-argocd";
+                  key = "attribute.client_secret";
+                };
+              };
+            }
+          ];
+        };
+        redis = {
+          image = {
+            repository = "ghcr.io/valkey-io/valkey";
+            tag = "9.0.0-alpine3.22@sha256:bef37d06d4856710973ee31dd1eac1482e4c8e6e7b847f999ad25433e646587b";
+          };
+        };
+        server = {
+          httproute = {
+            enabled = true;
+            hostnames = ["argocd.seigra.net"];
+            parentRefs = [
+              {
+                name = "argocd";
+                sectionName = "argocd";
+              }
+            ];
+          };
+        };
+        configs = {
+          params = {
+            "server.insecure" = true;
+            "controller.diff.server.side" = true;
+            "applicationsetcontroller.enable.progressive.syncs" = true;
+            "reposerver.max.combined.directory.manifests.size" = "30M";
+          };
+          cm = {
+            "application.resourceTrackingMethod" = "annotation+label";
+            "resource.ignoreResourceUpdatesEnabled" = "true";
+            "resource.compareoptions" = ''
+              ignoreResourceStatusField: all
+            '';
+            "resource.customizations.ignoreResourceUpdates.all" = ''
+              jsonPointers:
+              - /status
+              - /metadata/resourceVersion
+            '';
+            "resource.customizations" = ''
+              argoproj.io/Application:
+                health.lua: |
+                  hs = {}
+                  hs.status = "Progressing"
+                  hs.message = ""
+                  if obj.status ~= nil then
+                    if obj.status.health ~= nil then
+                      hs.status = obj.status.health.status
+                      if obj.status.health.message ~= nil then
+                        hs.message = obj.status.health.message
+                      end
+                    end
+                  end
+                  return hs
+              "k8s.keycloak.org/Keycloak":
+                health.lua: |
+                  local hs = {}
+                  if obj.status ~= nil then
+                    if obj.status.conditions ~= nil then
+                      local ready = false
+                      local haserrors = false
+                      local rollingupdate = false
+                      for i, condition in ipairs(obj.status.conditions) do
+                        if condition.type == "Ready" then
+                          ready = condition.status == "True"
+                          ready_message = condition.message
+                        elseif condition.type == "HasErrors" then
+                          haserrors = condition.status == "True"
+                          haserrors_message = condition.message
+                        elseif condition.type == "RollingUpdate" then
+                          rollingupdate = condition.status == "True"
+                          rollingupdate_message = condition.message
+                        end
+                      end
+                      if ready and haserrors == false and rollingupdate == false then
+                        hs.status = "Healthy"
+                        hs.message = ready_message
+                      elseif rollingupdate == true then
+                        hs.status = "Progressing"
+                        hs.message = rollingupdate_message
+                      elseif ready == false and haserrors == false then
+                        hs.status = "Progressing"
+                        hs.message = "Waiting for resource to be available"
+                      else
+                        hs.status = "Degraded"
+                        hs.message = haserrors_message
+                      end
+                      return hs
+                    end
+                  end
+
+                  hs.status = "Progressing"
+                  hs.message = "Waiting for resource to be created"
+                  return hs
+              "postgresql.cnpg.io/Cluster":
+                health.lua: |
+                  local hs = {}
+                  if obj.status ~= nil then
+                    if obj.status.conditions ~= nil then
+                      local ready = false
+                      local continuousarchiving = false
+                      for i, condition in ipairs(obj.status.conditions) do
+                        if condition.type == "Ready" then
+                          ready = condition.status == "True"
+                          ready_message = condition.message
+                        elseif condition.type == "ContinuousArchiving" then
+                          continuousarchiving = condition.status == "True"
+                          continuousarchiving_message = condition.message
+                        end
+                      end
+                      if ready and continuousarchiving then
+                        hs.status = "Healthy"
+                        hs.message = ready_message
+                      else
+                        hs.status = "Progressing"
+                        hs.message = ready_message
+                      end
+                      return hs
+                    end
+                  end
+
+                  hs.status = "Progressing"
+                  hs.message = "Waiting for resource to be created"
+                  return hs
+              "*.upbound.io/*":
+                health.lua: |
+                  health_status = {
+                    status = "Progressing",
+                    message = "Provisioning ..."
+                  }
+
+                  local function contains (table, val)
+                    for i, v in ipairs(table) do
+                      if v == val then
+                        return true
+                      end
+                    end
+                    return false
+                  end
+
+                  local has_no_status = {
+                    "ClusterProviderConfig",
+                    "ProviderConfig",
+                    "ProviderConfigUsage"
+                  }
+
+                  if obj.status == nil or next(obj.status) == nil and contains(has_no_status, obj.kind) then
+                    health_status.status = "Healthy"
+                    health_status.message = "Resource is up-to-date."
+                    return health_status
+                  end
+
+                  if obj.status == nil or next(obj.status) == nil or obj.status.conditions == nil then
+                    if (obj.kind == "ProviderConfig" or obj.kind == "ClusterProviderConfig") and obj.status.users ~= nil then
+                      health_status.status = "Healthy"
+                      health_status.message = "Resource is in use."
+                      return health_status
+                    end
+                    return health_status
+                  end
+
+                  for i, condition in ipairs(obj.status.conditions) do
+                    if condition.type == "LastAsyncOperation" then
+                      if condition.status == "False" then
+                        health_status.status = "Degraded"
+                        health_status.message = condition.message
+                        return health_status
+                      end
+                    end
+
+                    if condition.type == "Synced" then
+                      if condition.status == "False" then
+                        health_status.status = "Degraded"
+                        health_status.message = condition.message
+                        return health_status
+                      end
+                    end
+
+                    if condition.type == "Ready" then
+                      if condition.status == "True" then
+                        health_status.status = "Healthy"
+                        health_status.message = "Resource is up-to-date."
+                      end
+                    end
+                  end
+
+                  return health_status
+
+              "*.crossplane.io/*":
+                health.lua: |
+                  health_status = {
+                    status = "Progressing",
+                    message = "Provisioning ..."
+                  }
+
+                  local function contains (table, val)
+                    for i, v in ipairs(table) do
+                      if v == val then
+                        return true
+                      end
+                    end
+                    return false
+                  end
+
+                  local has_no_status = {
+                    "Composition",
+                    "CompositionRevision",
+                    "DeploymentRuntimeConfig",
+                    "ClusterProviderConfig",
+                    "ProviderConfig",
+                    "ProviderConfigUsage"
+                  }
+                  if obj.status == nil or next(obj.status) == nil and contains(has_no_status, obj.kind) then
+                      health_status.status = "Healthy"
+                      health_status.message = "Resource is up-to-date."
+                    return health_status
+                  end
+
+                  if obj.status == nil or next(obj.status) == nil or obj.status.conditions == nil then
+                    if (obj.kind == "ProviderConfig" or obj.kind == "ClusterProviderConfig") and obj.status.users ~= nil then
+                      health_status.status = "Healthy"
+                      health_status.message = "Resource is in use."
+                      return health_status
+                    end
+                    return health_status
+                  end
+
+                  for i, condition in ipairs(obj.status.conditions) do
+                    if condition.type == "LastAsyncOperation" then
+                      if condition.status == "False" then
+                        health_status.status = "Degraded"
+                        health_status.message = condition.message
+                        return health_status
+                      end
+                    end
+
+                    if condition.type == "Synced" then
+                      if condition.status == "False" then
+                        health_status.status = "Degraded"
+                        health_status.message = condition.message
+                        return health_status
+                      end
+                    end
+
+                    if contains({"Ready", "Healthy", "Offered", "Established", "ValidPipeline", "RevisionHealthy"}, condition.type) then
+                      if condition.status == "True" then
+                        health_status.status = "Healthy"
+                        health_status.message = "Resource is up-to-date."
+                      end
+                    end
+                  end
+
+                  return health_status
+            '';
+            "resource.exclusions" = ''
+              - apiGroups:
+                  - cilium.io
+                kinds:
+                  - CiliumIdentity
+                clusters:
+                  - "*"
+            '';
+            "dex.config" = ''
+              connectors:
+              - type: oidc
+                id: keycloak
+                name: seigra.net
+                config:
+                  issuer: https://auth.seigra.net/realms/home
+                  clientID: argocd
+                  clientSecret: $KEYCLOAK_CLIENT_SECRET
+                  scopes:
+                  - openid
+                  - profile
+                  - email
+                  getUserInfo: true
+                  userNameKey: preferred_username
+                  insecureEnableGroups: true
+            '';
+            "kustomize.buildOptions" = "--enable-helm";
+            url = "https://argocd.seigra.net";
+            "timeout.reconciliation.jitter" = "1m";
+          };
+        };
+        notifications = {
+          secret = {create = false;};
+          notifiers = {
+            "service.github" = ''
+              appID: 1131326
+              installationID: 60437316
+              privateKey: $githubPrivateKey
+            '';
+          };
+          templates = {
+            "template.app-deployed" = ''
+              message: |
+                Application is synced and healthy
+              github:
+                repoURLPath: "{{.app.spec.source.repoURL}}"
+                revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+                status:
+                  state: success
+                  label: "argo-cd / {{.app.metadata.name}}"
+                  targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+            '';
+            "template.app-health-degraded" = ''
+              message: |
+                Application has degraded
+              github:
+                repoURLPath: "{{.app.spec.source.repoURL}}"
+                revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+                status:
+                  state: failure
+                  label: "argo-cd / {{.app.metadata.name}}"
+                  targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+            '';
+            "template.app-sync-failed" = ''
+              message: |
+                Application syncing has failed
+              github:
+                repoURLPath: "{{.app.spec.source.repoURL}}"
+                revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+                status:
+                  state: failure
+                  label: "argo-cd / {{.app.metadata.name}}"
+                  targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+            '';
+            "template.app-sync-running" = ''
+              message: |
+                Application is being synced
+              github:
+                repoURLPath: "{{.app.spec.source.repoURL}}"
+                revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+                status:
+                  state: pending
+                  label: "argo-cd / {{.app.metadata.name}}"
+                  targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+            '';
+            "template.app-sync-status-unknown" = ''
+              message: |
+                Application status is 'Unknown'
+              github:
+                repoURLPath: "{{.app.spec.source.repoURL}}"
+                revisionPath: "{{.app.status.operationState.syncResult.revision}}"
+                status:
+                  state: error
+                  label: "argo-cd / {{.app.metadata.name}}"
+                  targetURL: "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+            '';
+          };
+          triggers = {
+            "trigger.on-deployed" = ''
+              - description: Application is synced and healthy
+                send:
+                - app-deployed
+                when: app.status.operationState != nil
+                  and app.status.operationState.phase in ['Succeeded']
+                  and app.status.health.status == 'Healthy'
+            '';
+            "trigger.on-health-degraded" = ''
+              - description: Application has degraded
+                send:
+                - app-health-degraded
+                when: app.status.health.status == 'Degraded'
+            '';
+            "trigger.on-sync-failed" = ''
+              - description: Application syncing has failed
+                send:
+                - app-sync-failed
+                when: app.status.operationState != nil
+                  and app.status.operationState.phase in ['Error','Failed']
+            '';
+            "trigger.on-sync-running" = ''
+              - description: Application is being synced
+                send:
+                - app-sync-running
+                when: app.status.operationState != nil and app.status.operationState.phase in ['Running']
+            '';
+            "trigger.on-sync-status-unknown" = ''
+              - description: Application status is 'Unknown'
+                send:
+                - app-sync-status-unknown
+                when: app.status.sync.status == 'Unknown'
+            '';
+          };
+        };
+      };
+    };
+    objectTransforms = [
+      {
+        match.kind = "CustomResourceDefinition";
+        rewrite = _: null;
+      }
+    ];
+    resources.gateways.argocd = {
+      metadata.annotations = {
+        "argocd.argoproj.io/sync-options" = "Force=true,Replace=true";
+        "cert-manager.io/cluster-issuer" = "letsencrypt";
+      };
+      spec = {
+        gatewayClassName = "cilium";
+        listeners = [
+          {
+            hostname = "argocd.seigra.net";
+            name = "argocd";
+            port = 443;
+            protocol = "HTTPS";
+            tls = {
+              certificateRefs = [{name = "argocd-gateway-tls";}];
+              mode = "Terminate";
+            };
+          }
+        ];
+      };
+    };
+    yamls = map builtins.readFile [
+      ./keycloak/client.yaml
+      ./keycloak/protocolmapper.yaml
+      ./keycloak/roles.yaml
+      ./vcluster-argocd-secret-sync.yaml
+    ];
+  };
+}

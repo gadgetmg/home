@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- logs-pvc.yaml
+
+configMapGenerator:
+- name: harbor-jobservice-conf
+  files:
+  - conf/config.yml
+- name: harbor-jobservice
+  literals:
+  - JOBSERVICE_WEBHOOK_JOB_HTTP_CLIENT_TIMEOUT="3"
+  - JOBSERVICE_WEBHOOK_JOB_MAX_RETRY="3"
+
+labels:
+- pairs:
+    app.kubernetes.io/name: jobservice
+    app.kubernetes.io/component: jobservice
+  includeSelectors: true
+  includeTemplates: true

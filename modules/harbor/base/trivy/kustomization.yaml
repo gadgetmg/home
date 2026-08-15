@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- statefulset.yaml
+- service.yaml
+
+configMapGenerator:
+- name: harbor-trivy
+  literals:
+  - SCANNER_API_SERVER_ADDR=:8080
+  - SCANNER_JOB_QUEUE_REDIS_URL=redis+sentinel://rfs-harbor:26379/mymaster/5?idle_timeout_seconds=30
+  - SCANNER_LOG_LEVEL=info
+  - SCANNER_REDIS_URL=redis+sentinel://rfs-harbor:26379/mymaster/5?idle_timeout_seconds=30
+  - SCANNER_STORE_REDIS_URL=redis+sentinel://rfs-harbor:26379/mymaster/5?idle_timeout_seconds=30
+  - SCANNER_TRIVY_CACHE_DIR=/home/scanner/.cache/trivy
+  - SCANNER_TRIVY_DB_REPOSITORY=mirror.gcr.io/aquasec/trivy-db,ghcr.io/aquasecurity/trivy-db
+  - SCANNER_TRIVY_DEBUG_MODE="false"
+  - SCANNER_TRIVY_IGNORE_UNFIXED="false"
+  - SCANNER_TRIVY_INSECURE="false"
+  - SCANNER_TRIVY_JAVA_DB_REPOSITORY=mirror.gcr.io/aquasec/trivy-java-db,ghcr.io/aquasecurity/trivy-java-db
+  - SCANNER_TRIVY_OFFLINE_SCAN="false"
+  - SCANNER_TRIVY_REPORTS_DIR=/home/scanner/.cache/reports
+  - SCANNER_TRIVY_SECURITY_CHECKS=vuln
+  - SCANNER_TRIVY_SEVERITY=UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+  - SCANNER_TRIVY_SKIP_JAVA_DB_UPDATE="false"
+  - SCANNER_TRIVY_SKIP_UPDATE="false"
+  - SCANNER_TRIVY_TIMEOUT=5m0s
+  - SCANNER_TRIVY_VULN_TYPE=os,library
+
+labels:
+- pairs:
+    app.kubernetes.io/name: trivy
+    app.kubernetes.io/component: trivy
+  includeSelectors: true
+  includeTemplates: true

@@ -1,8 +1,0 @@
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: linstor-internal-ca
-  namespace: piraeus-datastore
-spec:
-  ca:
-    secretName: linstor-internal-ca

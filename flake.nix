@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nixidy.url = "github:gadgetmg/nixidy";
     talhelper = {
       url = "github:budimanjojo/talhelper";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,36 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+      imports = [inputs.flake-parts.flakeModules.modules];
+      debug = true;
+      flake.nixidyEnvs.x86_64-linux = inputs.nixidy.lib.mkEnvs {
+        pkgs = import inputs.nixpkgs {system = "x86_64-linux";};
+        modules = [
+          ./modules/nixidy.nix
+          ./modules/crds.nix
+          ./modules/actual
+          ./modules/argocd
+          ./modules/cdi
+          ./modules/cert-manager
+          ./modules/cilium
+          ./modules/cloudflare-gateway
+          ./modules/clusterissuers
+          ./modules/cnpg
+          ./modules/crossplane
+          ./modules/crossplane-keycloak
+          ./modules/csi-driver-smb
+          ./modules/csi-snapshotter
+          ./modules/default-namespace
+          ./modules/external-dns
+          ./modules/external-secrets
+          ./modules/ezxss
+          ./modules/harbor
+        ];
+        envs = {
+          production.modules = [./envs/production];
+          test.modules = [./envs/test];
+        };
+      };
       perSystem = {
         pkgs,
         system,
@@ -40,7 +71,14 @@
         });
         talhelper = inputs.talhelper.packages.${system}.default;
         kubectl = inputs.krew2nix.packages.${system}.kubectl;
+        nixidy = inputs.nixidy.packages.${system}.default;
       in {
+        apps.updateCharts = {
+          type = "app";
+          program =
+            pkgs.lib.getExe (inputs.nixidy.packages.${system}.mkChartsUpdateScript
+              (inputs.nixidy.packages.${system}.mkChartAttrs ./charts));
+        };
         devShells = let
           kapp = pkgs.kapp.overrideAttrs {
             patches = [
@@ -61,6 +99,7 @@
                 go-task
                 kind
                 kapp
+                nixidy
                 (bats.withLibraries (p: [
                   p.bats-detik
                 ]))
@@ -103,6 +142,7 @@
                 kubeseal
                 kubevirt
                 kustomize
+                nixidy
                 pre-commit
                 qemu
                 renovate

@@ -1,0 +1,3 @@
+images:
+- path: spec/imageName
+  kind: Cluster

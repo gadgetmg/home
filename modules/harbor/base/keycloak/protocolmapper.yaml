@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../../schemas/client.keycloak.m.crossplane.io/protocolmapper_v1alpha1.json
+apiVersion: client.keycloak.m.crossplane.io/v1alpha1
+kind: ProtocolMapper
+metadata:
+  name: harbor-client-roles
+spec:
+  forProvider:
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    clientIdRef:
+      name: harbor
+    name: client roles
+    protocol: openid-connect
+    protocolMapper: oidc-usermodel-client-role-mapper
+    config:
+      usermodel.clientRoleMapping.clientId: harbor
+      multivalued: "true"
+      claim.name: groups
+      id.token.claim: "true"
+      access.token.claim: "false"
+      userinfo.token.claim: "false"
+      introspection.token.claim: "false"

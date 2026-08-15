@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: actual
+  namespace: argocd
+spec:
+  destination:
+    namespace: actual
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./manifests/test/actual
+    repoURL: https://github.com/gadgetmg/home.git
+    targetRevision: main
+  syncPolicy: {}

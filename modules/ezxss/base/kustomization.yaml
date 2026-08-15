@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ezxss
+
+resources:
+- namespace.yaml
+- database.yaml
+- configmap.yaml
+- deployment.yaml
+- service.yaml
+- gateway.yaml
+- httproute.yaml
+
+images:
+- name: ghcr.io/gadgetmg/ezxss
+  newTag: master@sha256:90e816394405050a6d1badd0a1cf7cd57bf5538aa977a08975a7d7d85e20b297
+- name: ghcr.io/mariadb/mariadb
+  newTag: 12.3.2-noble@sha256:ddfcc5cff7d788dc7c35a2093a3ac3d3950ebe05dcfd7960213b10213842b8b4
+- name: ghcr.io/mariadb-operator/mariadb-operator
+  newTag: 26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
+- name: docker.io/prom/mysqld-exporter
+  newTag: v0.19.0@sha256:eacb4b18e2ec1e0abdf2d64851b68526c964f6d9cb3e9458fb5d5f5062ea94c1
+
+components:
+- components/crd-configurations

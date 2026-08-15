@@ -1,6 +1,7 @@
 .direnv
 .decrypted~*
 .task
-charts
 kubeconfig
 talosconfig
+result
+apps/**/charts

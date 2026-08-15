@@ -1,0 +1,15 @@
+images:
+- path: spec/redis/image
+  kind: RedisFailover
+- path: spec/redis/exporter/image
+  kind: RedisFailover
+- path: spec/sentinel/image
+  kind: RedisFailover
+- path: spec/sentinel/exporter/image
+  kind: RedisFailover
+
+nameReference:
+- kind: Secret
+  fieldSpecs:
+  - kind: RedisFailover
+    path: spec/auth/secretPath

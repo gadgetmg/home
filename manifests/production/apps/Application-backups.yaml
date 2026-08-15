@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backups
+  namespace: argocd
+spec:
+  destination:
+    namespace: backups
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./manifests/production/backups
+    repoURL: https://github.com/gadgetmg/home.git
+    targetRevision: main
+  syncPolicy: {}

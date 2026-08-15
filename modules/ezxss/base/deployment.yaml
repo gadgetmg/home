@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.36.3/deployment.json
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ezxss
+  labels:
+    app.kubernetes.io/name: ezxss
+    app.kubernetes.io/instance: ezxss
+    app.kubernetes.io/component: ezxss
+    app.kubernetes.io/part-of: ezxss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ezxss
+      app.kubernetes.io/instance: ezxss
+      app.kubernetes.io/component: ezxss
+      app.kubernetes.io/part-of: ezxss
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ezxss
+        app.kubernetes.io/instance: ezxss
+        app.kubernetes.io/component: ezxss
+        app.kubernetes.io/part-of: ezxss
+    spec:
+      restartPolicy: Always
+      containers:
+      - image: ghcr.io/gadgetmg/ezxss
+        name: ezxss
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: ezxss
+        env:
+        - name: EZXSS_DBPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ezxss-db-password
+              key: password
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 33
+        seccompProfile:
+          type: RuntimeDefault

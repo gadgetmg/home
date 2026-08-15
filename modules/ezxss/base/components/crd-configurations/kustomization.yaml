@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+configurations:
+- cnpg.yaml
+- mariadb.yaml
+- redisfailover.yaml
+- crossplane.yaml
+- prometheus-operator.yaml

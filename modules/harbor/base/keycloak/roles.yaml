@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../../../../schemas/role.keycloak.m.crossplane.io/role_v1alpha1.json
+apiVersion: role.keycloak.m.crossplane.io/v1alpha1
+kind: Role
+metadata:
+  name: harbor-admin
+  labels:
+    seigra.net/roles: admin
+spec:
+  forProvider:
+    description: admin permissions
+    name: admin
+    realmIdRef:
+      name: home
+      namespace: keycloak
+    clientIdRef:
+      name: harbor

@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  destination:
+    namespace: harbor
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./manifests/production/harbor
+    repoURL: https://github.com/gadgetmg/home.git
+    targetRevision: main
+  syncPolicy: {}

@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: harbor
+  labels:
+    app.kubernetes.io/name: gateway
+    app.kubernetes.io/component: gateway
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - hostname: harbor.seigra.net
+    name: harbor
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - kind: Secret
+        name: harbor-gateway-tls
+      mode: Terminate
