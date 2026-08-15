@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflare-gateway
+  namespace: argocd
+spec:
+  destination:
+    namespace: cloudflare-gateway
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: ./manifests/test/cloudflare-gateway
+    repoURL: https://github.com/gadgetmg/home.git
+    targetRevision: main
+  syncPolicy: {}

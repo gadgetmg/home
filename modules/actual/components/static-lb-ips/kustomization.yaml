@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: config
+    fieldPath: data.lbipam_ips
+  targets:
+  - select:
+      kind: Gateway
+    fieldPaths:
+    - spec.infrastructure.annotations.[lbipam.cilium.io/ips]
+    options:
+      create: true

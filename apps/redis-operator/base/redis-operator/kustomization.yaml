@@ -12,6 +12,7 @@ helmCharts:
   releaseName: redis-operator
   namespace: redis-operator
   version: 3.3.5
+  includeCRDs: true
   valuesInline:
     image:
       repository: ghcr.io/freshworks-oss/redis-operator
