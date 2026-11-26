@@ -14,7 +14,7 @@ spec:
   bootstrap:
     initdb:
       database: paperless-ngx
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-standard-trixie@sha256:ebf3919504d7523a63e8e2fee9b051211de714644b36469275558c624afd50ec
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.7-standard-trixie@sha256:1abcfd1cac6d53cda5185706819aab36d66a4ed88e99fc2ae44ab0826aa99f00
   instances: 3
   storage:
     size: 100Gi

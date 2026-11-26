@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: acfbc58fd22efd7de29c59ea1737b17991ff5955d26c59ca0851ca4ce22f314f
+        checksum/cmd-params: 9d1609053906e09652be52433a0cfd1ae6c88c0255c286046d45344504b39518
       labels:
         app.kubernetes.io/component: applicationset-controller
         app.kubernetes.io/instance: argocd
@@ -46,6 +46,12 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: GRPC_ENABLE_TXT_SERVICE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.grpc.enable.txt.service.config
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_APPLICATIONSET_CONTROLLER_GLOBAL_PRESERVED_ANNOTATIONS
           valueFrom:
             configMapKeyRef:
@@ -208,7 +214,43 @@ spec:
               key: applicationsetcontroller.status.max.resources.count
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v3.4.5@sha256:224e454cfd8c1818fec3ed17b72b2034c9a3915fa819e1dcccafc753776d446a
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_BUCKET_SIZE
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.bucket.size
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_BUCKET_QPS
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.bucket.qps
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_BASE_DELAY_NS
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.basedelay.ns
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_MAX_DELAY_NS
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.maxdelay.ns
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_BACKOFF_FACTOR
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.backoff.factor
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_APPLICATIONSET_CONTROLLER_WORKQUEUE_FAILURE_COOLDOWN_NS
+          valueFrom:
+            configMapKeyRef:
+              key: applicationsetcontroller.wq.cooldown.ns
+              name: argocd-cmd-params-cm
+              optional: true
+        image: quay.io/argoproj/argocd:v3.6.3@sha256:f2e45010dbd6aeff01b845d212b436b2d8e7f44d90d437274906c2ab21e59e0d
         imagePullPolicy: IfNotPresent
         name: applicationset-controller
         ports:
@@ -249,6 +291,9 @@ spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: argocd-applicationset-controller
       terminationGracePeriodSeconds: 30
       volumes:
@@ -257,6 +302,7 @@ spec:
         name: ssh-known-hosts
       - configMap:
           name: argocd-tls-certs-cm
+          optional: true
         name: tls-certs
       - configMap:
           name: argocd-gpg-keys-cm

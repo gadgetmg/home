@@ -82,7 +82,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.3@sha256:dc7746bb081eb7ba9a0b6858e1fbd0083ece9ecae181e2b2db670f838e748b82
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.4@sha256:74e049de9d3203b4a968f26c8b73d4b3b15b9c4705688330cfa7281ae5f7b727
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5

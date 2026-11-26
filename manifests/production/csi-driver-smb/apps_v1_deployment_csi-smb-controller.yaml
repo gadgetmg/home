@@ -57,7 +57,7 @@ spec:
         env:
         - name: ADDRESS
           value: /csi/csi.sock
-        image: registry.k8s.io/sig-storage/csi-resizer:v2.2.0@sha256:a2d40c1c3ccb0c48b467125a6652c4dd5dcbf0d295641c9989581cfc690f6cf3
+        image: registry.k8s.io/sig-storage/csi-resizer:v2.2.1@sha256:ea1d25e23479000c7e8eeb92d827df66258df4e482ca054c5e7ce3fc0f5c41a5
         imagePullPolicy: IfNotPresent
         name: csi-resizer
         resources:
@@ -104,7 +104,7 @@ spec:
         env:
         - name: CSI_ENDPOINT
           value: unix:///csi/csi.sock
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.3@sha256:dc7746bb081eb7ba9a0b6858e1fbd0083ece9ecae181e2b2db670f838e748b82
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.4@sha256:74e049de9d3203b4a968f26c8b73d4b3b15b9c4705688330cfa7281ae5f7b727
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5

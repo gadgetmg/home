@@ -22,7 +22,7 @@ spec:
   template:
     metadata:
       annotations:
-        cilium.io/cilium-configmap-checksum: 1ed122710eca9f7a43cf3aef29943ff02b55157fe91920dfe8d544ce09ccb290
+        cilium.io/cilium-configmap-checksum: a543e11e500cf4d57f7cc8974b2fa321cd0bb2fd28d583a234accd3047b78e27
       labels:
         app.kubernetes.io/name: cilium-operator
         app.kubernetes.io/part-of: cilium
@@ -64,19 +64,22 @@ spec:
           value: localhost
         - name: KUBERNETES_SERVICE_PORT
           value: "7445"
-        image: quay.io/cilium/operator-generic:v1.18.10@sha256:ab08d58fd12e98d9a9601d4b52beee839ff2537fba73d262aabad222454a16b3
+        image: quay.io/cilium/operator-generic:v1.20.5@sha256:c6e7de6665aa9701db86c4fe46828a75a0d167afe084a9ffb5bce34b2c4fa8c4
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: 9234
+            port: health
             scheme: HTTP
           initialDelaySeconds: 60
           periodSeconds: 10
           timeoutSeconds: 3
         name: cilium-operator
         ports:
+        - containerPort: 9234
+          hostPort: 9234
+          name: health
         - containerPort: 9963
           hostPort: 9963
           name: prometheus
@@ -86,7 +89,7 @@ spec:
           httpGet:
             host: 127.0.0.1
             path: /healthz
-            port: 9234
+            port: health
             scheme: HTTP
           initialDelaySeconds: 0
           periodSeconds: 5
@@ -102,6 +105,7 @@ spec:
           name: cilium-config-path
           readOnly: true
       hostNetwork: true
+      hostUsers: true
       nodeSelector:
         kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
@@ -114,6 +118,8 @@ spec:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
       - key: node-role.kubernetes.io/master
+        operator: Exists
+      - key: node-role.kubernetes.io/etcd
         operator: Exists
       - key: node.kubernetes.io/not-ready
         operator: Exists

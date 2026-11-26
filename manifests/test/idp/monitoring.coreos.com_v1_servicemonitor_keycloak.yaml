@@ -13,6 +13,7 @@ spec:
   - interval: 30s
     path: /metrics
     port: http-metrics
+    scheme: http
   namespaceSelector:
     matchNames:
     - keycloak

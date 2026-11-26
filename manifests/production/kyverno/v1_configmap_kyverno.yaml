@@ -2,6 +2,7 @@ apiVersion: v1
 data:
   defaultRegistry: docker.io
   enableDefaultRegistryMutation: "true"
+  enableUpdateRequestCleanup: "false"
   excludeGroups: system:nodes
   generateSuccessEvents: "false"
   resourceFilters: '[*/*,kyverno,*] [Event,*,*] [*/*,kube-system,*] [*/*,kube-public,*]

@@ -1,7 +1,6 @@
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  labels: {}
   name: namespacedvalidatingpolicies.policies.kyverno.io
 spec:
   group: policies.kyverno.io
@@ -153,7 +152,7 @@ spec:
                   mode:
                     description: |-
                       Mode is the mode of policy evaluation.
-                      Allowed values are "Kubernetes" or "JSON".
+                      Allowed values are "Kubernetes", "HTTP" or "Envoy".
                       Optional. Default value is "Kubernetes".
                     type: string
                 type: object
@@ -860,7 +859,7 @@ spec:
                                 mode:
                                   description: |-
                                     Mode is the mode of policy evaluation.
-                                    Allowed values are "Kubernetes" or "JSON".
+                                    Allowed values are "Kubernetes", "HTTP" or "Envoy".
                                     Optional. Default value is "Kubernetes".
                                   type: string
                               type: object
@@ -1715,7 +1714,7 @@ spec:
                   mode:
                     description: |-
                       Mode is the mode of policy evaluation.
-                      Allowed values are "Kubernetes" or "JSON".
+                      Allowed values are "Kubernetes", "HTTP" or "Envoy".
                       Optional. Default value is "Kubernetes".
                     type: string
                 type: object
@@ -2422,7 +2421,7 @@ spec:
                                 mode:
                                   description: |-
                                     Mode is the mode of policy evaluation.
-                                    Allowed values are "Kubernetes" or "JSON".
+                                    Allowed values are "Kubernetes", "HTTP" or "Envoy".
                                     Optional. Default value is "Kubernetes".
                                   type: string
                               type: object

@@ -20,7 +20,7 @@ spec:
     - --port=443
     - --path=health/liveness
     - --https
-    image: ghcr.io/kyverno/readiness-checker:latest@sha256:4bd2fca9bef5ae15a79ffc1ab933803730e2dd2ba7525956f30a21cdd0afdc10
+    image: ghcr.io/kyverno/readiness-checker:v1.20.0@sha256:6079a30d75fe7ba868a5a7e5dfa71ee92a3a8bae97adcea1c8cfb1009280ee6c
     imagePullPolicy: IfNotPresent
     name: test
     resources:
@@ -42,4 +42,6 @@ spec:
       runAsUser: 65534
       seccompProfile:
         type: RuntimeDefault
+  nodeSelector:
+    kubernetes.io/os: linux
   restartPolicy: Never

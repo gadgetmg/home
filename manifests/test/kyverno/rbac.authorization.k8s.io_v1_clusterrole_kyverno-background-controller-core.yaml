@@ -17,11 +17,6 @@ rules:
 - apiGroups:
   - kyverno.io
   resources:
-  - policies
-  - policies/status
-  - clusterpolicies
-  - clusterpolicies/status
-  - policyexceptions
   - updaterequests
   - updaterequests/status
   - globalcontextentries
@@ -58,6 +53,51 @@ rules:
   - policyexceptions
   verbs:
   - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - kyverno.io
+  resources:
+  - cleanuppolicies
+  - clustercleanuppolicies
+  - policies
+  - clusterpolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - policies.kyverno.io
+  resources:
+  - deletingpolicies
+  - imagevalidatingpolicies
+  - namespaceddeletingpolicies
+  - namespacedimagevalidatingpolicies
+  - namespacedvalidatingpolicies
+  - validatingpolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - wgpolicyk8s.io
+  resources:
+  - policyreports
+  - clusterpolicyreports
+  verbs:
+  - create
+  - delete
   - get
   - list
   - patch

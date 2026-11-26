@@ -18,8 +18,8 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: daf09213b13a6f4fdc21e92a4a9f215a9c00080e5b286c8e3db359defc1505f6
-        checksum/cmd-params: acfbc58fd22efd7de29c59ea1737b17991ff5955d26c59ca0851ca4ce22f314f
+        checksum/cm: 9a607bc86f4c698d16b29b6a88671dcbf3ad82253c6616a367d5f1667b705597
+        checksum/cmd-params: 9d1609053906e09652be52433a0cfd1ae6c88c0255c286046d45344504b39518
       labels:
         app.kubernetes.io/component: server
         app.kubernetes.io/instance: argocd
@@ -44,6 +44,12 @@ spec:
         env:
         - name: ARGOCD_SERVER_NAME
           value: argocd-server
+        - name: GRPC_ENABLE_TXT_SERVICE_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: server.grpc.enable.txt.service.config
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_SERVER_INSECURE
           valueFrom:
             configMapKeyRef:
@@ -90,6 +96,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: server.disable.auth
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_SERVER_DISABLE_SWAGGER_UI
+          valueFrom:
+            configMapKeyRef:
+              key: server.disable.swagger.ui
               name: argocd-cmd-params-cm
               optional: true
         - name: ARGOCD_SERVER_ENABLE_GZIP
@@ -158,6 +170,12 @@ spec:
               key: server.tls.ciphers
               name: argocd-cmd-params-cm
               optional: true
+        - name: ARGOCD_TLS_CURVE_PREFERENCES
+          valueFrom:
+            configMapKeyRef:
+              key: server.tls.curvepreferences
+              name: argocd-cmd-params-cm
+              optional: true
         - name: ARGOCD_SERVER_CONNECTION_STATUS_CACHE_EXPIRATION
           valueFrom:
             configMapKeyRef:
@@ -188,6 +206,18 @@ spec:
               key: redis.server
               name: argocd-cmd-params-cm
               optional: true
+        - name: REDIS_SENTINEL_HOSTS
+          valueFrom:
+            configMapKeyRef:
+              key: redis.sentinel.hosts
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: REDIS_SENTINEL_MASTER
+          valueFrom:
+            configMapKeyRef:
+              key: redis.sentinel.master
+              name: argocd-cmd-params-cm
+              optional: true
         - name: REDIS_COMPRESSION
           valueFrom:
             configMapKeyRef:
@@ -198,6 +228,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: redis.db
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_REDIS_KEY_PREFIX
+          valueFrom:
+            configMapKeyRef:
+              key: redis.key.prefix
               name: argocd-cmd-params-cm
               optional: true
         - name: REDIS_USERNAME
@@ -270,6 +306,12 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: otlp.attrs
+              name: argocd-cmd-params-cm
+              optional: true
+        - name: ARGOCD_SERVER_OTLP_SAMPLE_RATIO
+          valueFrom:
+            configMapKeyRef:
+              key: otlp.sample.ratio
               name: argocd-cmd-params-cm
               optional: true
         - name: ARGOCD_APPLICATION_NAMESPACES
@@ -350,7 +392,7 @@ spec:
               key: server.sync.replace.allowed
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v3.4.5@sha256:224e454cfd8c1818fec3ed17b72b2034c9a3915fa819e1dcccafc753776d446a
+        image: quay.io/argoproj/argocd:v3.6.3@sha256:f2e45010dbd6aeff01b845d212b436b2d8e7f44d90d437274906c2ab21e59e0d
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -408,6 +450,9 @@ spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: argocd-server
       terminationGracePeriodSeconds: 30
       volumes:
@@ -420,6 +465,7 @@ spec:
         name: ssh-known-hosts
       - configMap:
           name: argocd-tls-certs-cm
+          optional: true
         name: tls-certs
       - configMap:
           name: argocd-styles-cm

@@ -36,6 +36,7 @@ spec:
         - --proxy-headers=xforwarded
         - --http-port=8080
         - --https-port=8443
+        - --http-management-port=9000
         - --db=postgres
         - --db-url=jdbc:postgresql://keycloak-db-rw:5432/keycloak
         - --metrics-enabled=true
@@ -64,7 +65,9 @@ spec:
             secretKeyRef:
               key: password
               name: keycloak-db-app
-        image: quay.io/keycloak/keycloak:26.7.0@sha256:2eb3cd316835c990e69e26ade292ffa78f6fb0db7d5fc6377463c162e1979ac0
+        - name: JAVA_OPTS_APPEND
+          value: -XX:+UnlockDiagnosticVMOptions -XX:-UseBASE64Intrinsics
+        image: quay.io/keycloak/keycloak:26.8.2@sha256:c68e286cacd87b942ac1939a0a1481461109d6acd3a57dc496969a319a76bbf0
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
@@ -135,7 +138,7 @@ spec:
         - sh
         - -c
         - cp -r /opt/keycloak/lib/quarkus/* /shared-quarkus/
-        image: quay.io/keycloak/keycloak:26.7.0@sha256:2eb3cd316835c990e69e26ade292ffa78f6fb0db7d5fc6377463c162e1979ac0
+        image: quay.io/keycloak/keycloak:26.8.2@sha256:c68e286cacd87b942ac1939a0a1481461109d6acd3a57dc496969a319a76bbf0
         imagePullPolicy: Always
         name: copy-quarkus-lib
         resources: {}

@@ -56,6 +56,7 @@ rules:
   resources:
   - namespaces
   - secrets
+  - serviceaccounts
   verbs:
   - get
   - list
@@ -64,7 +65,18 @@ rules:
   - ""
   resources:
   - services
-  - endpoints
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - patch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
   verbs:
   - get
   - list
@@ -131,9 +143,12 @@ rules:
   resources:
   - ciliumendpointslices
   - ciliumenvoyconfigs
+  - ciliumbgpclusterconfigs
+  - ciliumbgpnodeconfigoverrides
   - ciliumbgppeerconfigs
   - ciliumbgpadvertisements
   - ciliumbgpnodeconfigs
+  - ciliumcidrgroups
   verbs:
   - create
   - update
@@ -162,7 +177,6 @@ rules:
   - apiextensions.k8s.io
   resourceNames:
   - ciliumloadbalancerippools.cilium.io
-  - ciliumbgppeeringpolicies.cilium.io
   - ciliumbgpclusterconfigs.cilium.io
   - ciliumbgppeerconfigs.cilium.io
   - ciliumbgpadvertisements.cilium.io
@@ -183,8 +197,21 @@ rules:
   - ciliuml2announcementpolicies.cilium.io
   - ciliumpodippools.cilium.io
   - ciliumgatewayclassconfigs.cilium.io
+  - ciliumdatapathplugins.cilium.io
   resources:
   - customresourcedefinitions
+  verbs:
+  - update
+- apiGroups:
+  - apiextensions.k8s.io
+  resourceNames:
+  - ciliumbgpclusterconfigs.cilium.io
+  - ciliumbgppeerconfigs.cilium.io
+  - ciliumbgpadvertisements.cilium.io
+  - ciliumbgpnodeconfigs.cilium.io
+  - ciliumbgpnodeconfigoverrides.cilium.io
+  resources:
+  - customresourcedefinitions/status
   verbs:
   - update
 - apiGroups:
@@ -192,10 +219,8 @@ rules:
   resources:
   - ciliumloadbalancerippools
   - ciliumpodippools
-  - ciliumbgppeeringpolicies
-  - ciliumbgpclusterconfigs
-  - ciliumbgpnodeconfigoverrides
   - ciliumbgppeerconfigs
+  - ciliumdatapathplugins
   verbs:
   - get
   - list
@@ -241,11 +266,15 @@ rules:
   resources:
   - gatewayclasses
   - gateways
+  - tcproutes
+  - udproutes
   - tlsroutes
   - httproutes
   - grpcroutes
   - referencegrants
   - referencepolicies
+  - backendtlspolicies
+  - listenersets
   verbs:
   - get
   - list
@@ -264,6 +293,10 @@ rules:
   - httproutes/status
   - grpcroutes/status
   - tlsroutes/status
+  - backendtlspolicies/status
+  - tcproutes/status
+  - udproutes/status
+  - listenersets/status
   verbs:
   - update
   - patch
@@ -283,6 +316,14 @@ rules:
   - update
   - patch
 - apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - multicluster.x-k8s.io
   resources:
   - serviceimports
@@ -290,3 +331,9 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumendpointslices
+  verbs:
+  - deletecollection
