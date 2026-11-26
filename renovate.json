@@ -2,9 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:best-practices",
-    ":maintainLockFilesWeekly",
-    ":automergeAll"
+    "group:allNonMajor",
+    ":automergeMinor"
   ],
+  "gitIgnoredAuthors": ["196080869+gadgetmg[bot]@users.noreply.github.com"],
   "ignorePaths": ["manifests/**"],
   "nix": {
     "enabled": true
