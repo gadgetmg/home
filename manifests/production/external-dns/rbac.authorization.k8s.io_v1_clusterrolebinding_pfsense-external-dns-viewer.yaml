@@ -2,14 +2,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
-    app.kubernetes.io/instance: openwrt
+    app.kubernetes.io/instance: pfsense
     app.kubernetes.io/name: external-dns
-  name: openwrt-external-dns-viewer
+  name: pfsense-external-dns-viewer
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: openwrt-external-dns
+  name: pfsense-external-dns
 subjects:
 - kind: ServiceAccount
-  name: openwrt-external-dns
+  name: pfsense-external-dns
   namespace: external-dns

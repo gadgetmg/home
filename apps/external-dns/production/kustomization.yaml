@@ -13,7 +13,7 @@ components:
 helmCharts:
 - name: external-dns
   repo: https://kubernetes-sigs.github.io/external-dns
-  releaseName: openwrt
+  releaseName: pfsense
   namespace: external-dns
   version: 1.21.1
   valuesInline:
@@ -23,44 +23,47 @@ helmCharts:
     - gateway-tlsroute
     - gateway-tcproute
     - gateway-udproute
+    policy: upsert-only
     provider:
       name: webhook
       webhook:
         image:
-          repository: docker.io/renanqts/external-dns-openwrt-webhook
-          # renovate: datasource=docker depName=renanqts/external-dns-openwrt-webhook
-          tag: v0.1.0@sha256:a356eb7ead234dc673108c30de761ed9f9542709fc0d8cc8332f81dd53a74d63
-        securityContext:
-          privileged: false
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 65532
-          runAsGroup: 65532
-          capabilities:
-            drop: ["ALL"]
+          repository: ghcr.io/slamdev/external-dns-pfsense-webhook
+          # renovate: datasource=docker depName=ghcr.io/slamdev/external-dns-pfsense-webhook
+          tag: latest@sha256:79ea27bf19476d6b42fe10ac72166d0aadd6cb24c1ca813a1b1dadbfa24dcf6c
+        ports:
+        - name: http
+          containerPort: 8888
+        - name: monitoring
+          containerPort: 8080
+        resources:
+          requests:
+            cpu: 10m
+            memory: 50Mi
+        env:
+        - name: APP_PFSENSE_URL
+          value: https://router.lan.seigra.net
+        - name: APP_PFSENSE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: pfsense-provider-auth
+              key: username
+        - name: APP_PFSENSE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pfsense-provider-auth
+              key: password
+        - name: APP_DRYRUN
+          value: "false"
+        startupProbe:
+          httpGet:
+            path: /ready
+            port: monitoring
         livenessProbe:
           httpGet:
-            path: /ping
-            port: 8888
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
+            path: /live
+            port: monitoring
         readinessProbe:
           httpGet:
-            path: /ping
-            port: 8888
-          initialDelaySeconds: 10
-          timeoutSeconds: 5
-        env:
-        - name: PROVIDER_OPENWRT_LUCIRPC_HOSTNAME
-          value: router.lan.seigra.net
-        - name: PROVIDER_OPENWRT_LUCIRPC_AUTH_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: openwrt-provider-lucirpc-auth
-              key: username
-        - name: PROVIDER_OPENWRT_LUCIRPC_AUTH_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: openwrt-provider-lucirpc-auth
-              key: password
+            path: /ready
+            port: monitoring
