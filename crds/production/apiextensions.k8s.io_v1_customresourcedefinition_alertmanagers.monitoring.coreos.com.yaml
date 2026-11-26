@@ -2,8 +2,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.21.0
-    operator.prometheus.io/version: 0.92.1
+    controller-gen.kubebuilder.io/version: v0.23.0
+    operator.prometheus.io/version: 0.95.2
   name: alertmanagers.monitoring.coreos.com
 spec:
   group: monitoring.coreos.com
@@ -1017,6 +1017,30 @@ spec:
                         x-kubernetes-list-type: atomic
                     type: object
                 type: object
+              alertmanagerConfigFileSystemMode:
+                description: |-
+                  alertmanagerConfigFileSystemMode defines how the operator handles
+                  AlertmanagerConfig resources which have references to the Alertmanager
+                  container's filesystem (as opposed to secret key references). Users
+                  controlling the receiver's service may create an AlertmanagerConfig
+                  resource with a reference to a container's file (for instance using
+                  `botTokenFile` for the Telegram receiver) and exfiltrate sensitive
+                  content from files located in the Alertmanager container.
+
+                  Supported values are:
+                  - "DenyAll" denies any AlertmanagerConfig resource referencing files from the container's filesystem, non-compliant resources are rejected.
+                  - "FromAlertmanagerConfigMatcherStrategy" uses the `alertmanagerConfigNamespaceSelector` field to make a decision
+                    - When `alertmanagerConfigNamespaceSelector` is "None", it is equivalent to "AllowAll"
+                    - When `alertmanagerConfigNamespaceSelector` is "OnNamespaceExceptForAlertmanagerNamespace", it is equivalent to "AllowAll" for the AlertmanagerConfig resources located in the Alertmanager's namespace and "DenyAll" for all other resources.
+                    - When `alertmanagerConfigNamespaceSelector` is "OnNamespace", it is equivalent to "AllowAll" for the main AlertmanagerConfig resource (defined in `.spec.alertmanagerConfig.name`) and "DenyAll" for all other resources.
+                  - "AllowAll" allows any AlertmanagerConfig resource to reference files from the container's filesystem (use with caution).
+
+                  By default, the operator uses the "FromAlertmanagerConfigMatcherStrategy" mode.
+                enum:
+                - AllowAll
+                - FromAlertmanagerConfigMatcherStrategy
+                - DenyAll
+                type: string
               alertmanagerConfigMatcherStrategy:
                 description: |-
                   alertmanagerConfigMatcherStrategy defines how AlertmanagerConfig objects
@@ -1315,7 +1339,9 @@ spec:
                                       data to use for the targets.
                                     properties:
                                       key:
-                                        description: The key to select.
+                                        description: |-
+                                          The key to select from the ConfigMap's Data field.
+                                          Keys in the BinaryData field are not currently propagated to container env vars.
                                         type: string
                                       name:
                                         default: ""
@@ -1467,7 +1493,9 @@ spec:
                                           containing data to use for the targets.
                                         properties:
                                           key:
-                                            description: The key to select.
+                                            description: |-
+                                              The key to select from the ConfigMap's Data field.
+                                              Keys in the BinaryData field are not currently propagated to container env vars.
                                             type: string
                                           name:
                                             default: ""
@@ -1522,7 +1550,9 @@ spec:
                                           containing data to use for the targets.
                                         properties:
                                           key:
-                                            description: The key to select.
+                                            description: |-
+                                              The key to select from the ConfigMap's Data field.
+                                              Keys in the BinaryData field are not currently propagated to container env vars.
                                             type: string
                                           name:
                                             default: ""
@@ -1693,7 +1723,9 @@ spec:
                                       data to use for the targets.
                                     properties:
                                       key:
-                                        description: The key to select.
+                                        description: |-
+                                          The key to select from the ConfigMap's Data field.
+                                          Keys in the BinaryData field are not currently propagated to container env vars.
                                         type: string
                                       name:
                                         default: ""
@@ -1747,7 +1779,9 @@ spec:
                                       data to use for the targets.
                                     properties:
                                       key:
-                                        description: The key to select.
+                                        description: |-
+                                          The key to select from the ConfigMap's Data field.
+                                          Keys in the BinaryData field are not currently propagated to container env vars.
                                         type: string
                                       name:
                                         default: ""
@@ -2154,7 +2188,9 @@ spec:
                                       data to use for the targets.
                                     properties:
                                       key:
-                                        description: The key to select.
+                                        description: |-
+                                          The key to select from the ConfigMap's Data field.
+                                          Keys in the BinaryData field are not currently propagated to container env vars.
                                         type: string
                                       name:
                                         default: ""
@@ -2208,7 +2244,9 @@ spec:
                                       data to use for the targets.
                                     properties:
                                       key:
-                                        description: The key to select.
+                                        description: |-
+                                          The key to select from the ConfigMap's Data field.
+                                          Keys in the BinaryData field are not currently propagated to container env vars.
                                         type: string
                                       name:
                                         default: ""
@@ -2320,7 +2358,44 @@ spec:
                               It requires Alertmanager >= v0.24.0.
                             pattern: ^(http|https)://.+$
                             type: string
+                          botToken:
+                            description: |-
+                              botToken represents the bot token configuration for Telegram.
+                              It is mutually exclusive with `botTokenFile`.
+                              It requires Alertmanager >= v0.31.0.
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          botTokenFile:
+                            description: |-
+                              botTokenFile defines the file to read the Telegram bot token from.
+                              It is mutually exclusive with `botToken`.
+                              It requires Alertmanager >= v0.31.0.
+                            minLength: 1
+                            type: string
                         type: object
+                        x-kubernetes-validations:
+                        - message: botToken and botTokenFile are mutually exclusive.
+                          rule: '!has(self.botToken) || !has(self.botTokenFile)'
                       victorops:
                         description: victorops defines the default configuration for
                           VictorOps.
@@ -2426,7 +2501,9 @@ spec:
                             data to use for the targets.
                           properties:
                             key:
-                              description: The key to select.
+                              description: |-
+                                The key to select from the ConfigMap's Data field.
+                                Keys in the BinaryData field are not currently propagated to container env vars.
                               type: string
                             name:
                               default: ""
@@ -2499,6 +2576,21 @@ spec:
                   clusterLabel defines the identifier that uniquely identifies the Alertmanager cluster.
                   You should only set it when the Alertmanager cluster includes Alertmanager instances which are external to this Alertmanager resource. In practice, the addresses of the external instances are provided via the `.spec.additionalPeers` field.
                 type: string
+              clusterPeerName:
+                description: |-
+                  clusterPeerName defines the name that this Alertmanager instance uses to
+                  advertise itself to other cluster peers (the `--cluster.peer-name` flag,
+                  available since Alertmanager v0.30.0).
+
+                  If not set, the operator defaults to the pod's name (`$(POD_NAME)`),
+                  which is injected via the Kubernetes downward API. Setting this field
+                  lets you override that default with either a literal value or a string
+                  referencing environment variables that are already available in the
+                  Alertmanager container (for example `$(POD_NAME).$(NAMESPACE)`).
+
+                  / It requires Alertmanager >= 0.30.0.
+                minLength: 1
+                type: string
               clusterPeerTimeout:
                 description: clusterPeerTimeout defines the timeout for cluster peering.
                 pattern: ^(0|(([0-9]+)h)?(([0-9]+)m)?(([0-9]+)s)?(([0-9]+)ms)?)$
@@ -2527,7 +2619,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -2581,7 +2675,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -2699,7 +2795,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -2774,7 +2872,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -2825,6 +2925,12 @@ spec:
 
                           For more detail on clientAuth options:
                           https://golang.org/pkg/crypto/tls/#ClientAuthType
+                        enum:
+                        - NoClientCert
+                        - RequestClientCert
+                        - RequireAnyClientCert
+                        - VerifyClientCertIfGiven
+                        - RequireAndVerifyClientCert
                         type: string
                       clientCAFile:
                         description: |-
@@ -3006,7 +3112,9 @@ spec:
                                 description: Selects a key of a ConfigMap.
                                 properties:
                                   key:
-                                    description: The key to select.
+                                    description: |-
+                                      The key to select from the ConfigMap's Data field.
+                                      Keys in the BinaryData field are not currently propagated to container env vars.
                                     type: string
                                   name:
                                     default: ""
@@ -3276,6 +3384,11 @@ spec:
                                     Number must be in the range 1 to 65535.
                                     Name must be an IANA_SVC_NAME.
                                   x-kubernetes-int-or-string: true
+                                protocol:
+                                  description: |-
+                                    Protocol selects the wire protocol for the probe connection.
+                                    Nil defaults to HTTP/1.1.
+                                  type: string
                                 scheme:
                                   description: |-
                                     Scheme to use for connecting to the host.
@@ -3389,6 +3502,11 @@ spec:
                                     Number must be in the range 1 to 65535.
                                     Name must be an IANA_SVC_NAME.
                                   x-kubernetes-int-or-string: true
+                                protocol:
+                                  description: |-
+                                    Protocol selects the wire protocol for the probe connection.
+                                    Nil defaults to HTTP/1.1.
+                                  type: string
                                 scheme:
                                   description: |-
                                     Scheme to use for connecting to the host.
@@ -3471,6 +3589,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -3528,6 +3653,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -3683,6 +3813,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -3740,6 +3877,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -4193,6 +4335,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -4250,6 +4399,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -4389,10 +4543,21 @@ spec:
                         description: VolumeMount describes a mounting of a Volume
                           within a container.
                         properties:
-                          mountPath:
+                          bindMountOptions:
                             description: |-
-                              Path within the container at which the volume should be mounted.  Must
-                              not contain ':'.
+                              bindMountOptions is the list of additional bind mount options to apply when
+                              mounting this volume into the container. Allowed values are noexec,
+                              nodev, and nosuid. These are Linux mount options and have no effect on
+                              Windows nodes.
+                              This field is not supported with image volumes.
+                              This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.
+                            items:
+                              type: string
+                            type: array
+                            x-kubernetes-list-type: set
+                          mountPath:
+                            description: Path within the container at which the volume
+                              should be mounted.
                             type: string
                           mountPropagation:
                             description: |-
@@ -4705,7 +4870,9 @@ spec:
                                 description: Selects a key of a ConfigMap.
                                 properties:
                                   key:
-                                    description: The key to select.
+                                    description: |-
+                                      The key to select from the ConfigMap's Data field.
+                                      Keys in the BinaryData field are not currently propagated to container env vars.
                                     type: string
                                   name:
                                     default: ""
@@ -4975,6 +5142,11 @@ spec:
                                     Number must be in the range 1 to 65535.
                                     Name must be an IANA_SVC_NAME.
                                   x-kubernetes-int-or-string: true
+                                protocol:
+                                  description: |-
+                                    Protocol selects the wire protocol for the probe connection.
+                                    Nil defaults to HTTP/1.1.
+                                  type: string
                                 scheme:
                                   description: |-
                                     Scheme to use for connecting to the host.
@@ -5088,6 +5260,11 @@ spec:
                                     Number must be in the range 1 to 65535.
                                     Name must be an IANA_SVC_NAME.
                                   x-kubernetes-int-or-string: true
+                                protocol:
+                                  description: |-
+                                    Protocol selects the wire protocol for the probe connection.
+                                    Nil defaults to HTTP/1.1.
+                                  type: string
                                 scheme:
                                   description: |-
                                     Scheme to use for connecting to the host.
@@ -5170,6 +5347,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -5227,6 +5411,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -5382,6 +5571,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -5439,6 +5635,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -5892,6 +6093,13 @@ spec:
                         grpc:
                           description: GRPC specifies a GRPC HealthCheckRequest.
                           properties:
+                            mode:
+                              description: |-
+                                mode specifies the connection mode for the gRPC health probe.
+                                Set to "TLS" to use TLS without certificate verification.
+                                Set to "Plaintext" to use a plaintext (insecure) connection explicitly.
+                                If not specified, the probe uses a plaintext (insecure) connection.
+                              type: string
                             port:
                               description: Port number of the gRPC service. Number
                                 must be in the range 1 to 65535.
@@ -5949,6 +6157,11 @@ spec:
                                 Number must be in the range 1 to 65535.
                                 Name must be an IANA_SVC_NAME.
                               x-kubernetes-int-or-string: true
+                            protocol:
+                              description: |-
+                                Protocol selects the wire protocol for the probe connection.
+                                Nil defaults to HTTP/1.1.
+                              type: string
                             scheme:
                               description: |-
                                 Scheme to use for connecting to the host.
@@ -6088,10 +6301,21 @@ spec:
                         description: VolumeMount describes a mounting of a Volume
                           within a container.
                         properties:
-                          mountPath:
+                          bindMountOptions:
                             description: |-
-                              Path within the container at which the volume should be mounted.  Must
-                              not contain ':'.
+                              bindMountOptions is the list of additional bind mount options to apply when
+                              mounting this volume into the container. Allowed values are noexec,
+                              nodev, and nosuid. These are Linux mount options and have no effect on
+                              Windows nodes.
+                              This field is not supported with image volumes.
+                              This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.
+                            items:
+                              type: string
+                            type: array
+                            x-kubernetes-list-type: set
+                          mountPath:
+                            description: Path within the container at which the volume
+                              should be mounted.
                             type: string
                           mountPropagation:
                             description: |-
@@ -6508,11 +6732,8 @@ spec:
                       Eligible volumes are in-tree FibreChannel and iSCSI volumes, and all CSI volumes
                       whose CSI driver announces SELinux support by setting spec.seLinuxMount: true in their
                       CSIDriver instance. Other volumes are always re-labelled recursively.
-                      "MountOption" value is allowed only when SELinuxMount feature gate is enabled.
 
-                      If not specified and SELinuxMount feature gate is enabled, "MountOption" is used.
-                      If not specified and SELinuxMount feature gate is disabled, "MountOption" is used for ReadWriteOncePod volumes
-                      and "Recursive" for all other volumes.
+                      If not specified, "MountOption" is used.
 
                       This field affects only Pods that have SELinux label set, either in PodSecurityContext or in SecurityContext of all containers.
 
@@ -6689,6 +6910,18 @@ spec:
                           Must be an empty string (default) or Memory.
                           More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
                         type: string
+                      mode:
+                        description: |-
+                          mode specifies the permission bits for the emptyDir directory, in numeric
+                          notation (e.g., 0755, 01777). Must be a value between 0000 and 01777.
+                          If not specified, defaults to 0777.
+                          This might be in conflict with other options that affect the file
+                          mode, like fsGroup. If fsGroup is specified, the fsGroup permissions
+                          will override the mode specified here.
+                          This field has no effect on Windows.
+                          This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.
+                        format: int32
+                        type: integer
                       sizeLimit:
                         anyOf:
                         - type: integer
@@ -6762,8 +6995,8 @@ spec:
                                   * An existing PVC (PersistentVolumeClaim)
                                   If the provisioner or an external controller can support the specified data source,
                                   it will create a new volume based on the contents of the specified data source.
-                                  When the AnyVolumeDataSource feature gate is enabled, dataSource contents will be copied to dataSourceRef,
-                                  and dataSourceRef contents will be copied to dataSource when dataSourceRef.namespace is not specified.
+                                  dataSource contents will be copied to dataSourceRef, and dataSourceRef contents will be
+                                  copied to dataSource when dataSourceRef.namespace is not specified.
                                   If the namespace is specified, then dataSourceRef will not be copied to dataSource.
                                 properties:
                                   apiGroup:
@@ -6808,7 +7041,6 @@ spec:
                                     specified.
                                   * While dataSource only allows local objects, dataSourceRef allows objects
                                     in any namespaces.
-                                  (Beta) Using this field requires the AnyVolumeDataSource feature gate to be enabled.
                                   (Alpha) Using the namespace field of dataSourceRef requires the CrossNamespaceVolumeDataSource feature gate to be enabled.
                                 properties:
                                   apiGroup:
@@ -7021,8 +7253,8 @@ spec:
                               * An existing PVC (PersistentVolumeClaim)
                               If the provisioner or an external controller can support the specified data source,
                               it will create a new volume based on the contents of the specified data source.
-                              When the AnyVolumeDataSource feature gate is enabled, dataSource contents will be copied to dataSourceRef,
-                              and dataSourceRef contents will be copied to dataSource when dataSourceRef.namespace is not specified.
+                              dataSource contents will be copied to dataSourceRef, and dataSourceRef contents will be
+                              copied to dataSource when dataSourceRef.namespace is not specified.
                               If the namespace is specified, then dataSourceRef will not be copied to dataSource.
                             properties:
                               apiGroup:
@@ -7065,7 +7297,6 @@ spec:
                                 specified.
                               * While dataSource only allows local objects, dataSourceRef allows objects
                                 in any namespaces.
-                              (Beta) Using this field requires the AnyVolumeDataSource feature gate to be enabled.
                               (Alpha) Using the namespace field of dataSourceRef requires the CrossNamespaceVolumeDataSource feature gate to be enabled.
                             properties:
                               apiGroup:
@@ -7345,6 +7576,61 @@ spec:
                               currentVolumeAttributesClassName is the current name of the VolumeAttributesClass the PVC is using.
                               When unset, there is no VolumeAttributeClass applied to this PersistentVolumeClaim
                             type: string
+                          healthStatus:
+                            description: |-
+                              healthStatus contains the latest controller-reported health information
+                              for the volume bound to this claim.
+                            properties:
+                              healthConditions:
+                                description: |-
+                                  conditions is the set of adverse conditions reported by
+                                  the CSI controller plugin. An empty list means no adverse condition.
+                                  At most 16 conditions may be reported.
+                                items:
+                                  description: VolumeHealthCondition represents an
+                                    adverse health condition reported for a volume.
+                                  properties:
+                                    message:
+                                      description: |-
+                                        message is a human-readable description.
+                                        Maximum permitted length of a message is 1024 bytes.
+                                      type: string
+                                    reason:
+                                      description: |-
+                                        reason is a brief CamelCase machine-parseable reason.
+                                        Together with status it forms the unique identity of a condition entry.
+                                        Maximum permitted length of a reason is 256 bytes.
+                                      minLength: 1
+                                      type: string
+                                    status:
+                                      description: |-
+                                        status is the machine-parseable health category.
+                                        Possible values:
+                                        - "Inaccessible": the volume cannot be accessed.
+                                        - "DataLoss": data loss has been detected on the volume.
+                                        - "Degraded": the volume is functioning with reduced capability.
+                                      enum:
+                                      - DataLoss
+                                      - Degraded
+                                      - Inaccessible
+                                      minLength: 1
+                                      type: string
+                                  required:
+                                  - reason
+                                  - status
+                                  type: object
+                                maxItems: 16
+                                type: array
+                                x-kubernetes-list-map-keys:
+                                - status
+                                - reason
+                                x-kubernetes-list-type: map
+                              lastTransitionTime:
+                                description: lastTransitionTime is when the current
+                                  set of conditions first appeared.
+                                format: date-time
+                                type: string
+                            type: object
                           modifyVolumeStatus:
                             description: |-
                               ModifyVolumeStatus represents the status object of ControllerModifyVolume operation.
@@ -7663,10 +7949,21 @@ spec:
                   description: VolumeMount describes a mounting of a Volume within
                     a container.
                   properties:
-                    mountPath:
+                    bindMountOptions:
                       description: |-
-                        Path within the container at which the volume should be mounted.  Must
-                        not contain ':'.
+                        bindMountOptions is the list of additional bind mount options to apply when
+                        mounting this volume into the container. Allowed values are noexec,
+                        nodev, and nosuid. These are Linux mount options and have no effect on
+                        Windows nodes.
+                        This field is not supported with image volumes.
+                        This is an alpha field and requires enabling the VolumeBindMountOptions feature gate.
+                      items:
+                        type: string
+                      type: array
+                      x-kubernetes-list-type: set
+                    mountPath:
+                      description: Path within the container at which the volume should
+                        be mounted.
                       type: string
                     mountPropagation:
                       description: |-
@@ -7940,6 +8237,13 @@ spec:
                             mode, like fsGroup, and the result can be other mode bits set.
                           format: int32
                           type: integer
+                        defaultUser:
+                          description: |-
+                            defaultUser is Optional: The owner UID of the created files by default.
+                            The defaultUser field is only used as a fallback when the item-level user field is unset.
+                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                          format: int64
+                          type: integer
                         items:
                           description: |-
                             items if unspecified, each key-value pair in the Data field of the referenced
@@ -7972,6 +8276,13 @@ spec:
                                   May not contain the path element '..'.
                                   May not start with the string '..'.
                                 type: string
+                              user:
+                                description: |-
+                                  user is Optional: The owner UID of the created file.
+                                  If specified, the item-level user field takes precedence over defaultUser.
+                                  (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                format: int64
+                                type: integer
                             required:
                             - key
                             - path
@@ -8058,6 +8369,13 @@ spec:
                             mode, like fsGroup, and the result can be other mode bits set.
                           format: int32
                           type: integer
+                        defaultUser:
+                          description: |-
+                            defaultUser is Optional: The owner UID of the created files by default.
+                            The defaultUser field is only used as a fallback when the item-level user field is unset.
+                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                          format: int64
+                          type: integer
                         items:
                           description: Items is a list of downward API volume file
                           items:
@@ -8122,6 +8440,13 @@ spec:
                                 - resource
                                 type: object
                                 x-kubernetes-map-type: atomic
+                              user:
+                                description: |-
+                                  user is Optional: The owner UID of the created file.
+                                  If specified, the item-level user field takes precedence over defaultUser.
+                                  (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                format: int64
+                                type: integer
                             required:
                             - path
                             type: object
@@ -8140,6 +8465,18 @@ spec:
                             Must be an empty string (default) or Memory.
                             More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
                           type: string
+                        mode:
+                          description: |-
+                            mode specifies the permission bits for the emptyDir directory, in numeric
+                            notation (e.g., 0755, 01777). Must be a value between 0000 and 01777.
+                            If not specified, defaults to 0777.
+                            This might be in conflict with other options that affect the file
+                            mode, like fsGroup. If fsGroup is specified, the fsGroup permissions
+                            will override the mode specified here.
+                            This field has no effect on Windows.
+                            This field is alpha and requires EmptyDirVolumeMode featuregate to be enabled.
+                          format: int32
+                          type: integer
                         sizeLimit:
                           anyOf:
                           - type: integer
@@ -8233,8 +8570,8 @@ spec:
                                     * An existing PVC (PersistentVolumeClaim)
                                     If the provisioner or an external controller can support the specified data source,
                                     it will create a new volume based on the contents of the specified data source.
-                                    When the AnyVolumeDataSource feature gate is enabled, dataSource contents will be copied to dataSourceRef,
-                                    and dataSourceRef contents will be copied to dataSource when dataSourceRef.namespace is not specified.
+                                    dataSource contents will be copied to dataSourceRef, and dataSourceRef contents will be
+                                    copied to dataSource when dataSourceRef.namespace is not specified.
                                     If the namespace is specified, then dataSourceRef will not be copied to dataSource.
                                   properties:
                                     apiGroup:
@@ -8279,7 +8616,6 @@ spec:
                                       specified.
                                     * While dataSource only allows local objects, dataSourceRef allows objects
                                       in any namespaces.
-                                    (Beta) Using this field requires the AnyVolumeDataSource feature gate to be enabled.
                                     (Alpha) Using the namespace field of dataSourceRef requires the CrossNamespaceVolumeDataSource feature gate to be enabled.
                                   properties:
                                     apiGroup:
@@ -8846,6 +9182,13 @@ spec:
                             mode, like fsGroup, and the result can be other mode bits set.
                           format: int32
                           type: integer
+                        defaultUser:
+                          description: |-
+                            defaultUser is Optional: The owner UID of the created files by default.
+                            The defaultUser field is only used as a fallback when the item-level user field is unset.
+                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                          format: int64
+                          type: integer
                         sources:
                           description: |-
                             sources is the list of volume projections. Each entry in this list
@@ -8945,6 +9288,13 @@ spec:
                                       Mutually-exclusive with name.  The contents of all selected
                                       ClusterTrustBundles will be unified and deduplicated.
                                     type: string
+                                  user:
+                                    description: |-
+                                      user is Optional: The owner UID of the created file.
+                                      If specified, the item-level user field takes precedence over defaultUser.
+                                      (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                    format: int64
+                                    type: integer
                                 required:
                                 - path
                                 type: object
@@ -8985,6 +9335,13 @@ spec:
                                             May not contain the path element '..'.
                                             May not start with the string '..'.
                                           type: string
+                                        user:
+                                          description: |-
+                                            user is Optional: The owner UID of the created file.
+                                            If specified, the item-level user field takes precedence over defaultUser.
+                                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                          format: int64
+                                          type: integer
                                       required:
                                       - key
                                       - path
@@ -9080,6 +9437,13 @@ spec:
                                           - resource
                                           type: object
                                           x-kubernetes-map-type: atomic
+                                        user:
+                                          description: |-
+                                            user is Optional: The owner UID of the created file.
+                                            If specified, the item-level user field takes precedence over defaultUser.
+                                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                          format: int64
+                                          type: integer
                                       required:
                                       - path
                                       type: object
@@ -9187,6 +9551,13 @@ spec:
                                     description: Kubelet's generated CSRs will be
                                       addressed to this signer.
                                     type: string
+                                  user:
+                                    description: |-
+                                      user is Optional: The owner UID of the created file.
+                                      If specified, the item-level user field takes precedence over defaultUser.
+                                      (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                    format: int64
+                                    type: integer
                                   userAnnotations:
                                     additionalProperties:
                                       type: string
@@ -9246,6 +9617,13 @@ spec:
                                             May not contain the path element '..'.
                                             May not start with the string '..'.
                                           type: string
+                                        user:
+                                          description: |-
+                                            user is Optional: The owner UID of the created file.
+                                            If specified, the item-level user field takes precedence over defaultUser.
+                                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                          format: int64
+                                          type: integer
                                       required:
                                       - key
                                       - path
@@ -9293,6 +9671,13 @@ spec:
                                       path is the path relative to the mount point of the file to project the
                                       token into.
                                     type: string
+                                  user:
+                                    description: |-
+                                      user is Optional: The owner UID of the created file.
+                                      If specified, the item-level user field takes precedence over defaultUser.
+                                      (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                    format: int64
+                                    type: integer
                                 required:
                                 - path
                                 type: object
@@ -9499,6 +9884,13 @@ spec:
                             mode, like fsGroup, and the result can be other mode bits set.
                           format: int32
                           type: integer
+                        defaultUser:
+                          description: |-
+                            defaultUser is Optional: The owner UID of the created files by default.
+                            The defaultUser field is only used as a fallback when the item-level user field is unset.
+                            (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                          format: int64
+                          type: integer
                         items:
                           description: |-
                             items If unspecified, each key-value pair in the Data field of the referenced
@@ -9531,6 +9923,13 @@ spec:
                                   May not contain the path element '..'.
                                   May not start with the string '..'.
                                 type: string
+                              user:
+                                description: |-
+                                  user is Optional: The owner UID of the created file.
+                                  If specified, the item-level user field takes precedence over defaultUser.
+                                  (Alpha) This field requires the AtomicWriteVolumeUserFields feature gate to be enabled.
+                                format: int64
+                                type: integer
                             required:
                             - key
                             - path
@@ -9634,6 +10033,7 @@ spec:
                       getConcurrency defines the maximum number of GET requests processed concurrently. This corresponds to the
                       Alertmanager's `--web.get-concurrency` flag.
                     format: int32
+                    minimum: 0
                     type: integer
                   httpConfig:
                     description: httpConfig defines HTTP parameters for web server.
@@ -9694,6 +10094,7 @@ spec:
                       timeout for HTTP requests. This corresponds to the Alertmanager's
                       `--web.timeout` flag.
                     format: int32
+                    minimum: 0
                     type: integer
                   tlsConfig:
                     description: tlsConfig defines the TLS parameters for HTTPS.
@@ -9711,7 +10112,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -9786,7 +10189,9 @@ spec:
                               data to use for the targets.
                             properties:
                               key:
-                                description: The key to select.
+                                description: |-
+                                  The key to select from the ConfigMap's Data field.
+                                  Keys in the BinaryData field are not currently propagated to container env vars.
                                 type: string
                               name:
                                 default: ""
@@ -9837,6 +10242,12 @@ spec:
 
                           For more detail on clientAuth options:
                           https://golang.org/pkg/crypto/tls/#ClientAuthType
+                        enum:
+                        - NoClientCert
+                        - RequestClientCert
+                        - RequireAnyClientCert
+                        - VerifyClientCertIfGiven
+                        - RequireAndVerifyClientCert
                         type: string
                       clientCAFile:
                         description: |-
