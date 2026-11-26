@@ -4,6 +4,7 @@
     "config:best-practices",
     "group:allDigest",
     "group:allNonMajor",
+    ":automergeDigest",
     ":automergeMinor"
   ],
   "gitIgnoredAuthors": ["196080869+gadgetmg[bot]@users.noreply.github.com"],
