@@ -22,7 +22,17 @@ spec:
       - args:
         - migrate
         - --resource
+        - cleanuppolicies.kyverno.io
+        - --resource
+        - clustercleanuppolicies.kyverno.io
+        - --resource
+        - clusterpolicies.kyverno.io
+        - --resource
         - globalcontextentries.kyverno.io
+        - --resource
+        - policies.kyverno.io
+        - --resource
+        - policyexceptions.kyverno.io
         - --resource
         - updaterequests.kyverno.io
         - --resource
@@ -47,7 +57,7 @@ spec:
         - policyexceptions.policies.kyverno.io
         - --resource
         - validatingpolicies.policies.kyverno.io
-        image: ghcr.io/kyverno/kyverno-cli:v1.20.0@sha256:bd2b8b7c9d550ecf04e0bacaf351adce2f82ce67fd3f291075edcee7f8ab4ab4
+        image: ghcr.io/kyverno/kyverno-cli:v1.19.2@sha256:322ec5044d600930cb3af0e56dc33154a2d1d1fba58f4cadad3f47be7e78b11c
         imagePullPolicy: IfNotPresent
         name: kyverno-cli
         resources:

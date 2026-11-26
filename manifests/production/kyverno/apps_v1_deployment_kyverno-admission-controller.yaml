@@ -76,7 +76,6 @@ spec:
         - --omitEvents=PolicyApplied,PolicySkipped
         - --enablePolicyException=false
         - --protectManagedResources=false
-        - --protectGenerationLabels=true
         - --allowInsecureRegistry=false
         - --registryCredentialHelpers=default,google,amazon,azure,github
         - --enableReporting=validate,mutate,mutateExisting,imageVerify,generate
@@ -103,7 +102,7 @@ spec:
           value: /.sigstore
         - name: KYVERNO_DEPLOYMENT
           value: kyverno-admission-controller
-        image: ghcr.io/kyverno/kyverno:v1.20.0@sha256:9de49c5416ea536f00a205527197ac048abdf32c5a75d633cd9afff8928f359d
+        image: ghcr.io/kyverno/kyverno:v1.19.2@sha256:c8c4dd09e720d2cd7fd24ca73ac28e46651001372f988e0cba3f2f612f04b955
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
@@ -192,7 +191,7 @@ spec:
           value: kyverno-admission-controller
         - name: KYVERNO_SVC
           value: kyverno-svc
-        image: ghcr.io/kyverno/kyvernopre:v1.20.0@sha256:339067e083430e0c97007541bef9cfdbac89bee13f7228772c77ae8aead14b8b
+        image: ghcr.io/kyverno/kyvernopre:v1.19.2@sha256:27f3cc52e628559b56d08363b85316819802086c9808606914f7805a244148f4
         imagePullPolicy: IfNotPresent
         name: kyverno-pre
         resources:
