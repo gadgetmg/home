@@ -17,11 +17,11 @@ images:
 - name: ghcr.io/gadgetmg/ezxss
   newTag: master@sha256:90e816394405050a6d1badd0a1cf7cd57bf5538aa977a08975a7d7d85e20b297
 - name: ghcr.io/mariadb/mariadb
-  newTag: 12.3.2-noble@sha256:ef26b7cead9791369fa06c4879ffe0cc8b19518502fff3ad56d3058866ca4192
+  newTag: 12.3.4-noble@sha256:d82229fd0040eb4c3e7b04cdc158a699d487f8d33374b5829699bc534f410d0f
 - name: ghcr.io/mariadb-operator/mariadb-operator
-  newTag: 26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
+  newTag: 26.10.2@sha256:f4b1f260a85f52ba54e537eb18ec9f7502aaa5d3234ce84f07cc43481d6a3076
 - name: docker.io/prom/mysqld-exporter
-  newTag: v0.19.0@sha256:eacb4b18e2ec1e0abdf2d64851b68526c964f6d9cb3e9458fb5d5f5062ea94c1
+  newTag: v0.21.0@sha256:afad0c59a154fea24ca5ea0e6f95f2b0b168601b111266963dc8a347715b5318
 
 components:
 - ../../../shared/components/crd-configurations
