@@ -40,7 +40,6 @@ rules:
   - cleanuppolicies
   verbs:
   - list
-  - watch
 - apiGroups:
   - policies.kyverno.io
   resources:
@@ -82,13 +81,6 @@ rules:
   - watch
   - deletecollection
 - apiGroups:
-  - kyverno.io
-  resources:
-  - clustercleanuppolicies/status
-  - cleanuppolicies/status
-  verbs:
-  - update
-- apiGroups:
   - ""
   resources:
   - configmaps
@@ -111,3 +103,11 @@ rules:
   - subjectaccessreviews
   verbs:
   - create
+- apiGroups:
+  - kyverno.io
+  resources:
+  - updaterequests
+  verbs:
+  - list
+  - watch
+  - delete
