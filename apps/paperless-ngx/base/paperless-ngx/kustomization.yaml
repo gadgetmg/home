@@ -30,6 +30,7 @@ configMapGenerator:
   - REQUESTS_CA_BUNDLE=/bundle.pem
   - PAPERLESS_DATE_ORDER=MDY
   - PAPERLESS_CONSUMER_ENABLE_BARCODES=True
+  - PAPERLESS_ALLOWED_HOSTS=*
 - name: paperless-ngx-socialaccount-config
   literals:
   - name=seigra.net
