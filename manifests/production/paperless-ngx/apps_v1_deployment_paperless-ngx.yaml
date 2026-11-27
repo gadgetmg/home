@@ -58,7 +58,7 @@ spec:
               name: paperless-ngx-db-app
         envFrom:
         - configMapRef:
-            name: paperless-ngx-config-hh4b4d67bb
+            name: paperless-ngx-config-bkctkhftc8
         - secretRef:
             name: paperless-ngx-secret-key
         - secretRef:
