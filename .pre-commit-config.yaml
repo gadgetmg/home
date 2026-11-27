@@ -5,7 +5,7 @@ repos:
     name: hydrate
     language: system
     entry: task
-    args: ["-s", "hydrate"]
+    args: ["-s", "hydrate", "--force"]
     pass_filenames: false
   - id: kubeconform
     name: kubeconform
@@ -14,7 +14,7 @@ repos:
     args: ["-s", "kubeconform"]
     pass_filenames: false
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: no-commit-to-branch
   - id: check-case-conflict
