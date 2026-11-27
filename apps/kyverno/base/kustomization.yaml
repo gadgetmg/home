@@ -16,7 +16,7 @@ helmCharts:
   repo: https://kyverno.github.io/kyverno/
   releaseName: kyverno
   namespace: kyverno
-  version: 3.10.0
+  version: 3.9.2
   apiVersions:
   - policy/v1/PodDisruptionBudget
   valuesInline:
@@ -27,50 +27,50 @@ helmCharts:
       legacyPolicyCheck:
         image:
           # renovate: datasource=docker depName=ghcr.io/kyverno/kyverno-cli
-          tag: v1.20.0@sha256:bd2b8b7c9d550ecf04e0bacaf351adce2f82ce67fd3f291075edcee7f8ab4ab4
+          tag: v1.19.2@sha256:322ec5044d600930cb3af0e56dc33154a2d1d1fba58f4cadad3f47be7e78b11c
     crds:
       migration:
         image:
           # renovate: datasource=docker depName=ghcr.io/kyverno/kyverno-cli
-          tag: v1.20.0@sha256:bd2b8b7c9d550ecf04e0bacaf351adce2f82ce67fd3f291075edcee7f8ab4ab4
+          tag: v1.19.2@sha256:322ec5044d600930cb3af0e56dc33154a2d1d1fba58f4cadad3f47be7e78b11c
     test:
       image:
         # renovate: datasource=docker depName=ghcr.io/kyverno/readiness-checker
-        tag: v1.20.0@sha256:6079a30d75fe7ba868a5a7e5dfa71ee92a3a8bae97adcea1c8cfb1009280ee6c
+        tag: v1.19.2@sha256:02600428e7c956e222f4376413525866ed9fec28e6bcb1222774ce6bf5fc904a
     webhooksCleanup:
       image:
         # renovate: datasource=docker depName=ghcr.io/kyverno/readiness-checker
-        tag: v1.20.0@sha256:6079a30d75fe7ba868a5a7e5dfa71ee92a3a8bae97adcea1c8cfb1009280ee6c
+        tag: v1.19.2@sha256:02600428e7c956e222f4376413525866ed9fec28e6bcb1222774ce6bf5fc904a
     admissionController:
       initContainer:
         image:
           # renovate: datasource=docker depName=ghcr.io/kyverno/kyvernopre
-          tag: v1.20.0@sha256:339067e083430e0c97007541bef9cfdbac89bee13f7228772c77ae8aead14b8b
+          tag: v1.19.2@sha256:27f3cc52e628559b56d08363b85316819802086c9808606914f7805a244148f4
       container:
         image:
           # renovate: datasource=docker depName=ghcr.io/kyverno/kyverno
-          tag: v1.20.0@sha256:9de49c5416ea536f00a205527197ac048abdf32c5a75d633cd9afff8928f359d
+          tag: v1.19.2@sha256:c8c4dd09e720d2cd7fd24ca73ac28e46651001372f988e0cba3f2f612f04b955
       replicas: 2
       serviceMonitor:
         enabled: true
     backgroundController:
       image:
         # renovate: datasource=docker depName=ghcr.io/kyverno/background-controller
-        tag: v1.20.0@sha256:c72df38320a48fc9de10f9d23d087a117853bb08207b7f60f6d1e8457fb3ddb7
+        tag: v1.19.2@sha256:c46e124f21ef8a6bb4b48de57106808b1007edcd5ddd4ff7df5d23b9efa60ce2
       replicas: 2
       serviceMonitor:
         enabled: true
     cleanupController:
       image:
         # renovate: datasource=docker depName=ghcr.io/kyverno/cleanup-controller
-        tag: v1.20.0@sha256:0f9ce0c203561c52499e871a987ff987371f57385fcafe7af1a01dfd6db1feee
+        tag: v1.19.2@sha256:d7340aa7c9315080c3dafa7b765d090ced37353e89e5cd7a3f9ac69e8fb532b2
       replicas: 2
       serviceMonitor:
         enabled: true
     reportsController:
       image:
         # renovate: datasource=docker depName=ghcr.io/kyverno/reports-controller
-        tag: v1.20.0@sha256:f54e3cc106fadb1a615d0ec11c42f741f51d3580a5f70dfbe7bd7ec58864ef03
+        tag: v1.19.2@sha256:5fb6d3e738050dbce84f60ecabaede7665fbe0578d07c1e8c912443b035e79c3
       replicas: 2
       serviceMonitor:
         enabled: true
