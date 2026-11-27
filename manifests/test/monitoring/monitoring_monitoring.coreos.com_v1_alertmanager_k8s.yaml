@@ -30,7 +30,7 @@ spec:
   automountServiceAccountToken: true
   externalUrl: http://k8s-alertmanager.monitoring:9093
   hostNetwork: false
-  image: quay.io/prometheus/alertmanager:v0.33.1@sha256:9e082985f56f4c8c9f724e18f2288c6708f472e56a5286b8863d080434ea065d
+  image: quay.io/prometheus/alertmanager:v0.35.1@sha256:03d4e362b9948eee910802ddac55f9175b320862a2de1fdef5206c3213875a09
   imagePullPolicy: IfNotPresent
   listenLocal: false
   logFormat: logfmt

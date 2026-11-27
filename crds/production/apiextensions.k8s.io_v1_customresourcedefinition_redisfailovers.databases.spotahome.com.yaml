@@ -3,10 +3,6 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: (devel)
-  labels:
-    app.kubernetes.io/instance: redis-operator
-    app.kubernetes.io/name: redis-operator
-    app.kubernetes.io/version: 3.3.3
   name: redisfailovers.databases.spotahome.com
 spec:
   group: databases.spotahome.com
@@ -74,6 +70,13 @@ spec:
                   port:
                     type: string
                 type: object
+              engine:
+                description: Engine selects Redis or Valkey. Omitted or empty means
+                  Redis (historical behavior).
+                enum:
+                - Redis
+                - Valkey
+                type: string
               labelWhitelist:
                 items:
                   type: string
@@ -1675,9 +1678,6 @@ spec:
                         type: integer
                     type: object
                   disableMasterRollout:
-                    default: false
-                    description: When true, only slave pods are rolled out on spec
-                      change (OnDelete); master is not deleted until this is false.
                     type: boolean
                   disablePodDisruptionBudget:
                     type: boolean
@@ -6844,6 +6844,9 @@ spec:
                   priorityClassName:
                     type: string
                   replicas:
+                    format: int32
+                    type: integer
+                  reservedPodMemoryPercent:
                     format: int32
                     type: integer
                   resources:

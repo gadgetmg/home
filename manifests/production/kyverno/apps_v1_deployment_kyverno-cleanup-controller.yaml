@@ -57,6 +57,7 @@ spec:
         - --dumpPayload=false
         - --maxAPICallResponseLength=2000000
         - --apiCallTimeout=30s
+        - --maxGlobalContextEntries=0
         - --loggingFormat=text
         - --v=2
         - --protectManagedResources=false
@@ -82,7 +83,7 @@ spec:
               fieldPath: metadata.namespace
         - name: KYVERNO_SVC
           value: kyverno-cleanup-controller
-        image: ghcr.io/kyverno/cleanup-controller:v1.18.2@sha256:b0395d29ae332276e6910eb40418be9bc127c068d659f90aa1bcddd6be99ccb4
+        image: ghcr.io/kyverno/cleanup-controller:v1.19.2@sha256:d7340aa7c9315080c3dafa7b765d090ced37353e89e5cd7a3f9ac69e8fb532b2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2

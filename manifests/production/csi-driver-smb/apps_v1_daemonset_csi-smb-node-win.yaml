@@ -57,6 +57,7 @@ spec:
         - --enable-get-volume-stats=true
         - --remove-smb-mapping-during-unmount=true
         - --enable-windows-host-process=true
+        - --require-privacy-for-global-mapping=true
         command:
         - smbplugin.exe
         env:
@@ -67,7 +68,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: spec.nodeName
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.3-windows-hp@sha256:4fdb6d2ba034e4776640b778dc65d4c0f52d5674ae79f96751760714560452c0
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.4-windows-hp@sha256:5b8202d29540c6a93f31de8fe881fa7628f0375e86b13bb8077c349c58fc5499
         imagePullPolicy: IfNotPresent
         name: smb
         resources:
@@ -87,7 +88,7 @@ spec:
         - -c
         - New-Item -ItemType Directory -Path C:\var\lib\kubelet\plugins\smb.csi.k8s.io\
           -Force
-        image: registry.k8s.io/sig-storage/smbplugin:v1.20.3-windows-hp@sha256:4fdb6d2ba034e4776640b778dc65d4c0f52d5674ae79f96751760714560452c0
+        image: registry.k8s.io/sig-storage/smbplugin:v1.20.4-windows-hp@sha256:5b8202d29540c6a93f31de8fe881fa7628f0375e86b13bb8077c349c58fc5499
         imagePullPolicy: IfNotPresent
         name: init
         securityContext:

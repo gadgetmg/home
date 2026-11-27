@@ -6,7 +6,6 @@ spec:
   config:
     featureGates:
     - HonorWaitForFirstConsumer
-    - WebhookPvcRendering
     podResourceRequirements:
       limits:
         memory: 1G

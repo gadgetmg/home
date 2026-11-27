@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cmd-params: acfbc58fd22efd7de29c59ea1737b17991ff5955d26c59ca0851ca4ce22f314f
+        checksum/cmd-params: 9d1609053906e09652be52433a0cfd1ae6c88c0255c286046d45344504b39518
       labels:
         app.kubernetes.io/component: notifications-controller
         app.kubernetes.io/instance: argocd
@@ -81,7 +81,7 @@ spec:
               key: notificationscontroller.repo.server.plaintext
               name: argocd-cmd-params-cm
               optional: true
-        image: quay.io/argoproj/argocd:v3.4.5@sha256:224e454cfd8c1818fec3ed17b72b2034c9a3915fa819e1dcccafc753776d446a
+        image: quay.io/argoproj/argocd:v3.6.3@sha256:f2e45010dbd6aeff01b845d212b436b2d8e7f44d90d437274906c2ab21e59e0d
         imagePullPolicy: IfNotPresent
         name: notifications-controller
         ports:
@@ -107,11 +107,15 @@ spec:
       dnsPolicy: ClusterFirst
       nodeSelector:
         kubernetes.io/os: linux
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       serviceAccountName: argocd-notifications-controller
       terminationGracePeriodSeconds: 30
       volumes:
       - configMap:
           name: argocd-tls-certs-cm
+          optional: true
         name: tls-certs
       - name: argocd-repo-server-tls
         secret:

@@ -2,7 +2,7 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   annotations:
-    cert-manager.io/inject-ca-from: cert-manager/trust-manager
+    cert-manager.io/inject-ca-from-secret: cert-manager/trust-manager-tls
   labels:
     app: trust-manager
     app.kubernetes.io/instance: trust-manager

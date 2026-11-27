@@ -50,9 +50,13 @@ spec:
               containerName: crossplane
               divisor: "1"
               resource: limits.memory
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         - name: LEADER_ELECTION
           value: "true"
-        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
+        image: ghcr.io/crossplane/crossplane:v2.5.0@sha256:c94d330a1a9db1d407ee3d8f163d8ac3bd9ae0872a3fa3e81381575fe6e05957
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -90,7 +94,7 @@ spec:
               containerName: crossplane-init
               divisor: "1"
               resource: limits.memory
-        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
+        image: ghcr.io/crossplane/crossplane:v2.5.0@sha256:c94d330a1a9db1d407ee3d8f163d8ac3bd9ae0872a3fa3e81381575fe6e05957
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:

@@ -21,7 +21,6 @@ rules:
   - serviceaccounts
   - services
   - endpoints
-  - pods/exec
   verbs:
   - get
   - list
@@ -30,6 +29,14 @@ rules:
   - update
   - delete
   - patch
+- apiGroups:
+  - discovery.k8s.io
+  resources:
+  - endpointslices
+  verbs:
+  - get
+  - list
+  - watch
 - apiGroups:
   - ""
   resources:
@@ -212,6 +219,13 @@ rules:
   - virtualmachinetemplaterequests/source
   verbs:
   - create
+- apiGroups:
+  - subresources.template.kubevirt.io
+  resources:
+  - virtualmachinetemplates/process
+  - virtualmachinetemplates/create
+  verbs:
+  - create
 - nonResourceURLs:
   - /metrics
   verbs:
@@ -223,6 +237,7 @@ rules:
   verbs:
   - get
   - list
+  - watch
   - delete
   - patch
 - apiGroups:
@@ -540,6 +555,14 @@ rules:
   - delete
   - patch
 - apiGroups:
+  - template.kubevirt.io
+  resources:
+  - virtualmachinetemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - pool.kubevirt.io
   resources:
   - virtualmachinepools
@@ -574,9 +597,10 @@ rules:
   - virtualmachineinstances/addvolume
   - virtualmachineinstances/removevolume
   - virtualmachineinstances/backup
-  - virtualmachineinstances/redefine-checkpoint
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
+  - virtualmachineinstances/externalsnapshot
+  - virtualmachineinstances/commitsnapshot
   - virtualmachineinstances/reset
   - virtualmachineinstances/softreboot
   - virtualmachineinstances/sev/setupsession
@@ -687,24 +711,25 @@ rules:
   - resource.k8s.io
   resources:
   - resourceslices
-  - resourceclaims
   verbs:
   - list
   - watch
   - get
 - apiGroups:
-  - k8s.cni.cncf.io
+  - resource.k8s.io
   resources:
-  - network-attachment-definitions
+  - resourceclaims
   verbs:
+  - list
+  - watch
   - get
+  - create
 - apiGroups:
   - kubevirt.io
   resources:
   - virtualmachineinstances
   verbs:
   - update
-  - patch
   - list
   - watch
 - apiGroups:
@@ -756,20 +781,13 @@ rules:
   - list
   - watch
 - apiGroups:
-  - backup.kubevirt.io
+  - plugin.kubevirt.io
   resources:
-  - virtualmachinebackuptrackers
-  - virtualmachinebackuptrackers/status
-  verbs:
-  - list
-  - watch
-  - patch
-- apiGroups:
-  - apps
-  resources:
-  - controllerrevisions
+  - plugins
   verbs:
   - get
+  - list
+  - watch
 - apiGroups:
   - export.kubevirt.io
   resources:
@@ -783,6 +801,14 @@ rules:
   resources:
   - kubevirts
   verbs:
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - get
   - list
   - watch
 - apiGroups:
@@ -893,6 +919,7 @@ rules:
   - virtualmachines/addvolume
   - virtualmachines/removevolume
   - virtualmachines/memorydump
+  - virtualmachines/removememorydump
   - virtualmachines/evacuate/cancel
   verbs:
   - update
@@ -946,6 +973,19 @@ rules:
   resources:
   - virtualmachinebackups
   - virtualmachinebackuptrackers
+  verbs:
+  - get
+  - delete
+  - create
+  - update
+  - patch
+  - list
+  - watch
+  - deletecollection
+- apiGroups:
+  - plugin.kubevirt.io
+  resources:
+  - plugins
   verbs:
   - get
   - delete
@@ -1066,6 +1106,7 @@ rules:
   - virtualmachines/addvolume
   - virtualmachines/removevolume
   - virtualmachines/memorydump
+  - virtualmachines/removememorydump
   - virtualmachines/evacuate/cancel
   verbs:
   - update
@@ -1292,6 +1333,14 @@ rules:
   - list
   - watch
 - apiGroups:
+  - plugin.kubevirt.io
+  resources:
+  - plugins
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
   - instancetype.kubevirt.io
   resources:
   - virtualmachineclusterinstancetypes
@@ -1319,6 +1368,18 @@ rules:
   - list
   - watch
   - deletecollection
+- apiGroups:
+  - k8s.cni.cncf.io
+  resources:
+  - network-attachment-definitions
+  verbs:
+  - get
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - virtualmachineinstances/redefine-checkpoint
+  verbs:
+  - update
 - apiGroups:
   - authentication.k8s.io
   resources:

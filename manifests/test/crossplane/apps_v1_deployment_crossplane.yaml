@@ -67,7 +67,7 @@ spec:
           value: crossplane-tls-client
         - name: TLS_CLIENT_CERTS_DIR
           value: /tls/client
-        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
+        image: ghcr.io/crossplane/crossplane:v2.5.0@sha256:c94d330a1a9db1d407ee3d8f163d8ac3bd9ae0872a3fa3e81381575fe6e05957
         imagePullPolicy: IfNotPresent
         name: crossplane
         ports:
@@ -140,13 +140,15 @@ spec:
               fieldPath: metadata.namespace
         - name: WEBHOOK_SERVICE_PORT
           value: "9443"
+        - name: USAGE_WEBHOOK_FAILURE_POLICY
+          value: Fail
         - name: TLS_CA_SECRET_NAME
           value: crossplane-root-ca
         - name: TLS_SERVER_SECRET_NAME
           value: crossplane-tls-server
         - name: TLS_CLIENT_SECRET_NAME
           value: crossplane-tls-client
-        image: ghcr.io/crossplane/crossplane:v2.3.4@sha256:cea30c75198e8cee8e9a4fcb003b158750d345ca91831876de38989c11cbf94c
+        image: ghcr.io/crossplane/crossplane:v2.5.0@sha256:c94d330a1a9db1d407ee3d8f163d8ac3bd9ae0872a3fa3e81381575fe6e05957
         imagePullPolicy: IfNotPresent
         name: crossplane-init
         resources:

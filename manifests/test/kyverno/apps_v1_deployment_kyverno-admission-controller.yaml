@@ -59,6 +59,7 @@ spec:
         - --admissionReports=true
         - --maxAdmissionReports=1000
         - --autoUpdateWebhooks=true
+        - --excludeBootstrapResources=false
         - --enableConfigMapCaching=true
         - --controllerRuntimeMetricsAddress=:8080
         - --enableDeferredLoading=true
@@ -69,6 +70,7 @@ spec:
         - --dumpPatches=false
         - --maxAPICallResponseLength=2000000
         - --apiCallTimeout=30s
+        - --maxGlobalContextEntries=0
         - --loggingFormat=text
         - --v=2
         - --omitEvents=PolicyApplied,PolicySkipped
@@ -100,7 +102,7 @@ spec:
           value: /.sigstore
         - name: KYVERNO_DEPLOYMENT
           value: kyverno-admission-controller
-        image: ghcr.io/kyverno/kyverno:v1.18.2@sha256:0a540e2ddf74d0d2d3d45f9ef248d7dbc96576accdbcc6a2dd7eaff9fea56504
+        image: ghcr.io/kyverno/kyverno:v1.19.2@sha256:c8c4dd09e720d2cd7fd24ca73ac28e46651001372f988e0cba3f2f612f04b955
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 2
@@ -189,7 +191,7 @@ spec:
           value: kyverno-admission-controller
         - name: KYVERNO_SVC
           value: kyverno-svc
-        image: ghcr.io/kyverno/kyvernopre:v1.18.2@sha256:cd8cb4a31d25b3992734fb8f24a90ef691c90ce49338c89bea96792160eacb98
+        image: ghcr.io/kyverno/kyvernopre:v1.19.2@sha256:27f3cc52e628559b56d08363b85316819802086c9808606914f7805a244148f4
         imagePullPolicy: IfNotPresent
         name: kyverno-pre
         resources:

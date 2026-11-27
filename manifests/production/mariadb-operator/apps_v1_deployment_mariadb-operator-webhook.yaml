@@ -29,7 +29,7 @@ spec:
         - --metrics-addr=:8080
         - --health-addr=:8081
         - --log-level=INFO
-        image: ghcr.io/mariadb-operator/mariadb-operator:26.6.0@sha256:a5e17b48f08ef02cda59a5b0ed68a18ae5e0f820129ac391fa220ea117aebd6c
+        image: ghcr.io/mariadb-operator/mariadb-operator:26.10.2@sha256:f4b1f260a85f52ba54e537eb18ec9f7502aaa5d3234ce84f07cc43481d6a3076
         imagePullPolicy: IfNotPresent
         name: webhook
         ports:

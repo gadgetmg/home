@@ -23,7 +23,7 @@ spec:
       containers:
       - args:
         - delete-webhooks
-        image: ghcr.io/kyverno/readiness-checker:v1.18.2@sha256:4fb1870b1a4adfed0fa7a32b7c3bcaf736fb889c7e1947ee8b20710bc2f5a5ce
+        image: ghcr.io/kyverno/readiness-checker:v1.19.2@sha256:02600428e7c956e222f4376413525866ed9fec28e6bcb1222774ce6bf5fc904a
         imagePullPolicy: null
         name: kubectl
         resources:
@@ -45,5 +45,7 @@ spec:
           runAsUser: 65534
           seccompProfile:
             type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/os: linux
       restartPolicy: Never
       serviceAccountName: kyverno-admission-controller

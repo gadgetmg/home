@@ -19,3 +19,21 @@ rules:
   - get
   - list
   - watch
+- apiGroups:
+  - policies.kyverno.io
+  resources:
+  - deletingpolicies
+  - generatingpolicies
+  - imagevalidatingpolicies
+  - mutatingpolicies
+  - namespaceddeletingpolicies
+  - namespacedgeneratingpolicies
+  - namespacedimagevalidatingpolicies
+  - namespacedmutatingpolicies
+  - namespacedvalidatingpolicies
+  - policyexceptions
+  - validatingpolicies
+  verbs:
+  - get
+  - list
+  - watch

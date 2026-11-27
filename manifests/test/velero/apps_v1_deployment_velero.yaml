@@ -44,6 +44,11 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
         - name: LD_LIBRARY_PATH
           value: /plugins
         - name: AWS_SHARED_CREDENTIALS_FILE
@@ -54,7 +59,7 @@ spec:
           value: /credentials/cloud
         - name: ALIBABA_CLOUD_CREDENTIALS_FILE
           value: /credentials/cloud
-        image: docker.io/velero/velero:v1.18.1@sha256:11459094b1b21ec7c817b08f8067d9e89380835547915cac9c4132ff05b55b90
+        image: docker.io/velero/velero:v1.18.2@sha256:37396519f399536e5f01427d723565ae69294ec3fb5625cf1c87c09eaa9de16b
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 5
@@ -98,7 +103,7 @@ spec:
           name: scratch
       dnsPolicy: ClusterFirst
       initContainers:
-      - image: docker.io/velero/velero-plugin-for-aws:v1.14.2@sha256:0751144c1c8e52d52c48717fbd13ad5a3061e612ae4d7ad744a946cd5b139d1a
+      - image: docker.io/velero/velero-plugin-for-aws:v1.15.0@sha256:cb8fdbefc54e2d99b124f6611bc8cad31a1e546689dfb2a32c9307339c492750
         name: velero-plugin-for-aws
         securityContext:
           allowPrivilegeEscalation: false

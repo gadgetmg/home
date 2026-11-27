@@ -25,7 +25,7 @@ helmCharts:
   releaseName: kube-prometheus-stack
   namespace: monitoring
   skipTests: true
-  version: 87.19.0
+  version: 87.21.0
   apiVersions:
   - discovery.k8s.io/v1/EndpointSlice
   valuesInline:
@@ -65,12 +65,12 @@ helmCharts:
           registry: quay.io
           repository: prometheus-operator/prometheus-config-reloader
           # renovate: datasource=docker depName=quay.io/prometheus-operator/prometheus-config-reloader
-          tag: v0.92.1@sha256:74550ba3e8bf93f47bc574231090d340ae9c01d25cd11ff74799e65f9fdb9a48
+          tag: v0.95.2@sha256:cc74ddedad4ab1c49446971f6d51302ad4303d8660a2018af925c7f62c114304
       thanosImage:
         registry: quay.io
         repository: thanos/thanos
         # renovate: datasource=docker depName=quay.io/thanos/thanos
-        tag: v0.42.2@sha256:6249f7aaadd3695df637fb2eb4cb9a9955611eee691c3970892fe9c0dc3f2db6
+        tag: v0.42.5@sha256:0a546b98a8dd47735456ab389983675ee363d68127e334937a9fceeea10da5e7
     cleanPrometheusOperatorObjectNames: true
     prometheus-node-exporter:
       namespaceOverride: kube-system
@@ -105,7 +105,7 @@ helmCharts:
   repo: https://prometheus-community.github.io/helm-charts
   releaseName: prometheus-adapter
   namespace: monitoring
-  version: 5.3.0
+  version: 5.4.2
   apiVersions:
   - apiregistration.k8s.io/v1
   valuesInline:
@@ -156,6 +156,6 @@ helmCharts:
 
 images:
 - name: quay.io/prometheus/prometheus
-  newTag: v3.13.1@sha256:3c42b892cf723fa54d2f262c37a0e1f80aa8c8ddb1da7b9b0df9455a35a7f893
+  newTag: v3.16.0@sha256:9332054523223e2ddc18d8101799d54a4a8d823b030c53216f063a6c117773cd
 - name: quay.io/prometheus/alertmanager
-  newTag: v0.33.1@sha256:9e082985f56f4c8c9f724e18f2288c6708f472e56a5286b8863d080434ea065d
+  newTag: v0.35.1@sha256:03d4e362b9948eee910802ddac55f9175b320862a2de1fdef5206c3213875a09

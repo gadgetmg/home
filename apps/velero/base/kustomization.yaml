@@ -7,7 +7,7 @@ resources:
 
 images:
 - name: docker.io/velero/velero-plugin-for-aws
-  newTag: v1.14.2@sha256:0751144c1c8e52d52c48717fbd13ad5a3061e612ae4d7ad744a946cd5b139d1a
+  newTag: v1.15.0@sha256:cb8fdbefc54e2d99b124f6611bc8cad31a1e546689dfb2a32c9307339c492750
 
 components:
 - ../../../shared/components/strip-helm-labels
@@ -18,7 +18,7 @@ helmCharts:
   repo: https://vmware-tanzu.github.io/helm-charts
   releaseName: velero
   namespace: velero
-  version: 12.1.0
+  version: 12.2.5
   includeCRDs: true
   apiVersions:
   - monitoring.coreos.com/v1

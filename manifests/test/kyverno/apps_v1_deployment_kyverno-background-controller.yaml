@@ -53,6 +53,7 @@ spec:
         - --enableDeferredLoading=true
         - --maxAPICallResponseLength=2000000
         - --apiCallTimeout=30s
+        - --maxGlobalContextEntries=0
         - --loggingFormat=text
         - --v=2
         - --omitEvents=PolicyApplied,PolicySkipped
@@ -75,7 +76,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/kyverno/background-controller:v1.18.2@sha256:d62566ce41bd0d4a32bf2cf44b9ebfc02c36374f821f83070890287f62f68671
+        image: ghcr.io/kyverno/background-controller:v1.19.2@sha256:c46e124f21ef8a6bb4b48de57106808b1007edcd5ddd4ff7df5d23b9efa60ce2
         imagePullPolicy: IfNotPresent
         name: controller
         ports:

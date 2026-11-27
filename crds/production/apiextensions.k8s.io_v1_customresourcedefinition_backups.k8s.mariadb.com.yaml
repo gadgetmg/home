@@ -298,7 +298,15 @@ spec:
                 - none
                 - bzip2
                 - gzip
+                - zstd
                 type: string
+              compressionThreads:
+                description: |-
+                  CompressionThreads defines the number of CPU threads to use for compression. It only has effect when compression is set to zstd.
+                  Defaults to all available CPUs.
+                format: int32
+                minimum: 1
+                type: integer
               databases:
                 description: Databases defines the logical databases to be backed
                   up. If not provided, all databases are backed up.
@@ -675,6 +683,10 @@ spec:
                         x-kubernetes-map-type: atomic
                       storageClassName:
                         type: string
+                      volumeAttributesClassName:
+                        description: VolumeAttributesClassName references a VolumeAttributesClass
+                          for the PVC.
+                        type: string
                     type: object
                   volume:
                     description: Volume is a Kubernetes volume specification.
@@ -841,6 +853,10 @@ spec:
                         type: object
                         x-kubernetes-map-type: atomic
                       storageClassName:
+                        type: string
+                      volumeAttributesClassName:
+                        description: VolumeAttributesClassName references a VolumeAttributesClass
+                          for the PVC.
                         type: string
                     type: object
                   s3:

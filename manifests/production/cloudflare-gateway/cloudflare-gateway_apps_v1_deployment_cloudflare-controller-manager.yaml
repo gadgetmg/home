@@ -45,7 +45,7 @@ spec:
         env:
         - name: GATEWAY_IMAGE
           value: docker.io/cloudflare/cloudflared:2025.11.1@sha256:89ee50efb1e9cb2ae30281a8a404fed95eb8f02f0a972617526f8c5b417acae2
-        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.10.1@sha256:dea57b0427da3c24f535e397bc7edea3145282be1204c987f7d4a709a544f929
+        image: ghcr.io/pl4nty/cloudflare-kubernetes-gateway:v0.10.2@sha256:0bf358f68d2bda04cfc065a20e0bb6e1e0bd0c6123b01ae24364b4ad3000a1f2
         livenessProbe:
           httpGet:
             path: /healthz

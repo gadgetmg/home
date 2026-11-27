@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: piraeus-datastore
+  name: piraeus-operator-manager-namespaced-rolebinding
+  namespace: piraeus-datastore
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: piraeus-operator-controller-manager
+subjects:
+- kind: ServiceAccount
+  name: piraeus-operator-controller-manager
+  namespace: piraeus-datastore

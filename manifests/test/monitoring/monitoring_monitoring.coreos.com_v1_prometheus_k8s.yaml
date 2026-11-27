@@ -37,7 +37,7 @@ spec:
   enableOTLPReceiver: false
   externalUrl: http://k8s-prometheus.monitoring:9090
   hostNetwork: false
-  image: quay.io/prometheus/prometheus:v3.13.1@sha256:3c42b892cf723fa54d2f262c37a0e1f80aa8c8ddb1da7b9b0df9455a35a7f893
+  image: quay.io/prometheus/prometheus:v3.16.0@sha256:9332054523223e2ddc18d8101799d54a4a8d823b030c53216f063a6c117773cd
   imagePullPolicy: IfNotPresent
   listenLocal: false
   logFormat: logfmt

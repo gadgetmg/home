@@ -57,7 +57,7 @@ spec:
         - policyexceptions.policies.kyverno.io
         - --resource
         - validatingpolicies.policies.kyverno.io
-        image: ghcr.io/kyverno/kyverno-cli:v1.18.2@sha256:7224ed05508c24419c3df98114c28ba682ad0a940dcdb7b9fdba0a4b6bf943cf
+        image: ghcr.io/kyverno/kyverno-cli:v1.19.2@sha256:322ec5044d600930cb3af0e56dc33154a2d1d1fba58f4cadad3f47be7e78b11c
         imagePullPolicy: IfNotPresent
         name: kyverno-cli
         resources:
@@ -79,5 +79,7 @@ spec:
           runAsUser: 65534
           seccompProfile:
             type: RuntimeDefault
+      nodeSelector:
+        kubernetes.io/os: linux
       restartPolicy: Never
       serviceAccountName: kyverno-migrate-resources
