@@ -19,5 +19,13 @@ rules:
   resources:
   - secrets
   verbs:
-  - get
   - create
+- apiGroups:
+  - ""
+  resourceNames:
+  - k8s-admission
+  resources:
+  - secrets
+  verbs:
+  - get
+  - delete

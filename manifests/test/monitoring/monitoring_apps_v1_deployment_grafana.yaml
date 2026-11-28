@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: 8d6e5af92f3ef65785a6e74e17fca8114cb47004218f4546fd2211a5593f3c29
+        checksum/config: 80ff0fe3efbc36d8505c01fd30e2d854e191db53b0897c6f91dd8763d1e5ddd8
         checksum/sc-dashboard-provider-config: e70bf6a851099d385178a76de9757bb0bef8299da6d8443602590e44f05fdf24
         checksum/secret: 032056e9c62bbe9d1daa41ee49cd3d9524c076f51ca4c65adadf4ef08ef28712
         kubectl.kubernetes.io/default-container: grafana
@@ -55,7 +55,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/dashboards/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:2.10.0@sha256:21b9fe7bb29d65caf2445ccbf96ff6eda5e589a92bd8f5188f957fe75b551d72
+        image: quay.io/kiwigrid/k8s-sidecar:2.14.3@sha256:52d311dcedd587421a236c4d6c621f05614c40a51386e955e0699dca97ec0880
         imagePullPolicy: IfNotPresent
         name: grafana-sc-dashboard
         securityContext:
@@ -63,6 +63,7 @@ spec:
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
           seccompProfile:
             type: RuntimeDefault
         volumeMounts:
@@ -93,7 +94,7 @@ spec:
           value: http://localhost:3000/api/admin/provisioning/datasources/reload
         - name: REQ_METHOD
           value: POST
-        image: quay.io/kiwigrid/k8s-sidecar:2.10.0@sha256:21b9fe7bb29d65caf2445ccbf96ff6eda5e589a92bd8f5188f957fe75b551d72
+        image: quay.io/kiwigrid/k8s-sidecar:2.14.3@sha256:52d311dcedd587421a236c4d6c621f05614c40a51386e955e0699dca97ec0880
         imagePullPolicy: IfNotPresent
         name: grafana-sc-datasources
         securityContext:
@@ -101,6 +102,7 @@ spec:
           capabilities:
             drop:
             - ALL
+          readOnlyRootFilesystem: true
           seccompProfile:
             type: RuntimeDefault
         volumeMounts:
@@ -136,12 +138,12 @@ spec:
             secretKeyRef:
               key: attribute.client_secret
               name: keycloak-client-grafana
-        image: docker.io/grafana/grafana:13.1.1@sha256:7cb8c64c4d57a57e734073f3cc94620adb24a0acb929bd80ba9f14017e3a975b
+        image: docker.io/grafana/grafana:13.3.2-distroless@sha256:d9425e704fa9dff189966b827fbc9b63befc5b443999c7b82193f1b1a73c74f7
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 10
           httpGet:
-            path: /api/health
+            path: /healthz
             port: grafana
           initialDelaySeconds: 60
           timeoutSeconds: 30
@@ -169,9 +171,12 @@ spec:
             drop:
             - ALL
           privileged: false
+          readOnlyRootFilesystem: true
           seccompProfile:
             type: RuntimeDefault
         volumeMounts:
+        - mountPath: /tmp
+          name: tmp
         - mountPath: /etc/grafana/grafana.ini
           name: config
           subPath: grafana.ini
@@ -195,6 +200,8 @@ spec:
       serviceAccountName: grafana
       shareProcessNamespace: false
       volumes:
+      - emptyDir: {}
+        name: tmp
       - configMap:
           name: grafana
         name: config

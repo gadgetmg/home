@@ -26,6 +26,8 @@ data:
     logs = /var/log/grafana
     plugins = /var/lib/grafana/plugins
     provisioning = /etc/grafana/provisioning
+    [plugins]
+    preinstall_auto_update = false
     [server]
     domain = grafana.seigra.net
     root_url = https://grafana.seigra.net

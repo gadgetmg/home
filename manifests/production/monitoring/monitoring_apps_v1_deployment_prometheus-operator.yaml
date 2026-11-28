@@ -40,16 +40,16 @@ spec:
         - --config-reloader-memory-request=0
         - --config-reloader-memory-limit=0
         - --thanos-default-base-image=quay.io/thanos/thanos:v0.42.5@sha256:0a546b98a8dd47735456ab389983675ee363d68127e334937a9fceeea10da5e7
-        - --secret-field-selector=type!=kubernetes.io/dockercfg,type!=kubernetes.io/service-account-token,type!=helm.sh/release.v1
+        - --secret-field-selector=type!=kubernetes.io/dockercfg,type!=helm.sh/release.v1
         - --web.enable-tls=true
-        - --web.cert-file=/cert/cert
-        - --web.key-file=/cert/key
+        - --web.cert-file=/cert/tls.crt
+        - --web.key-file=/cert/tls.key
         - --web.listen-address=:10250
         - --web.tls-min-version=VersionTLS13
         env:
         - name: GOGC
           value: "30"
-        image: quay.io/prometheus-operator/prometheus-operator:v0.92.1@sha256:7d9247d2351480fc74587e24681578f815f387bafb2ee7b86a852a94c4cd3774
+        image: quay.io/prometheus-operator/prometheus-operator:v0.95.2@sha256:7986c2afa118c9dea07d01c5e1a29555824582e92f6ee8607591d1a7178acf29
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -86,6 +86,8 @@ spec:
         - mountPath: /cert
           name: tls-secret
           readOnly: true
+      nodeSelector:
+        kubernetes.io/os: linux
       securityContext:
         fsGroup: 65534
         runAsGroup: 65534

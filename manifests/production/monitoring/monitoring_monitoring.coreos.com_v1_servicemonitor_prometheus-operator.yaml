@@ -18,7 +18,7 @@ spec:
     tlsConfig:
       ca:
         secret:
-          key: ca
+          key: ca.crt
           name: k8s-admission
           optional: false
       serverName: prometheus-operator

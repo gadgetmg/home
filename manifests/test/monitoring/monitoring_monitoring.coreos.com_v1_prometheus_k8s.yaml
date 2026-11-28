@@ -42,6 +42,8 @@ spec:
   listenLocal: false
   logFormat: logfmt
   logLevel: info
+  nodeSelector:
+    kubernetes.io/os: linux
   paused: false
   podMonitorNamespaceSelector: {}
   podMonitorSelector: {}
@@ -83,5 +85,5 @@ spec:
         storageClassName: ssd-r2
   tsdb:
     outOfOrderTimeWindow: 0s
-  version: v3.13.1-distroless
+  version: v3.16.0-distroless
   walCompression: true
