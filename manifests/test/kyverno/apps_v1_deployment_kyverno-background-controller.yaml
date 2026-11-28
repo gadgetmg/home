@@ -48,6 +48,7 @@ spec:
         - --otelConfig=prometheus
         - --metricsPort=8000
         - --resyncPeriod=15m
+        - --crdWatcher=false
         - --enableConfigMapCaching=true
         - --controllerRuntimeMetricsAddress=:8080
         - --enableDeferredLoading=true
@@ -76,7 +77,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-        image: ghcr.io/kyverno/background-controller:v1.19.2@sha256:c46e124f21ef8a6bb4b48de57106808b1007edcd5ddd4ff7df5d23b9efa60ce2
+        image: ghcr.io/kyverno/background-controller:v1.20.0@sha256:c72df38320a48fc9de10f9d23d087a117853bb08207b7f60f6d1e8457fb3ddb7
         imagePullPolicy: IfNotPresent
         name: controller
         ports:
