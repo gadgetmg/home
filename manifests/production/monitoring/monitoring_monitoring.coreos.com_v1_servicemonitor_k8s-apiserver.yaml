@@ -10,17 +10,29 @@ metadata:
   namespace: monitoring
 spec:
   endpoints:
-  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  - authorization:
+      credentials:
+        key: token
+        name: k8s-prometheus-token
+      type: Bearer
     metricRelabelings:
     - action: drop
       regex: (etcd_request|apiserver_request_slo|apiserver_request_sli|apiserver_request)_duration_seconds_bucket;(0\.15|0\.2|0\.3|0\.35|0\.4|0\.45|0\.6|0\.7|0\.8|0\.9|1\.25|1\.5|1\.75|2|3|3\.5|4|4\.5|6|7|8|9|15|20|40|45|50)(\.0)?
       sourceLabels:
       - __name__
       - le
+    - action: drop
+      regex: apiserver_watch_events_dispatch_duration_seconds_bucket;(0\.0005|0\.005|0\.025|0\.05|0\.25|0\.5|2\.5)
+      sourceLabels:
+      - __name__
+      - le
     port: https
     scheme: https
     tlsConfig:
-      caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      ca:
+        configMap:
+          key: ca.crt
+          name: kube-root-ca.crt
       insecureSkipVerify: false
       serverName: kubernetes
   jobLabel: component

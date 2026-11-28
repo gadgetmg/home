@@ -32,7 +32,7 @@ spec:
         - --namespace=monitoring
         - --secret-name=k8s-admission
         - --patch-failure-policy=
-        image: ghcr.io/jkroepke/kube-webhook-certgen:1.8.5@sha256:d0e80b2f62fe43bb5e1b96adc692132fb4522e802f4cf673c09b1f94722b8cb6
+        image: ghcr.io/jkroepke/kube-webhook-certgen:1.11.1@sha256:8009b04f9873f7279b5adee37fdd03b6a9aa7b6751d4f69fde2683010e41cd1f
         imagePullPolicy: IfNotPresent
         name: patch
         resources: {}
@@ -42,6 +42,8 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
+      nodeSelector:
+        kubernetes.io/os: linux
       restartPolicy: OnFailure
       securityContext:
         runAsGroup: 2000

@@ -10,7 +10,11 @@ metadata:
   namespace: monitoring
 spec:
   endpoints:
-  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  - authorization:
+      credentials:
+        key: token
+        name: k8s-prometheus-token
+      type: Bearer
     port: http-metrics
   jobLabel: jobLabel
   namespaceSelector:

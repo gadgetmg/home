@@ -32,7 +32,7 @@ spec:
       - args:
         - --port=8080
         - --resources=certificatesigningrequests,configmaps,cronjobs,daemonsets,deployments,endpointslices,horizontalpodautoscalers,ingresses,jobs,leases,limitranges,mutatingwebhookconfigurations,namespaces,networkpolicies,nodes,persistentvolumeclaims,persistentvolumes,poddisruptionbudgets,pods,replicasets,replicationcontrollers,resourcequotas,secrets,services,statefulsets,storageclasses,validatingwebhookconfigurations,volumeattachments
-        image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.19.1@sha256:85108987d044b18a098126732f98602df408888c0f7d456241f5abefb9744bc1
+        image: registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.20.0@sha256:42cfe3723a5f058171c627537fb57a3ea0f26e4380fa18555a95cb1a1b4cfc5b
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -69,6 +69,8 @@ spec:
           readOnlyRootFilesystem: true
       dnsPolicy: ClusterFirst
       hostNetwork: false
+      nodeSelector:
+        kubernetes.io/os: linux
       securityContext:
         fsGroup: 65534
         runAsGroup: 65534
